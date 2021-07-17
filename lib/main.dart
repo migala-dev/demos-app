@@ -1,19 +1,29 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluro/fluro.dart';
+
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
-import 'package:fluro/fluro.dart';
-import 'package:flutter/material.dart';
+import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 
 void main() {
-  runApp(App());
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (_) => ThemeCubit(),
+      )
+    ],
+    child: DemosApp(),
+  ));
 }
 
-class App extends StatefulWidget {
+class DemosApp extends StatefulWidget {
   @override
-  State createState() => AppState();
+  State createState() => DemosAppState();
 }
 
-class AppState extends State<App> {
-  AppState() {
+class DemosAppState extends State<DemosApp> {
+  DemosAppState() {
     final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;
@@ -21,11 +31,16 @@ class AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    final app = MaterialApp(
-      title: 'Fluro',
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
-      onGenerateRoute: Application.router.generator,
+    final app = BlocBuilder<ThemeCubit, ThemeData>(
+      builder: (context, theme) {
+        return MaterialApp(
+          theme: theme,
+          title: 'DemosApp',
+          debugShowCheckedModeBanner: false,
+          initialRoute: 'login',
+          onGenerateRoute: Application.router.generator,
+        );
+      },
     );
     return app;
   }
