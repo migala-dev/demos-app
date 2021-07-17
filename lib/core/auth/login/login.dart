@@ -1,6 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:demos_app/utils/mixins/form_validation_mixin.dart';
 import 'package:demos_app/widgets/buttons/bigbutton_widget.dart';
-import 'package:flutter/material.dart';
+import 'package:demos_app/widgets/simbols/demos_logo.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -30,7 +32,7 @@ class InputPhoneNumber extends StatefulWidget {
 }
 
 class _InputPhoneNumberState extends State<InputPhoneNumber>
-    with LoginInputValidationMixin {
+    with LoginFormValidationsMixin {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -81,32 +83,6 @@ class _InputPhoneNumberState extends State<InputPhoneNumber>
               ],
             )),
       ),
-    );
-  }
-}
-
-class DemosLogo extends StatelessWidget {
-  const DemosLogo({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text('Powered by Migala               '),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          height: 150,
-          width: 150,
-          color: Colors.grey,
-        ),
-        Text(
-          'DÊMOS',
-          style: TextStyle(fontSize: 45),
-        ),
-        Text('Democratiza tus espacios de trabajo')
-      ],
     );
   }
 }

@@ -1,4 +1,4 @@
-mixin LoginInputValidationMixin {
+mixin LoginFormValidationsMixin {
   bool isNumberValid(String? number) {
     if (number == null) {
       return false;
@@ -19,7 +19,7 @@ mixin LoginInputValidationMixin {
   }
 }
 
-mixin CreateSpaceInputValidation {
+mixin SpaceFormValidationsMixin {
   bool isSpaceNameValid(String name) => name.length > 0 && name.length < 20;
   bool isSpaceDescriptionValid(String spaceName) =>
       spaceName.length > 0 && spaceName.length <= 120;
