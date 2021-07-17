@@ -74,6 +74,7 @@ class _InputPhoneNumberState extends State<InputPhoneNumber>
                     text: 'SIGUIENTE',
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        Navigator.pushNamed(context, 'verifyPhone');
                         print('Número valido');
                       }
                     }),
