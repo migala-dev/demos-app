@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
 
@@ -31,6 +32,9 @@ class DemosAppState extends State<DemosApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent));
+
     final app = BlocBuilder<ThemeCubit, ThemeData>(
       builder: (context, theme) {
         return MaterialApp(

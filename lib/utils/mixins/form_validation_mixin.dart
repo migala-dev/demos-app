@@ -1,5 +1,9 @@
 mixin LoginInputValidationMixin {
-  bool isNumberValid(String number) {
+  bool isNumberValid(String? number) {
+    if (number == null) {
+      return false;
+    }
+
     final String phoneRegex = r"^[0-9]{10}$";
 
     return RegExp(phoneRegex).hasMatch(number);
