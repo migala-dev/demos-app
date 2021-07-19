@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
-class EditProfilePicture extends StatelessWidget {
-  final VoidCallback onPictureEditPress;
+class ProfilePicture extends StatelessWidget {
+  final VoidCallback? onPictureEditPress;
+  final bool editable;
 
-  const EditProfilePicture({Key? key, required this.onPictureEditPress})
-      : super(key: key);
+  const ProfilePicture({
+    Key? key,
+    this.editable = false,
+    this.onPictureEditPress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +23,14 @@ class EditProfilePicture extends StatelessWidget {
         Positioned(
             bottom: 0,
             right: 0,
-            child: FloatingActionButton(
-              elevation: 0,
-              mini: true,
-              child: Icon(Icons.photo_camera),
-              onPressed: onPictureEditPress,
-            ))
+            child: this.editable
+                ? FloatingActionButton(
+                    elevation: 0,
+                    mini: true,
+                    child: Icon(Icons.photo_camera),
+                    onPressed: onPictureEditPress,
+                  )
+                : Container())
       ],
     );
   }

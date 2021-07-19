@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ProfileInfoAndEditName extends StatelessWidget {
-  final VoidCallback onEditNamePress;
+class ProfileInfo extends StatelessWidget {
+  final VoidCallback? onEditNamePress;
+  final bool editableName;
 
-  const ProfileInfoAndEditName({Key? key, required this.onEditNamePress})
+  const ProfileInfo({Key? key, this.editableName = false, this.onEditNamePress})
       : super(key: key);
 
   @override
@@ -14,13 +15,18 @@ class ProfileInfoAndEditName extends StatelessWidget {
       children: [
         ListTile(
           leading: Icon(Icons.person),
-          trailing: IconButton(
-            icon: Icon(
-              Icons.edit,
-              color: accentColor,
-            ),
-            onPressed: onEditNamePress,
-          ),
+          trailing: this.editableName
+              ? IconButton(
+                  icon: Icon(
+                    Icons.edit,
+                    color: accentColor,
+                  ),
+                  onPressed: onEditNamePress,
+                )
+              : Container(
+                  height: 14,
+                  width: 14,
+                ),
           title: Text(
             'Nombre',
             style: TextStyle(color: Colors.grey, fontSize: 14),

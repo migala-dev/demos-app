@@ -28,13 +28,15 @@ class Profile extends StatelessWidget {
                 height: 25,
               ),
               Center(
-                  child: EditProfilePicture(
+                  child: ProfilePicture(
+                editable: true,
                 onPictureEditPress: () {},
               )),
               SizedBox(
                 height: 25,
               ),
-              ProfileInfoAndEditName(
+              ProfileInfo(
+                editableName: true,
                 onEditNamePress: () {},
               ),
               Spacer(),
