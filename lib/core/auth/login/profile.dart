@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/widgets/buttons/bigbutton_widget.dart';
-import 'package:demos_app/widgets/profile/profile_info_editname_widget.dart';
-import 'package:demos_app/widgets/profile/edit_profile_picture_widget.dart';
+import 'package:demos_app/widgets/profile/profile_info_widget.dart';
+import 'package:demos_app/widgets/profile/profile_picture_widget.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
