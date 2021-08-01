@@ -1,10 +1,20 @@
+import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:flutter/material.dart';
-
-import 'package:demos_app/utils/mixins/form_validation_mixin.dart';
-import 'package:demos_app/widgets/buttons/bigbutton_widget.dart';
+import 'package:demos_app/widgets/inputs/phone_input.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/simbols/demos_logo.dart';
+import 'package:http/http.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  var _phoneNumberKey = GlobalKey<FormFieldState>();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -12,77 +22,28 @@ class LoginPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          SizedBox(
-            height: size.height * 0.1,
+          Container(
+            child: DemosLogo(),
+            margin: EdgeInsets.only(top: size.height * 0.1, bottom: 35.0),
           ),
-          DemosLogo(),
-          SizedBox(
-            height: 35,
-          ),
-          InputPhoneNumber()
+          Form(
+              key: _formKey,
+              child: Column(
+                children: [PhoneInput(_phoneNumberKey)],
+              )),
+          BigButton(text: 'SIGUIENTE', onPressed: () => verifyPhone(context)),
         ],
       ),
     );
   }
-}
 
-class InputPhoneNumber extends StatefulWidget {
-  @override
-  _InputPhoneNumberState createState() => _InputPhoneNumberState();
-}
-
-class _InputPhoneNumberState extends State<InputPhoneNumber>
-    with LoginFormValidationsMixin {
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-        child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text('Número Teléfonico'),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  decoration: InputDecoration(
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        borderSide: BorderSide(),
-                      )),
-                  keyboardType: TextInputType.number,
-                  validator: (String? number) =>
-                      isNumberValid(number) ? null : 'Número no valido.',
-                ),
-                Row(
-                  children: [
-                    Spacer(),
-                    TextButton(
-                        onPressed: () {
-                          print('info');
-                        },
-                        child: Text('Para mas informacion hacer click aqui'))
-                  ],
-                ),
-                Spacer(),
-                BigButton(
-                    text: 'SIGUIENTE',
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.pushNamed(context, 'verifyPhone');
-                        print('Número valido');
-                      }
-                    }),
-              ],
-            )),
-      ),
-    );
+  void verifyPhone(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      String phoneNumber = _phoneNumberKey.currentState!.value;
+      bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
+      if (itSignInSuccessfully) {
+        Navigator.pushNamed(context, 'verifyPhone');
+      }
+    }
   }
 }
