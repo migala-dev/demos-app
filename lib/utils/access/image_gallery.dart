@@ -1,21 +1,20 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<bool> profilePictureUploader() async {
-  if(!await galleryPermissions()) return false;
-  XFile? file = await imagePicker();
-  return file != null ? await postImage(file) : false;
+Future<bool> profilePictureWorker() async {
+  if(!await checkGalleryPermission()) return false;
+  XFile? file = await pickImage();
+  return file != null ? await saveImage(file) : false;
 }
 
-Future<bool> galleryPermissions() async {
+Future<bool> checkGalleryPermission() async {
   var status = await Permission.photos.status;
   if(status.isGranted || status.isLimited || status.isRestricted) return true;
   if(status.isDenied) {
-    var request = await Permission.photos.request();
-    if (request.isGranted || request.isLimited || request.isRestricted) {
-      return true;
-    }
+    return askGalleryPermission();
   }
   if(status.isPermanentlyDenied) {
     openAppSettings();
@@ -23,15 +22,22 @@ Future<bool> galleryPermissions() async {
   }
   return false;
 }
+Future<bool> askGalleryPermission() async {
+  var request = await Permission.photos.request();
+  if (request.isGranted || request.isLimited || request.isRestricted) {
+    return true;
+  }
+  return false;
+}
 
-Future<XFile?> imagePicker() async {
+Future<XFile?> pickImage() async {
   XFile? file = await ImagePicker().pickImage(
     source: ImageSource.gallery,
   );
   return file;
 }
 
-Future<bool> postImage(XFile image) async {
+Future<bool> saveImage(XFile image) async {
   String fileName = image.path.split('/').last;
   FormData formData = FormData.fromMap({
     "file":
