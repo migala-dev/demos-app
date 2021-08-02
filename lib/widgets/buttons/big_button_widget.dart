@@ -10,14 +10,14 @@ class BigButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(width: double.infinity, height: 60),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
+        constraints:
+            BoxConstraints.tightFor(width: double.infinity, height: 60),
+        child: ElevatedButton(
+          onPressed: onPressed,
+          child: Text(
+            text,
+            style: TextStyle(fontSize: 20),
+          ),
+        ));
   }
 }
