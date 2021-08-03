@@ -4,21 +4,11 @@ import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<bool> profilePictureWorker() async {
-  if(!await checkGalleryPermission()) return false;
-  XFile? file = await pickImage();
-  return file != null ? await saveImage(file) : false;
-}
-
 Future<bool> checkGalleryPermission() async {
   var status = await Permission.photos.status;
   if(status.isGranted || status.isLimited || status.isRestricted) return true;
-  if(status.isDenied) {
-    return askGalleryPermission();
-  }
   if(status.isPermanentlyDenied) {
     openAppSettings();
-    return false;
   }
   return false;
 }
