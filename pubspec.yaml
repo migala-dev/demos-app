@@ -34,7 +34,9 @@ dependencies:
   http: ^0.13.3
   intl_phone_field: ^2.0.1
   quiver: ^3.0.1
-
+  permission_handler: ^8.1.4+2
+  image_picker: ^0.8.2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
