@@ -1,8 +1,9 @@
-import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/utils/services/auth_service.dart';
+import 'package:demos_app/widgets/buttons/timer_text_button_widget.dart';
 
 class VerifyPhonePage extends StatelessWidget {
   const VerifyPhonePage({Key? key}) : super(key: key);
@@ -92,10 +93,10 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
             SizedBox(
               height: 20,
             ),
-            Text(
-              'Reenviar mensaje de verificacion    4:36',
-              style: TextStyle(color: Colors.grey),
-            )
+            TimerTextButton(
+              onPressed: () {},
+              duration: Duration(minutes: 4, seconds: 30),
+            ),
           ],
         ),
         BigButton(
