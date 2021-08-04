@@ -109,7 +109,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-flutter_web_plugins:
+  flutter_web_plugins:
     dependency: transitive
     description: flutter
     source: sdk
@@ -128,20 +128,13 @@ flutter_web_plugins:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
-  intl_phone_field:
-    dependency: "direct main"
-    description:
-      name: intl_phone_field
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
-image_picker:
+  image_picker:
     dependency: "direct main"
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.2"
+    version: "0.8.3"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -156,6 +149,13 @@ image_picker:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  intl_phone_field:
+    dependency: "direct main"
+    description:
+      name: intl_phone_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   js:
     dependency: transitive
     description:
@@ -198,7 +198,7 @@ image_picker:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
- permission_handler:
+  permission_handler:
     dependency: "direct main"
     description:
       name: permission_handler
