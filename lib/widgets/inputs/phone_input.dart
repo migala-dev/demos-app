@@ -3,38 +3,39 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 
 class PhoneInput extends StatefulWidget {
   final TextEditingController controller;
-  final bool enabled;
+  final bool disabled;
 
-  const PhoneInput({Key? key, required this.controller, this.enabled = true})
+  const PhoneInput({Key? key, required this.controller, this.disabled = false})
       : super(key: key);
   @override
-  _PhoneInputState createState() => _PhoneInputState(controller, enabled);
+  _PhoneInputState createState() => _PhoneInputState(controller, disabled);
 }
 
 class _PhoneInputState extends State<PhoneInput> {
   final TextEditingController controller;
-  final bool enabled;
+  final bool disabled;
+  final countries = [
+    'MX',
+    'AR',
+    'BO',
+    'BR',
+    'CL',
+    'EC',
+    'PE',
+    'US',
+    'CO',
+    'PY',
+    'UY',
+    'VE'
+  ];
 
-  _PhoneInputState(this.controller, this.enabled);
+  _PhoneInputState(this.controller, this.disabled);
 
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
-      countries: [
-        'MX',
-        'AR',
-        'BO',
-        'BR',
-        'CL',
-        'EC',
-        'PE',
-        'US',
-        'CO',
-        'PY',
-        'UY',
-        'VE'
-      ],
-      enabled: enabled,
+      countries: countries,
+      enabled: !disabled,
       searchText: 'Buscar por nombre de país',
       autoValidate: false,
       validator: validatePhone,

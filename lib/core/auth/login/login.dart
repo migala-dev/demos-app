@@ -1,5 +1,7 @@
-import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:flutter/material.dart';
+
+import 'package:demos_app/utils/ui/ui_utils.dart';
+import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:demos_app/widgets/inputs/phone_input.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/simbols/demos_logo.dart';
@@ -11,7 +13,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _textController = TextEditingController();
+  final _phoneNumberController = TextEditingController();
   bool _isLoading = false;
 
   @override
@@ -41,8 +43,8 @@ class _LoginPageState extends State<LoginPage> {
                               child: Column(
                                 children: [
                                   PhoneInput(
-                                    controller: _textController,
-                                    enabled: !_isLoading,
+                                    controller: _phoneNumberController,
+                                    disabled: _isLoading,
                                   )
                                 ],
                               )),
@@ -59,23 +61,27 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  void verifyPhone(BuildContext context) async {
+  void verifyPhone(BuildContext context) {
     if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-      FocusScope.of(context).unfocus();
-      String phoneNumber = _textController.value.text;
-      print(phoneNumber);
-      bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
-      if (itSignInSuccessfully) {
-        Navigator.pushNamed(context, 'verifyPhone');
-      } else {
-        // TODO: toast
-      }
-      setState(() {
-        _isLoading = false;
-      });
+      setLoadingState();
     }
+  }
+
+  void setLoadingState() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    hideKeyboard(context);
+    String phoneNumber = _phoneNumberController.value.text;
+
+    bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
+    if (itSignInSuccessfully) {
+      Navigator.pushNamed(context, 'verifyPhone');
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }

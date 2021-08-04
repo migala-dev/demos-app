@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
+import 'package:demos_app/utils/ui/ui_utils.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:demos_app/widgets/buttons/timer_text_button_widget.dart';
@@ -48,7 +49,7 @@ class SecurityCodeForm extends StatefulWidget {
 }
 
 class _SecurityCodeFormState extends State<SecurityCodeForm> {
-  final TextEditingController _pinPutController = TextEditingController();
+  final TextEditingController _verifyCodeController = TextEditingController();
   bool _isLoading = false;
 
   BoxDecoration get _pinPutDecoration {
@@ -76,10 +77,9 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
             PinPut(
               fieldsCount: 6,
               onSubmit: (String pin) {
-                // Hide keyboard
-                FocusScope.of(context).unfocus();
+                hideKeyboard(context);
               },
-              controller: _pinPutController,
+              controller: _verifyCodeController,
               submittedFieldDecoration: _pinPutDecoration.copyWith(
                 borderRadius: BorderRadius.circular(20.0),
               ),
@@ -94,31 +94,31 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
               height: 20,
             ),
             TimerTextButton(
-              onPressed: () {},
+              text: 'Reenviar mensaje de verificacion',
+              onPressed: verifyCode,
               duration: Duration(minutes: 4, seconds: 30),
             ),
           ],
         ),
         BigButton(
-            isLoading: _isLoading,
-            text: 'VERIFICAR',
-            onPressed: () async {
-              setState(() {
-                _isLoading = true;
-              });
-              final code = _pinPutController.text;
-              final isValidCode = await AuthService().verifyCode(code);
-              if (isValidCode) {
-                Navigator.pushReplacementNamed(context, 'profile');
-              } else {
-                // TODO: toast
-              }
-
-              setState(() {
-                _isLoading = false;
-              });
-            })
+            isLoading: _isLoading, text: 'VERIFICAR', onPressed: verifyCode)
       ],
     );
+  }
+
+  void verifyCode() async {
+    setState(() {
+      _isLoading = true;
+    });
+
+    final code = _verifyCodeController.text;
+    final isValidCode = await AuthService().verifyCode(code);
+    if (isValidCode) {
+      Navigator.pushReplacementNamed(context, 'profile');
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 }
