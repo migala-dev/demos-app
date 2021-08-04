@@ -6,17 +6,24 @@ import 'package:quiver/async.dart';
 class TimerTextButton extends StatefulWidget {
   final VoidCallback onPressed;
   final Duration duration;
-  TimerTextButton({Key? key, required this.onPressed, required this.duration})
+  final String text;
+
+  TimerTextButton(
+      {Key? key,
+      required this.onPressed,
+      required this.duration,
+      required this.text})
       : super(key: key);
 
   @override
   _TimerTextButtonState createState() =>
-      _TimerTextButtonState(onPressed, duration);
+      _TimerTextButtonState(onPressed, duration, text);
 }
 
 class _TimerTextButtonState extends State<TimerTextButton> {
   final VoidCallback onPressed;
   final Duration duration;
+  final String text;
 
   String _currentTimeRemaining = '';
 
@@ -24,7 +31,7 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   StreamSubscription<CountdownTimer>? sub;
 
-  _TimerTextButtonState(this.onPressed, this.duration);
+  _TimerTextButtonState(this.onPressed, this.duration, this.text);
 
   void startTimer() {
     CountdownTimer countDownTimer = CountdownTimer(
@@ -73,8 +80,7 @@ class _TimerTextButtonState extends State<TimerTextButton> {
     return TextButton(
         onPressed: _done ? onPressed : null,
         child: Text(
-          'Reenviar mensaje de verificacion    $_currentTimeRemaining',
-          // style: TextStyle(color: Colors.grey),
+          '$text    $_currentTimeRemaining',
         ));
   }
 }
