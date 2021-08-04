@@ -26,7 +26,7 @@ class VerifyPhonePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Column(
           children: [
-            Text('Verifica tu número de teléfono',
+            Text('Reenviar código de verificación',
                 style: TextStyle(fontSize: 42)),
             SizedBox(
               height: 100,
@@ -107,9 +107,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
   }
 
   void verifyCode() async {
-    setState(() {
-      _isLoading = true;
-    });
+    setIsLoadingState(true);
 
     final code = _verifyCodeController.text;
     final isValidCode = await AuthService().verifyCode(code);
@@ -117,8 +115,12 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
       Navigator.pushReplacementNamed(context, 'profile');
     }
 
+    setIsLoadingState(false);
+  }
+
+  void setIsLoadingState(bool loading) async {
     setState(() {
-      _isLoading = false;
+      _isLoading = loading;
     });
   }
 }

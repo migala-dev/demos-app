@@ -61,27 +61,29 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 
-  void verifyPhone(BuildContext context) {
+  void verifyPhone(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      setLoadingState();
+      setIsLoadingState(true);
+
+      hideKeyboard(context);
+      String phoneNumber = _phoneNumberController.value.text;
+
+      bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
+      if (itSignInSuccessfully) {
+        Navigator.pushNamed(context, 'verifyPhone');
+      }
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      setIsLoadingState(false);
     }
   }
 
-  void setLoadingState() async {
+  void setIsLoadingState(bool loading) async {
     setState(() {
-      _isLoading = true;
-    });
-
-    hideKeyboard(context);
-    String phoneNumber = _phoneNumberController.value.text;
-
-    bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
-    if (itSignInSuccessfully) {
-      Navigator.pushNamed(context, 'verifyPhone');
-    }
-
-    setState(() {
-      _isLoading = false;
+      _isLoading = loading;
     });
   }
 }
