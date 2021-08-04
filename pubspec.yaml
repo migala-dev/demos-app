@@ -32,7 +32,8 @@ dependencies:
   equatable: ^2.0.3
   pinput: ^1.2.0
   http: ^0.13.3
-
+  permission_handler: ^8.1.4+2
+  image_picker: ^0.8.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
