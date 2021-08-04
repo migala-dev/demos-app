@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/utils/services/api_service.dart';
 
@@ -27,7 +25,7 @@ class AuthService {
     return true;
   }
 
-  Future<bool> verifyCode(int code) async {
+  Future<bool> verifyCode(String code) async {
     String endpoint = ApiPath().getVerifyCodePath();
     Object params = {
       "phoneNumber": _phoneNumber,

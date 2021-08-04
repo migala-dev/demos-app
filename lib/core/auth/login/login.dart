@@ -11,8 +11,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-
-  var _phoneNumberKey = GlobalKey<FormFieldState>();
+  final _textController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +39,16 @@ class _LoginPageState extends State<LoginPage> {
                           child: Form(
                               key: _formKey,
                               child: Column(
-                                children: [PhoneInput(_phoneNumberKey)],
+                                children: [
+                                  PhoneInput(
+                                    controller: _textController,
+                                    enabled: !_isLoading,
+                                  )
+                                ],
                               )),
                         )),
                         BigButton(
+                            isLoading: _isLoading,
                             text: 'SIGUIENTE',
                             onPressed: () => verifyPhone(context)),
                       ],
@@ -55,11 +61,21 @@ class _LoginPageState extends State<LoginPage> {
 
   void verifyPhone(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      String phoneNumber = _phoneNumberKey.currentState!.value;
+      setState(() {
+        _isLoading = true;
+      });
+      FocusScope.of(context).unfocus();
+      String phoneNumber = _textController.value.text;
+      print(phoneNumber);
       bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
       if (itSignInSuccessfully) {
         Navigator.pushNamed(context, 'verifyPhone');
+      } else {
+        // TODO: toast
       }
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 }

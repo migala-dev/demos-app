@@ -1,3 +1,4 @@
+import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
@@ -47,6 +48,7 @@ class SecurityCodeForm extends StatefulWidget {
 
 class _SecurityCodeFormState extends State<SecurityCodeForm> {
   final TextEditingController _pinPutController = TextEditingController();
+  bool _isLoading = false;
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
@@ -71,9 +73,8 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
               height: 20,
             ),
             PinPut(
-              fieldsCount: 5,
+              fieldsCount: 6,
               onSubmit: (String pin) {
-                print(pin);
                 // Hide keyboard
                 FocusScope.of(context).unfocus();
               },
@@ -97,7 +98,25 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
             )
           ],
         ),
-        BigButton(text: 'VERIFICAR', onPressed: () {})
+        BigButton(
+            isLoading: _isLoading,
+            text: 'VERIFICAR',
+            onPressed: () async {
+              setState(() {
+                _isLoading = true;
+              });
+              final code = _pinPutController.text;
+              final isValidCode = await AuthService().verifyCode(code);
+              if (isValidCode) {
+                Navigator.pushReplacementNamed(context, 'profile');
+              } else {
+                // TODO: toast
+              }
+
+              setState(() {
+                _isLoading = false;
+              });
+            })
       ],
     );
   }
