@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
-import 'package:demos_app/widgets/buttons/bigbutton_widget.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
 class VerifyPhonePage extends StatelessWidget {
   const VerifyPhonePage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:demos_app/widgets/buttons/bigbutton_widget.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/profile/profile_info_widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture_widget.dart';
 
