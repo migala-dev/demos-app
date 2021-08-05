@@ -73,10 +73,6 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushNamed(context, 'verifyPhone');
       }
 
-      setState(() {
-        _isLoading = false;
-      });
-
       setIsLoadingState(false);
     }
   }
