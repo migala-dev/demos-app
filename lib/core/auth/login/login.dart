@@ -1,5 +1,7 @@
-import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:flutter/material.dart';
+
+import 'package:demos_app/utils/ui/ui_utils.dart';
+import 'package:demos_app/utils/services/auth_service.dart';
 import 'package:demos_app/widgets/inputs/phone_input.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/simbols/demos_logo.dart';
@@ -11,8 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-
-  var _phoneNumberKey = GlobalKey<FormFieldState>();
+  final _phoneNumberController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +41,16 @@ class _LoginPageState extends State<LoginPage> {
                           child: Form(
                               key: _formKey,
                               child: Column(
-                                children: [PhoneInput(_phoneNumberKey)],
+                                children: [
+                                  PhoneInput(
+                                    controller: _phoneNumberController,
+                                    disabled: _isLoading,
+                                  )
+                                ],
                               )),
                         )),
                         BigButton(
+                            isLoading: _isLoading,
                             text: 'SIGUIENTE',
                             onPressed: () => verifyPhone(context)),
                       ],
@@ -55,11 +63,23 @@ class _LoginPageState extends State<LoginPage> {
 
   void verifyPhone(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      String phoneNumber = _phoneNumberKey.currentState!.value;
+      setIsLoadingState(true);
+
+      hideKeyboard(context);
+      String phoneNumber = _phoneNumberController.value.text;
+
       bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
       if (itSignInSuccessfully) {
         Navigator.pushNamed(context, 'verifyPhone');
       }
+
+      setIsLoadingState(false);
     }
+  }
+
+  void setIsLoadingState(bool loading) {
+    setState(() {
+      _isLoading = loading;
+    });
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
+import 'package:demos_app/utils/ui/ui_utils.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/utils/services/auth_service.dart';
+import 'package:demos_app/widgets/buttons/timer_text_button_widget.dart';
 
 class VerifyPhonePage extends StatelessWidget {
   const VerifyPhonePage({Key? key}) : super(key: key);
@@ -23,7 +26,7 @@ class VerifyPhonePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Column(
           children: [
-            Text('Verifica tu número de teléfono',
+            Text('Reenviar código de verificación',
                 style: TextStyle(fontSize: 42)),
             SizedBox(
               height: 100,
@@ -46,7 +49,8 @@ class SecurityCodeForm extends StatefulWidget {
 }
 
 class _SecurityCodeFormState extends State<SecurityCodeForm> {
-  final TextEditingController _pinPutController = TextEditingController();
+  final TextEditingController _verifyCodeController = TextEditingController();
+  bool _isLoading = false;
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
@@ -71,13 +75,11 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
               height: 20,
             ),
             PinPut(
-              fieldsCount: 5,
+              fieldsCount: 6,
               onSubmit: (String pin) {
-                print(pin);
-                // Hide keyboard
-                FocusScope.of(context).unfocus();
+                hideKeyboard(context);
               },
-              controller: _pinPutController,
+              controller: _verifyCodeController,
               submittedFieldDecoration: _pinPutDecoration.copyWith(
                 borderRadius: BorderRadius.circular(20.0),
               ),
@@ -91,14 +93,34 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
             SizedBox(
               height: 20,
             ),
-            Text(
-              'Reenviar mensaje de verificacion    4:36',
-              style: TextStyle(color: Colors.grey),
-            )
+            TimerTextButton(
+              text: 'Reenviar mensaje de verificacion',
+              onPressed: verifyCode,
+              duration: Duration(minutes: 4, seconds: 30),
+            ),
           ],
         ),
-        BigButton(text: 'VERIFICAR', onPressed: () {})
+        BigButton(
+            isLoading: _isLoading, text: 'VERIFICAR', onPressed: verifyCode)
       ],
     );
+  }
+
+  void verifyCode() async {
+    setIsLoadingState(true);
+
+    final code = _verifyCodeController.text;
+    final isValidCode = await AuthService().verifyCode(code);
+    if (isValidCode) {
+      Navigator.pushReplacementNamed(context, 'profile');
+    }
+
+    setIsLoadingState(false);
+  }
+
+  void setIsLoadingState(bool loading) {
+    setState(() {
+      _isLoading = loading;
+    });
   }
 }

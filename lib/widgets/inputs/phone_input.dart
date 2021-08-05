@@ -1,26 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class PhoneInput extends StatefulWidget {
-  final _phoneNumberKey;
+  final TextEditingController controller;
+  final bool disabled;
 
-  PhoneInput(this._phoneNumberKey);
-
+  const PhoneInput({Key? key, required this.controller, this.disabled = false})
+      : super(key: key);
   @override
-  _PhoneInputState createState() => _PhoneInputState(_phoneNumberKey);
+  _PhoneInputState createState() => _PhoneInputState(controller, disabled);
 }
 
 class _PhoneInputState extends State<PhoneInput> {
-  final _phoneNumberKey;
+  final TextEditingController controller;
+  final bool disabled;
+  final countries = [
+    'MX',
+    'AR',
+    'BO',
+    'BR',
+    'CL',
+    'EC',
+    'PE',
+    'US',
+    'CO',
+    'PY',
+    'UY',
+    'VE'
+  ];
 
-  _PhoneInputState(this._phoneNumberKey);
+  _PhoneInputState(this.controller, this.disabled);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      key: _phoneNumberKey,
-      decoration: InputDecoration(
-          labelText: 'Número Teléfonico', hintText: '+52646364634'),
+    return IntlPhoneField(
+      countries: countries,
+      enabled: !disabled,
+      searchText: 'Buscar por nombre de país',
+      autoValidate: false,
       validator: validatePhone,
+      decoration: InputDecoration(
+        labelText: 'Número Teléfonico',
+      ),
+      initialCountryCode: 'MX',
+      onChanged: (phone) {
+        controller.text = phone.completeNumber;
+      },
     );
   }
 
@@ -35,9 +60,11 @@ class _PhoneInputState extends State<PhoneInput> {
       return false;
     }
 
-    /*  final String phoneRegex =
-        r"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$"; */
+    final String phoneRegex =
+        r"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
 
-    return true;
+    RegExp regExp = RegExp(phoneRegex);
+
+    return regExp.hasMatch(phoneNumber);
   }
 }
