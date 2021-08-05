@@ -73,15 +73,11 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushNamed(context, 'verifyPhone');
       }
 
-      setState(() {
-        _isLoading = false;
-      });
-
       setIsLoadingState(false);
     }
   }
 
-  void setIsLoadingState(bool loading) async {
+  void setIsLoadingState(bool loading) {
     setState(() {
       _isLoading = loading;
     });
