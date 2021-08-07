@@ -41,7 +41,7 @@ class DemosAppState extends State<DemosApp> {
           theme: theme,
           title: 'DemosApp',
           debugShowCheckedModeBanner: false,
-          initialRoute: 'login',
+          initialRoute: Routes.verifyPhone,
           onGenerateRoute: Application.router.generator,
         );
       },
