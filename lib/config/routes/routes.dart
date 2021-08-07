@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 class Routes {
   static String root = "/";
   static String login = "/login";
-  static String verifyPhone = "/verifyPhone";
+  static String verifyPhone = "/verify-code";
   static String profile = "/profile";
 
   static void configureRoutes(FluroRouter router) {
@@ -14,7 +14,7 @@ class Routes {
       print("ROUTE WAS NOT FOUND !!!");
       return;
     });
-    router.define(root, handler: homeHandler);
+    router.define(root, handler: loginHandler);
     router.define(login, handler: loginHandler);
     router.define(verifyPhone, handler: verifyPhoneHandler);
     router.define(profile, handler: profileHandler);

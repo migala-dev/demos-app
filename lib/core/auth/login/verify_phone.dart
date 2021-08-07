@@ -1,3 +1,5 @@
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
@@ -19,15 +21,14 @@ class VerifyPhonePage extends StatelessWidget {
           Icons.arrow_back,
         ),
         onPressed: () {
-          Navigator.pop(context);
+          goToLogin(context);
         },
       )),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Column(
           children: [
-            Text('Reenviar código de verificación',
-                style: TextStyle(fontSize: 42)),
+            Text('Verifica tu número teléfono', style: TextStyle(fontSize: 42)),
             SizedBox(
               height: 100,
             ),
@@ -36,6 +37,10 @@ class VerifyPhonePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void goToLogin(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, Routes.login, (r) => false);
   }
 }
 
@@ -48,9 +53,9 @@ class SecurityCodeForm extends StatefulWidget {
   _SecurityCodeFormState createState() => _SecurityCodeFormState();
 }
 
-class _SecurityCodeFormState extends State<SecurityCodeForm> {
+class _SecurityCodeFormState extends State<SecurityCodeForm>
+    with LoadingStateHandler {
   final TextEditingController _verifyCodeController = TextEditingController();
-  bool _isLoading = false;
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
@@ -94,33 +99,39 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
               height: 20,
             ),
             TimerTextButton(
-              text: 'Reenviar mensaje de verificacion',
-              onPressed: verifyCode,
-              duration: Duration(minutes: 4, seconds: 30),
+              text: 'Reenviar código de verificación',
+              onPressed: (restartTimer) {
+                resendCode(restartTimer);
+              },
+              duration: Duration(minutes: 2, seconds: 30),
+              disabled: isLoading,
             ),
           ],
         ),
         BigButton(
-            isLoading: _isLoading, text: 'VERIFICAR', onPressed: verifyCode)
+            isLoading: isLoading, text: 'VERIFICAR', onPressed: verifyCode)
       ],
     );
   }
 
-  void verifyCode() async {
-    setIsLoadingState(true);
-
-    final code = _verifyCodeController.text;
-    final isValidCode = await AuthService().verifyCode(code);
-    if (isValidCode) {
-      Navigator.pushReplacementNamed(context, 'profile');
-    }
-
-    setIsLoadingState(false);
+  void resendCode(void Function() restartTimer) async {
+    wrapLoadingTransaction(() async {
+      _verifyCodeController.text = '';
+      bool isCodeResended = await AuthService().resendCode();
+      if (isCodeResended) {
+        restartTimer();
+      }
+    });
   }
 
-  void setIsLoadingState(bool loading) {
-    setState(() {
-      _isLoading = loading;
+  void verifyCode() async {
+    wrapLoadingTransaction(() async {
+      final code = _verifyCodeController.text;
+      final isValidCode = await AuthService().verifyCode(code);
+      if (isValidCode) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, Routes.profile, (r) => false);
+      }
     });
   }
 }

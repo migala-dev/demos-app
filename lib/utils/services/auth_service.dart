@@ -11,6 +11,10 @@ class AuthService {
     return _authService;
   }
 
+  Future<bool> resendCode() async {
+    return signIn(_phoneNumber ?? '');
+  }
+
   Future<bool> signIn(String phoneNumber) async {
     String endpoint = ApiPath().getSignInPath();
     _phoneNumber = phoneNumber;

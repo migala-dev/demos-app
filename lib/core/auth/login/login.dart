@@ -1,3 +1,5 @@
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/utils/ui/ui_utils.dart';
@@ -11,10 +13,9 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with LoadingStateHandler {
   final _formKey = GlobalKey<FormState>();
   final _phoneNumberController = TextEditingController();
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,13 +45,13 @@ class _LoginPageState extends State<LoginPage> {
                                 children: [
                                   PhoneInput(
                                     controller: _phoneNumberController,
-                                    disabled: _isLoading,
+                                    disabled: isLoading,
                                   )
                                 ],
                               )),
                         )),
                         BigButton(
-                            isLoading: _isLoading,
+                            isLoading: isLoading,
                             text: 'SIGUIENTE',
                             onPressed: () => verifyPhone(context)),
                       ],
@@ -63,23 +64,14 @@ class _LoginPageState extends State<LoginPage> {
 
   void verifyPhone(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
-      setIsLoadingState(true);
-
-      hideKeyboard(context);
-      String phoneNumber = _phoneNumberController.value.text;
-
-      bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
-      if (itSignInSuccessfully) {
-        Navigator.pushNamed(context, 'verifyPhone');
-      }
-
-      setIsLoadingState(false);
+      wrapLoadingTransaction(() async {
+        hideKeyboard(context);
+        String phoneNumber = _phoneNumberController.value.text;
+        bool itSignInSuccessfully = await AuthService().signIn(phoneNumber);
+        if (itSignInSuccessfully) {
+          Navigator.pushNamed(context, Routes.verifyPhone);
+        }
+      });
     }
-  }
-
-  void setIsLoadingState(bool loading) {
-    setState(() {
-      _isLoading = loading;
-    });
   }
 }

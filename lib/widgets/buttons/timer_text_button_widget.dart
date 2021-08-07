@@ -4,26 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
 
 class TimerTextButton extends StatefulWidget {
-  final VoidCallback onPressed;
+  final void Function(void Function()) onPressed;
   final Duration duration;
   final String text;
+  bool disabled = false;
 
   TimerTextButton(
       {Key? key,
       required this.onPressed,
       required this.duration,
-      required this.text})
+      required this.text,
+      this.disabled = false})
       : super(key: key);
 
   @override
   _TimerTextButtonState createState() =>
-      _TimerTextButtonState(onPressed, duration, text);
+      _TimerTextButtonState(onPressed, duration, text, disabled);
 }
 
 class _TimerTextButtonState extends State<TimerTextButton> {
-  final VoidCallback onPressed;
+  final void Function(void Function()) onPressed;
   final Duration duration;
   final String text;
+  bool disabled = false;
 
   String _currentTimeRemaining = '';
 
@@ -31,7 +34,8 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   StreamSubscription<CountdownTimer>? sub;
 
-  _TimerTextButtonState(this.onPressed, this.duration, this.text);
+  _TimerTextButtonState(
+      this.onPressed, this.duration, this.text, this.disabled);
 
   void startTimer() {
     CountdownTimer countDownTimer = CountdownTimer(
@@ -57,9 +61,14 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   @override
   void initState() {
+    start();
+    super.initState();
+  }
+
+  void start() {
+    _done = false;
     _currentTimeRemaining = _formatDuration(duration);
     startTimer();
-    super.initState();
   }
 
   @override
@@ -77,10 +86,27 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   @override
   Widget build(BuildContext context) {
+    return _done ? getLink() : getTimer();
+  }
+
+  Widget getTimer() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [Text(text), Text(_currentTimeRemaining)],
+      ),
+    );
+  }
+
+  Widget getLink() {
     return TextButton(
-        onPressed: _done ? onPressed : null,
-        child: Text(
-          '$text    $_currentTimeRemaining',
-        ));
+        onPressed: disabled ? null : onActionPressed, child: Text(text));
+  }
+
+  void onActionPressed() {
+    if (_done) {
+      this.onPressed(() => start());
+    }
   }
 }
