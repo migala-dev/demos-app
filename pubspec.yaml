@@ -36,7 +36,9 @@ dependencies:
   quiver: ^3.0.1
   permission_handler: ^8.1.4+2
   image_picker: ^0.8.2
-  
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

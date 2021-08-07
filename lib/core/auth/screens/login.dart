@@ -3,7 +3,7 @@ import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/utils/ui/ui_utils.dart';
-import 'package:demos_app/utils/services/auth_service.dart';
+import 'package:demos_app/core/auth/services/auth_service.dart';
 import 'package:demos_app/widgets/inputs/phone_input.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/simbols/demos_logo.dart';

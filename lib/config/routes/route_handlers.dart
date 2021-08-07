@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 
-import 'package:demos_app/core/auth/login/login.dart';
-import 'package:demos_app/core/auth/login/profile.dart';
-import 'package:demos_app/core/auth/login/verify_phone.dart';
+import 'package:demos_app/core/auth/screens/login.dart';
+import 'package:demos_app/core/auth/screens/profile.dart';
+import 'package:demos_app/core/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/home/screens/home.dart';
 
 var homeHandler = Handler(
