@@ -40,8 +40,12 @@ class ProfileInfoItem extends StatelessWidget {
         title,
         style: TextStyle(color: Colors.grey, fontSize: 14),
       ),
-      subtitle: value != null ? getValueLabel() : getWithoutValueLabel(),
+      subtitle: hasValue() ? getValueLabel() : getWithoutValueLabel(),
     );
+  }
+
+  bool hasValue() {
+    return value != null && value != '';
   }
 
   Widget getValueLabel() {
