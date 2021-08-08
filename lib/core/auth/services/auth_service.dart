@@ -2,6 +2,7 @@ import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/auth/models/verify_code_response.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/utils/services/api_service.dart';
+import 'package:demos_app/utils/services/token.service.dart';
 
 class AuthService {
   String? _phoneNumber;
@@ -44,7 +45,7 @@ class AuthService {
 
     UsersRepository().insert(response.user);
 
-    print(response);
+    TokenService().saveTokens(response.tokens);
 
     return true;
   }

@@ -1,17 +1,26 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:demos_app/utils/services/token.service.dart';
 import 'package:http/http.dart' as http;
 
 class ApiSerivce {
-  Map<String, String>? _headers = {};
+  Map<String, String> getDefaultHeaders() {
+    Map<String, String> headers = {};
+    String? accessToken = TokenService().accessToken;
+    if (accessToken != null) {
+      headers[HttpHeaders.authorizationHeader] = 'Bearer $accessToken';
+    }
+    return headers;
+  }
 
   Future<http.Response> get(String endpoint) {
-    return http.get(Uri.parse(endpoint), headers: _headers);
+    return http.get(Uri.parse(endpoint), headers: getDefaultHeaders());
   }
 
   Future<Map<String, dynamic>> post(String endpoint, Object? body) async {
-    Future<http.Response> call =
-        http.post(Uri.parse(endpoint), headers: _headers, body: body);
+    Future<http.Response> call = http.post(Uri.parse(endpoint),
+        headers: getDefaultHeaders(), body: body);
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
