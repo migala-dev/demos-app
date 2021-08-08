@@ -59,8 +59,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
 
   BoxDecoration get _pinPutDecoration {
     return BoxDecoration(
-      border: Border.all(color: Colors.black, width: 2.0),
-      borderRadius: BorderRadius.circular(15.0),
+      border: Border(bottom: BorderSide(color: Colors.black, width: 4.0)),
     );
   }
 
@@ -85,14 +84,16 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
                 hideKeyboard(context);
               },
               controller: _verifyCodeController,
+              textStyle: TextStyle(fontSize: 20.0),
               submittedFieldDecoration: _pinPutDecoration.copyWith(
-                borderRadius: BorderRadius.circular(20.0),
+                border: Border(
+                    bottom: BorderSide(
+                        color: Colors.blueAccent.withOpacity(0.5), width: 4.0)),
               ),
               selectedFieldDecoration: _pinPutDecoration,
               followingFieldDecoration: _pinPutDecoration.copyWith(
-                borderRadius: BorderRadius.circular(15.0),
-                border: Border.all(
-                    color: Colors.black.withOpacity(0.5), width: 2.0),
+                border: Border(
+                    bottom: BorderSide(color: Colors.blueAccent, width: 4.0)),
               ),
             ),
             SizedBox(

@@ -25,6 +25,13 @@ class ApiSerivce {
     return jsonDecode(response!.body);
   }
 
+  Future<Map<String, dynamic>> patch(String endpoint, Object? body) async {
+    Future<http.Response> call = http.patch(Uri.parse(endpoint),
+        headers: getDefaultHeaders(), body: body);
+    var response = await _handleErrors(call);
+    return jsonDecode(response!.body);
+  }
+
   Future<http.Response?> _handleErrors(Future<http.Response> call) async {
     try {
       http.Response response = await call;

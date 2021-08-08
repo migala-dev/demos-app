@@ -12,14 +12,10 @@ class ProfilePicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Container(
-          height: 170,
-          width: 170,
-          decoration:
-              BoxDecoration(color: Colors.grey[350], shape: BoxShape.circle),
-        ),
+        getDefaultImage(size),
         Positioned(
             bottom: 0,
             right: 0,
@@ -33,5 +29,14 @@ class ProfilePicture extends StatelessWidget {
                 : Container())
       ],
     );
+  }
+
+  Widget getDefaultImage(Size size) {
+    double width = size.width * 0.4;
+    return Image(
+        image: AssetImage('assets/images/default-profile.png'),
+        width: width,
+        height: width,
+        fit: BoxFit.cover);
   }
 }

@@ -17,4 +17,9 @@ class ApiPath {
   String getRefreshTokenPath() {
     return '${_getAuthPath()}/refresh-tokens';
   }
+
+  //  Users paths
+  String getUserPath() {
+    return '$_authServiceUrl/user';
+  }
 }
