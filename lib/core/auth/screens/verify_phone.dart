@@ -5,7 +5,7 @@ import 'package:pinput/pin_put/pin_put.dart';
 
 import 'package:demos_app/utils/ui/ui_utils.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
-import 'package:demos_app/utils/services/auth_service.dart';
+import 'package:demos_app/core/auth/services/auth_service.dart';
 import 'package:demos_app/widgets/buttons/timer_text_button_widget.dart';
 
 class VerifyPhonePage extends StatelessWidget {

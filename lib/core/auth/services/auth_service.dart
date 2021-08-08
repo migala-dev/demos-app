@@ -1,4 +1,6 @@
 import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/core/auth/models/verify_code_response.model.dart';
+import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/utils/services/api_service.dart';
 
 class AuthService {
@@ -36,7 +38,11 @@ class AuthService {
       "code": code,
       "session": _session,
     };
-    final response = await ApiSerivce().post(endpoint, params);
+    final httpResponse = await ApiSerivce().post(endpoint, params);
+
+    VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
+
+    UsersRepository().insert(response.user);
 
     print(response);
 
