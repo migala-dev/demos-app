@@ -15,6 +15,6 @@ class ApiPath {
   }
 
   String getRefreshTokenPath() {
-    return '${_getAuthPath()}/login';
+    return '${_getAuthPath()}/refresh-tokens';
   }
 }

@@ -1,3 +1,4 @@
+import 'package:demos_app/utils/services/token.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,6 +29,7 @@ class DemosAppState extends State<DemosApp> {
     final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;
+    TokenService().refreshTokens();
   }
 
   @override
