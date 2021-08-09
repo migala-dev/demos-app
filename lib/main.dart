@@ -3,11 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
 
-import 'package:demos_app/utils/services/token.service.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 import 'package:demos_app/core/auth/cubit/auth_cubit.dart';
+
+import 'core/enums/authentication_status.enum.dart';
 
 void main() {
   runApp(MultiBlocProvider(
