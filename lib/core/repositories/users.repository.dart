@@ -63,6 +63,13 @@ class UsersRepository {
     return result.length > 0 ? User.fromObject(result[0]) : null;
   }
 
+  Future<User?> findById(int userId) async {
+    Database? db = await this.db;
+    var result =
+        await db!.rawQuery("SELECT * FROM $tblUsers WHERE $colId = $userId");
+    return result.length > 0 ? User.fromObject(result[0]) : null;
+  }
+
   Future<List<User>> getAll() async {
     Database? db = await this.db;
     var result = await db!
@@ -72,7 +79,7 @@ class UsersRepository {
 
   Future<int> updateUser(User user) async {
     Database? db = await this.db;
-    var result = await db!.update(tblUsers, user.toMap(),
+    var result = await db!.update(tblUsers, {'name': user.name},
         where: "$colId = ?", whereArgs: [user.userId]);
     return result;
   }

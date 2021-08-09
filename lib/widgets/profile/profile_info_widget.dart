@@ -1,49 +1,71 @@
+import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/widgets/profile/profile_info_item.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:prompt_dialog/prompt_dialog.dart';
 
 class ProfileInfo extends StatelessWidget {
-  final VoidCallback? onEditNamePress;
-  final bool editableName;
+  final void Function(String?)? onEditNamePress;
+  final User? user;
 
-  const ProfileInfo({Key? key, this.editableName = false, this.onEditNamePress})
+  const ProfileInfo({Key? key, this.onEditNamePress, required this.user})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = Theme.of(context).accentColor;
-
     return Column(
       children: [
-        ListTile(
-          leading: Icon(Icons.person),
-          trailing: this.editableName
-              ? IconButton(
-                  icon: Icon(
-                    Icons.edit,
-                    color: accentColor,
-                  ),
-                  onPressed: onEditNamePress,
-                )
-              : Container(
-                  height: 14,
-                  width: 14,
-                ),
-          title: Text(
-            'Nombre',
-            style: TextStyle(color: Colors.grey, fontSize: 14),
-          ),
-          subtitle:
-              Text('Kyle', style: TextStyle(color: Colors.black, fontSize: 18)),
+        ProfileInfoItem(
+          title: 'Nombre',
+          icon: Icons.person,
+          onEdit: () async {
+            String? newName = await openUpdateNameModal(context);
+            if (newName != null && user?.name != newName) {
+              this.onEditNamePress!(newName);
+            }
+          },
+          editable: onEditNamePress != null,
+          value: user?.name,
         ),
-        ListTile(
-          leading: Icon(Icons.phone),
-          title: Text(
-            'Teléfono',
-            style: TextStyle(color: Colors.grey, fontSize: 14),
-          ),
-          subtitle: Text('+52 666 6666 666',
-              style: TextStyle(color: Colors.black, fontSize: 18)),
-        )
+        ProfileInfoItem(
+          title: 'Teléfono',
+          icon: Icons.phone,
+          value: formatPhoneNumber(user?.phoneNumber),
+        ),
       ],
+    );
+  }
+
+  String formatPhoneNumber(String? phoneNumber) {
+    String phoneNumberFormatted = '';
+
+    if (phoneNumber != null) {
+      phoneNumberFormatted = phoneNumber.substring(0, 3) +
+          " (" +
+          phoneNumber.substring(3, 6) +
+          ") " +
+          phoneNumber.substring(6, 9) +
+          "-" +
+          phoneNumber.substring(9, phoneNumber.length);
+    }
+
+    return phoneNumberFormatted;
+  }
+
+  Future<String?> openUpdateNameModal(BuildContext context) async {
+    return await prompt(
+      context,
+      title: Text('Nombre'),
+      initialValue: user?.name,
+      textOK: Text('Guardar'),
+      textCancel: Text(
+        'Cancelar',
+        style: TextStyle(color: Colors.grey),
+      ),
+      hintText: 'Introduce tu nombre',
+      maxLines: 1,
+      autoFocus: true,
+      barrierDismissible: true,
+      textCapitalization: TextCapitalization.words,
     );
   }
 }
