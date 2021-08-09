@@ -8,6 +8,7 @@ class Routes {
   static String verifyPhone = "/verify-code";
   static String profile = "/profile";
   static String spaces = "/spaces";
+  static String authLoading = "/auth-loading";
 
   static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
@@ -20,5 +21,6 @@ class Routes {
     router.define(verifyPhone, handler: verifyPhoneHandler);
     router.define(profile, handler: profileHandler);
     router.define(spaces, handler: homeHandler);
+    router.define(authLoading, handler: authLoadingHandler);
   }
 }
