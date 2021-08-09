@@ -5,6 +5,7 @@ import 'package:demos_app/core/auth/screens/login.dart';
 import 'package:demos_app/core/auth/screens/profile.dart';
 import 'package:demos_app/core/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/home/screens/home.dart';
+import 'package:demos_app/core/auth/screens/loading.dart';
 
 var homeHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
@@ -24,4 +25,9 @@ var verifyPhoneHandler = Handler(
 var profileHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return Profile();
+});
+
+var authLoadingHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return LoadingPage();
 });
