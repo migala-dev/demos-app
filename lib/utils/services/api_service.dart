@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:demos_app/utils/services/token.service.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:http/http.dart' as http;
 
 class ApiSerivce {
@@ -50,7 +51,7 @@ class ApiSerivce {
   }
 
   void _throwMessageError(String message) {
-    // TODO: Show message error
+    ToastUtil.showError(message);
     throw (message);
   }
 }
