@@ -19,8 +19,8 @@ final testSpaces = [
   Space(name: 'Cooperativa #14', members: 5),
 ];
 
-class SpacesHomeScreen extends StatelessWidget {
-  const SpacesHomeScreen({Key? key}) : super(key: key);
+class SpacesScreen extends StatelessWidget {
+  const SpacesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

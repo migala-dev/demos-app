@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class EmptySpacesHomeScreen extends StatelessWidget {
-  const EmptySpacesHomeScreen({Key? key}) : super(key: key);
+class EmptySpacesScreen extends StatelessWidget {
+  const EmptySpacesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
