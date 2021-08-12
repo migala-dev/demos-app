@@ -32,19 +32,12 @@ void main() async {
   ));
 }
 
-class DemosApp extends StatefulWidget {
+class DemosApp extends StatelessWidget {
   final String initialRoute;
 
-  const DemosApp({Key? key, required this.initialRoute}) : super(key: key);
-
-  @override
-  State createState() => DemosAppState();
-}
-
-class DemosAppState extends State<DemosApp> {
-  DemosAppState() {
+  DemosApp({Key? key, required this.initialRoute}) : super(key: key) {
     final router = FluroRouter();
-    Routes.configureRoutes(router);
+    Routes.configureRoutes(router, initialRoute);
     Application.router = router;
   }
 
@@ -57,7 +50,6 @@ class DemosAppState extends State<DemosApp> {
           title: 'DemosApp',
           debugShowCheckedModeBanner: false,
           onGenerateRoute: Application.router.generator,
-          initialRoute: widget.initialRoute,
         );
       },
     );

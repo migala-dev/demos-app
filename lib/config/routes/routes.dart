@@ -10,17 +10,20 @@ class Routes {
   static String spaces = "/spaces";
   static String authLoading = "/auth-loading";
 
-  static void configureRoutes(FluroRouter router) {
+  static void configureRoutes(FluroRouter router, String initialRoute) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       print("ROUTE WAS NOT FOUND !!!");
       return;
     });
-    router.define(root, handler: loginHandler);
+    if (initialRoute == login) {
+      router.define(root, handler: loginHandler);
+    } else {
+      router.define(root, handler: homeHandler);
+    }
     router.define(login, handler: loginHandler);
     router.define(verifyPhone, handler: verifyPhoneHandler);
     router.define(profile, handler: profileHandler);
     router.define(spaces, handler: homeHandler);
-    router.define(authLoading, handler: authLoadingHandler);
   }
 }
