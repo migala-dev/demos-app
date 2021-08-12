@@ -7,17 +7,24 @@ import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 
+import 'package:demos_app/utils/services/user_preferences_service.dart';
 import 'package:demos_app/utils/services/token.service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
 
+  final userPrefs = UserPreferencesService();
   final bool userIsAuthenticate = await TokenService().isAuthenticate();
+  await userPrefs.initUserPreferences();
 
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (_) => ThemeCubit(),
+        create: (_) => ThemeCubit(userPrefs.themeIsLight),
       )
     ],
     child: DemosApp(
@@ -43,9 +50,6 @@ class DemosAppState extends State<DemosApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent));
-
     final app = BlocBuilder<ThemeCubit, ThemeData>(
       builder: (context, theme) {
         return MaterialApp(
