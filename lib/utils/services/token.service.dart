@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:demos_app/constans/api_path.dart';
-import 'package:demos_app/core/enums/authentication_status.enum.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/utils/services/api_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -27,12 +26,10 @@ class TokenService {
     await _storage.write(key: _refreshTokenKey, value: tokens.refreshToken);
   }
 
-  Future<AuthenticationStatus> isAuthenticate() async {
+  Future<bool> isAuthenticate() async {
     String? value = await _getRefreshToken();
 
-    return value == null
-        ? AuthenticationStatus.unauthenticated
-        : AuthenticationStatus.authenticated;
+    return value != null;
   }
 
   void createJobToRequestNewAccessToken() {
