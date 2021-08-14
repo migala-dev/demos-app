@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferencesService {
-  static final String themeIsLightKey = 'themeIsLight';
+  static final String themeIsLightKey = 'themeIsDark';
 
   static final UserPreferencesService _singleton =
       UserPreferencesService._internal();
@@ -17,6 +17,6 @@ class UserPreferencesService {
     this._prefs = await SharedPreferences.getInstance();
   }
 
-  bool get themeIsLight => this._prefs.getBool(themeIsLightKey) ?? true;
-  set themeIsLight(bool t) => this._prefs.setBool(themeIsLightKey, t);
+  bool get themeIsDark => this._prefs.getBool(themeIsLightKey) ?? false;
+  set themeIsDark(bool t) => this._prefs.setBool(themeIsLightKey, t);
 }

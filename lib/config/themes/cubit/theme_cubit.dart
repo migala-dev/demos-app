@@ -7,20 +7,18 @@ import 'package:demos_app/config/themes/light_theme.dart';
 
 class ThemeCubit extends Cubit<ThemeData> {
   final _userPrefs = UserPreferencesService();
-  bool _isLigth;
+  bool isDark;
 
-  ThemeCubit(bool isLigth)
-      : this._isLigth = isLigth,
-        super(isLigth ? ligthTheme : darkTheme);
+  ThemeCubit(this.isDark) : super(isDark ? darkTheme : ligthTheme);
 
   void changeTheme() {
-    this._isLigth = !this._isLigth;
-    this._userPrefs.themeIsLight = this._isLigth;
+    this.isDark = !this.isDark;
+    this._userPrefs.themeIsDark = this.isDark;
 
-    if (this._isLigth) {
-      emit(ligthTheme);
-    } else {
+    if (this.isDark) {
       emit(darkTheme);
+    } else {
+      emit(ligthTheme);
     }
   }
 }

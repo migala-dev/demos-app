@@ -24,7 +24,7 @@ void main() async {
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
-        create: (_) => ThemeCubit(userPrefs.themeIsLight),
+        create: (_) => ThemeCubit(userPrefs.themeIsDark),
       )
     ],
     child: DemosApp(
