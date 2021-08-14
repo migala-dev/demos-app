@@ -131,7 +131,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
       final isValidCode = await AuthService().verifyCode(code);
       if (isValidCode) {
         Navigator.pushNamedAndRemoveUntil(
-            context, Routes.profile, (r) => false);
+            context, Routes.initialProfile, (r) => false);
       }
     });
   }

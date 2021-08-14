@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
@@ -39,6 +41,18 @@ class UserService {
     Object params = {'name': name};
 
     final httpResponse = await ApiSerivce().patch(endpoint, params);
+
+    User userSaved = User.fromObject(httpResponse);
+
+    UsersRepository().updateUser(userSaved);
+
+    return userSaved;
+  }
+
+  Future<User?> uploadProfileImage(File file) async {
+    String endpoint = ApiPath().getUpdateProfileImagePath();
+
+    final httpResponse = await ApiSerivce().upload(endpoint, file);
 
     User userSaved = User.fromObject(httpResponse);
 

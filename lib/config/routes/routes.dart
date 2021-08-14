@@ -6,7 +6,7 @@ class Routes {
   static String root = "/";
   static String login = "/login";
   static String verifyPhone = "/verify-code";
-  static String profile = "/profile";
+  static String initialProfile = "/initial-profile";
   static String spaces = "/spaces";
   static String authLoading = "/auth-loading";
 
@@ -16,14 +16,12 @@ class Routes {
       print("ROUTE WAS NOT FOUND !!!");
       return;
     });
-    if (initialRoute == login) {
-      router.define(root, handler: loginHandler);
-    } else {
-      router.define(root, handler: homeHandler);
-    }
+
+    var rootHandler = initialRoute == login ? loginHandler : homeHandler;
+    router.define(root, handler: rootHandler);
     router.define(login, handler: loginHandler);
     router.define(verifyPhone, handler: verifyPhoneHandler);
-    router.define(profile, handler: profileHandler);
+    router.define(initialProfile, handler: initialProfileHandler);
     router.define(spaces, handler: homeHandler);
   }
 }
