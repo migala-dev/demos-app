@@ -2,6 +2,7 @@ import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/auth/models/verify_code_response.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/utils/services/api_service.dart';
+import 'package:demos_app/utils/services/bucket.service.dart';
 import 'package:demos_app/utils/services/token.service.dart';
 import 'package:demos_app/utils/services/user.service.dart';
 
@@ -44,11 +45,13 @@ class AuthService {
 
     VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
 
-    UsersRepository().insert(response.user);
+    await UsersRepository().insert(response.user);
 
-    UserService().setCurrentUser(response.user.userId);
+    await UserService().setCurrentUser(response.user.userId);
 
-    TokenService().saveTokens(response.tokens);
+    await TokenService().saveTokens(response.tokens);
+
+    await BucketService().setBucketName(response.bucketName);
 
     return true;
   }

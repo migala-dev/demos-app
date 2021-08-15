@@ -81,7 +81,7 @@ class UsersRepository {
     Database? db = await this.db;
     Map<String, dynamic> values = {
       colName: user.name,
-      colProfilePictureKey: user.profilePictureUrl
+      colProfilePictureKey: user.profilePictureKey
     };
     var result = await db!.update(tblUsers, values,
         where: "$colId = ?", whereArgs: [user.userId]);

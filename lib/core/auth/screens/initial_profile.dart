@@ -1,6 +1,7 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
+import 'package:demos_app/utils/services/bucket.service.dart';
 import 'package:demos_app/utils/services/user.service.dart';
 import 'package:demos_app/widgets/pages/image_editor.page.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class InitialProfile extends StatefulWidget {
 class _InitialProfileState extends State<InitialProfile>
     with LoadingStateHandler {
   User? _currentUser;
+  String? _imageUrl;
 
   _InitialProfileState() {
     initCurrentUser();
@@ -26,9 +28,9 @@ class _InitialProfileState extends State<InitialProfile>
 
   void initCurrentUser() async {
     User? currentUser = await UserService().getCurrentUser();
-    setState(() {
-      _currentUser = currentUser;
-    });
+    if (currentUser != null) {
+      setUserAndImageUrl(currentUser);
+    }
   }
 
   @override
@@ -56,6 +58,7 @@ class _InitialProfileState extends State<InitialProfile>
                   Center(
                       child: ProfilePicture(
                     editable: true,
+                    imageUrl: _imageUrl,
                     onPictureEditPress: onPictureEditPress,
                   )),
                   Container(
@@ -107,11 +110,18 @@ class _InitialProfileState extends State<InitialProfile>
       if (image != null) {
         User? user = await UserService().uploadProfileImage(image);
         if (user != null) {
-          setState(() {
-            _currentUser = user;
-          });
+          setUserAndImageUrl(user);
         }
       }
+    });
+  }
+
+  void setUserAndImageUrl(User user) async {
+    String imageUrl =
+        await BucketService().getUrlFromKey(user.profilePictureKey);
+    setState(() {
+      _currentUser = user;
+      _imageUrl = imageUrl;
     });
   }
 }

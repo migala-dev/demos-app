@@ -31,8 +31,8 @@ class UserService {
     return _currentUser;
   }
 
-  void setCurrentUser(int? userId) {
-    _storage.write(key: _currentUserIdKey, value: userId.toString());
+  Future<void> setCurrentUser(int? userId) async {
+    await _storage.write(key: _currentUserIdKey, value: userId.toString());
   }
 
   Future<User?> updateUserName(String? name) async {

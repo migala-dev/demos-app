@@ -7,7 +7,7 @@ class TimerTextButton extends StatefulWidget {
   final void Function(void Function()) onPressed;
   final Duration duration;
   final String text;
-  bool disabled = false;
+  final bool disabled;
 
   TimerTextButton(
       {Key? key,

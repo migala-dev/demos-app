@@ -11,7 +11,7 @@ class User {
   int? get userId => this._userId;
   String get name => this._name ?? '';
   String get phoneNumber => this._phoneNumber;
-  String get profilePictureUrl => this._profilePictureKey ?? '';
+  String get profilePictureKey => this._profilePictureKey ?? '';
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();

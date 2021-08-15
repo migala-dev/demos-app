@@ -3,9 +3,7 @@ import 'dart:async';
 
 import 'package:demos_app/utils/access/image_gallery.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_crop/image_crop.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ImageEditorPage extends StatefulWidget {
   @override
