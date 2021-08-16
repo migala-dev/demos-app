@@ -1,13 +1,17 @@
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/auth/models/verify_code_response.model.dart';
+import 'package:demos_app/core/models/tokens.model.dart';
+import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/utils/services/api_service.dart';
 import 'package:demos_app/utils/services/token.service.dart';
 import 'package:demos_app/utils/services/user.service.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
 
 class AuthService {
   String? _phoneNumber;
   String? _session;
+  int _attemptCount = 0;
   static final AuthService _authService = AuthService._internal();
   AuthService._internal();
 
@@ -29,6 +33,7 @@ class AuthService {
     final response = await ApiSerivce().post(endpoint, params);
 
     _session = response['session'];
+    _attemptCount = 3;
 
     return true;
   }
@@ -44,12 +49,41 @@ class AuthService {
 
     VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
 
-    UsersRepository().insert(response.user);
+    if (!_isCodeValid(response)) {
+      _attemptCount -= 1;
+      String message =
+          'Código de verificación incorrecto, intentos restantes: $_attemptCount';
+      _session = response.session;
 
-    UserService().setCurrentUser(response.user.userId);
+      ToastUtil.showError(message);
 
-    TokenService().saveTokens(response.tokens);
+      return false;
+    }
+
+    _saveUser(response);
+
+    _saveTokens(response);
 
     return true;
+  }
+
+  bool _isCodeValid(VerifyCodeReponse response) {
+    return response.session == null;
+  }
+
+  void _saveUser(VerifyCodeReponse response) {
+    User? user = response.user;
+    if (user != null) {
+      UsersRepository().insert(user);
+
+      UserService().setCurrentUser(user.userId);
+    }
+  }
+
+  void _saveTokens(VerifyCodeReponse response) {
+    Tokens? tokens = response.tokens;
+    if (tokens != null) {
+      TokenService().saveTokens(tokens);
+    }
   }
 }
