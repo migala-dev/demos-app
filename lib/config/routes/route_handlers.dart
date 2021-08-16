@@ -1,4 +1,4 @@
-import 'package:demos_app/modules/settings/screens/settings.screen.dart';
+import 'package:demos_app/modules/settings/screens/general_settings.screen.dart';
 import 'package:demos_app/modules/spaces/screens/spaces.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
@@ -27,7 +27,7 @@ var spacesHandler = Handler(
   return SpacesScreen();
 });
 
-var settingsHandler = Handler(
+var generalSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SettingsScreen();
+  return GeneralSettingsScreen();
 });

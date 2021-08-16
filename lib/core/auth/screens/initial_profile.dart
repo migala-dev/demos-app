@@ -1,8 +1,8 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/core/services/bucket.service.dart';
+import 'package:demos_app/core/services/user.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
-import 'package:demos_app/utils/services/bucket.service.dart';
-import 'package:demos_app/utils/services/user.service.dart';
 import 'package:demos_app/widgets/pages/image_editor.page.dart';
 import 'package:flutter/material.dart';
 

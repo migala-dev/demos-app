@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:demos_app/utils/services/token.service.dart';
+import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:http/http.dart' as http;
 

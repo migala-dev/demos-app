@@ -1,3 +1,4 @@
+import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,8 +8,7 @@ import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 
-import 'package:demos_app/utils/services/user_preferences_service.dart';
-import 'package:demos_app/utils/services/token.service.dart';
+import 'core/services/token.service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

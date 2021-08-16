@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
         title: Text('Espacios'),
         actions: [
           IconButton(
-              onPressed: () => context.read<ThemeCubit>().changeTheme(),
+              onPressed: () => context.read<ThemeCubit>().toggleTheme(),
               icon: Icon(Icons.brightness_1))
         ],
       ),

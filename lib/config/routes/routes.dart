@@ -4,12 +4,16 @@ import 'package:flutter/widgets.dart';
 
 class Routes {
   static final String root = "/";
+  // Authentification
   static final String login = "/login";
   static final String verifyPhone = "/verify-code";
   static final String initialProfile = "/initial-profile";
-  static final String spaces = "/spaces";
   static final String authLoading = "/auth-loading";
-  static final String settings = "/settings";
+  // Spaces
+  static final String spaces = "/spaces";
+  // Settings
+  static final String settings = "/settings/general";
+  static final String settingsProfile = "/settings/profile";
 
   static void configureRoutes(FluroRouter router, String initialRoute) {
     router.notFoundHandler = Handler(
@@ -18,11 +22,16 @@ class Routes {
       return;
     });
 
-    var rootHandler = initialRoute == login ? loginHandler : spacesHandler;
+    var rootHandler = initialRoute == login ? spacesHandler : spacesHandler;
     router.define(root, handler: rootHandler);
+    // Authentification
     router.define(login, handler: loginHandler);
     router.define(verifyPhone, handler: verifyPhoneHandler);
     router.define(initialProfile, handler: initialProfileHandler);
+    // Spaces
     router.define(spaces, handler: spacesHandler);
+    // Settings
+    router.define(settings, handler: generalSettingsHandler);
+    router.define(settingsProfile, handler: generalSettingsHandler);
   }
 }

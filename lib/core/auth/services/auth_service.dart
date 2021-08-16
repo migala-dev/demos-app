@@ -3,10 +3,10 @@ import 'package:demos_app/core/auth/models/verify_code_response.model.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/utils/services/api_service.dart';
-import 'package:demos_app/utils/services/bucket.service.dart';
-import 'package:demos_app/utils/services/token.service.dart';
-import 'package:demos_app/utils/services/user.service.dart';
+import 'package:demos_app/core/services/api_service.dart';
+import 'package:demos_app/core/services/bucket.service.dart';
+import 'package:demos_app/core/services/token.service.dart';
+import 'package:demos_app/core/services/user.service.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
 
 class AuthService {
