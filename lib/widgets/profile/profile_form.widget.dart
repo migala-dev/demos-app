@@ -1,20 +1,20 @@
 import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/widgets/profile/profile_info_item.widget.dart';
+import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:prompt_dialog/prompt_dialog.dart';
 
-class ProfileInfo extends StatelessWidget {
+class ProfileForm extends StatelessWidget {
   final void Function(String?)? onEditNamePress;
   final User? user;
 
-  const ProfileInfo({Key? key, this.onEditNamePress, required this.user})
+  const ProfileForm({Key? key, this.onEditNamePress, required this.user})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ProfileInfoItem(
+        ProfileField(
           title: 'Nombre',
           icon: Icons.person,
           onEdit: () async {
@@ -26,7 +26,7 @@ class ProfileInfo extends StatelessWidget {
           editable: onEditNamePress != null,
           value: user?.name,
         ),
-        ProfileInfoItem(
+        ProfileField(
           title: 'Teléfono',
           icon: Icons.phone,
           value: formatPhoneNumber(user?.phoneNumber),

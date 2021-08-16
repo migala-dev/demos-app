@@ -22,7 +22,7 @@ class Routes {
       return;
     });
 
-    var rootHandler = initialRoute == login ? spacesHandler : spacesHandler;
+    var rootHandler = initialRoute == login ? loginHandler : spacesHandler;
     router.define(root, handler: rootHandler);
     // Authentification
     router.define(login, handler: loginHandler);
@@ -32,6 +32,6 @@ class Routes {
     router.define(spaces, handler: spacesHandler);
     // Settings
     router.define(settings, handler: generalSettingsHandler);
-    router.define(settingsProfile, handler: generalSettingsHandler);
+    router.define(settingsProfile, handler: profileSettingsHandler);
   }
 }

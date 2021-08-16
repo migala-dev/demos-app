@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ProfileInfoItem extends StatelessWidget {
+class ProfileField extends StatelessWidget {
   final String title;
   final String? value;
   final IconData icon;
   final bool editable;
   final VoidCallback? onEdit;
 
-  const ProfileInfoItem(
+  const ProfileField(
       {Key? key,
       required this.title,
       required this.icon,
