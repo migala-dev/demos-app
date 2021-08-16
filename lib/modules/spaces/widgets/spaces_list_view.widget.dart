@@ -1,7 +1,6 @@
+import 'package:demos_app/modules/spaces/widgets/spaces_scroll_view.widget.dart';
 import 'package:flutter/material.dart';
-
-import 'package:demos_app/widgets/spaces/spaces_slider.widget.dart';
-import 'package:demos_app/modules/spaces/models/space.dart';
+import 'package:demos_app/modules/spaces/models/space.model.dart';
 
 class SpacesListView extends StatelessWidget {
   final List<Space> spaces;
@@ -36,7 +35,7 @@ class SpacesListView extends StatelessWidget {
           ),
           ConstrainedBox(
             constraints: BoxConstraints(maxHeight: size.height * 0.28),
-            child: SpacesSlider(spaces: invitations),
+            child: SpacesScrollView(spaces: invitations),
           ),
           Divider(
             thickness: 1,
@@ -54,7 +53,7 @@ class SpacesListView extends StatelessWidget {
               thickness: 1,
             ),
             Expanded(
-              child: SpacesSlider(spaces: spaces),
+              child: SpacesScrollView(spaces: spaces),
             ),
             Divider(
               thickness: 1,

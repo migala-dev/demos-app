@@ -1,10 +1,10 @@
-import 'package:demos_app/modules/spaces/models/space.dart';
-import 'package:demos_app/widgets/spaces/space_tile.widget.dart';
+import 'package:demos_app/modules/spaces/models/space.model.dart';
+import 'package:demos_app/modules/spaces/widgets/space_tile.widget.dart';
 import 'package:flutter/material.dart';
 
-class SpacesSlider extends StatelessWidget {
+class SpacesScrollView extends StatelessWidget {
   final List<Space> spaces;
-  const SpacesSlider({Key? key, required this.spaces}) : super(key: key);
+  const SpacesScrollView({Key? key, required this.spaces}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

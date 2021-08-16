@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/utils/services/api_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'api_service.dart';
 
 class UserService {
   User? _currentUser;

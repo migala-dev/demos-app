@@ -1,26 +1,19 @@
+import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
-
-import 'package:demos_app/utils/services/user_preferences_service.dart';
 import 'package:demos_app/config/themes/dark_theme.dart';
 import 'package:demos_app/config/themes/light_theme.dart';
 
 class ThemeCubit extends Cubit<ThemeData> {
   final _userPrefs = UserPreferencesService();
-  bool _isLigth;
+  bool isDark;
 
-  ThemeCubit(bool isLigth)
-      : this._isLigth = isLigth,
-        super(isLigth ? ligthTheme : darkTheme);
+  ThemeCubit(this.isDark) : super(isDark ? darkTheme : ligthTheme);
 
-  void changeTheme() {
-    this._isLigth = !this._isLigth;
-    this._userPrefs.themeIsLight = this._isLigth;
-
-    if (this._isLigth) {
-      emit(ligthTheme);
-    } else {
-      emit(darkTheme);
-    }
+  void toggleTheme() {
+    this.isDark = !this.isDark;
+    this._userPrefs.themeIsDark = this.isDark;
+    ThemeData theme = this.isDark ? darkTheme : ligthTheme;
+    emit(theme);
   }
 }

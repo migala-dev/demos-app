@@ -1,6 +1,7 @@
-import 'package:demos_app/modules/spaces/models/space.dart';
-import 'package:demos_app/widgets/spaces/spaces_listview.widget.dart';
+import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
+import 'package:demos_app/modules/spaces/widgets/spaces_list_view.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/modules/spaces/models/space.model.dart';
 
 final testInvitations = [
   Space(name: 'Cooperativa #1', members: 5),
@@ -27,7 +28,7 @@ class SpacesScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Espacios'),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
+          actions: [PopupSpacesMenuButton()],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},

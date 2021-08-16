@@ -32,7 +32,7 @@ class BigButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         child: Text(
-          text,
+          text.toUpperCase(),
           style: TextStyle(fontSize: 20),
         ));
   }
