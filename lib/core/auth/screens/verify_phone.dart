@@ -128,10 +128,14 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
   void verifyCode() async {
     wrapLoadingTransaction(() async {
       final code = _verifyCodeController.text;
-      final isValidCode = await AuthService().verifyCode(code);
-      if (isValidCode) {
-        Navigator.pushNamedAndRemoveUntil(
-            context, Routes.profile, (r) => false);
+      try {
+        final isValidCode = await AuthService().verifyCode(code);
+        if (isValidCode) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.initialProfile, (r) => false);
+        }
+      } catch (err) {
+        Navigator.pushNamedAndRemoveUntil(context, Routes.login, (r) => false);
       }
     });
   }

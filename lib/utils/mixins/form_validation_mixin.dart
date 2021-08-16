@@ -13,7 +13,6 @@ mixin LoginFormValidationsMixin {
     if (code.length == 6) {
       return true;
     }
-    // TODO:? llamada a la api de validacion por sms
 
     return false;
   }
