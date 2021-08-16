@@ -10,7 +10,7 @@ class UsersRepository {
   String colId = "userId";
   String colName = "name";
   String colPhoneNumber = "phoneNumber";
-  String colProfilePictureUrl = "profilePictureUrl";
+  String colProfilePictureKey = "profilePictureKey";
   String colCreatedAt = "createdAt";
   String colUpdatedAt = "updatedAt";
 
@@ -41,7 +41,7 @@ class UsersRepository {
         "$colId INTEGER PRIMARY KEY, " +
         "$colName TEXT, " +
         "$colPhoneNumber TEXT UNIQUE," +
-        "$colProfilePictureUrl TEXT," +
+        "$colProfilePictureKey TEXT," +
         "$colCreatedAt TEXT," +
         "$colUpdatedAt TEXT)");
   }
@@ -79,7 +79,11 @@ class UsersRepository {
 
   Future<int> updateUser(User user) async {
     Database? db = await this.db;
-    var result = await db!.update(tblUsers, {'name': user.name},
+    Map<String, dynamic> values = {
+      colName: user.name,
+      colProfilePictureKey: user.profilePictureKey
+    };
+    var result = await db!.update(tblUsers, values,
         where: "$colId = ?", whereArgs: [user.userId]);
     return result;
   }

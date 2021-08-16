@@ -6,7 +6,7 @@ import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:http/http.dart' as http;
 
 class ApiSerivce {
-  Map<String, String> getDefaultHeaders() {
+  Map<String, String> _getDefaultHeaders() {
     Map<String, String> headers = {};
     String? accessToken = TokenService().accessToken;
     if (accessToken != null) {
@@ -16,19 +16,41 @@ class ApiSerivce {
   }
 
   Future<http.Response> get(String endpoint) {
-    return http.get(Uri.parse(endpoint), headers: getDefaultHeaders());
+    return http.get(Uri.parse(endpoint), headers: _getDefaultHeaders());
   }
 
   Future<Map<String, dynamic>> post(String endpoint, Object? body) async {
     Future<http.Response> call = http.post(Uri.parse(endpoint),
-        headers: getDefaultHeaders(), body: body);
+        headers: _getDefaultHeaders(), body: body);
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
   Future<Map<String, dynamic>> patch(String endpoint, Object? body) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
-        headers: getDefaultHeaders(), body: body);
+        headers: _getDefaultHeaders(), body: body);
+    var response = await _handleErrors(call);
+    return jsonDecode(response!.body);
+  }
+
+  Future<Map<String, dynamic>> upload(String endpoint, File imageFile) async {
+    var stream = new http.ByteStream(imageFile.openRead());
+    stream.cast();
+    var length = await imageFile.length();
+
+    var uri = Uri.parse(endpoint);
+
+    var request = new http.MultipartRequest(
+      "POST",
+      uri,
+    );
+    var multipartFile = new http.MultipartFile('file', stream, length,
+        filename: imageFile.path.split('/').last);
+
+    request.headers.addAll(_getDefaultHeaders());
+    request.files.add(multipartFile);
+
+    Future<http.Response> call = http.Response.fromStream(await request.send());
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }

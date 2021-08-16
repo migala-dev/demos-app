@@ -4,6 +4,7 @@ import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/utils/services/api_service.dart';
+import 'package:demos_app/utils/services/bucket.service.dart';
 import 'package:demos_app/utils/services/token.service.dart';
 import 'package:demos_app/utils/services/user.service.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
@@ -60,9 +61,11 @@ class AuthService {
       return false;
     }
 
-    _saveUser(response);
+    await _saveUser(response);
 
-    _saveTokens(response);
+    await _saveTokens(response);
+
+    await BucketService().setBucketName(response.bucketName!);
 
     return true;
   }
@@ -71,19 +74,19 @@ class AuthService {
     return response.session == null;
   }
 
-  void _saveUser(VerifyCodeReponse response) {
+  Future<void> _saveUser(VerifyCodeReponse response) async {
     User? user = response.user;
     if (user != null) {
-      UsersRepository().insert(user);
+      await UsersRepository().insert(user);
 
-      UserService().setCurrentUser(user.userId);
+      await UserService().setCurrentUser(user.userId);
     }
   }
 
-  void _saveTokens(VerifyCodeReponse response) {
+  Future<void> _saveTokens(VerifyCodeReponse response) async {
     Tokens? tokens = response.tokens;
     if (tokens != null) {
-      TokenService().saveTokens(tokens);
+      await TokenService().saveTokens(tokens);
     }
   }
 }

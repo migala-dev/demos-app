@@ -22,4 +22,8 @@ class ApiPath {
   String getUserPath() {
     return '$_authServiceUrl/user';
   }
+
+  String getUpdateProfileImagePath() {
+    return '${getUserPath()}/avatar';
+  }
 }
