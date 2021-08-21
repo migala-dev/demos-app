@@ -1,6 +1,8 @@
-import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
-import 'package:demos_app/modules/spaces/widgets/spaces_list_view.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart';
+
+import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
+import 'package:demos_app/modules/spaces/widgets/spaces_scroll_view.widget.dart';
 import 'package:demos_app/modules/spaces/models/space.model.dart';
 
 final testInvitations = [
@@ -25,15 +27,35 @@ class SpacesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Espacios'),
-          actions: [PopupSpacesMenuButton()],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.add),
-        ),
-        body: SpacesListView(invitations: testInvitations, spaces: testSpaces));
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text('Espacios'),
+            actions: [PopupSpacesMenuButton()],
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Text('Espacios')),
+                Tab(
+                    icon: Badge(
+                        elevation: 0,
+                        position: BadgePosition(end: -20),
+                        badgeContent: Text('${testInvitations.length}'),
+                        child: Text('Invitaciones'))),
+              ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add),
+          ),
+          body: TabBarView(
+            children: [
+              SpacesScrollView(spaces: testSpaces),
+              SpacesScrollView(spaces: testInvitations),
+            ],
+          )),
+    );
+    // body: SpacesListView(invitations: testInvitations, spaces: testSpaces));
   }
 }
