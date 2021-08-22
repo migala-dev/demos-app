@@ -12,10 +12,13 @@ class _ProfileState extends State<ProfileSettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Perfil'),
-      ),
-      body: Profile(),
-    );
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text('Perfil'),
+        ),
+        body: Container(
+          margin: EdgeInsets.symmetric(vertical: 28, horizontal: 28),
+          child: Profile(),
+        ));
   }
 }

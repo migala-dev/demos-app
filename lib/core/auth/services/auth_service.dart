@@ -39,7 +39,7 @@ class AuthService {
     return true;
   }
 
-  Future<bool> verifyCode(String code) async {
+  Future<User?> verifyCode(String code) async {
     String endpoint = ApiPath().getVerifyCodePath();
     Object params = {
       "phoneNumber": _phoneNumber,
@@ -58,7 +58,7 @@ class AuthService {
 
       ToastUtil.showError(message);
 
-      return false;
+      return null;
     }
 
     await _saveUser(response);
@@ -67,7 +67,7 @@ class AuthService {
 
     await BucketService().setBucketName(response.bucketName!);
 
-    return true;
+    return response.user;
   }
 
   bool _isCodeValid(VerifyCodeReponse response) {

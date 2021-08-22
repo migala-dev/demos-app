@@ -23,7 +23,7 @@ class UserService {
     if (_currentUser == null) {
       String? currentUserId = await _storage.read(key: _currentUserIdKey);
       if (currentUserId != null) {
-        User? user = await UsersRepository().findById(int.parse(currentUserId));
+        User? user = await UsersRepository().findById(currentUserId);
         _currentUser = user;
         return user;
       }
@@ -32,7 +32,7 @@ class UserService {
     return _currentUser;
   }
 
-  Future<void> setCurrentUser(int? userId) async {
+  Future<void> setCurrentUser(String? userId) async {
     await _storage.write(key: _currentUserIdKey, value: userId.toString());
   }
 
@@ -46,6 +46,7 @@ class UserService {
     User userSaved = User.fromObject(httpResponse);
 
     UsersRepository().updateUser(userSaved);
+    _currentUser = userSaved;
 
     return userSaved;
   }
@@ -58,6 +59,8 @@ class UserService {
     User userSaved = User.fromObject(httpResponse);
 
     UsersRepository().updateUser(userSaved);
+
+    _currentUser = userSaved;
 
     return userSaved;
   }
