@@ -1,4 +1,5 @@
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
@@ -130,10 +131,13 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
       String code = _verifyCodeController.text;
       if (code != '') {
         try {
-          final isValidCode = await AuthService().verifyCode(code);
-          if (isValidCode) {
-            Navigator.pushNamedAndRemoveUntil(
-                context, Routes.initialProfile, (r) => false);
+          User? user = await AuthService().verifyCode(code);
+          if (user != null) {
+            bool thisUserHasAlreadyInfo =
+                user.name != "" || user.profilePictureKey != "";
+            String route =
+                thisUserHasAlreadyInfo ? Routes.spaces : Routes.initialProfile;
+            Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);
           }
         } catch (err) {
           Navigator.pushNamedAndRemoveUntil(
