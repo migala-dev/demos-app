@@ -1,10 +1,11 @@
+import 'package:demos_app/modules/spaces/screens/votes_create_space.screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/modules/spaces/widgets/space_picture.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
-class DescriptionCreateSpaceScreen extends StatelessWidget {
-  const DescriptionCreateSpaceScreen({Key? key}) : super(key: key);
+class NewSpaceScreen extends StatelessWidget {
+  const NewSpaceScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +107,12 @@ class __NewSpaceDescriptionState extends State<_NewSpaceDescription> {
             BigButton(
                 text: 'CONTINUAR',
                 onPressed: () {
-                  _formKey.currentState?.validate();
+                  if (_formKey.currentState!.validate()) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VotesCreateSpaceScreen()));
+                  }
                 })
           ],
         ));
