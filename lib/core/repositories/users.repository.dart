@@ -38,7 +38,7 @@ class UsersRepository {
 
   void _createDb(Database db, int newVersion) async {
     await db.execute("CREATE TABLE $tblUsers(" +
-        "$colId INTEGER PRIMARY KEY, " +
+        "$colId TEXT PRIMARY KEY, " +
         "$colName TEXT, " +
         "$colPhoneNumber TEXT UNIQUE," +
         "$colProfilePictureKey TEXT," +
@@ -46,27 +46,27 @@ class UsersRepository {
         "$colUpdatedAt TEXT)");
   }
 
-  Future<int> insert(User user) async {
+  Future<String> insert(User user) async {
     Database? db = await this.db;
-    User? userSaved = await getUserByPhoneNumber(user.phoneNumber);
+    User? userSaved = await findById(user.userId!);
     if (userSaved == null) {
-      int result = await db!.insert(tblUsers, user.toMap());
-      return result;
+      await db!.insert(tblUsers, user.toMap());
+      return user.userId!;
     }
-    return userSaved.userId ?? 0;
+    return userSaved.userId!;
   }
 
   Future<User?> getUserByPhoneNumber(String phoneNumber) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblUsers WHERE $colPhoneNumber = $phoneNumber");
+        "SELECT * FROM $tblUsers WHERE $colPhoneNumber = '$phoneNumber'");
     return result.length > 0 ? User.fromObject(result[0]) : null;
   }
 
-  Future<User?> findById(int userId) async {
+  Future<User?> findById(String userId) async {
     Database? db = await this.db;
     var result =
-        await db!.rawQuery("SELECT * FROM $tblUsers WHERE $colId = $userId");
+        await db!.rawQuery("SELECT * FROM $tblUsers WHERE $colId = '$userId'");
     return result.length > 0 ? User.fromObject(result[0]) : null;
   }
 
@@ -79,16 +79,16 @@ class UsersRepository {
 
   Future<int> updateUser(User user) async {
     Database? db = await this.db;
-    Map<String, dynamic> values = {
-      colName: user.name,
-      colProfilePictureKey: user.profilePictureKey
-    };
-    var result = await db!.update(tblUsers, values,
-        where: "$colId = ?", whereArgs: [user.userId]);
+    var result = await db!.rawUpdate("UPDATE $tblUsers " +
+        "SET $colName = '${user.name}'" +
+        ", $colProfilePictureKey = '${user.profilePictureKey}' " +
+        "WHERE $colId = '${user.userId}'");
+    var users = await getAll();
+    print(users);
     return result;
   }
 
-  Future<int> deleteUser(int? userId) async {
+  Future<int> deleteUser(String? userId) async {
     int result;
     Database? db = await this.db;
     result =

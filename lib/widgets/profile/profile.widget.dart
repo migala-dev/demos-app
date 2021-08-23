@@ -99,7 +99,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
         await BucketService().getUrlFromKey(user.profilePictureKey);
     setState(() {
       _currentUser = user;
-      _imageUrl = imageUrl;
+      _imageUrl = user.profilePictureKey != "" ? imageUrl : null;
     });
   }
 }

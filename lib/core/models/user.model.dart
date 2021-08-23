@@ -1,5 +1,5 @@
 class User {
-  int? _userId;
+  String? _userId;
   String? _name;
   late String _phoneNumber;
   String? _profilePictureKey;
@@ -8,7 +8,7 @@ class User {
 
   User.withPhoneNumber(this._phoneNumber);
 
-  int? get userId => this._userId;
+  String? get userId => this._userId;
   String get name => this._name ?? '';
   String get phoneNumber => this._phoneNumber;
   String get profilePictureKey => this._profilePictureKey ?? '';
