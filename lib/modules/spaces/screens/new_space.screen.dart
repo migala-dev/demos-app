@@ -1,4 +1,4 @@
-import 'package:demos_app/modules/spaces/screens/votes_create_space.screen.dart';
+import 'package:demos_app/modules/spaces/screens/space_percentages_form.screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/modules/spaces/widgets/space_picture.widget.dart';
@@ -25,7 +25,7 @@ class NewSpaceScreen extends StatelessWidget {
                       SizedBox(
                         height: 25,
                       ),
-                      Expanded(child: _NewSpaceDescription())
+                      Expanded(child: _SpaceForm())
                     ]))),
           ),
         ),
@@ -47,16 +47,16 @@ class NewSpaceScreen extends StatelessWidget {
   }
 }
 
-class _NewSpaceDescription extends StatefulWidget {
-  const _NewSpaceDescription({
+class _SpaceForm extends StatefulWidget {
+  const _SpaceForm({
     Key? key,
   }) : super(key: key);
 
   @override
-  __NewSpaceDescriptionState createState() => __NewSpaceDescriptionState();
+  _SpaceFormState createState() => _SpaceFormState();
 }
 
-class __NewSpaceDescriptionState extends State<_NewSpaceDescription> {
+class _SpaceFormState extends State<_SpaceForm> {
   final int maxLines = 4;
   final _formKey = GlobalKey<FormState>();
 
@@ -89,32 +89,34 @@ class __NewSpaceDescriptionState extends State<_NewSpaceDescription> {
                       : null,
                   labelText: 'Descripción',
                   counterText: '$_descriptionLength/120'),
-              onChanged: (v) {
+              onChanged: (desciptionValue) {
                 setState(() {
-                  _descriptionLength = v.length;
+                  _descriptionLength = desciptionValue.length;
                 });
               },
-              validator: (value) {
-                if (value == null ||
-                    value.isEmpty ||
-                    _descriptionLength > 120) {
-                  return '';
-                }
-                return null;
-              },
+              validator: isDescriptionValid,
             ),
             Spacer(),
-            BigButton(
-                text: 'CONTINUAR',
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VotesCreateSpaceScreen()));
-                  }
-                })
+            BigButton(text: 'CONTINUAR', onPressed: continueToNextStep)
           ],
         ));
+  }
+
+  String? isDescriptionValid(String? description) {
+    if (description == null ||
+        description.isEmpty ||
+        _descriptionLength > 120) {
+      return '';
+    }
+    return null;
+  }
+
+  void continueToNextStep() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SpacePercentagesFormScreen()));
+    }
   }
 }
