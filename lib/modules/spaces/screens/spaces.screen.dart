@@ -1,3 +1,4 @@
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
@@ -46,7 +47,9 @@ class SpacesScreen extends StatelessWidget {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, Routes.newNpace);
+            },
             child: Icon(Icons.add),
           ),
           body: TabBarView(
