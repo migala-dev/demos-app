@@ -12,6 +12,8 @@ class Routes {
   // Spaces
   static final String spaces = "/spaces";
   static final String spacesDetails = "/spaces/spacesDetails";
+  static final String newNpace = "/new-space";
+
   // Settings
   static final String settings = "/settings/general";
   static final String settingsProfile = "/settings/profile";
@@ -32,6 +34,7 @@ class Routes {
     // Spaces
     router.define(spaces, handler: spacesHandler);
     router.define(spacesDetails, handler: spaceDetailsHandler);
+    router.define(newNpace, handler: newSpaceHandler);
     // Settings
     router.define(settings, handler: generalSettingsHandler);
     router.define(settingsProfile, handler: profileSettingsHandler);
