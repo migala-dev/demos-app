@@ -31,7 +31,7 @@ class SpacesScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Espacios'),
+            title: Text('Demos'),
             actions: [PopupSpacesMenuButton()],
             bottom: TabBar(
               tabs: [
