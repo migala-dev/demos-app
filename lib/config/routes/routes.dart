@@ -11,8 +11,8 @@ class Routes {
   static final String authLoading = "/auth-loading";
   // Spaces
   static final String spaces = "/spaces";
-  static final String spacesDetails = "/spaces/spacesDetails";
-  static final String newNpace = "/new-space";
+  static final String spacesDetails = "/spaces/spaces-details";
+  static final String newSpace = "/new-space";
 
   // Settings
   static final String settings = "/settings/general";
@@ -25,7 +25,7 @@ class Routes {
       return;
     });
 
-    var rootHandler = initialRoute == login ? loginHandler : spacesHandler;
+    var rootHandler = initialRoute == login ? spacesHandler : spacesHandler;
     router.define(root, handler: rootHandler);
     // Authentification
     router.define(login, handler: loginHandler);
@@ -34,7 +34,8 @@ class Routes {
     // Spaces
     router.define(spaces, handler: spacesHandler);
     router.define(spacesDetails, handler: spaceDetailsHandler);
-    router.define(newNpace, handler: newSpaceHandler);
+    router.define(newSpace, handler: newSpaceHandler);
+
     // Settings
     router.define(settings, handler: generalSettingsHandler);
     router.define(settingsProfile, handler: profileSettingsHandler);

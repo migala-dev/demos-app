@@ -1,3 +1,5 @@
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/spaces/models/space.model.dart';
 import 'package:flutter/material.dart';
 
 class SpaceTile extends StatelessWidget {
@@ -23,7 +25,8 @@ class SpaceTile extends StatelessWidget {
       ),
       title: Text(name),
       subtitle: Text('$members miembros'),
-      onTap: onTap,
+      onTap: () => Navigator.pushNamed(context, Routes.spacesDetails,
+          arguments: Space(name: name, members: members)),
     );
   }
 }
