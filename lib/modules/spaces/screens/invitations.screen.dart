@@ -67,7 +67,7 @@ class _InvitationsScreenState extends State<InvitationsScreen> {
             });
           },
           unselectContact: (contact) {
-            toggleContact(contact);
+            unselectContact(contact);
           }),
       Expanded(
         child: InvitationContactList(
@@ -83,11 +83,25 @@ class _InvitationsScreenState extends State<InvitationsScreen> {
   }
 
   void toggleContact(InvitationContact contact) {
+    if (contactsSelected.contains(contact)) {
+      unselectContact(contact);
+    } else {
+      selectContact(contact);
+    }
+  }
+
+  void selectContact(InvitationContact contact) {
+    setState(() {
+      if (!contactsSelected.contains(contact)) {
+        contactsSelected.add(contact);
+      }
+    });
+  }
+
+  void unselectContact(InvitationContact contact) {
     setState(() {
       if (contactsSelected.contains(contact)) {
         contactsSelected.removeWhere((c) => c == contact);
-      } else {
-        contactsSelected.add(contact);
       }
     });
   }

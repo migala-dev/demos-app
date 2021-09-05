@@ -11,20 +11,17 @@ class InvitationContactChip extends StatefulWidget {
       : super(key: key);
 
   @override
-  _InvitationContactChipState createState() =>
-      _InvitationContactChipState(contact, unselectContact);
+  _InvitationContactChipState createState() => _InvitationContactChipState();
 }
 
 class _InvitationContactChipState extends State<InvitationContactChip> {
-  InvitationContact contact;
-  void Function() unselectContact;
   bool unselectMode = false;
 
-  _InvitationContactChipState(this.contact, this.unselectContact);
+  _InvitationContactChipState();
 
   @override
   Widget build(BuildContext context) {
-    Color color = contact.color;
+    Color color = widget.contact.color;
     return GestureDetector(
       child: FittedBox(
           child: Container(
@@ -35,7 +32,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
             color: !unselectMode ? Colors.grey[200] : color),
         child: Row(
           children: [
-            contact.profilePicture == null || unselectMode
+            widget.contact.profilePicture == null || unselectMode
                 ? GestureDetector(
                     child: Container(
                         width: 32.0,
@@ -49,7 +46,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
                           children: [
                             !unselectMode
                                 ? Text(
-                                    contact.name[0].toUpperCase(),
+                                    widget.contact.name[0].toUpperCase(),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16.0),
                                   )
@@ -63,20 +60,20 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
                     onTap: () {
                       setState(() {
                         if (unselectMode) {
-                          unselectContact();
+                          widget.unselectContact();
                         }
                         unselectMode = !unselectMode;
                       });
                     },
                   )
                 : ProfilePicture(
-                    imageUrl: contact.profilePicture,
+                    imageUrl: widget.contact.profilePicture,
                     width: 95,
                   ),
             Container(
               margin: EdgeInsets.only(left: 4, right: 16),
               child: Text(
-                contact.name.split(' ')[0],
+                widget.contact.name.split(' ')[0],
                 style: TextStyle(
                     color: unselectMode ? Colors.white : Colors.black),
               ),

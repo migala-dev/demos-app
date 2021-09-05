@@ -18,18 +18,13 @@ class InvitationSearchField extends StatefulWidget {
       : super(key: key);
 
   @override
-  _InvitationSearchFieldState createState() => _InvitationSearchFieldState(
-      contactsSelected, unselectContact, onSearchChange);
+  _InvitationSearchFieldState createState() => _InvitationSearchFieldState();
 }
 
 class _InvitationSearchFieldState extends State<InvitationSearchField> {
-  List<InvitationContact> contactsSelected;
-  void Function(InvitationContact) unselectContact;
-  void Function(String) onSearchChange;
   FocusNode textNode = FocusNode();
 
-  _InvitationSearchFieldState(
-      this.contactsSelected, this.unselectContact, this.onSearchChange);
+  _InvitationSearchFieldState();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +36,9 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
             color: Colors.white,
             border: Border(bottom: BorderSide(color: greyColor, width: 1.0))),
         child: Wrap(children: [
-          ...contactsSelected.map((user) => getContactChip(user)).toList(),
+          ...widget.contactsSelected
+              .map((user) => getContactChip(user))
+              .toList(),
           Container(
             margin: EdgeInsets.only(left: 12.0),
             child: ConstrainedBox(
@@ -53,10 +50,10 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
                 onKey: (key) {
                   if (key.logicalKey == LogicalKeyboardKey.backspace &&
                       key.runtimeType.toString() == 'RawKeyDownEvent') {
-                    if (contactsSelected.length > 0) {
+                    if (widget.contactsSelected.length > 0) {
                       InvitationContact lastContactSelected =
-                          contactsSelected.last;
-                      unselectContact(lastContactSelected);
+                          widget.contactsSelected.last;
+                      widget.unselectContact(lastContactSelected);
                     }
                   }
                 },
@@ -66,11 +63,12 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
                   ),
                   decoration: new InputDecoration(
                     border: InputBorder.none,
-                    hintText:
-                        contactsSelected.length == 0 ? 'Añadir personas' : '',
+                    hintText: widget.contactsSelected.length == 0
+                        ? 'Añadir personas'
+                        : '',
                   ),
                   onChanged: (searchFieldValue) {
-                    onSearchChange(searchFieldValue);
+                    widget.onSearchChange(searchFieldValue);
                   },
                 ),
               )),
@@ -88,7 +86,7 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
     return InvitationContactChip(
       contact: contact,
       unselectContact: () {
-        unselectContact(contact);
+        widget.unselectContact(contact);
       },
     );
   }
