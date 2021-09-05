@@ -48,7 +48,7 @@ class SpacesScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              Navigator.pushNamed(context, Routes.newNpace);
+              Navigator.pushNamed(context, Routes.newSpace);
             },
             child: Icon(Icons.add),
           ),
