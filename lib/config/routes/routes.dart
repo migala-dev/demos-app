@@ -25,7 +25,7 @@ class Routes {
       return;
     });
 
-    var rootHandler = initialRoute == login ? spacesHandler : spacesHandler;
+    var rootHandler = initialRoute == login ? loginHandler : spacesHandler;
     router.define(root, handler: rootHandler);
     // Authentification
     router.define(login, handler: loginHandler);

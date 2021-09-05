@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 class SpaceDetails extends StatelessWidget {
   const SpaceDetails({Key? key}) : super(key: key);
 
-  // static const routeName = '/extractArguments';
-
   @override
   Widget build(BuildContext context) {
     final Space spaceDetails =
