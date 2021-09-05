@@ -7,15 +7,15 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'api_service.dart';
 
-class UserService {
+class CurrentUserService {
   User? _currentUser;
   String _currentUserIdKey = 'current-user-id-key';
   final _storage = new FlutterSecureStorage();
-  static UserService _userService = new UserService._internal();
+  static CurrentUserService _userService = new CurrentUserService._internal();
 
-  UserService._internal();
+  CurrentUserService._internal();
 
-  factory UserService() {
+  factory CurrentUserService() {
     return _userService;
   }
 

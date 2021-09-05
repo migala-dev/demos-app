@@ -83,8 +83,6 @@ class UsersRepository {
         "SET $colName = '${user.name}'" +
         ", $colProfilePictureKey = '${user.profilePictureKey}' " +
         "WHERE $colId = '${user.userId}'");
-    var users = await getAll();
-    print(users);
     return result;
   }
 

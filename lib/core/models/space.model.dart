@@ -16,6 +16,7 @@ class Space {
   int get participationPercentage => this._participationPercentage;
   int get approvalPercentage => this._approvalPercentage;
   String? get createdAt => this._createdAt;
+  String? get updatedAt => this._updatedAt;
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
