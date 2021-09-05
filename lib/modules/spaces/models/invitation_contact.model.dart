@@ -13,7 +13,6 @@ const List<MaterialColor> primaries = <MaterialColor>[
   Colors.cyan,
   Colors.teal,
   Colors.green,
-  Colors.yellow,
   Colors.amber,
   Colors.orange,
   Colors.deepOrange,
