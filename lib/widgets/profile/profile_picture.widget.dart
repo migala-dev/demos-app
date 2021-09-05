@@ -5,13 +5,17 @@ class ProfilePicture extends StatelessWidget {
   final VoidCallback? onPictureEditPress;
   final bool editable;
   final String? imageUrl;
+  final double? width;
+  final double? percentage;
 
-  const ProfilePicture({
-    Key? key,
-    this.editable = false,
-    this.onPictureEditPress,
-    this.imageUrl,
-  }) : super(key: key);
+  const ProfilePicture(
+      {Key? key,
+      this.editable = false,
+      this.onPictureEditPress,
+      this.imageUrl,
+      this.width,
+      this.percentage = 0.4})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +39,10 @@ class ProfilePicture extends StatelessWidget {
   }
 
   Widget getImage(size) {
-    double width = size.width * 0.4;
-    return imageUrl == null ? getDefaultImage(width) : getProfileImage(width);
+    double imageWidth = (width ?? size.width) * percentage;
+    return imageUrl == null
+        ? getDefaultImage(imageWidth)
+        : getProfileImage(imageWidth);
   }
 
   Widget getDefaultImage(double width) {

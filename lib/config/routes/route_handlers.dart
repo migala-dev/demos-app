@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/screens/invitations.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 
@@ -33,6 +34,11 @@ var spacesHandler = Handler(
 var newSpaceHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return NewSpaceScreen();
+});
+
+var invitationsSpaceHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return InvitationsScreen();
 });
 
 var generalSettingsHandler = Handler(
