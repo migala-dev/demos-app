@@ -11,8 +11,9 @@ class Routes {
   static final String authLoading = "/auth-loading";
   // Spaces
   static final String spaces = "/spaces";
-  static final String spacesDetails = "/spaces/spaces-details";
   static final String newSpace = "/new-space";
+  static final String spacesDetails = "/spaces/spaces-details";
+  static final String invitations = "/invitations";
 
   // Settings
   static final String settings = "/settings/general";
@@ -35,7 +36,7 @@ class Routes {
     router.define(spaces, handler: spacesHandler);
     router.define(spacesDetails, handler: spaceDetailsHandler);
     router.define(newSpace, handler: newSpaceHandler);
-
+    router.define(invitations, handler: invitationsSpaceHandler);
     // Settings
     router.define(settings, handler: generalSettingsHandler);
     router.define(settingsProfile, handler: profileSettingsHandler);

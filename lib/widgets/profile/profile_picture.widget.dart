@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 class ProfilePicture extends StatelessWidget {
   final VoidCallback? onPictureEditPress;
   final String? imageKey;
+  final double? width;
+  final double? percentage;
 
-  const ProfilePicture({
-    Key? key,
-    this.onPictureEditPress,
-    this.imageKey,
-  }) : super(key: key);
+  const ProfilePicture(
+      {Key? key,
+      this.onPictureEditPress,
+      this.imageKey,
+      this.width,
+      this.percentage = 0.4})
+      : super(key: key);
 
   bool get editable => onPictureEditPress != null;
 
@@ -35,8 +39,10 @@ class ProfilePicture extends StatelessWidget {
   }
 
   Widget getImage(size) {
-    double width = size.width * 0.4;
-    return imageKey == null ? getDefaultImage(width) : getProfileImage(width);
+    double imageWidth = (width ?? size.width) * percentage;
+    return imageKey == null
+        ? getDefaultImage(imageWidth)
+        : getProfileImage(imageWidth);
   }
 
   Widget getDefaultImage(double width) {

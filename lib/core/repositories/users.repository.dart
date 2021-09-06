@@ -59,7 +59,7 @@ class UsersRepository {
   Future<User?> getUserByPhoneNumber(String phoneNumber) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblUsers WHERE $colPhoneNumber = '$phoneNumber'");
+        "SELECT * FROM $tblUsers WHERE $colPhoneNumber LIKE '%$phoneNumber'");
     return result.length > 0 ? User.fromObject(result[0]) : null;
   }
 
