@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/screens/space_form.screen.dart';
 import 'package:demos_app/modules/spaces/screens/space_percentages_form.screen.dart';
+import 'package:demos_app/modules/spaces/services/new_space.service.dart';
 import 'package:flutter/material.dart';
 
 enum NewSpaceScreenEnum { SpaceInfo, Percentages }
@@ -12,6 +17,8 @@ class NewSpaceScreen extends StatefulWidget {
 }
 
 class _NewSpaceScreenState extends State<NewSpaceScreen> {
+  Space newSpace = new Space();
+  File? spacePictureFile;
   NewSpaceScreenEnum currentStep = NewSpaceScreenEnum.SpaceInfo;
 
   @override
@@ -38,8 +45,35 @@ class _NewSpaceScreenState extends State<NewSpaceScreen> {
 
   Widget getCurrentScreen() {
     return currentStep == NewSpaceScreenEnum.SpaceInfo
-        ? SpaceFormScreen()
-        : SpacePercentagesFormScreen();
+        ? SpaceFormScreen(
+            goToNextStep: goToNextStep,
+          )
+        : SpacePercentagesFormScreen(
+            createNewSpace: createNewSpace,
+          );
+  }
+
+  void goToNextStep(String name, String description, File? image) {
+    setState(() {
+      newSpace.name = name;
+      newSpace.description = description;
+      spacePictureFile = image;
+      currentStep = NewSpaceScreenEnum.Percentages;
+    });
+  }
+
+  void createNewSpace(
+      int approvalPercentage, int participationPercentage) async {
+    newSpace.approvalPercentage = approvalPercentage;
+    newSpace.participationPercentage = participationPercentage;
+
+    Space? space = await NewSpaceService().createSpace(newSpace);
+
+    if (spacePictureFile != null && space != null) {
+      await NewSpaceService().uploadPicture(space.spaceId!, spacePictureFile!);
+    }
+
+    Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
   }
 
   Column _appBarTitle() {

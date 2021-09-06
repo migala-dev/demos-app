@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 
 class ParticipationPercentageSlider extends StatefulWidget {
   final double minimumPercentage;
+  final void Function(int) onChange;
 
   const ParticipationPercentageSlider(
-      {Key? key, required this.minimumPercentage})
+      {Key? key, required this.minimumPercentage, required this.onChange})
       : super(key: key);
 
   @override
-  __ParticipationPercentageState createState() =>
-      __ParticipationPercentageState();
+  _ParticipationPercentageState createState() =>
+      _ParticipationPercentageState();
 }
 
-class __ParticipationPercentageState
+class StatefulWidget {}
+
+class _ParticipationPercentageState
     extends State<ParticipationPercentageSlider> {
   double _currentSliderValue = 0;
 
@@ -47,16 +50,12 @@ class __ParticipationPercentageState
           ),
         ),
         Slider(
-          min: 0,
+          min: widget.minimumPercentage,
           max: 100,
           divisions: 10,
           value: _currentSliderValue,
-          onChanged: (v) {
-            setState(() {
-              if (v >= widget.minimumPercentage) {
-                _currentSliderValue = v;
-              }
-            });
+          onChanged: (participationPercentage) {
+            widget.onChange(participationPercentage.toInt());
           },
         ),
         RichText(

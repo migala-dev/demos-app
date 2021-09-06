@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:demos_app/modules/spaces/screens/space_percentages_form.screen.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/pages/image_editor.page.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
 class SpaceFormScreen extends StatefulWidget {
-  const SpaceFormScreen({
-    Key? key,
-  }) : super(key: key);
+  final void Function(String, String, File?) goToNextStep;
+
+  const SpaceFormScreen({Key? key, required this.goToNextStep})
+      : super(key: key);
 
   @override
   _SpaceFormScreenState createState() => _SpaceFormScreenState();
@@ -17,6 +17,9 @@ class SpaceFormScreen extends StatefulWidget {
 class _SpaceFormScreenState extends State<SpaceFormScreen> {
   final int maxLines = 4;
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = new TextEditingController();
+  final TextEditingController _descriptionController =
+      new TextEditingController();
   File? spacePictureFile;
   int _descriptionLength = 0;
 
@@ -55,6 +58,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
           children: [
             TextFormField(
               decoration: InputDecoration(labelText: 'Nombre del espacio'),
+              controller: _nameController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'El Nombre del espacio es requerido';
@@ -67,6 +71,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
             ),
             TextFormField(
               maxLines: maxLines,
+              controller: _descriptionController,
               decoration: InputDecoration(
                   counterStyle: _descriptionLength > 120
                       ? TextStyle(color: Colors.red[600])
@@ -97,10 +102,10 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
 
   void continueToNextStep() {
     if (_formKey.currentState!.validate()) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SpacePercentagesFormScreen()));
+      String name = _nameController.text;
+      String description = _descriptionController.text;
+
+      widget.goToNextStep(name, description, spacePictureFile);
     }
   }
 }
