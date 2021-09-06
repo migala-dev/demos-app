@@ -13,7 +13,6 @@ class Routes {
   static final String spaces = "/spaces";
   static final String newSpace = "/new-space";
   static final String spacesDetails = "/spaces/spaces-details";
-  static final String newSpace = "/new-space";
   static final String invitations = "/invitations";
 
   // Settings
