@@ -32,7 +32,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
             color: !unselectMode ? Colors.grey[200] : color),
         child: Row(
           children: [
-            widget.contact.profilePicture == null || unselectMode
+            widget.contact.profilePictureKey == null || unselectMode
                 ? GestureDetector(
                     child: Container(
                         width: 32.0,
@@ -67,7 +67,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
                     },
                   )
                 : ProfilePicture(
-                    imageUrl: widget.contact.profilePicture,
+                    imageKey: widget.contact.profilePictureKey,
                     width: 95,
                   ),
             Container(
