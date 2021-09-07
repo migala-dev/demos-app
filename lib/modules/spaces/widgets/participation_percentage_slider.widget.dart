@@ -13,8 +13,6 @@ class ParticipationPercentageSlider extends StatefulWidget {
       _ParticipationPercentageState();
 }
 
-class StatefulWidget {}
-
 class _ParticipationPercentageState
     extends State<ParticipationPercentageSlider> {
   double _currentSliderValue = 0;
