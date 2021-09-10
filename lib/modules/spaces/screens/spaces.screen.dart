@@ -1,27 +1,11 @@
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
 import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/spaces_scroll_view.widget.dart';
-import 'package:demos_app/modules/spaces/models/space.model.dart';
-
-final testInvitations = [
-  Space(name: 'Cooperativa #1', members: 5),
-  Space(name: 'Cooperativa #3', members: 5),
-  Space(name: 'Cooperativa #56', members: 5),
-  Space(name: 'Cooperativa #6', members: 5),
-];
-
-final testSpaces = [
-  Space(name: 'Cooperativa #21', members: 5),
-  Space(name: 'Cooperativa #64', members: 5),
-  Space(name: 'Cooperativa #88', members: 5),
-  Space(name: 'Cooperativa #48', members: 5),
-  Space(name: 'Cooperativa #12', members: 5),
-  Space(name: 'Cooperativa #13', members: 5),
-  Space(name: 'Cooperativa #14', members: 5),
-];
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SpacesScreen extends StatelessWidget {
   const SpacesScreen({Key? key}) : super(key: key);
@@ -30,35 +14,42 @@ class SpacesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text('Demos'),
-            actions: [PopupSpacesMenuButton()],
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Text('Espacios')),
-                Tab(
-                    icon: Badge(
-                        elevation: 0,
-                        position: BadgePosition(end: -20),
-                        badgeContent: Text('${testInvitations.length}'),
-                        child: Text('Invitaciones'))),
-              ],
+      child: BlocBuilder<SpacesBloc, SpacesState>(
+        builder: (context, state) => Scaffold(
+            appBar: _spacesAppBar(state),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.newSpace);
+              },
+              child: Icon(Icons.add),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.newSpace);
-            },
-            child: Icon(Icons.add),
-          ),
-          body: TabBarView(
-            children: [
-              SpacesScrollView(spaces: testSpaces),
-              SpacesScrollView(spaces: testInvitations),
-            ],
-          )),
+            body: TabBarView(
+              children: [
+                SpacesScrollView(spaces: state.spaces),
+                SpacesScrollView(spaces: state.invitations),
+              ],
+            )),
+      ),
     );
-    // body: SpacesListView(invitations: testInvitations, spaces: testSpaces));
+  }
+
+  AppBar _spacesAppBar(SpacesState state) {
+    return AppBar(
+      title: Text('Demos'),
+      actions: [PopupSpacesMenuButton()],
+      bottom: TabBar(
+        tabs: [
+          Tab(icon: Text('Espacios')),
+          Tab(
+              icon: state.invitations.length == 0
+                  ? Text('Invitaciones')
+                  : Badge(
+                      elevation: 0,
+                      position: BadgePosition(end: -28),
+                      badgeContent: Text('${state.invitations.length}'),
+                      child: Text('Invitaciones'))),
+        ],
+      ),
+    );
   }
 }

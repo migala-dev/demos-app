@@ -1,5 +1,6 @@
 class ApiPath {
-  String _authServiceUrl = 'http://10.0.2.2:3000/v1';
+  final String _authServiceUrl = 'http://10.0.2.2:3000/v1';
+  final String _websocketService = 'ws://10.0.2.2:8080';
 
   //  Auth paths
   String _getAuthPath() {
@@ -26,4 +27,6 @@ class ApiPath {
   String getUpdateProfileImagePath() {
     return '${getUserPath()}/avatar';
   }
+
+  String getWebsocketServicePath() => '$_websocketService/ws?id=pruebaflutter';
 }
