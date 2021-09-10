@@ -1,31 +1,18 @@
 import 'package:demos_app/api/cache_api.service.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
-import 'package:demos_app/core/event_handlers/map_event_name_to_handler.dart';
 import 'package:demos_app/core/interface/event.handler.interface.dart';
+import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
 
-class UserSpaceHandler implements EventHandler {
+class UserSpaceHandler extends EventHandlerMixin {
   static final _userSpaceHandler = UserSpaceHandler._internal();
   UserSpaceHandler._internal();
   factory UserSpaceHandler() => _userSpaceHandler;
 
   @override
   String key = 'user_space';
-
-  List<EventHandler> eventHandlers = [UserSpaceInvitationEvent()];
-
-  // TODO: mixing
   @override
-  Future<void> handleEvent(DataEvent dataEvent) async {
-    EventHandler? handler =
-        _getEventHandler(dataEvent.eventName, eventHandlers);
-    await handler?.handleEvent(dataEvent);
-  }
-
-  EventHandler? _getEventHandler(
-      String entityName, List<EventHandler> eventHandlers) {
-    return mapEventNameToHandler(entityName, eventHandlers);
-  }
+  List<EventHandler> eventHandlers = [UserSpaceInvitationEvent()];
 }
 
 class UserSpaceInvitationEvent implements EventHandler {
