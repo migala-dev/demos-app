@@ -25,14 +25,17 @@ class SpaceService {
   Future<List<SpaceView>> _getSpacesByInvitationStatus(
       InvitationStatus invitationStatus) async {
     List<SpaceView> spacesView = [];
-    List<Space> spaces = await SpacesRepository().getAll();
+    List<UserSpace> myUserSpaces =
+        await UserSpaceRepository().findByInvitationStatus(invitationStatus);
 
-    for (var space in spaces) {
-      List<UserSpace> members = await UserSpaceRepository()
-          .findBySpaceIdAndInvitationStatus(space.spaceId, invitationStatus);
+    for (UserSpace userSpace in myUserSpaces) {
+      Space? space = await SpacesRepository().findById(userSpace.spaceId!);
+      List<UserSpace> members =
+          await UserSpaceRepository().findBySpaceId(space!.spaceId);
       SpaceView spaceView = SpaceView(
           spaceId: space.spaceId ?? '',
           name: space.name ?? '',
+          pictureKey: space.pictureKey,
           membersCount: members.length);
       spacesView.add(spaceView);
     }

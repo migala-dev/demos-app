@@ -25,7 +25,7 @@ class UserSpace {
     map["userSpaceId"] = _userSpaceId;
     map["spaceId"] = _spaceId;
     map["userId"] = _userId;
-    map["invitationStatus"] = _invitationStatus;
+    map["invitationStatus"] = _invitationStatus?.index;
     map["deleted"] = _deleted;
     map["createdBy"] = _createdBy;
     map["updatedBy"] = _updatedBy;
@@ -39,7 +39,7 @@ class UserSpace {
     this._spaceId = o["spaceId"];
     this._userId = o["userId"];
     this._invitationStatus = getInvitationStatusFromInt(o["invitationStatus"]);
-    this._deleted = o["deleted"];
+    this._deleted = o["deleted"] == 0 ? false : true;
     this._createdBy = o["createdBy"];
     this._updatedBy = o["updatedBy"];
     this._createdAt = o["createdAt"];

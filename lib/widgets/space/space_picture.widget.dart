@@ -5,11 +5,16 @@ import 'package:flutter/material.dart';
 
 class SpacePicture extends StatelessWidget {
   final VoidCallback? onPictureEditPress;
-  final String? imageKey;
+  final String? pictureKey;
   final File? imageFile;
+  final double? width;
 
   const SpacePicture(
-      {Key? key, this.onPictureEditPress, this.imageKey, this.imageFile})
+      {Key? key,
+      this.onPictureEditPress,
+      this.pictureKey,
+      this.imageFile,
+      this.width})
       : super(key: key);
 
   bool get editable => onPictureEditPress != null;
@@ -36,14 +41,14 @@ class SpacePicture extends StatelessWidget {
   }
 
   Widget getImage(size) {
-    double width = size.width * 0.4;
+    double imageWidth = width ?? size.width * 0.4;
     if (imageFile != null) {
-      return getFileImage(width);
+      return getFileImage(imageWidth);
     }
-    if (imageKey != null) {
-      return getSpaceImage(width);
+    if (pictureKey != null) {
+      return getSpaceImage(imageWidth);
     }
-    return getDefaultImage(width);
+    return getDefaultImage(imageWidth);
   }
 
   Widget getFileImage(double width) {
@@ -70,6 +75,6 @@ class SpacePicture extends StatelessWidget {
   }
 
   Widget getSpaceImage(double width) {
-    return BucketImage(imageKey: imageKey, width: width, boderRadius: 10.0);
+    return BucketImage(imageKey: pictureKey, width: width, boderRadius: 10.0);
   }
 }

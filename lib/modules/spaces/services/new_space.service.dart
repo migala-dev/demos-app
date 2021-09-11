@@ -16,8 +16,8 @@ class NewSpaceService {
     Object params = {
       "name": newSpace.name,
       "description": newSpace.description,
-      "participationPercentage": newSpace.participationPercentage,
-      "approvalPercentage": newSpace.approvalPercentage
+      "participationPercentage": newSpace.participationPercentage.toString(),
+      "approvalPercentage": newSpace.approvalPercentage.toString()
     };
     final httpResponse = await ApiSerivce().post(endpoint, params);
 

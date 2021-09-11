@@ -14,6 +14,6 @@ class CreateSpaceResponse {
   CreateSpaceResponse.fromObject(dynamic o) {
     this._space = Space.fromObject(o["space"]);
     this._userSpace = UserSpace.fromObject(o["userSpace"]);
-    this._roleUserSpace = o["roleUserSpace"];
+    this._roleUserSpace = RoleUserSpace.fromObject(o["roleUserSpace"]);
   }
 }

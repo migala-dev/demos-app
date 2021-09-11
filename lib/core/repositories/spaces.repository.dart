@@ -11,6 +11,7 @@ class SpacesRepository {
   String colName = "name";
   String colDescription = "description";
   String colPictureKey = "pictureKey";
+  String colOwnerId = "ownerId";
   String colApprovalPercentage = "approvalPercentage";
   String colParticipationPercentage = "participationPercentage";
   String colCreatedAt = "createdAt";
@@ -44,6 +45,7 @@ class SpacesRepository {
         "$colName TEXT, " +
         "$colDescription TEXT," +
         "$colPictureKey TEXT," +
+        "$colOwnerId TEXT," +
         "$colApprovalPercentage INTEGER," +
         "$colParticipationPercentage INTEGER," +
         "$colCreatedAt TEXT," +

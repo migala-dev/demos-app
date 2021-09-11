@@ -1,12 +1,15 @@
 import 'package:demos_app/modules/spaces/widgets/participation_percentage_slider.widget.dart';
+import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/modules/spaces/widgets/pass_rate_slider.widget.dart';
+import 'package:demos_app/modules/spaces/widgets/approval_percentage_slider.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
 class SpacePercentagesFormScreen extends StatefulWidget {
   final void Function(int, int) createNewSpace;
+  final bool isLoading;
 
-  const SpacePercentagesFormScreen({Key? key, required this.createNewSpace})
+  const SpacePercentagesFormScreen(
+      {Key? key, required this.createNewSpace, this.isLoading = false})
       : super(key: key);
 
   @override
@@ -22,17 +25,25 @@ class _SpacePercentagesFormScreenState
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+      margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       child: Column(
         children: [
-          PassRateSlider(
-            minimumPercentage: 70,
+          ApprovalPercentageSlider(
+            initialValue: approvalPercentage,
+            onChange: (approvalPercentage) {
+              setState(() {
+                this.approvalPercentage = approvalPercentage;
+              });
+            },
           ),
-          SizedBox(
-            height: 30,
+          Container(
+            height: 30.0,
+            margin: EdgeInsets.only(bottom: 12.0),
+            decoration: BoxDecoration(
+                border: Border(bottom: BorderSide(color: greyColor))),
           ),
           ParticipationPercentageSlider(
-            minimumPercentage: 70,
+            initialValue: participationPercentage,
             onChange: (participationPercentage) {
               setState(() {
                 this.participationPercentage = participationPercentage;
@@ -42,6 +53,7 @@ class _SpacePercentagesFormScreenState
           Spacer(),
           BigButton(
               text: 'Crear',
+              isLoading: widget.isLoading,
               onPressed: () {
                 widget.createNewSpace(
                     approvalPercentage, participationPercentage);

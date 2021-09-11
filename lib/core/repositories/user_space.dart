@@ -74,7 +74,7 @@ class UserSpaceRepository {
       String? spaceId, InvitationStatus invitationStatus) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblUserSpaces WHERE $colSpaceId = '$spaceId' AND $colInvitationStatus = ${invitationStatus.toString()}");
+        "SELECT * FROM $tblUserSpaces WHERE $colSpaceId = '$spaceId' AND $colInvitationStatus = ${invitationStatus.index}");
     return result.map((row) => UserSpace.fromObject(row)).toList();
   }
 
@@ -82,6 +82,21 @@ class UserSpaceRepository {
     Database? db = await this.db;
     var result = await db!
         .rawQuery("SELECT * FROM $tblUserSpaces ORDER BY $colCreatedAt ASC");
+    return result.map((row) => UserSpace.fromObject(row)).toList();
+  }
+
+  Future<List<UserSpace>> findByInvitationStatus(
+      InvitationStatus invitationStatus) async {
+    Database? db = await this.db;
+    var result = await db!.rawQuery(
+        "SELECT * FROM $tblUserSpaces WHERE $colInvitationStatus = ${invitationStatus.index}");
+    return result.map((row) => UserSpace.fromObject(row)).toList();
+  }
+
+  Future<List<UserSpace>> findBySpaceId(String? spaceId) async {
+    Database? db = await this.db;
+    var result = await db!.rawQuery(
+        "SELECT * FROM $tblUserSpaces WHERE $colSpaceId = '$spaceId'");
     return result.map((row) => UserSpace.fromObject(row)).toList();
   }
 

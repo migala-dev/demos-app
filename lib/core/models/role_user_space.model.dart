@@ -25,7 +25,7 @@ class RoleUserSpace {
     map["roleUserSpaceId"] = _roleUserSpaceId;
     map["spaceId"] = _spaceId;
     map["userId"] = _userId;
-    map["role"] = _role;
+    map["role"] = getSpaceRoleString(_role);
     map["deleted"] = _deleted;
     map["createdBy"] = _createdBy;
     map["updatedBy"] = _updatedBy;
@@ -39,7 +39,7 @@ class RoleUserSpace {
     this._spaceId = o["spaceId"];
     this._userId = o["userId"];
     this._role = getSpaceRoleFromString(o["role"]);
-    this._deleted = o["deleted"];
+    this._deleted = o["deleted"] == 0 ? false : true;
     this._createdBy = o["createdBy"];
     this._updatedBy = o["updatedBy"];
     this._createdAt = o["createdAt"];

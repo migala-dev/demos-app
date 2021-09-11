@@ -5,6 +5,7 @@ import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/screens/space_form.screen.dart';
 import 'package:demos_app/modules/spaces/screens/space_percentages_form.screen.dart';
 import 'package:demos_app/modules/spaces/services/new_space.service.dart';
+import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:flutter/material.dart';
 
 enum NewSpaceScreenEnum { SpaceInfo, Percentages }
@@ -16,7 +17,8 @@ class NewSpaceScreen extends StatefulWidget {
   _NewSpaceScreenState createState() => _NewSpaceScreenState();
 }
 
-class _NewSpaceScreenState extends State<NewSpaceScreen> {
+class _NewSpaceScreenState extends State<NewSpaceScreen>
+    with LoadingStateHandler {
   Space newSpace = new Space();
   File? spacePictureFile;
   NewSpaceScreenEnum currentStep = NewSpaceScreenEnum.SpaceInfo;
@@ -49,8 +51,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen> {
             goToNextStep: goToNextStep,
           )
         : SpacePercentagesFormScreen(
-            createNewSpace: createNewSpace,
-          );
+            createNewSpace: createNewSpace, isLoading: isLoading);
   }
 
   void goToNextStep(String name, String description, File? image) {
@@ -64,16 +65,18 @@ class _NewSpaceScreenState extends State<NewSpaceScreen> {
 
   void createNewSpace(
       int approvalPercentage, int participationPercentage) async {
-    newSpace.approvalPercentage = approvalPercentage;
-    newSpace.participationPercentage = participationPercentage;
+    wrapLoadingTransaction(() async {
+      newSpace.approvalPercentage = approvalPercentage;
+      newSpace.participationPercentage = participationPercentage;
+      Space? space = await NewSpaceService().createSpace(newSpace);
+      if (spacePictureFile != null && space != null) {
+        await NewSpaceService()
+            .uploadPicture(space.spaceId!, spacePictureFile!);
+      }
 
-    Space? space = await NewSpaceService().createSpace(newSpace);
-
-    if (spacePictureFile != null && space != null) {
-      await NewSpaceService().uploadPicture(space.spaceId!, spacePictureFile!);
-    }
-
-    Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
+      Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
+      Navigator.pushNamed(context, Routes.invitations);
+    });
   }
 
   Column _appBarTitle() {
