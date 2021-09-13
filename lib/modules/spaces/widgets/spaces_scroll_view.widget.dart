@@ -1,9 +1,9 @@
-import 'package:demos_app/modules/spaces/models/space.model.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/widgets/space_tile.widget.dart';
 import 'package:flutter/material.dart';
 
 class SpacesScrollView extends StatelessWidget {
-  final List<Space> spaces;
+  final List<SpaceView> spaces;
   const SpacesScrollView({Key? key, required this.spaces}) : super(key: key);
 
   @override
@@ -12,12 +12,10 @@ class SpacesScrollView extends StatelessWidget {
       physics: BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: spaces.length,
-      itemBuilder: (context, index) => SpaceTile(
-          image: Container(
-            color: Colors.grey,
-          ),
-          name: spaces[index].name,
-          members: spaces[index].members),
+      itemBuilder: (context, index) {
+        SpaceView space = spaces[index];
+        return SpaceTile(space: space);
+      },
     );
   }
 }

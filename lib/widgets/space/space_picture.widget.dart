@@ -1,18 +1,20 @@
+import 'dart:io';
+
 import 'package:demos_app/widgets/general/bucket_image.image.dart';
 import 'package:flutter/material.dart';
 
-class ProfilePicture extends StatelessWidget {
+class SpacePicture extends StatelessWidget {
   final VoidCallback? onPictureEditPress;
-  final String? imageKey;
+  final String? pictureKey;
+  final File? imageFile;
   final double? width;
-  final double? percentage;
 
-  const ProfilePicture(
+  const SpacePicture(
       {Key? key,
       this.onPictureEditPress,
-      this.imageKey,
-      this.width,
-      this.percentage = 0.4})
+      this.pictureKey,
+      this.imageFile,
+      this.width})
       : super(key: key);
 
   bool get editable => onPictureEditPress != null;
@@ -39,10 +41,29 @@ class ProfilePicture extends StatelessWidget {
   }
 
   Widget getImage(size) {
-    double imageWidth = (width ?? size.width) * percentage;
-    return imageKey == null
-        ? getDefaultImage(imageWidth)
-        : getProfileImage(imageWidth);
+    double imageWidth = width ?? size.width * 0.4;
+    if (imageFile != null) {
+      return getFileImage(imageWidth);
+    }
+    if (pictureKey != null) {
+      return getSpaceImage(imageWidth);
+    }
+    return getDefaultImage(imageWidth);
+  }
+
+  Widget getFileImage(double width) {
+    return Container(
+      width: width,
+      height: width,
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: FittedBox(
+            child: Image.file(
+              imageFile!,
+            ),
+            fit: BoxFit.fill,
+          )),
+    );
   }
 
   Widget getDefaultImage(double width) {
@@ -53,8 +74,7 @@ class ProfilePicture extends StatelessWidget {
         fit: BoxFit.cover);
   }
 
-  Widget getProfileImage(double width) {
-    return BucketImage(
-        imageKey: imageKey, width: width, boderRadius: width / 2);
+  Widget getSpaceImage(double width) {
+    return BucketImage(imageKey: pictureKey, width: width, boderRadius: 10.0);
   }
 }

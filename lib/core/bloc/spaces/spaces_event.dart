@@ -8,7 +8,9 @@ abstract class SpacesEvent extends Equatable {
 }
 
 class SpacesAddSpaceInvitation extends SpacesEvent {
-  final Space invitation;
+  final SpaceView invitation;
 
   SpacesAddSpaceInvitation(this.invitation);
 }
+
+class InitSpaces extends SpacesEvent {}

@@ -1,6 +1,5 @@
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/core/services/bucket.service.dart';
 import 'package:demos_app/modules/spaces/models/invitation_contact.model.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
@@ -32,9 +31,6 @@ class ContactService {
             userContacts.add(userContact);
           } else {
             InvitationContact userContact = InvitationContact.fromUser(user);
-            String imageUrl =
-                await BucketService().getUrlFromKey(user.profilePictureKey);
-            userContact.profilePicture = imageUrl;
             userContacts.add(userContact);
           }
         }

@@ -1,6 +1,5 @@
 import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/services/bucket.service.dart';
-import 'package:demos_app/core/services/user.service.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/widgets/pages/image_editor.page.dart';
 import 'package:demos_app/widgets/profile/profile_form.widget.dart';
@@ -17,7 +16,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> with LoadingStateHandler {
   User? _currentUser;
-  String? _imageUrl;
   final List<Widget>? children;
 
   _ProfileState(this.children) {
@@ -25,9 +23,9 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
   }
 
   void initCurrentUser() async {
-    User? currentUser = await UserService().getCurrentUser();
+    User? currentUser = await CurrentUserService().getCurrentUser();
     if (currentUser != null) {
-      setUserAndImageUrl(currentUser);
+      setUser(currentUser);
     }
   }
 
@@ -43,8 +41,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
             children: [
               Center(
                   child: ProfilePicture(
-                editable: true,
-                imageUrl: _imageUrl,
+                imageKey: _currentUser?.profilePictureKey,
                 onPictureEditPress: onPictureEditPress,
               )),
               Container(
@@ -68,7 +65,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
 
   void updateName(String? name) async {
     wrapLoadingTransaction(() async {
-      User? user = await UserService().updateUserName(name);
+      User? user = await CurrentUserService().updateUserName(name);
       if (user != null) {
         setState(() {
           _currentUser = user;
@@ -86,20 +83,17 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
 
     wrapLoadingTransaction(() async {
       if (image != null) {
-        User? user = await UserService().uploadProfileImage(image);
+        User? user = await CurrentUserService().uploadProfileImage(image);
         if (user != null) {
-          setUserAndImageUrl(user);
+          setUser(user);
         }
       }
     });
   }
 
-  void setUserAndImageUrl(User user) async {
-    String imageUrl =
-        await BucketService().getUrlFromKey(user.profilePictureKey);
+  void setUser(User user) async {
     setState(() {
       _currentUser = user;
-      _imageUrl = user.profilePictureKey != "" ? imageUrl : null;
     });
   }
 }

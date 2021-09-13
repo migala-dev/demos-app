@@ -1,55 +1,25 @@
-import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/modules/spaces/screens/empty_spaces.screen.dart';
 import 'package:flutter/material.dart';
-import 'package:badges/badges.dart';
-
-import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
-import 'package:demos_app/modules/spaces/widgets/spaces_scroll_view.widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:demos_app/modules/spaces/screens/spaces_list.screen.dart';
+import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 
 class SpacesScreen extends StatelessWidget {
   const SpacesScreen({Key? key}) : super(key: key);
 
+  bool areSpacesEmpty(SpacesState state) =>
+      state.spaces.length == 0 && state.invitations.length == 0;
+
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: BlocBuilder<SpacesBloc, SpacesState>(
-        builder: (context, state) => Scaffold(
-            appBar: _spacesAppBar(state),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.newSpace);
-              },
-              child: Icon(Icons.add),
-            ),
-            body: TabBarView(
-              children: [
-                SpacesScrollView(spaces: state.spaces),
-                SpacesScrollView(spaces: state.invitations),
-              ],
-            )),
-      ),
-    );
-  }
+    return BlocBuilder<SpacesBloc, SpacesState>(builder: (context, state) {
+      if (areSpacesEmpty(state)) {
+        return EmptySpacesScreen();
+      }
 
-  AppBar _spacesAppBar(SpacesState state) {
-    return AppBar(
-      title: Text('Demos'),
-      actions: [PopupSpacesMenuButton()],
-      bottom: TabBar(
-        tabs: [
-          Tab(icon: Text('Espacios')),
-          Tab(
-              icon: state.invitations.length == 0
-                  ? Text('Invitaciones')
-                  : Badge(
-                      elevation: 0,
-                      position: BadgePosition(end: -28),
-                      badgeContent: Text('${state.invitations.length}'),
-                      child: Text('Invitaciones'))),
-        ],
-      ),
-    );
+      return SpaceListScreen(
+          spaces: state.spaces, invitations: state.invitations);
+    });
   }
 }

@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
-import 'package:demos_app/modules/spaces/models/space.model.dart';
 import 'package:http/http.dart' as http;
 
 class CacheApiService {

@@ -10,3 +10,14 @@ SpaceRole getSpaceRoleFromString(String role) {
       return SpaceRole.WORKER;
   }
 }
+
+String getSpaceRoleString(SpaceRole? role) {
+  switch (role) {
+    case SpaceRole.ADMIN:
+      return "ADMIN";
+    case SpaceRole.REPRESENTATIVE:
+      return "REPRESENTATIVE";
+    default:
+      return "WORKER";
+  }
+}

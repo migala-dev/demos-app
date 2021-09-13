@@ -20,7 +20,7 @@ void main() async {
   ));
 
   final userPrefs = UserPreferencesService();
-  final bool userIsAuthenticate = await TokenService().isAuthenticate();
+  final bool userIsAuthenticate = !await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
   runApp(MultiBlocProvider(
@@ -28,7 +28,12 @@ void main() async {
       BlocProvider(
         create: (_) => ThemeCubit(userPrefs.themeIsDark),
       ),
-      BlocProvider(create: (_) => SpacesBloc()),
+      BlocProvider(create: (_) {
+        final spacesBloc = SpacesBloc();
+        spacesBloc.add(InitSpaces());
+
+        return spacesBloc;
+      }),
     ],
     child: DemosApp(
         initialRoute: userIsAuthenticate ? Routes.spaces : Routes.login),

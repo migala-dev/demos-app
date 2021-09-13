@@ -1,21 +1,20 @@
 import 'package:demos_app/widgets/general/slider_common_theme.widget.dart';
 import 'package:flutter/material.dart';
 
-class ParticipationPercentageSlider extends StatefulWidget {
+class ApprovalPercentageSlider extends StatefulWidget {
   final int initialValue;
   final void Function(int) onChange;
 
-  const ParticipationPercentageSlider(
+  const ApprovalPercentageSlider(
       {Key? key, required this.onChange, this.initialValue = 51})
       : super(key: key);
 
   @override
-  _ParticipationPercentageState createState() =>
-      _ParticipationPercentageState();
+  _ApprovalPercentageSliderState createState() =>
+      _ApprovalPercentageSliderState();
 }
 
-class _ParticipationPercentageState
-    extends State<ParticipationPercentageSlider> {
+class _ApprovalPercentageSliderState extends State<ApprovalPercentageSlider> {
   final double _minimumPercentage = 51;
   final int _exampleTotalUsers = 30;
   double _currentSliderValue = 0;
@@ -32,14 +31,10 @@ class _ParticipationPercentageState
       children: [
         ListTile(
           contentPadding: EdgeInsets.all(0),
-          title: Text(
-            'Porcentaje de participación',
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
-          ),
-          subtitle: Text(
-            'En votaciones con opción multiple',
-            style: TextStyle(color: Colors.grey[600]),
-          ),
+          title: Text('Porcentaje de aprovación',
+              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400)),
+          subtitle: Text('En votaciones A favor/En contra',
+              style: TextStyle(color: Colors.grey[600])),
           trailing: Container(
             alignment: Alignment.center,
             height: 40,
@@ -81,8 +76,7 @@ class _ParticipationPercentageState
               TextSpan(
                   text: ' ${getTotalUsersCount()} usuarios',
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: ' para aprovar una de las opciones de la propuesta.'),
+              TextSpan(text: ' para aprovar la propuesta'),
             ],
           ),
         )
