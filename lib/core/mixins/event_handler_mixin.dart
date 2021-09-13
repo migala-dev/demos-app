@@ -4,7 +4,7 @@ import 'package:demos_app/core/models/data_event.model.dart';
 
 class EventHandlerMixin implements EventHandler {
   @override
-  String key = 'EventHandlerMixin';
+  String key = '';
   List<EventHandler> eventHandlers = [];
 
   @override

@@ -1,7 +1,10 @@
+import 'dart:convert';
 import 'dart:math';
 
+import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
 import 'package:demos_app/modules/spaces/models/space.model.dart';
+import 'package:http/http.dart' as http;
 
 class CacheApiService {
   static final CacheApiService _cacheApiService = CacheApiService._internal();
@@ -12,13 +15,16 @@ class CacheApiService {
   }
 
   Future<List<DataEvent>> getCache() async {
-    return [];
-  }
+    final uri = Uri.parse(ApiPath().getGetCache());
+    final resp = await http.get(uri);
+    if (resp.statusCode != 200) {
+      return [];
+    }
 
-  Future<Space> getInvitation(String id) async {
-    var rng = new Random();
+    final List data = jsonDecode(resp.body);
 
-    return Space(
-        name: "Invitación ${rng.nextInt(100)}", members: rng.nextInt(50));
+    final events = data.map((event) => DataEvent.fromObject(event)).toList();
+
+    return events;
   }
 }

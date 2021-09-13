@@ -1,6 +1,7 @@
 class ApiPath {
   final String _authServiceUrl = 'http://10.0.2.2:3000/v1';
   final String _websocketService = 'ws://10.0.2.2:8080';
+  final String _cacheService = 'http://10.0.2.2:8080';
 
   //  Auth paths
   String _getAuthPath() {
@@ -29,4 +30,6 @@ class ApiPath {
   }
 
   String getWebsocketServicePath() => '$_websocketService/ws?id=pruebaflutter';
+
+  String getGetCache() => '$_cacheService/get_cache';
 }

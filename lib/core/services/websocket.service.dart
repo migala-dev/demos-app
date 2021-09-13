@@ -1,6 +1,7 @@
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/event_handlers/user_space/user_space_handler.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
+import 'package:demos_app/core/services/cache.service.dart';
 import 'package:web_socket_channel/io.dart';
 
 class WebSocketService {
@@ -17,11 +18,10 @@ class WebSocketService {
 
   void listenToEvents() {
     final _channel = _getChannelConnection();
-    final _userSpaceHandler = UserSpaceHandler();
+    final _cacheService = CacheService();
 
-    _channel.stream.listen((event) {
-      final dataEvent = DataEvent.fromJson(event);
-      _userSpaceHandler.handleEvent(dataEvent);
+    _channel.stream.listen((_) {
+      _cacheService.getCache();
     });
   }
 }

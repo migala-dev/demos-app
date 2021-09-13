@@ -44,7 +44,7 @@ class CacheService {
 
   Future<void> handleEvent(DataEvent dataEvent) async {
     try {
-      EventHandler? handler = _getEventHandler(dataEvent.eventName);
+      EventHandler? handler = _getEventHandler(dataEvent.entityName);
       await handler?.handleEvent(dataEvent);
     } catch (e) {}
   }
