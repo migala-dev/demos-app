@@ -68,7 +68,7 @@ class InvitationContactList extends StatelessWidget {
       );
     }
     return ProfilePicture(
-      imageUrl: user.profilePicture,
+      imageKey: user.profilePictureKey,
       percentage: 0.12,
     );
   }

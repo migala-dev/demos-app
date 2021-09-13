@@ -1,3 +1,5 @@
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
 import 'package:flutter/material.dart';
 
 class EmptySpacesScreen extends StatelessWidget {
@@ -5,26 +7,38 @@ class EmptySpacesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Espacios'),
-          actions: [IconButton(onPressed: () {}, icon: Icon(Icons.more_vert))],
+          title: Text('Demos'),
+          actions: [PopupSpacesMenuButton()],
         ),
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: EdgeInsets.only(
+                bottom: size.height * 0.2, right: 20.0, left: 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: 28.0),
+                  child: Icon(
+                    Icons.category,
+                    color: Colors.grey,
+                    size: size.width * 0.35,
+                  ),
+                ),
                 Text('No tienes espacios por el momento',
-                    style: TextStyle(color: Colors.grey)),
+                    style: TextStyle(color: Colors.grey, fontSize: 16.0)),
                 SizedBox(
                   height: 10,
                 ),
                 ConstrainedBox(
                   constraints: BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        goToCreateNewSpace(context);
+                      },
                       child: Text(
                         'Crea tu primer espacio',
                       )),
@@ -33,5 +47,9 @@ class EmptySpacesScreen extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  void goToCreateNewSpace(BuildContext context) {
+    Navigator.pushNamed(context, Routes.newSpace);
   }
 }

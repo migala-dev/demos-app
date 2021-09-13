@@ -3,7 +3,6 @@ class User {
   String? _name;
   late String _phoneNumber;
   String? _profilePictureKey;
-  String? _profilePicture;
   String? _createdAt;
   String? _updatedAt;
 
@@ -13,11 +12,6 @@ class User {
   String get name => this._name ?? '';
   String get phoneNumber => this._phoneNumber;
   String? get profilePictureKey => this._profilePictureKey;
-  String? get profilePicture => this._profilePicture;
-
-  set profilePicture(String? profilePicture) {
-    this._profilePicture = profilePicture;
-  }
 
   set name(String name) => this._name = name;
 

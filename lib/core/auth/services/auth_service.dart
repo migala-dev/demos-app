@@ -6,7 +6,7 @@ import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/core/services/api_service.dart';
 import 'package:demos_app/core/services/bucket.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
-import 'package:demos_app/core/services/user.service.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
 
 class AuthService {
@@ -79,7 +79,7 @@ class AuthService {
     if (user != null) {
       await UsersRepository().insert(user);
 
-      await UserService().setCurrentUser(user.userId);
+      await CurrentUserService().setCurrentUser(user.userId);
     }
   }
 
