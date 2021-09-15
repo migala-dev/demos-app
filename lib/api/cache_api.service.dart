@@ -13,7 +13,8 @@ class CacheApiService {
   }
 
   Future<List<DataEvent>> getCache() async {
-    final resp = await ApiSerivce().get(ApiPath().getGetCache());
+    String endpoint = ApiPath().getGetCache();
+    final resp = await ApiSerivce().get(endpoint);
     if (resp.statusCode != 200) {
       return [];
     }
