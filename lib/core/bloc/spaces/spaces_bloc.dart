@@ -18,14 +18,14 @@ class SpacesBloc extends Bloc<SpacesEvent, SpacesState> {
     SpacesEvent event,
   ) async* {
     if (event is InitSpaces) {
-      yield await _mapSpacesInitializeToSate();
+      yield await _mapSpacesInitializeToState();
     } else if (event is SpacesAddSpaceInvitation) {
       yield state
           .copyWith(invitations: [event.invitation, ...state.invitations]);
     }
   }
 
-  Future<SpacesState> _mapSpacesInitializeToSate() async {
+  Future<SpacesState> _mapSpacesInitializeToState() async {
     final spaceService = SpaceService();
 
     final spacesStored = await spaceService.getSpaces();

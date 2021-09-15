@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
-import 'package:http/http.dart' as http;
+import 'package:demos_app/core/services/api_service.dart';
 
 class CacheApiService {
   static final CacheApiService _cacheApiService = CacheApiService._internal();
@@ -13,8 +13,7 @@ class CacheApiService {
   }
 
   Future<List<DataEvent>> getCache() async {
-    final uri = Uri.parse(ApiPath().getGetCache());
-    final resp = await http.get(uri);
+    final resp = await ApiSerivce().get(ApiPath().getGetCache());
     if (resp.statusCode != 200) {
       return [];
     }
