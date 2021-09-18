@@ -9,4 +9,7 @@ class SpaceView {
       required this.name,
       this.pictureKey,
       required this.membersCount});
+
+  factory SpaceView.fromObject(Map<String, dynamic> o) =>
+      SpaceView(spaceId: o['id'], name: o['name'], membersCount: o['members']);
 }
