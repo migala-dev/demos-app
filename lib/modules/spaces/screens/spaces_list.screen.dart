@@ -26,8 +26,9 @@ class SpaceListScreen extends StatelessWidget {
                 Tab(icon: Text('Espacios')),
                 Tab(
                     icon: Badge(
+                        showBadge: invitations.length > 0,
                         elevation: 0,
-                        position: BadgePosition(end: -20),
+                        position: BadgePosition(end: -28),
                         badgeContent: Text('${invitations.length}'),
                         child: Text('Invitaciones'))),
               ],

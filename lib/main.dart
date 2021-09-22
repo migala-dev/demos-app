@@ -1,9 +1,11 @@
-import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
 
+import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/core/services/websocket.service.dart';
+import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
@@ -18,14 +20,20 @@ void main() async {
   ));
 
   final userPrefs = UserPreferencesService();
-  final bool userIsAuthenticate = await TokenService().isAuthenticate();
+  final bool userIsAuthenticate = !await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
         create: (_) => ThemeCubit(userPrefs.themeIsDark),
-      )
+      ),
+      BlocProvider(create: (_) {
+        final spacesBloc = SpacesBloc();
+        spacesBloc.add(InitSpaces());
+
+        return spacesBloc;
+      }),
     ],
     child: DemosApp(
         initialRoute: userIsAuthenticate ? Routes.spaces : Routes.login),
@@ -39,6 +47,9 @@ class DemosApp extends StatelessWidget {
     final router = FluroRouter();
     Routes.configureRoutes(router, initialRoute);
     Application.router = router;
+
+    final webSocketService = WebSocketService();
+    webSocketService.listenToEvents();
   }
 
   @override
