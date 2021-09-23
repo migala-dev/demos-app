@@ -16,6 +16,9 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 
 
+## Convencion para nombrar archivos
+*file-name*.*file-identifier*.dart
+
 ## Estructura de archivos
 ### General
 /lib
@@ -25,10 +28,8 @@ samples, guidance on mobile development, and a full API reference.
 &nbsp;&nbsp; /modules
 &nbsp;&nbsp;&nbsp;&nbsp;/*module-name* (spaces)
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/models
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*entity-name*_view.model.ts
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//Son entidades que solo se usan en los widgets
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*entity-name*_reponse.model.ts
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Respuestas de backend
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*entity-name*_view.model.dart
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*entity-name*_reponse.model.dart
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/widgets
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/services
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/pages
@@ -48,42 +49,62 @@ samples, guidance on mobile development, and a full API reference.
 ### Core
 
 #### Api (NEW)
-
+Esta capa conecta el servidor y los servicios (Aqui se mapea la respuesta)
 #### Models
+Modelos de la aplicacion en general
 
 #### Services
+Servicios de la aplicacion en general
 
 #### Enums
+Enumerables del proyecto en general
 
 #### Repositories
-Tecnologias:
+Los repositorios son archivos que contienen las conexiones a tablas de la base de datos local
 
+Tecnologias:
+SQLite Flutter
 #### Bloc (New)
 
 #### Listeners
+Archivos que manejan las respuestas del cache
 
 ---
 
 ### Modules
+Un modulo es una unidad contenedora de mas pantallas o paginas
+Todas las carpetas dentro de la seccion de module empiezan con el nombre del modulo correspondiente.
 
 #### *module-name*
 
-
+Subcarpetas:
 * widgets
 * models
 * services
 * pages
-
+Se describe en la siguiente seccion
 
  ##### Pages
+Archivos base:
+*page-name*.page.dart (spaces.page.dart)
 
+Subcarpetas:
 * widgets
 * models
+* services
 * screens
+Se describe en la siguiente seccion
 
-
-
-
+##### Screens
+*screen-name*.page.dart (empty_spaces.page.dart)
+Subcarpetas:
+* widgets
+* models
+* services
 ---
 
 ### Tipos de modelos
+* *entity-name*_view.model.ts
+Son entidades que solo se usan en los widgets
+* *entity-name*_reponse.model.ts
+Respuestas de backend

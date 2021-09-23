@@ -8,7 +8,7 @@ import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 class SpacesScreen extends StatelessWidget {
   const SpacesScreen({Key? key}) : super(key: key);
 
-  bool areSpacesEmpty(SpacesState state) =>
+  bool areSpacesEmpty(SpacesS tate state) =>
       state.spaces.length == 0 && state.invitations.length == 0;
 
   @override

@@ -2,7 +2,7 @@ import 'package:demos_app/core/models/role_user_space.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/user_space.dart';
 
-class CreateSpaceResponse {
+class NewSpaceResponse {
   late Space? _space;
   late UserSpace? _userSpace;
   late RoleUserSpace? _roleUserSpace;
@@ -11,7 +11,7 @@ class CreateSpaceResponse {
   UserSpace? get userSpace => this._userSpace;
   RoleUserSpace? get roleUserSpace => this._roleUserSpace;
 
-  CreateSpaceResponse.fromObject(dynamic o) {
+  NewSpaceResponse.fromObject(dynamic o) {
     this._space = Space.fromObject(o["space"]);
     this._userSpace = UserSpace.fromObject(o["userSpace"]);
     this._roleUserSpace = RoleUserSpace.fromObject(o["roleUserSpace"]);

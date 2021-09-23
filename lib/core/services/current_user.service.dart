@@ -37,26 +37,17 @@ class CurrentUserService {
   }
 
   Future<User?> updateUserName(String? name) async {
-    String endpoint = ApiPath().getUserPath();
-
-    Object params = {'name': name};
-
-    final httpResponse = await ApiSerivce().patch(endpoint, params);
-
-    User userSaved = User.fromObject(httpResponse);
-
+    User userSaved = await UserApiService.updateUserName(name);
+    
     UsersRepository().updateUser(userSaved);
+
     _currentUser = userSaved;
 
     return userSaved;
   }
 
   Future<User?> uploadProfileImage(File file) async {
-    String endpoint = ApiPath().getUpdateProfileImagePath();
-
-    final httpResponse = await ApiSerivce().upload(endpoint, file);
-
-    User userSaved = User.fromObject(httpResponse);
+    User userSaved = await UserApiService.uploadProfileImage(file);
 
     UsersRepository().updateUser(userSaved);
 
