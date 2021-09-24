@@ -20,7 +20,7 @@ void main() async {
   ));
 
   final userPrefs = UserPreferencesService();
-  final bool userIsAuthenticate = !await TokenService().isAuthenticate();
+  final bool userIsAuthenticate = await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
   runApp(MultiBlocProvider(
