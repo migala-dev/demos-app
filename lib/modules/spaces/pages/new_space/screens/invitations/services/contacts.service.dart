@@ -1,6 +1,6 @@
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/modules/spaces/models/invitation_contact.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class ContactService {

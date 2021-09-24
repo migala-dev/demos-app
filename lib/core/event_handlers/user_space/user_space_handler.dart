@@ -1,5 +1,5 @@
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
-import 'package:demos_app/core/interface/event.handler.interface.dart';
+import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -12,7 +12,7 @@ class UserSpaceHandler extends EventHandlerMixin {
   @override
   String key = 'user_space';
   @override
-  List<EventHandler> eventHandlers = [UserSpaceInvitationEvent()];
+  final List<EventHandler> eventHandlers = [UserSpaceInvitationEvent()];
 }
 
 class UserSpaceInvitationEvent implements EventHandler {

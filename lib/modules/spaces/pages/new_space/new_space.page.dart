@@ -1,10 +1,9 @@
 import 'dart:io';
-
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/modules/spaces/screens/space_form.screen.dart';
-import 'package:demos_app/modules/spaces/screens/space_percentages_form.screen.dart';
-import 'package:demos_app/modules/spaces/services/new_space.service.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/space_form.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/space_percentages_form.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:flutter/material.dart';
 

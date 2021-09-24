@@ -1,11 +1,8 @@
 import 'dart:io';
-
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/core/api/user.api.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import 'api_service.dart';
 
 class CurrentUserService {
   User? _currentUser;
@@ -37,7 +34,7 @@ class CurrentUserService {
   }
 
   Future<User?> updateUserName(String? name) async {
-    User userSaved = await UserApiService.updateUserName(name);
+    User userSaved = await UserApi.updateUserName(name);
     
     UsersRepository().updateUser(userSaved);
 
@@ -47,9 +44,9 @@ class CurrentUserService {
   }
 
   Future<User?> uploadProfileImage(File file) async {
-    User userSaved = await UserApiService.uploadProfileImage(file);
+    User? userSaved = await UserApi.uploadProfileImage(file);
 
-    UsersRepository().updateUser(userSaved);
+    UsersRepository().updateUser(userSaved!);
 
     _currentUser = userSaved;
 

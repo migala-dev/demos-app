@@ -1,18 +1,19 @@
 import 'package:demos_app/constans/api_path.dart';
-import 'package:demos_app/core/auth/models/verify_code_response.model.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/core/services/api_service.dart';
 import 'package:demos_app/core/services/bucket.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
+import 'package:demos_app/modules/auth/api/auth.api.dart';
+import 'package:demos_app/modules/auth/models/verify_code_response.model.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
 
 class AuthService {
   String? _phoneNumber;
   String? _session;
   int _attemptCount = 0;
+  final int _totalOfAttempts = 3;
   static final AuthService _authService = AuthService._internal();
   AuthService._internal();
 
@@ -25,30 +26,17 @@ class AuthService {
   }
 
   Future<bool> signIn(String phoneNumber) async {
-    String endpoint = ApiPath().getSignInPath();
     _phoneNumber = phoneNumber;
-    Object params = {
-      "phoneNumber": phoneNumber,
-    };
 
-    final response = await ApiSerivce().post(endpoint, params);
-
-    _session = response['session'];
-    _attemptCount = 3;
+    String session = await AuthApi().signIn(phoneNumber);
+    _session = session;
+    _attemptCount = _totalOfAttempts;
 
     return true;
   }
 
   Future<User?> verifyCode(String code) async {
-    String endpoint = ApiPath().getVerifyCodePath();
-    Object params = {
-      "phoneNumber": _phoneNumber,
-      "code": code,
-      "session": _session,
-    };
-    final httpResponse = await ApiSerivce().post(endpoint, params);
-
-    VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
+    VerifyCodeReponse response = await AuthApi().verifyCode(code, _phoneNumber!, _session!);
 
     if (!_isCodeValid(response)) {
       _attemptCount -= 1;

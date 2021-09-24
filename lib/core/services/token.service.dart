@@ -1,10 +1,8 @@
 import 'dart:async';
-
 import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import 'api_service.dart';
 
 class TokenService {
   String _refreshTokenKey = 'refresh-token';
@@ -53,7 +51,7 @@ class TokenService {
       'refreshToken': refreshToken,
     };
 
-    final httpResponse = await ApiSerivce().post(endpoint, params);
+    final httpResponse = await Api.post(endpoint, params);
 
     Tokens tokens = Tokens.fromObject(httpResponse);
 

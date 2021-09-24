@@ -1,20 +1,20 @@
 import 'dart:convert';
-
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
-import 'package:demos_app/core/services/api_service.dart';
 
-class CacheApiService {
-  static final CacheApiService _cacheApiService = CacheApiService._internal();
-  CacheApiService._internal();
+import 'api.dart';
 
-  factory CacheApiService() {
-    return _cacheApiService;
+class CacheApi {
+  static final CacheApi _cacheApi = CacheApi._internal();
+  CacheApi._internal();
+
+  factory CacheApi() {
+    return _cacheApi;
   }
 
   Future<List<DataEvent>> getCache() async {
     String endpoint = ApiPath().getGetCache();
-    final resp = await ApiSerivce().get(endpoint);
+    final resp = await Api.get(endpoint);
     if (resp.statusCode != 200) {
       return [];
     }

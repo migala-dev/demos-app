@@ -1,10 +1,10 @@
-import 'package:demos_app/modules/spaces/models/settings/profile_option.model.dart';
-import 'package:demos_app/modules/spaces/models/settings/settings_option.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/models/profile_menu_option.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/models/settings_menu_option.model.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
 import 'package:flutter/material.dart';
 
 class PopupSpacesMenuButton extends StatelessWidget {
-  final List<MenuOption> menuOptions = [ProfileOption(), SettingsOption()];
+  final List<MenuOption> menuOptions = [ProfileMenuOption(), SettingsMenuOption()];
 
   PopupSpacesMenuButton({Key? key}) : super(key: key);
 

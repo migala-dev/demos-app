@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
-import 'package:demos_app/modules/spaces/services/spaces.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/spaces.service.dart';
 import 'package:equatable/equatable.dart';
 
 part 'spaces_event.dart';

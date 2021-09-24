@@ -1,7 +1,8 @@
-import 'package:demos_app/modules/spaces/models/invitation_contact.model.dart';
-import 'package:demos_app/modules/spaces/services/contacts.service.dart';
-import 'package:demos_app/modules/spaces/widgets/invitation_contact_list.widget.dart';
-import 'package:demos_app/modules/spaces/widgets/invitation_search_field.widget.dart';
+
+import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/services/contacts.service.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_contact_list.widget.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_search_field.widget.dart';
 import 'package:flutter/material.dart';
 
 class InvitationsScreen extends StatefulWidget {

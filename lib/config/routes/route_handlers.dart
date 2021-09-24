@@ -1,16 +1,14 @@
-import 'package:demos_app/modules/spaces/screens/invitations.screen.dart';
+import 'package:demos_app/modules/auth/screens/initial_profile.dart';
+import 'package:demos_app/modules/auth/screens/login.dart';
+import 'package:demos_app/modules/auth/screens/verify_phone.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/spaces.page.dart';
+import 'package:demos_app/modules/spaces/screens/general_settings.screen.dart';
+import 'package:demos_app/modules/spaces/screens/profile.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
-
-import 'package:demos_app/modules/settings/screens/general_settings.screen.dart';
-import 'package:demos_app/modules/settings/screens/profile.screen.dart';
-import 'package:demos_app/modules/spaces/screens/new_space.screen.dart';
-import 'package:demos_app/modules/spaces/screens/spaces.screen.dart';
-import 'package:demos_app/modules/space_details/screens/spaces_details_screen.dart';
-
-import 'package:demos_app/core/auth/screens/login.dart';
-import 'package:demos_app/core/auth/screens/initial_profile.dart';
-import 'package:demos_app/core/auth/screens/verify_phone.dart';
 
 var loginHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

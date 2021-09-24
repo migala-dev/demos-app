@@ -1,5 +1,5 @@
 import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/modules/spaces/widgets/popup_spaces_menu_button.widget.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_button.widget.dart';
 import 'package:flutter/material.dart';
 
 class EmptySpacesScreen extends StatelessWidget {

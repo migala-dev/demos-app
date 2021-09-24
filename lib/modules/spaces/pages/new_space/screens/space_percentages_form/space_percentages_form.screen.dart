@@ -1,7 +1,7 @@
-import 'package:demos_app/modules/spaces/widgets/participation_percentage_slider.widget.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/approval_percentage_slider.widget.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/participation_percentage_slider.widget.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/modules/spaces/widgets/approval_percentage_slider.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
 class SpacePercentagesFormScreen extends StatefulWidget {
