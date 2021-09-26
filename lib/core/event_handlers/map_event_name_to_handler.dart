@@ -1,4 +1,4 @@
-import 'package:demos_app/core/interface/event.handler.interface.dart';
+import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 
 EventHandler? mapEventNameToHandler(
     String keyEvent, List<EventHandler> eventHandlers) {

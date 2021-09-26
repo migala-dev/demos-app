@@ -1,7 +1,7 @@
-import 'package:demos_app/api/cache_api.service.dart';
+import 'package:demos_app/core/api/cache.api.dart';
 import 'package:demos_app/core/event_handlers/map_event_name_to_handler.dart';
 import 'package:demos_app/core/event_handlers/user_space/user_space_handler.dart';
-import 'package:demos_app/core/interface/event.handler.interface.dart';
+import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
 
 class CacheService {
@@ -17,7 +17,7 @@ class CacheService {
   }
 
   Future<void> getCache() async {
-    List<DataEvent> dataEventList = await CacheApiService().getCache();
+    List<DataEvent> dataEventList = await CacheApi().getCache();
     await _handleEvents(dataEventList);
   }
 

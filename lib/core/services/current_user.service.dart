@@ -1,11 +1,8 @@
 import 'dart:io';
-
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/core/api/user.api.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import 'api_service.dart';
 
 class CurrentUserService {
   User? _currentUser;
@@ -37,28 +34,19 @@ class CurrentUserService {
   }
 
   Future<User?> updateUserName(String? name) async {
-    String endpoint = ApiPath().getUserPath();
-
-    Object params = {'name': name};
-
-    final httpResponse = await ApiSerivce().patch(endpoint, params);
-
-    User userSaved = User.fromObject(httpResponse);
-
+    User userSaved = await UserApi.updateUserName(name);
+    
     UsersRepository().updateUser(userSaved);
+
     _currentUser = userSaved;
 
     return userSaved;
   }
 
   Future<User?> uploadProfileImage(File file) async {
-    String endpoint = ApiPath().getUpdateProfileImagePath();
+    User? userSaved = await UserApi.uploadProfileImage(file);
 
-    final httpResponse = await ApiSerivce().upload(endpoint, file);
-
-    User userSaved = User.fromObject(httpResponse);
-
-    UsersRepository().updateUser(userSaved);
+    UsersRepository().updateUser(userSaved!);
 
     _currentUser = userSaved;
 
