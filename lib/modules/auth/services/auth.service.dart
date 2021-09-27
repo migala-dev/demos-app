@@ -1,10 +1,10 @@
-import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/core/services/bucket.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
+import 'package:demos_app/core/services/websocket.service.dart';
 import 'package:demos_app/modules/auth/api/auth.api.dart';
 import 'package:demos_app/modules/auth/models/verify_code_response.model.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
@@ -55,6 +55,8 @@ class AuthService {
 
     await BucketService().setBucketName(response.bucketName!);
 
+    createWebSocketConnection(response.user);
+
     return response.user;
   }
 
@@ -76,5 +78,10 @@ class AuthService {
     if (tokens != null) {
       await TokenService().saveTokens(tokens);
     }
+  }
+
+  void createWebSocketConnection(User? user) {
+    WebSocketService webSocketService = WebSocketService();
+    webSocketService.createConnection(user!.userId!);
   }
 }
