@@ -3,12 +3,16 @@ import 'package:demos_app/enviroments/get-enviroment.dart';
 
 class SpacePath {
   //  Space paths
-  String getSpacePath() {
+  String getSpacesPath() {
     Enviroment enviroment = getEnviroment();
     return '${enviroment.spaceServiceUrl}/spaces';
   }
 
+  String getSpacePath(String spaceId) {
+    return '${getSpacesPath()}/$spaceId';
+  }
+
   String getUpdateSpaceImagePath(String spaceId) {
-    return '${getSpacePath()}/$spaceId/picture';
+    return '${getSpacePath(spaceId)}/picture';
   }
 }

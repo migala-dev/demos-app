@@ -16,7 +16,7 @@ class Api {
     return headers;
   }
 
-  static Future<http.Response> get(String endpoint) async {
+  static Future<dynamic> get(String endpoint) async {
     Future<http.Response> call = http.get(Uri.parse(endpoint),
         headers: _getDefaultHeaders());
     var response = await _handleErrors(call);

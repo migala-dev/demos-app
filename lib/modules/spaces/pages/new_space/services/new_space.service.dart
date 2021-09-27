@@ -1,22 +1,26 @@
 import 'dart:io';
+import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/models/role_user_space.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/user_space.dart';
 import 'package:demos_app/core/repositories/role_user_space.repository.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/user_space.dart';
-import 'package:demos_app/modules/spaces/api/space.api.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/models/new_space_response.model.dart';
+import 'package:demos_app/core/models/responses/space_response.model.dart';
 
 class NewSpaceService {
   Future<Space?> createSpace(Space newSpace) async {
-    NewSpaceResponse response = await SpaceApi().createSpace(newSpace);
+    SpaceResponse response = await SpaceApi().createSpace(newSpace);
     
+    await addSpaceEntitiesFromResponse(response);
+
+    return response.space;
+  }
+
+  Future<void> addSpaceEntitiesFromResponse(SpaceResponse response) async {
     await _saveSpace(response.space);
     await _saveUserSpace(response.userSpace);
     await _saveRoleUserSpace(response.roleUserSpace);
-
-    return response.space;
   }
 
   Future<Space?> uploadPicture(String spaceId, File file) async {

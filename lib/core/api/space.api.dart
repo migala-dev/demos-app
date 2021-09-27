@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:demos_app/constans/space.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/models/new_space_response.model.dart';
+import 'package:demos_app/core/models/responses/space_response.model.dart';
 
 class SpaceApi {
   static SpaceApi _spaceApi = SpaceApi._internal();
@@ -16,8 +16,8 @@ class SpaceApi {
     return _spaceApi;
   }
 
-  Future<NewSpaceResponse> createSpace(Space newSpace) async {
-    String endpoint = SpacePath().getSpacePath();
+  Future<SpaceResponse> createSpace(Space newSpace) async {
+    String endpoint = SpacePath().getSpacesPath();
     Object params = {
       "name": newSpace.name,
       "description": newSpace.description,
@@ -26,7 +26,7 @@ class SpaceApi {
     };
     final httpResponse = await Api.post(endpoint, params);
 
-    NewSpaceResponse response = NewSpaceResponse.fromObject(httpResponse);
+    SpaceResponse response = SpaceResponse.fromObject(httpResponse);
 
     return response;
   }
@@ -40,4 +40,14 @@ class SpaceApi {
 
     return spaceUpdated;
   }
+
+  Future<SpaceResponse> getSpace(String spaceId) async {
+    String endpoint = SpacePath().getSpacePath(spaceId);
+    final httpResponse = await Api.get(endpoint);
+
+    SpaceResponse response = SpaceResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
 }

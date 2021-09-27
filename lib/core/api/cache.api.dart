@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/models/data_event.model.dart';
 
@@ -13,15 +12,10 @@ class CacheApi {
   }
 
   Future<List<DataEvent>> getCache() async {
-    String endpoint = ApiPath().getGetCache();
-    final resp = await Api.get(endpoint);
-    if (resp.statusCode != 200) {
-      return [];
-    }
+    String endpoint = ApiPath().getGetCachePath();
+    final List httpResponse  = await Api.get(endpoint);
 
-    final List data = jsonDecode(resp.body);
-
-    final events = data.map((event) => DataEvent.fromObject(event)).toList();
+    final events = httpResponse.map((event) => DataEvent.fromObject(event)).toList();
 
     return events;
   }
