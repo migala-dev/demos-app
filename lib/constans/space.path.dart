@@ -1,9 +1,11 @@
-class SpacePath {
-  String _spaceServiceUrl = 'http://10.0.2.2:3001/v1';
+import 'package:demos_app/enviroments/enviroment.interface.dart';
+import 'package:demos_app/enviroments/get-enviroment.dart';
 
+class SpacePath {
   //  Space paths
   String getSpacePath() {
-    return '$_spaceServiceUrl/spaces';
+    Enviroment enviroment = getEnviroment();
+    return '${enviroment.spaceServiceUrl}/spaces';
   }
 
   String getUpdateSpaceImagePath(String spaceId) {

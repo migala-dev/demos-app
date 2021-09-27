@@ -1,11 +1,11 @@
-class ApiPath {
-  final String _authServiceUrl = 'http://10.0.2.2:3000/v1';
-  final String _websocketService = 'ws://10.0.2.2:8080';
-  final String _cacheService = 'http://10.0.2.2:8080';
+import 'package:demos_app/enviroments/enviroment.interface.dart';
+import 'package:demos_app/enviroments/get-enviroment.dart';
 
+class ApiPath {
   //  Auth paths
   String _getAuthPath() {
-    return '$_authServiceUrl/auth';
+    Enviroment enviroment = getEnviroment();
+    return '${enviroment.authServiceUrl}/auth';
   }
 
   String getSignInPath() {
@@ -22,14 +22,21 @@ class ApiPath {
 
   //  Users paths
   String getUserPath() {
-    return '$_authServiceUrl/user';
+    Enviroment enviroment = getEnviroment();
+    return '${enviroment.authServiceUrl}/user';
   }
 
   String getUpdateProfileImagePath() {
     return '${getUserPath()}/avatar';
   }
 
-  String getWebsocketServicePath() => '$_websocketService/ws?id=pruebaflutter';
+  String getWebsocketServicePath(String userId) {
+    Enviroment enviroment = getEnviroment();
+    return '${enviroment.websocketServiceUrl}/$userId';
+  } 
 
-  String getGetCache() => '$_cacheService/get_cache';
+  String getGetCache() {
+    Enviroment enviroment = getEnviroment();
+    return '${enviroment.cacheServiceUrl}/get-cache';
+  }
 }
