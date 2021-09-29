@@ -30,6 +30,6 @@ class UserSpaceInvitationEvent implements EventHandler {
     await NewSpaceService().addSpaceEntitiesFromResponse(response);
 
     final spacesBloc = SpacesBloc();
-    spacesBloc.add(LoadSpacesEvent());
+    spacesBloc.add(LoadInitSpacesEvent());
   }
 }

@@ -25,8 +25,8 @@ void main() async {
   final bool userIsAuthenticate = await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
-  if(userIsAuthenticate) {
-    User? currentUser =  await CurrentUserService().getCurrentUser();
+  if (userIsAuthenticate) {
+    User? currentUser = await CurrentUserService().getCurrentUser();
     WebSocketService webSocketService = WebSocketService();
     webSocketService.createConnection(currentUser!.userId!);
   }
@@ -38,7 +38,7 @@ void main() async {
       ),
       BlocProvider(create: (_) {
         final spacesBloc = SpacesBloc();
-        spacesBloc.add(LoadSpacesEvent());
+        spacesBloc.add(LoadInitSpacesEvent());
 
         return spacesBloc;
       }),
@@ -55,7 +55,6 @@ class DemosApp extends StatelessWidget {
     final router = FluroRouter();
     Routes.configureRoutes(router, initialRoute);
     Application.router = router;
-
   }
 
   @override

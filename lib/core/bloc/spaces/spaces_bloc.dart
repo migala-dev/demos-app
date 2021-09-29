@@ -9,24 +9,18 @@ part 'spaces_state.dart';
 
 class SpacesBloc extends Bloc<SpacesEvent, SpacesState> {
   static final _spacesBloc = SpacesBloc._internal();
-  SpacesBloc._internal() : super(SpacesState(invitations: [], spaces: []));
+  SpacesBloc._internal() : super(SpacesState(invitations: [], spaces: [])) {
+    on<LoadInitSpacesEvent>(_onLoadInitSpaces);
+  }
   factory SpacesBloc() => _spacesBloc;
 
-  @override
-  Stream<SpacesState> mapEventToState(
-    SpacesEvent event,
-  ) async* {
-      if(event == LoadSpacesEvent()) {
-        yield await _mapSpacesInitializeToState();
-      }
-  }
-
-  Future<SpacesState> _mapSpacesInitializeToState() async {
+  FutureOr<void> _onLoadInitSpaces(
+      SpacesEvent event, Emitter<SpacesState> emit) async {
     final spaceService = SpaceService();
 
     final spacesStored = await spaceService.getSpaces();
     final invitationsStored = await spaceService.getInvitations();
 
-    return SpacesState(spaces: spacesStored, invitations: invitationsStored);
+    emit(SpacesState(spaces: spacesStored, invitations: invitationsStored));
   }
 }
