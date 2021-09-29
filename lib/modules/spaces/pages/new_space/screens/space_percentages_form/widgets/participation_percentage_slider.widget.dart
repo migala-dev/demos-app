@@ -82,7 +82,7 @@ class _ParticipationPercentageState
                   text: ' ${getTotalUsersCount()} usuarios',
                   style: TextStyle(fontWeight: FontWeight.bold)),
               TextSpan(
-                  text: ' para aprovar una de las opciones de la propuesta.'),
+                  text: ' para aprobar una de las opciones de la propuesta.'),
             ],
           ),
         )

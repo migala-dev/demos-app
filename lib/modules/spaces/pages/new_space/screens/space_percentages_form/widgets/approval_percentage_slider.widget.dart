@@ -76,7 +76,7 @@ class _ApprovalPercentageSliderState extends State<ApprovalPercentageSlider> {
               TextSpan(
                   text: ' ${getTotalUsersCount()} usuarios',
                   style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(text: ' para aprovar la propuesta'),
+              TextSpan(text: ' para aprobar la propuesta'),
             ],
           ),
         )
