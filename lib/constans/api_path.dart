@@ -35,8 +35,8 @@ class ApiPath {
     return '${enviroment.websocketServiceUrl}/$userId';
   } 
 
-  String getGetCache() {
+  String getGetCachePath() {
     Enviroment enviroment = getEnviroment();
-    return '${enviroment.cacheServiceUrl}/get-cache';
+    return '${enviroment.cacheServiceUrl}/cache';
   }
 }

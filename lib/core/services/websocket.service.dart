@@ -1,26 +1,29 @@
 import 'package:demos_app/constans/api_path.dart';
-import 'package:demos_app/core/event_handlers/user_space/user_space_handler.dart';
-import 'package:demos_app/core/models/data_event.model.dart';
 import 'package:demos_app/core/services/cache.service.dart';
 import 'package:web_socket_channel/io.dart';
 
 class WebSocketService {
-  static final WebSocketService userSpaceEventListener =
-      WebSocketService._internal();
+  final Duration pingInterval = Duration(seconds: 2);
+  static final WebSocketService userSpaceEventListener = WebSocketService._internal();
+  IOWebSocketChannel? connection;
+
   WebSocketService._internal();
+
   factory WebSocketService() => userSpaceEventListener;
 
-  IOWebSocketChannel _getChannelConnection() {
-    return IOWebSocketChannel.connect(
-        Uri.parse(ApiPath().getWebsocketServicePath()),
-        pingInterval: Duration(seconds: 2));
+  void createConnection(String userId) {
+    String websocketPath = ApiPath().getWebsocketServicePath(userId);
+    connection = IOWebSocketChannel.connect(websocketPath, pingInterval: pingInterval);
+    this._startListening();
   }
 
-  void listenToEvents() {
-    final _channel = _getChannelConnection();
+  void _startListening() {
+    if (connection == null) {
+      throw 'You have to create a connection first';
+    }
     final _cacheService = CacheService();
 
-    _channel.stream.listen((_) {
+    connection!.stream.listen((event) {
       _cacheService.getCache();
     });
   }

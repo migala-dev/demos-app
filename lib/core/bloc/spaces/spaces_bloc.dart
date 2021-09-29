@@ -16,12 +16,7 @@ class SpacesBloc extends Bloc<SpacesEvent, SpacesState> {
   Stream<SpacesState> mapEventToState(
     SpacesEvent event,
   ) async* {
-    if (event is InitSpaces) {
       yield await _mapSpacesInitializeToState();
-    } else if (event is SpacesAddSpaceInvitation) {
-      yield state
-          .copyWith(invitations: [event.invitation, ...state.invitations]);
-    }
   }
 
   Future<SpacesState> _mapSpacesInitializeToState() async {

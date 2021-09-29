@@ -18,7 +18,7 @@ class ProfileField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = Theme.of(context).accentColor;
+    final accentColor = Theme.of(context).colorScheme.secondary;
     return ListTile(
       leading: Container(
         margin: EdgeInsets.only(top: 6.0),

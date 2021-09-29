@@ -18,9 +18,9 @@ class DataEvent {
         this._data = data;
 
   factory DataEvent.fromObject(Map<String, dynamic> o) => DataEvent(
-      entityName: o["entity_name"],
-      eventName: o["event_name"],
-      data: o["data"]);
+      entityName: o["entityName"],
+      eventName: o["eventName"],
+      data: jsonDecode(o["data"]));
 
   factory DataEvent.fromJson(String str) {
     final o = json.decode(str);

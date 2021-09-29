@@ -7,10 +7,4 @@ abstract class SpacesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SpacesAddSpaceInvitation extends SpacesEvent {
-  final SpaceView invitation;
-
-  SpacesAddSpaceInvitation(this.invitation);
-}
-
-class InitSpaces extends SpacesEvent {}
+class LoadSpacesEvent extends SpacesEvent {}

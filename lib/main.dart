@@ -1,3 +1,5 @@
+import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +25,12 @@ void main() async {
   final bool userIsAuthenticate = await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
+  if(userIsAuthenticate) {
+    User? currentUser =  await CurrentUserService().getCurrentUser();
+    WebSocketService webSocketService = WebSocketService();
+    webSocketService.createConnection(currentUser!.userId!);
+  }
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
@@ -30,7 +38,7 @@ void main() async {
       ),
       BlocProvider(create: (_) {
         final spacesBloc = SpacesBloc();
-        spacesBloc.add(InitSpaces());
+        spacesBloc.add(LoadSpacesEvent());
 
         return spacesBloc;
       }),
@@ -48,8 +56,6 @@ class DemosApp extends StatelessWidget {
     Routes.configureRoutes(router, initialRoute);
     Application.router = router;
 
-    final webSocketService = WebSocketService();
-    webSocketService.listenToEvents();
   }
 
   @override
