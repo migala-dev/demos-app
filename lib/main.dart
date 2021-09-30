@@ -1,18 +1,20 @@
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
 
+import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
+
+import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
+import 'package:demos_app/core/services/token.service.dart';
+
 import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
-
-import 'core/services/token.service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +44,9 @@ void main() async {
 
         return spacesBloc;
       }),
+      BlocProvider(
+        create: (_) => ConnectionStatusBloc(),
+      ),
     ],
     child: DemosApp(
         initialRoute: userIsAuthenticate ? Routes.spaces : Routes.login),
