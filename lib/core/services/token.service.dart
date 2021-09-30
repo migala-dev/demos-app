@@ -11,7 +11,6 @@ class TokenService {
   final _storage = new FlutterSecureStorage();
 
   TokenService._internal() {
-    refreshTokens();
     createJobToRequestNewAccessToken();
   }
 

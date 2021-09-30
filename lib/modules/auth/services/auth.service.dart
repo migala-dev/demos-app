@@ -2,6 +2,7 @@ import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/core/services/bucket.service.dart';
+import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
@@ -56,6 +57,8 @@ class AuthService {
     await BucketService().setBucketName(response.bucketName!);
 
     createWebSocketConnection(response.user);
+
+    CacheService().getCache();
 
     return response.user;
   }
