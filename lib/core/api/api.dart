@@ -23,21 +23,21 @@ class Api {
     return jsonDecode(response!.body);
   }
 
-  static Future<Map<String, dynamic>> post(String endpoint, Object? body) async {
+  static Future<dynamic> post(String endpoint, Object? body) async {
     Future<http.Response> call = http.post(Uri.parse(endpoint),
         headers: _getDefaultHeaders(), body: body);
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
-  static Future<Map<String, dynamic>> patch(String endpoint, Object? body) async {
+  static Future<dynamic> patch(String endpoint, Object? body) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
         headers: _getDefaultHeaders(), body: body);
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
-  static Future<Map<String, dynamic>> upload(String endpoint, File imageFile) async {
+  static Future<dynamic> upload(String endpoint, File imageFile) async {
     var stream = new http.ByteStream(imageFile.openRead());
     stream.cast();
     var length = await imageFile.length();
