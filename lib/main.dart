@@ -1,4 +1,5 @@
 import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,6 +30,8 @@ void main() async {
     User? currentUser =  await CurrentUserService().getCurrentUser();
     WebSocketService webSocketService = WebSocketService();
     webSocketService.createConnection(currentUser!.userId!);
+    await TokenService().refreshTokens();
+    CacheService().getCache();
   }
 
   runApp(MultiBlocProvider(
