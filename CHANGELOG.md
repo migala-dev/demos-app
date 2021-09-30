@@ -1,18 +1,24 @@
 
-0.04 [Unrealase]
-Sugeriacias (Pendiente)
 
-0.03 [Unrealase]
-Comentarios dentro de propuestas
-Votaciones (Pendiente)
+## [Unreleased]
 
-0.02 [Unrealase]
- Crear propuesta (Pendiente)
+## [0.0.4] 
+- Sugeriacias
+
+## [0.0.3] 
+- Comentarios dentro de propuestas
+- Votaciones
+
+## [0.0.2] 
+  - Administrar miembros de un espacio
+  - Crear propuesta
   - Nuevo servicio propuestas
- Administrar miembros de un espacio (Pendiente)
 
-0.01 [Unrealase]
- Espacios e invitaciones (En desarrollo)
- - Nuevo servicio de espacios
- Registro de usuarios y autentificacion (Listo) 
- - Nuevo Serivcio de autentificacion
+## [0.0.1] 
+ ### Added
+ - Registro de usuarios y autentificación
+- Actualizar tu información de perfil
+- Creación de nuevos espacios
+- Envió de invitaciones a los espacios
+- Primera entrega del almacenamiento y consulta del caché
+- Aceptar o rechazar invitaciones
