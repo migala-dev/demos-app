@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/widgets/snackbars/no_connection.snackbar.dart';
 
-class SafeConnection extends StatelessWidget {
+class TopSnakbarsNotification extends StatelessWidget {
   final Widget child;
 
-  const SafeConnection({Key? key, required this.child}) : super(key: key);
+  const TopSnakbarsNotification({Key? key, required this.child})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

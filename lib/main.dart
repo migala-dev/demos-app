@@ -43,7 +43,7 @@ void main() async {
       ),
       BlocProvider(create: (_) {
         final spacesBloc = SpacesBloc();
-        spacesBloc.add(LoadInitSpacesEvent());
+        spacesBloc.add(LoadSpacesEvent());
 
         return spacesBloc;
       }),

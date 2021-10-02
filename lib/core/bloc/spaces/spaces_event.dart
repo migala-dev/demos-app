@@ -7,4 +7,4 @@ abstract class SpacesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadInitSpacesEvent extends SpacesEvent {}
+class LoadSpacesEvent extends SpacesEvent {}

@@ -10,11 +10,11 @@ part 'spaces_state.dart';
 class SpacesBloc extends Bloc<SpacesEvent, SpacesState> {
   static final _spacesBloc = SpacesBloc._internal();
   SpacesBloc._internal() : super(SpacesState(invitations: [], spaces: [])) {
-    on<LoadInitSpacesEvent>(_onLoadInitSpaces);
+    on<LoadSpacesEvent>(_onLoadSpaces);
   }
   factory SpacesBloc() => _spacesBloc;
 
-  FutureOr<void> _onLoadInitSpaces(
+  FutureOr<void> _onLoadSpaces(
       SpacesEvent event, Emitter<SpacesState> emit) async {
     final spaceService = SpaceService();
 
