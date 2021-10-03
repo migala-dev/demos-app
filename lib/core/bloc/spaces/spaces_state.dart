@@ -14,3 +14,7 @@ class SpacesState extends Equatable {
   @override
   List<Object> get props => [this.spaces, this.invitations];
 }
+
+class LoadingSpaces extends SpacesState {
+  LoadingSpaces() : super(invitations: [], spaces: []);
+}

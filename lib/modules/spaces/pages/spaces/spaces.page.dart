@@ -1,4 +1,5 @@
 import 'package:demos_app/modules/spaces/pages/spaces/screens/empty_spaces.screen.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/screens/loading_spaces.screen.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/spaces_list.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +14,10 @@ class SpacesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SpacesBloc, SpacesState>(builder: (context, state) {
+      if (state is LoadingSpaces) {
+        return LoadingSpacesScreen();
+      }
+
       if (areSpacesEmpty(state)) {
         return EmptySpacesScreen();
       }
