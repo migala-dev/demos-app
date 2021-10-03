@@ -17,8 +17,9 @@ class SpaceTile extends StatelessWidget {
       ),
       title: Text(space.name),
       subtitle: Text('${space.membersCount} miembros'),
-      onTap: () =>
-          Navigator.pushNamed(context, Routes.spacesDetails, arguments: space),
+      onTap: () {
+        Navigator.pushNamed(context, Routes.spaceInvitation, arguments: space);
+      },
     );
   }
 }
