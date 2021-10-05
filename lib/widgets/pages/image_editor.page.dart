@@ -57,17 +57,8 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              TextButton(
-                child: Text(
-                  'Guardar imagen',
-                  style: Theme.of(context)
-                      .textTheme
-                      .button!
-                      .copyWith(color: Colors.white),
-                ),
-                onPressed: () => _cropImage(),
-              ),
-              _buildOpenImage(),
+              _buildSaveOption(),
+              _buildCancelOption(),
             ],
           ),
         )
@@ -75,15 +66,28 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
     );
   }
 
-  Widget _buildOpenImage() {
-    return TextButton(
-      child: Text(
-        'Elegir imagen',
-        style:
-            Theme.of(context).textTheme.button!.copyWith(color: Colors.white),
+  Widget _buildCancelOption() {
+    return GestureDetector(
+      child: Icon(
+        Icons.close,
+        color: Colors.white,
       ),
-      onPressed: () => _openImage(),
+      onTap: () => _goBack(),
     );
+  }
+
+  Widget _buildSaveOption() {
+    return GestureDetector(
+      child: Icon(
+        Icons.done,
+        color: Colors.white,
+      ),
+      onTap: () => _cropImage(),
+    );
+  }
+
+  void _goBack() {
+    Navigator.pop(context);
   }
 
   Future<void> _openImage() async {
