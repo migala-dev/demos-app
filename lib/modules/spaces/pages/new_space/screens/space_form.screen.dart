@@ -92,9 +92,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
   }
 
   String? isDescriptionValid(String? description) {
-    if (description == null ||
-        description.isEmpty ||
-        _descriptionLength > 120) {
+    if (description == null || _descriptionLength > 120) {
       return '';
     }
     return null;

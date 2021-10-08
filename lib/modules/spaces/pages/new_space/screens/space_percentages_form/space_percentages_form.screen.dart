@@ -50,6 +50,13 @@ class _SpacePercentagesFormScreenState
               });
             },
           ),
+          Spacer(
+            flex: 8,
+          ),
+          Text(
+            "* Estos porcentajes podrán ser actualizados dentro del espacio",
+            style: TextStyle(color: Colors.grey[600]),
+          ),
           Spacer(),
           BigButton(
               text: 'Crear',
