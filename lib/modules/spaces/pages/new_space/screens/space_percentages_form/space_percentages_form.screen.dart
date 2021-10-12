@@ -54,7 +54,6 @@ class _SpacePercentagesFormScreenState
           Text("*Estos porcentages podrán ser actualizados dentro del espacio",
               style: TextStyle(color: Colors.grey[600])),
           Spacer(),
-          Spacer(),
           BigButton(
               text: 'Crear',
               isLoading: widget.isLoading,
