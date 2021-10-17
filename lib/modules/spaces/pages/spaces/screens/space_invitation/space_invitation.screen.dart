@@ -2,7 +2,9 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation/space_invitation.service.dart';
 import 'package:demos_app/shared/models/option.model.dart';
+import 'package:demos_app/utils/ui/reload_spaces.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/general/select_options.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
@@ -132,7 +134,11 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen> {
     Navigator.pushNamed(context, Routes.spacesDetails, arguments: this.spaceView);
   }
 
-  void reject() {
+  void reject() async {
+    await SpaceInvitationService().rejectSpace(spaceView!.spaceId);
+
+    reloadSpaceListk();
+
     goBack(context);
   }
 }

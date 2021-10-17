@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:demos_app/constans/space.path.dart';
 import 'package:demos_app/core/api/api.dart';
+import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 
@@ -46,6 +47,15 @@ class SpaceApi {
     final httpResponse = await Api.get(endpoint);
 
     SpaceResponse response = SpaceResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+  Future<InvitationResponse> rejectInvitation(String spaceId) async {
+    String endpoint = SpacePath().getRejectInvitationPath(spaceId);
+    final httpResponse = await Api.post(endpoint, null);
+
+    InvitationResponse response = InvitationResponse.fromObject(httpResponse);
 
     return response;
   }

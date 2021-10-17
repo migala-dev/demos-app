@@ -100,7 +100,7 @@ class UserSpaceRepository {
     return result.map((row) => UserSpace.fromObject(row)).toList();
   }
 
-  Future<int> updateSpace(UserSpace userSpace) async {
+  Future<int> update(UserSpace userSpace) async {
     Database? db = await this.db;
     var result = await db!.rawUpdate("UPDATE $tblUserSpaces " +
         "SET $colInvitationStatus = '${userSpace.invitationStatus}'" +
