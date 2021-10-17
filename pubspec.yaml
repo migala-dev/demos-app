@@ -32,6 +32,7 @@ dependencies:
   equatable: ^2.0.3
   pinput: ^1.2.0
   http: ^0.13.3
+  intl: ^0.17.0
   intl_phone_field: ^2.0.1
   quiver: ^3.0.1
   permission_handler: ^8.1.4+2
