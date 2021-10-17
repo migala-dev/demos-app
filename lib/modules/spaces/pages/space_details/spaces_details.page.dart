@@ -1,5 +1,6 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
 class SpaceDetails extends StatelessWidget {
@@ -7,7 +8,7 @@ class SpaceDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SpaceView spaceDetails =
+    final SpaceView spaceView =
         ModalRoute.of(context)?.settings.arguments as SpaceView;
 
     MaterialApp(
@@ -17,7 +18,17 @@ class SpaceDetails extends StatelessWidget {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(spaceDetails.name.toString()),
+          titleSpacing: 0,
+          title: Row(
+            children: [
+              SpacePicture(
+                width: 32,
+                pictureKey: spaceView.pictureKey,
+              ),
+              SizedBox(width: 12),
+              Text(spaceView.name.toString()),
+            ],
+          ),
         ),
       ),
     );
