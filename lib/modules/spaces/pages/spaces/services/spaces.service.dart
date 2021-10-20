@@ -36,7 +36,8 @@ class SpaceService {
           spaceId: space.spaceId ?? '',
           name: space.name ?? '',
           pictureKey: space.pictureKey,
-          membersCount: members.length);
+          membersCount: members.length,
+          createdAt: userSpace.createdAt);
       spacesView.add(spaceView);
     }
 
