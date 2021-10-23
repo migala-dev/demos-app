@@ -16,6 +16,10 @@ class SpacePath {
     return '${getSpacePath(spaceId)}/invitation';
   }
 
+  String getAcceptInvitationPath(String spaceId) {
+    return '${getInvitationPath(spaceId)}/accept';
+  }
+
   String getRejectInvitationPath(String spaceId) {
     return '${getInvitationPath(spaceId)}/reject';
   }

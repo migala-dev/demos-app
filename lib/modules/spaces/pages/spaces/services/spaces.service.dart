@@ -2,7 +2,7 @@ import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/user_space.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
-import 'package:demos_app/core/repositories/user_space.dart';
+import 'package:demos_app/core/repositories/user_space.repository.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 
 class SpaceService {

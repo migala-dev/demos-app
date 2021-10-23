@@ -46,6 +46,16 @@ class UsersRepository {
         "$colUpdatedAt TEXT)");
   }
 
+  Future<String> insertOrUpdate(User user) async {
+    Database? db = await this.db;
+    User? userSaved = await findById(user.userId!);
+    if (userSaved == null) {
+      await db!.insert(tblUsers, user.toMap());
+      return user.userId!;
+    }
+    return updateUser(user).toString();
+  }
+
   Future<String> insert(User user) async {
     Database? db = await this.db;
     User? userSaved = await findById(user.userId!);

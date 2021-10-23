@@ -53,6 +53,17 @@ class UserSpaceRepository {
         "$colUpdatedAt TEXT)");
   }
 
+  Future<String> insertOrUpdate(UserSpace userSpace) async {
+    Database? db = await this.db;
+    UserSpace? spaceSaved = await findById(userSpace.userSpaceId!);
+    if (spaceSaved == null) {
+      await db!.insert(tblUserSpaces, userSpace.toMap());
+      return userSpace.userSpaceId!;
+    }
+    return update(userSpace).toString();
+  }
+
+
   Future<String> insert(UserSpace userSpace) async {
     Database? db = await this.db;
     UserSpace? spaceSaved = await findById(userSpace.userSpaceId!);
@@ -103,7 +114,7 @@ class UserSpaceRepository {
   Future<int> update(UserSpace userSpace) async {
     Database? db = await this.db;
     var result = await db!.rawUpdate("UPDATE $tblUserSpaces " +
-        "SET $colInvitationStatus = '${userSpace.invitationStatus}'" +
+        "SET $colInvitationStatus = '${userSpace.invitationStatus?.index}'" +
         ", $colDeleted = '${userSpace.deleted}' " +
         ", $colUpdatedBy = '${userSpace.updatedBy}' " +
         "WHERE $colId = '${userSpace.userSpaceId}'");
