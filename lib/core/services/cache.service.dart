@@ -38,8 +38,7 @@ class CacheService {
     String? lastUpdatedDate = await _readLastUpdatedDate();
     List<DataEvent> dataEventList = await CacheApi().getCache(lastUpdatedDate);
     await _handleEvents(dataEventList);
-    String nowDate = DateTime.now().toIso8601String();
-    await _writeLastUpdatedDate(nowDate);
+    await updateLastUpdatedDate();
   }
 
   Future<void> _handleEvents(List<DataEvent> dataEventList) async {
@@ -62,6 +61,11 @@ class CacheService {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future<void> updateLastUpdatedDate() async {
+    String nowDate = DateTime.now().toIso8601String();
+    await _writeLastUpdatedDate(nowDate);
   }
 
   EventHandler? _getEventHandler(String entityName) {
