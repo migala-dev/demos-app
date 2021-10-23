@@ -73,7 +73,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
         await NewSpaceService()
             .uploadPicture(space.spaceId!, spacePictureFile!);
       }
-      reloadSpaceListk();
+      reloadSpaceList();
       Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
       Navigator.pushNamed(context, Routes.invitations);
     });

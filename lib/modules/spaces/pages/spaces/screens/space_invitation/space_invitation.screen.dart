@@ -137,7 +137,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen> {
   void reject() async {
     await SpaceInvitationService().rejectSpace(spaceView!.spaceId);
 
-    reloadSpaceListk();
+    reloadSpaceList();
 
     goBack(context);
   }
