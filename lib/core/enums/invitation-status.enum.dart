@@ -3,6 +3,7 @@ enum InvitationStatus {
   RECEIVED,
   ACCEPTED,
   CANCELED,
+  REJECTED
 }
 
 InvitationStatus getInvitationStatusFromInt(int status) {
@@ -14,7 +15,9 @@ InvitationStatus getInvitationStatusFromInt(int status) {
     case 2:
       return InvitationStatus.ACCEPTED;
     case 3:
-    default:
       return InvitationStatus.CANCELED;
+    case 4:
+    default:
+      return InvitationStatus.REJECTED;
   }
 }

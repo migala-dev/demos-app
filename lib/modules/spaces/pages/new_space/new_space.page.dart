@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_form.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/space_percentages_form.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
+import 'package:demos_app/utils/ui/reload_spaces.util.dart';
 import 'package:flutter/material.dart';
 
 enum NewSpaceScreenEnum { SpaceInfo, Percentages }
@@ -73,7 +73,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
         await NewSpaceService()
             .uploadPicture(space.spaceId!, spacePictureFile!);
       }
-      reloadSpaceListk();
+      reloadSpaceList();
       Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
       Navigator.pushNamed(context, Routes.invitations);
     });
@@ -90,10 +90,5 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
         )
       ],
     );
-  }
-
-  void reloadSpaceListk() {
-    final spacesBloc = SpacesBloc();
-    spacesBloc.add(LoadSpacesEvent());
   }
 }

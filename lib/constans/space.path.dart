@@ -12,6 +12,18 @@ class SpacePath {
     return '${getSpacesPath()}/$spaceId';
   }
 
+  String getInvitationPath(String spaceId) {
+    return '${getSpacePath(spaceId)}/invitation';
+  }
+
+  String getAcceptInvitationPath(String spaceId) {
+    return '${getInvitationPath(spaceId)}/accept';
+  }
+
+  String getRejectInvitationPath(String spaceId) {
+    return '${getInvitationPath(spaceId)}/reject';
+  }
+
   String getUpdateSpaceImagePath(String spaceId) {
     return '${getSpacePath(spaceId)}/picture';
   }
