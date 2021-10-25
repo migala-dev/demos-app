@@ -15,18 +15,28 @@ class SpaceDetails extends StatelessWidget {
       routes: {Routes.spacesDetails: (context) => const SpaceDetails()},
     );
 
+    void goToSpaceSettings() {
+      Navigator.pushNamed(context, Routes.spaceSettings, arguments: spaceView);
+    }
+
     return Container(
       child: Scaffold(
         appBar: AppBar(
           titleSpacing: 0,
           title: Row(
             children: [
-              SpacePicture(
-                width: 32,
-                pictureKey: spaceView.pictureKey,
+              GestureDetector(
+                child: SpacePicture(
+                  width: 32,
+                  pictureKey: spaceView.pictureKey,
+                ),
+                onTap: () => goToSpaceSettings(),
               ),
               SizedBox(width: 12),
-              Text(spaceView.name.toString()),
+              GestureDetector(
+                child: Text(spaceView.name),
+                onTap: () => goToSpaceSettings(),
+              ),
             ],
           ),
         ),

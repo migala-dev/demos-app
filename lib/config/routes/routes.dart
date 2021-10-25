@@ -15,6 +15,7 @@ class Routes {
   static final String spacesDetails = "/spaces/spaces-details";
   static final String invitations = "/invitations";
   static final String spaceInvitation = '/space-invitation';
+  static final String spaceSettings = '/space-settings';
 
   // Settings
   static final String settings = "/settings/general";
@@ -39,6 +40,8 @@ class Routes {
     router.define(newSpace, handler: newSpaceHandler);
     router.define(invitations, handler: invitationsSpaceHandler);
     router.define(spaceInvitation, handler: spaceInvitationHandler);
+    router.define(spaceSettings, handler: spaceSettingsHandler);
+
     // Settings
     router.define(settings, handler: generalSettingsHandler);
     router.define(settingsProfile, handler: profileSettingsHandler);
