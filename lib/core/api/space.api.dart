@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:demos_app/constans/space.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
+import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
@@ -14,6 +15,15 @@ class SpaceApi {
 
   factory SpaceApi() {
     return _spaceApi;
+  }
+
+  Future<AllSpacesResponse> getAllSpaces() async {
+    String endpoint = SpacePath().getAllSpaces();
+    final httpResponse = await Api.get(endpoint);
+
+    AllSpacesResponse response = AllSpacesResponse.fromObject(httpResponse);
+    
+    return response;
   }
 
   Future<SpaceResponse> createSpace(Space newSpace) async {

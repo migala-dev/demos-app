@@ -8,6 +8,10 @@ class SpacePath {
     return '${enviroment.spaceServiceUrl}/spaces';
   }
 
+  String getAllSpaces() {
+    return getSpacesPath();
+  }
+
   String getSpacePath(String spaceId) {
     return '${getSpacesPath()}/$spaceId';
   }
@@ -27,4 +31,5 @@ class SpacePath {
   String getUpdateSpaceImagePath(String spaceId) {
     return '${getSpacePath(spaceId)}/picture';
   }
+
 }
