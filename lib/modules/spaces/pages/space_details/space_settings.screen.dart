@@ -25,7 +25,7 @@ class SpaceSettings extends StatelessWidget {
           ListTile(
             leading: SpacePicture(width: 64, pictureKey: spaceView.pictureKey),
             title: Text(
-              "Nombre de la empresa",
+              spaceView.name,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             subtitle: Text("Creado el 12/12/21"),
@@ -42,10 +42,11 @@ class SpaceSettings extends StatelessWidget {
           optionsTile(
               "Votos",
               "Porcentaje de participación y aprovación de las propuestas",
-              Icons.how_to_vote),
+              Icons.how_to_vote,
+              ""),
           SizedBox(height: 8),
           optionsTile(
-              "Miembros", "Usuarios, invitaciones y roles", Icons.people),
+              "Miembros", "Usuarios, invitaciones y roles", Icons.people, ""),
           Expanded(flex: 5, child: Container()),
           Expanded(
             flex: 1,
@@ -72,7 +73,7 @@ class SpaceSettings extends StatelessWidget {
   }
 }
 
-ListTile optionsTile(String text, String subText, IconData icon) {
+ListTile optionsTile(String text, String subText, IconData icon, var action) {
   return ListTile(
     leading: Icon(icon, size: 32),
     title: Text(
@@ -83,7 +84,9 @@ ListTile optionsTile(String text, String subText, IconData icon) {
       subText,
       style: TextStyle(fontSize: 12),
     ),
-    onTap: () {},
+    onTap: () {
+      action;
+    },
     contentPadding: EdgeInsets.symmetric(horizontal: 28),
     horizontalTitleGap: 8,
   );
