@@ -5,7 +5,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/space_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation.screen.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation/space_invitation.screen.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/spaces.page.dart';
 import 'package:demos_app/modules/spaces/screens/general_settings.screen.dart';
 import 'package:demos_app/modules/spaces/screens/profile.screen.dart';
