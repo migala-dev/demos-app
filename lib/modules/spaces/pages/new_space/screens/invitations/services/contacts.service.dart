@@ -31,6 +31,9 @@ class ContactService {
             userContacts.add(userContact);
           } else {
             InvitationContact userContact = InvitationContact.fromUser(user);
+            if (userContact.name == '') {
+              userContact.name = contact.displayName;
+            }
             userContacts.add(userContact);
           }
         }

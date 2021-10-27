@@ -1,5 +1,6 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/shared/services/date.service.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,9 @@ class SpaceSettings extends StatelessWidget {
       routes: {Routes.spacesDetails: (context) => const SpaceSettings()},
     );
 
+    String createdAt =
+        DateService.parseToStandardDate(spaceView.createdAt ?? '');
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Ajustes"),
@@ -28,7 +32,7 @@ class SpaceSettings extends StatelessWidget {
               spaceView.name,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            subtitle: Text("Creado el 12/12/21"),
+            subtitle: Text("Creado el $createdAt"),
             visualDensity:
                 VisualDensity(vertical: VisualDensity.maximumDensity),
             minVerticalPadding: 16,
@@ -57,7 +61,10 @@ class SpaceSettings extends StatelessWidget {
                   margin: EdgeInsets.only(right: 16),
                   child: Column(
                     children: [
-                      Text("Powered by"),
+                      Text(
+                        "powered by",
+                        style: TextStyle(fontWeight: FontWeight.w300),
+                      ),
                       Text("Migala",
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.bold))
