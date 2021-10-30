@@ -37,7 +37,7 @@ class SpaceService {
           name: space.name ?? '',
           pictureKey: space.pictureKey,
           membersCount: members.length,
-          createdAt: userSpace.createdAt);
+          invitationCreatedAt: userSpace.createdAt);
       spacesView.add(spaceView);
     }
 

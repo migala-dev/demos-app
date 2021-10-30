@@ -1,3 +1,5 @@
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+
 class Space {
   String? _spaceId;
   String? _name;
@@ -49,5 +51,12 @@ class Space {
     this._ownerId = o["ownerId"];
     this._createdAt = o["createdAt"];
     this._updatedAt = o["updatedAt"];
+  }
+
+  SpaceView toSpapceView() {
+    return SpaceView(
+          spaceId: spaceId ?? '',
+          name: name ?? '',
+          pictureKey: pictureKey);
   }
 }

@@ -75,7 +75,8 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
       }
       reloadSpaceList();
       Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
-      Navigator.pushNamed(context, Routes.invitations);
+      Navigator.pushNamed(context, Routes.spacesDetails, arguments: space?.toSpapceView());
+      Navigator.pushNamed(context, Routes.invitations, arguments: space?.spaceId);
     });
   }
 
