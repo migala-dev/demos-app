@@ -3,6 +3,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/mod
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/services/contacts.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_contact_list.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_search_field.widget.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space_invitation.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
@@ -21,7 +22,6 @@ class _InvitationsScreenState extends State<InvitationsScreen>
   List<InvitationContact> contacts = [];
   bool fetchingContacts = true;
   String searchParam = '';
-  String? spaceId;
 
   @override
   void initState() {
@@ -37,16 +37,8 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     });
   }
 
-  void getSpaceIdFromContext() {
-    String contextSpaceId = ModalRoute.of(context)?.settings.arguments as String;
-    setState(() {
-      spaceId = contextSpaceId;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    getSpaceIdFromContext();
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -131,7 +123,8 @@ class _InvitationsScreenState extends State<InvitationsScreen>
 
   void sendInvitations() {
     wrapLoadingTransaction(() async {
-      await SpaceInvitationService().sendInvitations(spaceId!, contactsSelected);
+      Space? currentSpace = CurrentSpaceService().getCurrentSpace();
+      await SpaceInvitationService().sendInvitations(currentSpace!.spaceId!, contactsSelected);
 
       Navigator.pop(context);
     });
