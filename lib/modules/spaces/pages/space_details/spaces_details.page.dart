@@ -1,5 +1,6 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -11,10 +12,7 @@ class SpaceDetails extends StatelessWidget {
     final SpaceView spaceView =
         ModalRoute.of(context)?.settings.arguments as SpaceView;
 
-    MaterialApp(
-      routes: {Routes.spacesDetails: (context) => const SpaceDetails()},
-    );
-
+    CurrentSpaceService().setCurrentSpace(spaceView.spaceId);
     void goToSpaceSettings() {
       Navigator.pushNamed(context, Routes.spaceSettings, arguments: spaceView);
     }
