@@ -15,7 +15,7 @@ class Routes {
   static final String spacesDetails = "/spaces/spaces-details";
   static final String invitations = "/invitations";
   static final String spaceInvitation = '/space-invitation';
-  static final String spaceSettings = '/space-settings';
+  static final String spaceSettings = '/spaces/space-settings';
 
   // Settings
   static final String settings = "/settings/general";
