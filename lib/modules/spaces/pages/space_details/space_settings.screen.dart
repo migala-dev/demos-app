@@ -1,7 +1,8 @@
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
-import 'package:demos_app/shared/services/date.service.dart';
+import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,8 @@ class SpaceSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Space? currentSpace = CurrentSpaceService().getCurrentSpace();
 
-
     String createdAt =
-        DateService.parseToStandardDate(currentSpace?.createdAt ?? '');
+        DateFormatterService.parseToStandardDate(currentSpace?.createdAt ?? '');
 
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +53,13 @@ class SpaceSettingsScreen extends StatelessWidget {
               subtitle: "Usuarios, invitaciones y roles",
               icon: Icons.people,
               onTap: () {}),
+          SettingItem(
+              title: "Invitaciones",
+              subtitle: "Temporal",
+              icon: Icons.sms,
+              onTap: () {
+                Navigator.pushNamed(context, Routes.invitations);
+              }),
           Expanded(flex: 5, child: Container()),
           Expanded(
             flex: 1,

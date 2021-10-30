@@ -1,7 +1,7 @@
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-class DateService {
+class DateFormatterService {
   static String parseToStandardDate(String date) {
       DateFormat dateFormat = DateFormat('yyyy-MM-dd');
       DateTime inputDate = dateFormat.parse(date);

@@ -21,24 +21,22 @@ class SpaceDetailsScreen extends StatelessWidget {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          titleSpacing: 0,
-          title: Row(
-            children: [
-              GestureDetector(
-                child: SpacePicture(
-                  width: 32,
-                  pictureKey: spaceView.pictureKey,
-                ),
-                onTap: () => goToSpaceSettings(context),
+            titleSpacing: 0,
+            title: InkWell(
+              child: Row(
+                children: [
+                  Container(
+                    child: SpacePicture(
+                      width: 32,
+                      pictureKey: spaceView.pictureKey,
+                    ),
+                    margin: EdgeInsets.only(right: 12.0),
+                  ),
+                  Text(spaceView.name)
+                ],
               ),
-              SizedBox(width: 12),
-              GestureDetector(
-                child: Text(spaceView.name),
-                onTap: () => goToSpaceSettings(context),
-              ),
-            ],
-          ),
-        ),
+              onTap: () => goToSpaceSettings(context),
+            )),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/wid
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space_invitation.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -125,7 +126,7 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     wrapLoadingTransaction(() async {
       Space? currentSpace = CurrentSpaceService().getCurrentSpace();
       await SpaceInvitationService().sendInvitations(currentSpace!.spaceId!, contactsSelected);
-
+      ToastUtil.showSuccess('Invitaciones enviadas con exito!!!');
       Navigator.pop(context);
     });
   }

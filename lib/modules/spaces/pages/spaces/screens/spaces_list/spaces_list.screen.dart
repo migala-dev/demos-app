@@ -4,7 +4,7 @@ import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widgets/space_list.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_button.widget.dart';
-import 'package:demos_app/shared/services/date.service.dart';
+import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/wrappers/top_snakbars_notification.dart';
 import 'package:flutter/material.dart';
 
@@ -66,7 +66,7 @@ class SpaceListScreen extends StatelessWidget {
     return SpaceListWidget(
       spaces: invitations,
       getSubtitle: (spaceView) =>
-          'Invitado desde el ${DateService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
+          'Invitado desde el ${DateFormatterService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
       onSpaceTab: (spaceView) {
         Navigator.pushNamed(context, Routes.spaceInvitation,
             arguments: spaceView);
