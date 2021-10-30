@@ -66,7 +66,7 @@ class SpaceListScreen extends StatelessWidget {
     return SpaceListWidget(
       spaces: invitations,
       getSubtitle: (spaceView) =>
-          'Invitado desde el ${DateService.parseToStandardDate(spaceView.createdAt!)}',
+          'Invitado desde el ${DateService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
       onSpaceTab: (spaceView) {
         Navigator.pushNamed(context, Routes.spaceInvitation,
             arguments: spaceView);

@@ -2,7 +2,7 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation/space_invitation.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space_invitation.service.dart';
 import 'package:demos_app/shared/models/option.model.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/reload_spaces.util.dart';

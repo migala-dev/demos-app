@@ -1,5 +1,6 @@
-import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/shared/services/date.service.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +10,11 @@ class SpaceSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SpaceView spaceView =
-        ModalRoute.of(context)?.settings.arguments as SpaceView;
+    Space? currentSpace = CurrentSpaceService().getCurrentSpace();
+
 
     String createdAt =
-        DateService.parseToStandardDate(spaceView.createdAt ?? '');
+        DateService.parseToStandardDate(currentSpace?.createdAt ?? '');
 
     return Scaffold(
       appBar: AppBar(
@@ -25,9 +26,9 @@ class SpaceSettingsScreen extends StatelessWidget {
             margin: EdgeInsets.only(top: 16),
             child: ListTile(
               leading:
-                  SpacePicture(width: 64, pictureKey: spaceView.pictureKey),
+                  SpacePicture(width: 64, pictureKey: currentSpace?.pictureKey),
               title: Text(
-                spaceView.name,
+                currentSpace?.name ?? '',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
               subtitle: Text("Creado el $createdAt"),

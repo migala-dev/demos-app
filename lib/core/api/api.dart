@@ -16,6 +16,13 @@ class Api {
     return headers;
   }
 
+   static Map<String, String> _getHeadersWithApplicationJSON() {
+    Map<String, String> headers = _getDefaultHeaders();
+    headers['Content-Type'] = 'application/json';
+    
+    return headers;
+  }
+
   static Future<dynamic> get(String endpoint) async {
     Future<http.Response> call = http.get(Uri.parse(endpoint),
         headers: _getDefaultHeaders());
@@ -25,14 +32,14 @@ class Api {
 
   static Future<dynamic> post(String endpoint, Object? body) async {
     Future<http.Response> call = http.post(Uri.parse(endpoint),
-        headers: _getDefaultHeaders(), body: body);
+        headers: _getHeadersWithApplicationJSON(), body: json.encoder.convert(body));
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
   static Future<dynamic> patch(String endpoint, Object? body) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
-        headers: _getDefaultHeaders(), body: body);
+        headers: _getHeadersWithApplicationJSON(), body:  json.encoder.convert(body));
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }

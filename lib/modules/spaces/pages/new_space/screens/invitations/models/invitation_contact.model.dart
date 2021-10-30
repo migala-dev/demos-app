@@ -29,4 +29,9 @@ class InvitationContact extends User {
   Color get color => this._color;
 
   InvitationContact.fromUser(User user) : super.fromUserObject(user);
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        "phoneNumber": phoneNumber,
+        "userId": userId
+  };
 }

@@ -1,13 +1,14 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
 class SpaceDetailsScreen extends StatelessWidget {
   const SpaceDetailsScreen({Key? key}) : super(key: key);
 
-  void goToSpaceSettings(BuildContext context, SpaceView spaceView) {
-    Navigator.pushNamed(context, Routes.spaceSettings, arguments: spaceView);
+  void goToSpaceSettings(BuildContext context) {
+    Navigator.pushNamed(context, Routes.spaceSettings);
   }
 
   @override
@@ -15,9 +16,7 @@ class SpaceDetailsScreen extends StatelessWidget {
     final SpaceView spaceView =
         ModalRoute.of(context)?.settings.arguments as SpaceView;
 
-    MaterialApp(
-      routes: {Routes.spacesDetails: (context) => const SpaceDetailsScreen()},
-    );
+    CurrentSpaceService().setCurrentSpace(spaceView.spaceId);
 
     return Container(
       child: Scaffold(
@@ -30,12 +29,12 @@ class SpaceDetailsScreen extends StatelessWidget {
                   width: 32,
                   pictureKey: spaceView.pictureKey,
                 ),
-                onTap: () => goToSpaceSettings(context, spaceView),
+                onTap: () => goToSpaceSettings(context),
               ),
               SizedBox(width: 12),
               GestureDetector(
                 child: Text(spaceView.name),
-                onTap: () => goToSpaceSettings(context, spaceView),
+                onTap: () => goToSpaceSettings(context),
               ),
             ],
           ),

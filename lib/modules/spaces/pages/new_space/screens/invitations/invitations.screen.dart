@@ -1,8 +1,12 @@
-
+import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/services/contacts.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_contact_list.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_search_field.widget.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space_invitation.service.dart';
+import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class InvitationsScreen extends StatefulWidget {
@@ -12,7 +16,8 @@ class InvitationsScreen extends StatefulWidget {
   _InvitationsScreenState createState() => _InvitationsScreenState();
 }
 
-class _InvitationsScreenState extends State<InvitationsScreen> {
+class _InvitationsScreenState extends State<InvitationsScreen>
+    with LoadingStateHandler {
   List<InvitationContact> contactsSelected = [];
   List<InvitationContact> contacts = [];
   bool fetchingContacts = true;
@@ -79,6 +84,15 @@ class _InvitationsScreenState extends State<InvitationsScreen> {
             toggleContact(contact);
           },
         ),
+      ),
+      Container(
+        child: BigButton(
+          text: 'Invitar',
+          onPressed: sendInvitations,
+          isLoading: isLoading,
+        ),
+        padding: EdgeInsets.symmetric(horizontal: 12.0),
+        margin: EdgeInsets.only(bottom: 12.0),
       )
     ]);
   }
@@ -104,6 +118,15 @@ class _InvitationsScreenState extends State<InvitationsScreen> {
       if (contactsSelected.contains(contact)) {
         contactsSelected.removeWhere((c) => c == contact);
       }
+    });
+  }
+
+  void sendInvitations() {
+    wrapLoadingTransaction(() async {
+      Space? currentSpace = CurrentSpaceService().getCurrentSpace();
+      await SpaceInvitationService().sendInvitations(currentSpace!.spaceId!, contactsSelected);
+
+      Navigator.pop(context);
     });
   }
 }
