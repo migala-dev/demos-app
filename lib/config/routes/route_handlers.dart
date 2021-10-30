@@ -35,12 +35,12 @@ var spacesHandler = Handler(
 // Handler de los detalles del espacio
 var spaceDetailsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpaceDetails();
+  return SpaceDetailsScreen();
 });
 
 var spaceSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpaceSettings();
+  return SpaceSettingsScreen();
 });
 
 var newSpaceHandler = Handler(
