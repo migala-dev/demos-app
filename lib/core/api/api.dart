@@ -31,8 +31,11 @@ class Api {
   }
 
   static Future<dynamic> post(String endpoint, Object? body) async {
+    Map<String, String> headers = body != null ? _getHeadersWithApplicationJSON(): _getDefaultHeaders();
+    String bodyFormatted = body != null ? json.encoder.convert(body) : '';
+
     Future<http.Response> call = http.post(Uri.parse(endpoint),
-        headers: _getHeadersWithApplicationJSON(), body: json.encoder.convert(body));
+        headers: headers, body: bodyFormatted);
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
