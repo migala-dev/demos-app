@@ -21,10 +21,9 @@ class WebSocketService {
     if (connection == null) {
       throw 'You have to create a connection first';
     }
-    final _cacheService = CacheService();
 
     connection!.stream.listen((event) {
-      _cacheService.getCache();
+      CacheService().getCache();
     });
   }
 }
