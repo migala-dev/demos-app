@@ -52,25 +52,29 @@ class SpaceListScreen extends StatelessWidget {
   }
 
   Widget getSpaceList(BuildContext context) {
-    return SpaceListWidget(
-      spaces: spaces,
-      getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
-      onSpaceTab: (spaceView) {
-        Navigator.pushNamed(context, Routes.spacesDetails,
-            arguments: spaceView);
-      },
+    return TopSnakbarsNotification(
+      child: SpaceListWidget(
+        spaces: spaces,
+        getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
+        onSpaceTab: (spaceView) {
+          Navigator.pushNamed(context, Routes.spacesDetails,
+              arguments: spaceView);
+        },
+      ),
     );
   }
 
   Widget getInvitationList(BuildContext context) {
-    return SpaceListWidget(
-      spaces: invitations,
-      getSubtitle: (spaceView) =>
-          'Invitado desde el ${DateFormatterService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
-      onSpaceTab: (spaceView) {
-        Navigator.pushNamed(context, Routes.spaceInvitation,
-            arguments: spaceView);
-      },
+    return TopSnakbarsNotification(
+      child: SpaceListWidget(
+        spaces: invitations,
+        getSubtitle: (spaceView) =>
+            'Invitado desde el ${DateFormatterService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
+        onSpaceTab: (spaceView) {
+          Navigator.pushNamed(context, Routes.spaceInvitation,
+              arguments: spaceView);
+        },
+      ),
     );
   }
 

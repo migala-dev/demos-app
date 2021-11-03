@@ -24,6 +24,9 @@ void main() async {
     statusBarIconBrightness: Brightness.dark,
   ));
 
+  final connectionStatusBloc = ConnectionStatusBloc();
+  connectionStatusBloc.listenStatusConnection();
+
   final userPrefs = UserPreferencesService();
   final bool userIsAuthenticate = await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();

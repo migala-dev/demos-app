@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:demos_app/core/errors/handle_error.dart';
 import 'package:demos_app/core/services/token.service.dart';
-import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:http/http.dart' as http;
-
-import 'error_message_translation.service.dart';
 
 class Api {
   static Map<String, String> _getDefaultHeaders() {
@@ -16,30 +14,32 @@ class Api {
     return headers;
   }
 
-   static Map<String, String> _getHeadersWithApplicationJSON() {
+  static Map<String, String> _getHeadersWithApplicationJSON() {
     Map<String, String> headers = _getDefaultHeaders();
     headers['Content-Type'] = 'application/json';
-    
+
     return headers;
   }
 
   static Future<dynamic> get(String endpoint) async {
-    Future<http.Response> call = http.get(Uri.parse(endpoint),
-        headers: _getDefaultHeaders());
+    Future<http.Response> call =
+        http.get(Uri.parse(endpoint), headers: _getDefaultHeaders());
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
   static Future<dynamic> post(String endpoint, Object? body) async {
     Future<http.Response> call = http.post(Uri.parse(endpoint),
-        headers: _getHeadersWithApplicationJSON(), body: json.encoder.convert(body));
+        headers: _getHeadersWithApplicationJSON(),
+        body: json.encoder.convert(body));
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
   static Future<dynamic> patch(String endpoint, Object? body) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
-        headers: _getHeadersWithApplicationJSON(), body:  json.encoder.convert(body));
+        headers: _getHeadersWithApplicationJSON(),
+        body: json.encoder.convert(body));
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
@@ -66,7 +66,8 @@ class Api {
     return jsonDecode(response!.body);
   }
 
-  static Future<http.Response?> _handleErrors(Future<http.Response> call) async {
+  static Future<http.Response?> _handleErrors(
+      Future<http.Response> call) async {
     try {
       http.Response response = await call;
       if (response.statusCode != 200) {
@@ -84,7 +85,7 @@ class Api {
   }
 
   static void _throwMessageError(String message) {
-    ToastUtil.showError(ErrorMessageTraslation.getMessage(message));
-    throw (message);
+    handleError(message);
+    // throw (message);
   }
 }
