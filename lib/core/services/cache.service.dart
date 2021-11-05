@@ -1,13 +1,15 @@
 import 'package:demos_app/core/api/cache.api.dart';
+import 'package:demos_app/core/event_handlers/handlers/space_handler.dart';
+import 'package:demos_app/core/event_handlers/handlers/user_space_handler.dart';
 import 'package:demos_app/core/event_handlers/map_event_name_to_handler.dart';
-import 'package:demos_app/core/event_handlers/user_space/user_space_handler.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/repositories/cache.repository.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CacheService {
-  List<EventHandler> eventHandlers = [UserSpaceHandler()];
+  List<EventHandler> eventHandlers = [UserSpaceHandler(), SpaceHandler()];
   bool isPendingCache = false;
   bool isRequestInProgress = false;
   final String _lastUpdatedDateKey = 'last-updated-date';
@@ -62,7 +64,11 @@ class CacheService {
   Future<void> handleEvent(Cache dataEvent) async {
     try {
       EventHandler? handler = _getEventHandler(dataEvent.entityName);
-      await handler?.handleEvent(dataEvent);
+      if(handler != null) {
+        await handler.handleEvent(dataEvent);
+      } else {
+        ToastUtil.showError('Entidad no implementada: ${dataEvent.entityName}');
+      }
     } catch (e) {
       print(e);
     }
