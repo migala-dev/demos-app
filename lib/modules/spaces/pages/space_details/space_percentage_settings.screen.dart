@@ -51,7 +51,11 @@ class _SpacePercentageSettingsScreenState
                 },
               ),
               Spacer(),
-              BigButton(text: 'Guardar', onPressed: () {}),
+              BigButton(
+                  text: 'Guardar',
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ],
           ),
         ),
