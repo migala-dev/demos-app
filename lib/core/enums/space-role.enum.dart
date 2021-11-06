@@ -1,4 +1,4 @@
-enum SpaceRole { WORKER, ADMIN, REPRESENTATIVE }
+enum SpaceRole { WORKER, ADMIN, REPRESENTATIVE, INVITED }
 
 SpaceRole getSpaceRoleFromString(String role) {
   switch (role) {
@@ -17,7 +17,9 @@ String getSpaceRoleString(SpaceRole? role) {
       return "ADMIN";
     case SpaceRole.REPRESENTATIVE:
       return "REPRESENTATIVE";
-    default:
+    case SpaceRole.WORKER:
       return "WORKER";
+    default:
+      return 'INVITADO';
   }
 }

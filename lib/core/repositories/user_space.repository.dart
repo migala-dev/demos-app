@@ -63,7 +63,6 @@ class UserSpaceRepository {
     return update(userSpace).toString();
   }
 
-
   Future<String> insert(UserSpace userSpace) async {
     Database? db = await this.db;
     UserSpace? spaceSaved = await findById(userSpace.userSpaceId!);
@@ -94,6 +93,15 @@ class UserSpaceRepository {
     var result = await db!
         .rawQuery("SELECT * FROM $tblUserSpaces ORDER BY $colCreatedAt ASC");
     return result.map((row) => UserSpace.fromObject(row)).toList();
+  }
+
+  Future<List<Map<String, Object?>>> getUsersBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblUserSpaces WHERE $colSpaceId = '$spaceId'");
+
+    return result;
   }
 
   Future<List<UserSpace>> findByInvitationStatus(

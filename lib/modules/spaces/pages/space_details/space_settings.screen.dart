@@ -52,7 +52,9 @@ class SpaceSettingsScreen extends StatelessWidget {
               title: "Miembros",
               subtitle: "Usuarios, invitaciones y roles",
               icon: Icons.people,
-              onTap: () {}),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.spaceMembers);
+              }),
           SettingItem(
               title: "Invitaciones",
               subtitle: "Temporal",

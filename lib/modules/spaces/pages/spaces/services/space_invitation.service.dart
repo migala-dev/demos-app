@@ -10,9 +10,10 @@ import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 
 class SpaceInvitationService {
-
-  Future<List<UserSpace>> sendInvitations(String spaceId, List<InvitationContact> contacts) async {
-    SendInvitationsResponse response = await SpaceApi().sendInvitations(spaceId, contacts);
+  Future<List<UserSpace>> sendInvitations(
+      String spaceId, List<InvitationContact> contacts) async {
+    SendInvitationsResponse response =
+        await SpaceApi().sendInvitations(spaceId, contacts);
 
     for (final member in response.userSpaces) {
       await UserSpaceRepository().insertOrUpdate(member);
@@ -22,7 +23,8 @@ class SpaceInvitationService {
   }
 
   Future<UserSpace?> acceptInvitation(String spaceId) async {
-    AcceptInvitationResponse response = await SpaceApi().acceptInvitation(spaceId);
+    AcceptInvitationResponse response =
+        await SpaceApi().acceptInvitation(spaceId);
 
     await SpacesRepository().updateSpace(response.space);
 
