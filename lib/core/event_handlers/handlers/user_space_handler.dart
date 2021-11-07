@@ -2,7 +2,7 @@ import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
-import 'package:demos_app/core/models/data_event.model.dart';
+import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 
@@ -22,7 +22,7 @@ class UserSpaceInvitationEvent implements EventHandler {
   String key = 'invitation';
 
   @override
-  Future<void> handleEvent(DataEvent dataEvent) async {
+  Future<void> handleEvent(Cache dataEvent) async {
     String spaceId = dataEvent.data!['spaceId'];
 
     SpaceResponse response = await SpaceApi().getSpace(spaceId);

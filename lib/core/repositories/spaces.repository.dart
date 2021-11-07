@@ -80,7 +80,7 @@ class SpacesRepository {
     Database? db = await this.db;
     var result = await db!.rawUpdate("UPDATE $tblSpaces " +
         "SET $colName = '${space.name}'" +
-        ", $colPictureKey = '${space.pictureKey}' " +
+        (space.pictureKey != null ? ", $colPictureKey = '${space.pictureKey}' " : "")+
         ", $colApprovalPercentage = '${space.approvalPercentage}' " +
         ", $colParticipationPercentage = '${space.participationPercentage}' " +
         ", $colUpdatedAt = '${space.updatedAt}' " +

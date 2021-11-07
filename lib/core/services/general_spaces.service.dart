@@ -1,5 +1,6 @@
 import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
+import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/repositories/role_user_space.repository.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
@@ -33,6 +34,14 @@ class GeneralSpaceService {
 
       await CacheService().updateLastUpdatedDate();
     }
+  }
+
+  Future<Space> updateSpace(String spaceId) async {
+    SpaceResponse response = await SpaceApi().getSpace(spaceId);
+    
+    await SpacesRepository().updateSpace(response.space);
+    
+    return response.space;
   }
 
 }
