@@ -3,12 +3,12 @@ import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/user_space.dart';
 
 class SpaceResponse {
-  late Space? _space;
-  late UserSpace? _userSpace;
+  late Space _space;
+  late UserSpace _userSpace;
   late RoleUserSpace? _roleUserSpace;
 
-  Space? get space => this._space;
-  UserSpace? get userSpace => this._userSpace;
+  Space get space => this._space;
+  UserSpace get userSpace => this._userSpace;
   RoleUserSpace? get roleUserSpace => this._roleUserSpace;
 
   SpaceResponse.fromObject(dynamic o) {
