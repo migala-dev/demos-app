@@ -11,7 +11,7 @@ import 'package:demos_app/core/models/responses/space_response.model.dart';
 class NewSpaceService {
   Future<Space?> createSpace(Space newSpace) async {
     SpaceResponse response = await SpaceApi().createSpace(newSpace);
-    
+
     await addSpaceEntitiesFromResponse(response);
 
     return response.space;
@@ -24,7 +24,6 @@ class NewSpaceService {
   }
 
   Future<Space?> uploadPicture(String spaceId, File file) async {
-
     Space? spaceUpdated = await SpaceApi().uploadPicture(spaceId, file);
 
     SpacesRepository().updateSpace(spaceUpdated!);
