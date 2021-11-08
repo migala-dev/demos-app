@@ -9,6 +9,10 @@ import 'package:flutter/material.dart';
 class SpaceSettingsScreen extends StatelessWidget {
   const SpaceSettingsScreen({Key? key}) : super(key: key);
 
+  void goToSpacePercentageSettings(BuildContext context) {
+    Navigator.pushNamed(context, Routes.spacePercentage);
+  }
+
   @override
   Widget build(BuildContext context) {
     Space? currentSpace = CurrentSpaceService().getCurrentSpace();
@@ -47,7 +51,9 @@ class SpaceSettingsScreen extends StatelessWidget {
               subtitle:
                   "Porcentaje de participación y aprovación de las propuestas",
               icon: Icons.how_to_vote,
-              onTap: () {}),
+              onTap: () {
+                goToSpacePercentageSettings(context);
+              }),
           SettingItem(
               title: "Miembros",
               subtitle: "Usuarios, invitaciones y roles",
