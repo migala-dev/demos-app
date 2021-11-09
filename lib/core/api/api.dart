@@ -86,6 +86,5 @@ class Api {
 
   static void _throwMessageError(String message) {
     handleError(message);
-    // throw (message);
   }
 }

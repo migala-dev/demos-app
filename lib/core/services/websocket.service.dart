@@ -33,4 +33,9 @@ class WebSocketService {
       _cacheService.getCache();
     });
   }
+
+  void closeConnection() {
+    connection?.sink.close();
+    _isConnected = false;
+  }
 }

@@ -5,13 +5,8 @@ import 'package:fluro/fluro.dart';
 
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
-import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
-
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/services/cache.service.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
-import 'package:demos_app/core/services/websocket.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
+import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 
 import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
@@ -28,16 +23,9 @@ void main() async {
   connectionStatusBloc.listenStatusConnection();
 
   final userPrefs = UserPreferencesService();
-  final bool userIsAuthenticate = await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
-  if (userIsAuthenticate) {
-    User? currentUser = await CurrentUserService().getCurrentUser();
-    WebSocketService webSocketService = WebSocketService();
-    webSocketService.createConnection(currentUser!.userId!);
-    await TokenService().refreshTokens();
-    CacheService().getCache();
-  }
+  final bool userIsAuthenticate = await TokenService().isAuthenticate();
 
   runApp(MultiBlocProvider(
     providers: [

@@ -10,7 +10,7 @@ class ConnectionStatusBloc
   static final _connectionBloc = ConnectionStatusBloc._internal();
   factory ConnectionStatusBloc() => _connectionBloc;
 
-  ConnectionStatusBloc._internal() : super(ConnectionStatusState.Connected) {
+  ConnectionStatusBloc._internal() : super(ConnectionStatusState.Connecting) {
     on<ConnectionChangeEvent>((event, emit) {
       emit(event.newEvent);
     });
