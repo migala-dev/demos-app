@@ -1,12 +1,15 @@
 import 'package:demos_app/core/api/cache.api.dart';
+import 'package:demos_app/core/event_handlers/handlers/space_handler.dart';
+import 'package:demos_app/core/event_handlers/handlers/user_space_handler.dart';
 import 'package:demos_app/core/event_handlers/map_event_name_to_handler.dart';
-import 'package:demos_app/core/event_handlers/user_space/user_space_handler.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
-import 'package:demos_app/core/models/data_event.model.dart';
+import 'package:demos_app/core/models/cache.model.dart';
+import 'package:demos_app/core/repositories/cache.repository.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CacheService {
-  List<EventHandler> eventHandlers = [UserSpaceHandler()];
+  List<EventHandler> eventHandlers = [UserSpaceHandler(), SpaceHandler()];
   bool isPendingCache = false;
   bool isRequestInProgress = false;
   final String _lastUpdatedDateKey = 'last-updated-date';
@@ -36,14 +39,18 @@ class CacheService {
 
   Future<void> _requestCache() async {
     String? lastUpdatedDate = await _readLastUpdatedDate();
-    List<DataEvent> dataEventList = await CacheApi().getCache(lastUpdatedDate);
+    List<Cache> dataEventList = await CacheApi().getCache(lastUpdatedDate);
     await _handleEvents(dataEventList);
     await updateLastUpdatedDate();
   }
 
-  Future<void> _handleEvents(List<DataEvent> dataEventList) async {
+  Future<void> _handleEvents(List<Cache> dataEventList) async {
     for (final event in dataEventList) {
-      await handleEvent(event);
+      bool isNew  = await _isNewEvent(event);
+      if(isNew) {
+        await handleEvent(event);
+        await _saveEvent(event);
+      }
     }
   }
 
@@ -54,10 +61,14 @@ class CacheService {
     }
   }
 
-  Future<void> handleEvent(DataEvent dataEvent) async {
+  Future<void> handleEvent(Cache dataEvent) async {
     try {
       EventHandler? handler = _getEventHandler(dataEvent.entityName);
-      await handler?.handleEvent(dataEvent);
+      if(handler != null) {
+        await handler.handleEvent(dataEvent);
+      } else {
+        ToastUtil.showError('Entidad no implementada: ${dataEvent.entityName}');
+      }
     } catch (e) {
       print(e);
     }
@@ -78,5 +89,14 @@ class CacheService {
 
   Future<void> _writeLastUpdatedDate(String lastUpdatedDate) async {
     await _storage.write(key: _lastUpdatedDateKey, value: lastUpdatedDate);
+  }
+
+  Future<bool> _isNewEvent(Cache cache) async {
+    Cache? cacheSaved = await CacheRepository().findById(cache.cacheId);
+    return cacheSaved == null;
+  }
+
+  Future<void> _saveEvent(Cache cache) async {
+    await CacheRepository().insert(cache);
   }
 }

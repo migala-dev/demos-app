@@ -1,7 +1,6 @@
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
-import 'package:demos_app/widgets/general/async_text.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
 

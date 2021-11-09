@@ -42,6 +42,17 @@ class SpaceApi {
     return response;
   }
 
+  Future<void> updateSpace(Space space) async {
+    String endpoint = SpacePath().getSpacePath(space.spaceId!);
+    Object params = {
+      "name": space.name,
+      "description": space.description,
+      "participationPercentage": space.participationPercentage.toString(),
+      "approvalPercentage": space.approvalPercentage.toString()
+    };
+    await Api.post(endpoint, params);
+  }
+
   Future<Space?> uploadPicture(String spaceId, File file) async {
     String endpoint = SpacePath().getUpdateSpaceImagePath(spaceId);
 
@@ -83,10 +94,7 @@ class SpaceApi {
   Future<SendInvitationsResponse> sendInvitations(
       String spaceId, List<InvitationContact> contacts) async {
     String endpoint = SpacePath().getInvitationPath(spaceId);
-    Object params = {
-      "users": contacts.map((c) => c.toJson()).toList()
-    };
-
+    Object params = {"users": contacts.map((c) => c.toJson()).toList()};
 
     final httpResponse = await Api.post(endpoint, params);
 
