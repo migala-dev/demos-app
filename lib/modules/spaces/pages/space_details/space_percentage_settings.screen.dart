@@ -22,10 +22,15 @@ class _SpacePercentageSettingsScreenState
   int participationPercentage = 70;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     Space? space = CurrentSpaceService().getCurrentSpace();
     approvalPercentage = space!.approvalPercentage;
     participationPercentage = space.participationPercentage;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
         appBar: AppBar(
@@ -73,8 +78,8 @@ class _SpacePercentageSettingsScreenState
   void save() {
     wrapLoadingTransaction(() async {
       Space? space = CurrentSpaceService().getCurrentSpace();
-      space!.approvalPercentage = this.approvalPercentage;
-      space.participationPercentage = this.participationPercentage;
+      space!.approvalPercentage = approvalPercentage;
+      space.participationPercentage = participationPercentage;
 
       await SpaceDetailsService().updateSpace(space);
       Navigator.pop(context);

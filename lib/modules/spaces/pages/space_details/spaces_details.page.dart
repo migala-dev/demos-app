@@ -22,7 +22,7 @@ class SpaceDetailsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
             titleSpacing: 0,
-            title: InkWell(
+            title: GestureDetector(
               child: Row(
                 children: [
                   Container(
