@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:demos_app/core/errors/handle_error.dart';
 import 'package:demos_app/core/services/token.service.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:http/http.dart' as http;
+
+import 'error_message_translation.service.dart';
 
 class Api {
   static Map<String, String> _getDefaultHeaders() {
@@ -88,6 +90,7 @@ class Api {
   }
 
   static void _throwMessageError(String message) {
-    handleError(message);
+    ToastUtil.showError(ErrorMessageTraslation.getMessage(message));
+    throw (message);
   }
 }

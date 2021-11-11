@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
+import 'package:connectivity/connectivity.dart';
 
 import 'package:demos_app/app_initializer.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
@@ -20,11 +21,16 @@ void main() async {
     statusBarIconBrightness: Brightness.dark,
   ));
 
-  final connectionStatusBloc = ConnectionStatusBloc();
-  connectionStatusBloc.listenStatusConnection();
+  final connectivityResult = await Connectivity().checkConnectivity();
+  if (connectivityResult != ConnectivityResult.none) {
+    AppInitializer().initApp();
+  }
 
   final userPrefs = UserPreferencesService();
   await userPrefs.initUserPreferences();
+
+  final connectionStatusBloc = ConnectionStatusBloc();
+  connectionStatusBloc.listenStatusConnection();
 
   final bool userIsAuthenticate = await TokenService().isAuthenticate();
 
