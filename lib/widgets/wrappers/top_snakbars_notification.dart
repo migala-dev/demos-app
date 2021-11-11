@@ -1,4 +1,3 @@
-import 'package:demos_app/core/connection/app_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,16 +12,11 @@ class TopSnakbarsNotification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appConnection = AppConnection();
-
     return BlocBuilder<ConnectionStatusBloc, ConnectionStatusState>(
       builder: (context, state) {
         if (state == ConnectionStatusState.Connected) {
-          appConnection.connectApp();
           return child;
         } else if (state == ConnectionStatusState.Unconnected) {
-          appConnection.disconnectApp();
-
           return Column(
             children: [
               NoConnectionSnackbar(),

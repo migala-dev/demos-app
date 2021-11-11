@@ -4,29 +4,29 @@ import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
 
-class AppConnection {
-  static final _appConnection = AppConnection._internal();
-  AppConnection._internal();
-  factory AppConnection() => _appConnection;
+class AppInitializer {
+  static final _appInitializer = AppInitializer._internal();
+  AppInitializer._internal();
+  factory AppInitializer() => _appInitializer;
 
-  bool isConnected = false;
+  bool isAlreadyInitialize = false;
 
-  void connectApp() async {
-    if (!isConnected) {
+  void initApp() async {
+    if (!isAlreadyInitialize) {
       User? currentUser = await CurrentUserService().getCurrentUser();
       WebSocketService webSocketService = WebSocketService();
       webSocketService.createConnection(currentUser!.userId!);
       await TokenService().refreshTokens();
       CacheService().getCache();
 
-      isConnected = true;
+      isAlreadyInitialize = true;
     }
   }
 
-  void disconnectApp() {
+  void disconnectWebsocket() {
     WebSocketService webSocketService = WebSocketService();
     webSocketService.closeConnection();
 
-    isConnected = false;
+    isAlreadyInitialize = false;
   }
 }

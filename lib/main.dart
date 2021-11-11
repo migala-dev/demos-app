@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
 
+import 'package:demos_app/app_initializer.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/services/token.service.dart';
@@ -68,6 +69,17 @@ class DemosApp extends StatelessWidget {
         );
       },
     );
-    return app;
+
+    return BlocListener<ConnectionStatusBloc, ConnectionStatusState>(
+      listener: (context, state) {
+        final appInitializer = AppInitializer();
+        if (state == ConnectionStatusState.Connected) {
+          appInitializer.initApp();
+        } else if (state == ConnectionStatusState.Unconnected) {
+          appInitializer.disconnectWebsocket();
+        }
+      },
+      child: app,
+    );
   }
 }
