@@ -133,7 +133,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
           User? user = await AuthService().verifyCode(code);
           if (user != null) {
             bool thisUserHasAlreadyInfo =
-                user.name != "" || user.profilePictureKey != "";
+                user.name != "" || user.profilePictureKey != null;
             String route =
                 thisUserHasAlreadyInfo ? Routes.spaces : Routes.initialProfile;
             Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);

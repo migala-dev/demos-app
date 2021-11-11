@@ -16,6 +16,8 @@ class IsCurrentUserAdminWidgetValidator implements WidgetValidator {
 
     User? user = await CurrentUserService().getCurrentUser();
 
-    return GeneralSpaceService().isUserAdmin(user!.userId!, space.spaceId!);
+    bool isAdmin = await GeneralSpaceService().isUserAdmin(user!.userId!, space.spaceId!);
+    
+    return isAdmin;
   }
 }

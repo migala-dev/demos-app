@@ -30,7 +30,7 @@ class User {
     this._userId = o["userId"];
     this._name = o["name"];
     this._phoneNumber = o["phoneNumber"];
-    this._profilePictureKey = o["profilePictureKey"];
+    this._profilePictureKey = o["profilePictureKey"] == "null" ? null : o["profilePictureKey"];
     this._createdAt = o["createdAt"];
     this._updatedAt = o["updatedAt"];
   }
