@@ -69,6 +69,14 @@ class RoleUserSpaceRepository {
     return result.length > 0 ? RoleUserSpace.fromObject(result[0]) : null;
   }
 
+  Future<RoleUserSpace?> findByUserIdAndSpaceId(
+      String userId, String spaceId) async {
+    Database? db = await this.db;
+    var result = await db!.rawQuery(
+        "SELECT * FROM $tblRoleUserSpaces WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId'");
+    return result.length > 0 ? RoleUserSpace.fromObject(result[0]) : null;
+  }
+
   Future<List<RoleUserSpace>> getAll() async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
