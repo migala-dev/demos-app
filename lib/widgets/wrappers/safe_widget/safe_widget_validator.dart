@@ -1,12 +1,18 @@
+import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SafeWidgetValidator extends StatefulWidget {
-  final List<WidgetValidator> validators;
+  final List<WidgetValidator>? validators;
   final Widget child;
+  final bool safeInternetConnectionMode;
 
   const SafeWidgetValidator(
-      {Key? key, required this.validators, required this.child})
+      {Key? key,
+      this.validators,
+      required this.child,
+      this.safeInternetConnectionMode = true})
       : super(key: key);
 
   @override
@@ -31,16 +37,29 @@ class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
 
   @override
   Widget build(BuildContext context) {
-    if (isValid) {
-      return widget.child;
-    }
-    return Container();
+    return BlocBuilder<ConnectionStatusBloc, ConnectionStatusState>(
+      builder: (context, connectionState) {
+        if (isValid && isValidConnection(connectionState)) {
+          return widget.child;
+        }
+        return Container();
+      },
+    );
   }
 
   Future<bool> validate() async {
-    List<bool> validatosResult = await Future.wait(
-        widget.validators.map((v) => v.canActivate()).toList());
+    if (widget.validators == null) {
+      return true;
+    } else {
+      List<bool> validatosResult = await Future.wait(
+          widget.validators!.map((v) => v.canActivate()).toList());
 
-    return validatosResult.every((r) => r);
+      return validatosResult.every((r) => r);
+    }
+  }
+
+  bool isValidConnection(ConnectionStatusState connectionState) {
+    return !widget.safeInternetConnectionMode ||
+        connectionState == ConnectionStatusState.Connected;
   }
 }
