@@ -2,16 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluro/fluro.dart';
+import 'package:connectivity/connectivity.dart';
 
+import 'package:demos_app/app_initializer.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
-import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
-
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/services/cache.service.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
-import 'package:demos_app/core/services/websocket.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
+import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 
 import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
@@ -24,17 +21,18 @@ void main() async {
     statusBarIconBrightness: Brightness.dark,
   ));
 
+  final connectivityResult = await Connectivity().checkConnectivity();
+  if (connectivityResult != ConnectivityResult.none) {
+    AppInitializer().initApp();
+  }
+
   final userPrefs = UserPreferencesService();
-  final bool userIsAuthenticate = await TokenService().isAuthenticate();
   await userPrefs.initUserPreferences();
 
-  if (userIsAuthenticate) {
-    User? currentUser = await CurrentUserService().getCurrentUser();
-    WebSocketService webSocketService = WebSocketService();
-    webSocketService.createConnection(currentUser!.userId!);
-    await TokenService().refreshTokens();
-    CacheService().getCache();
-  }
+  final connectionStatusBloc = ConnectionStatusBloc();
+  connectionStatusBloc.listenStatusConnection();
+
+  final bool userIsAuthenticate = await TokenService().isAuthenticate();
 
   runApp(MultiBlocProvider(
     providers: [
@@ -77,6 +75,17 @@ class DemosApp extends StatelessWidget {
         );
       },
     );
-    return app;
+
+    return BlocListener<ConnectionStatusBloc, ConnectionStatusState>(
+      listener: (context, state) {
+        final appInitializer = AppInitializer();
+        if (state == ConnectionStatusState.Connected) {
+          appInitializer.initApp();
+        } else if (state == ConnectionStatusState.Unconnected) {
+          appInitializer.disconnectWebsocket();
+        }
+      },
+      child: app,
+    );
   }
 }

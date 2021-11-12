@@ -16,33 +16,35 @@ class Api {
     return headers;
   }
 
-   static Map<String, String> _getHeadersWithApplicationJSON() {
+  static Map<String, String> _getHeadersWithApplicationJSON() {
     Map<String, String> headers = _getDefaultHeaders();
     headers['Content-Type'] = 'application/json';
-    
+
     return headers;
   }
 
   static Future<dynamic> get(String endpoint) async {
-    Future<http.Response> call = http.get(Uri.parse(endpoint),
-        headers: _getDefaultHeaders());
+    Future<http.Response> call =
+        http.get(Uri.parse(endpoint), headers: _getDefaultHeaders());
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
   static Future<dynamic> post(String endpoint, Object? body) async {
-    Map<String, String> headers = body != null ? _getHeadersWithApplicationJSON(): _getDefaultHeaders();
+    Map<String, String> headers =
+        body != null ? _getHeadersWithApplicationJSON() : _getDefaultHeaders();
     String bodyFormatted = body != null ? json.encoder.convert(body) : '';
 
-    Future<http.Response> call = http.post(Uri.parse(endpoint),
-        headers: headers, body: bodyFormatted);
+    Future<http.Response> call =
+        http.post(Uri.parse(endpoint), headers: headers, body: bodyFormatted);
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
 
   static Future<dynamic> patch(String endpoint, Object? body) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
-        headers: _getHeadersWithApplicationJSON(), body:  json.encoder.convert(body));
+        headers: _getHeadersWithApplicationJSON(),
+        body: json.encoder.convert(body));
     var response = await _handleErrors(call);
     return jsonDecode(response!.body);
   }
@@ -69,7 +71,8 @@ class Api {
     return jsonDecode(response!.body);
   }
 
-  static Future<http.Response?> _handleErrors(Future<http.Response> call) async {
+  static Future<http.Response?> _handleErrors(
+      Future<http.Response> call) async {
     try {
       http.Response response = await call;
       if (response.statusCode != 200) {

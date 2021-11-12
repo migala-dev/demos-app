@@ -16,14 +16,16 @@ class TopSnakbarsNotification extends StatelessWidget {
       builder: (context, state) {
         if (state == ConnectionStatusState.Connected) {
           return child;
+        } else if (state == ConnectionStatusState.Unconnected) {
+          return Column(
+            children: [
+              NoConnectionSnackbar(),
+              Expanded(child: child),
+            ],
+          );
         }
 
-        return Column(
-          children: [
-            NoConnectionSnackbar(),
-            Expanded(child: child),
-          ],
-        );
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
