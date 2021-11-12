@@ -4,14 +4,14 @@ import 'package:web_socket_channel/io.dart';
 
 class WebSocketService {
   final Duration pingInterval = Duration(seconds: 2);
-  static final WebSocketService userSpaceEventListener =
+  static final WebSocketService _webSocketService =
       WebSocketService._internal();
   IOWebSocketChannel? connection;
   bool _isConnected = false;
 
   WebSocketService._internal();
 
-  factory WebSocketService() => userSpaceEventListener;
+  factory WebSocketService() => _webSocketService;
 
   void createConnection(String userId) {
     if (!_isConnected) {

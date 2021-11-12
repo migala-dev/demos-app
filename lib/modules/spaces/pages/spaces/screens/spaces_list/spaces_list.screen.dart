@@ -5,6 +5,7 @@ import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widget
 import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_button.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:demos_app/widgets/wrappers/top_snakbars_notification.dart';
 import 'package:flutter/material.dart';
 
@@ -26,12 +27,13 @@ class SpaceListScreen extends StatelessWidget {
             actions: [PopupSpacesMenuButton()],
             bottom: getSpacesTabBar(),
           ),
-          floatingActionButton: FloatingActionButton(
+          floatingActionButton: SafeWidgetValidator(
+              child: FloatingActionButton(
             onPressed: () {
               Navigator.pushNamed(context, Routes.newSpace);
             },
             child: Icon(Icons.add),
-          ),
+          )),
           body: getBody(context)),
     );
   }
@@ -52,29 +54,25 @@ class SpaceListScreen extends StatelessWidget {
   }
 
   Widget getSpaceList(BuildContext context) {
-    return TopSnakbarsNotification(
-      child: SpaceListWidget(
-        spaces: spaces,
-        getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
-        onSpaceTab: (spaceView) {
-          Navigator.pushNamed(context, Routes.spacesDetails,
-              arguments: spaceView);
-        },
-      ),
+    return SpaceListWidget(
+      spaces: spaces,
+      getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
+      onSpaceTab: (spaceView) {
+        Navigator.pushNamed(context, Routes.spacesDetails,
+            arguments: spaceView);
+      },
     );
   }
 
   Widget getInvitationList(BuildContext context) {
-    return TopSnakbarsNotification(
-      child: SpaceListWidget(
-        spaces: invitations,
-        getSubtitle: (spaceView) =>
-            'Invitado desde el ${DateFormatterService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
-        onSpaceTab: (spaceView) {
-          Navigator.pushNamed(context, Routes.spaceInvitation,
-              arguments: spaceView);
-        },
-      ),
+    return SpaceListWidget(
+      spaces: invitations,
+      getSubtitle: (spaceView) =>
+          'Invitado desde el ${DateFormatterService.parseToStandardDate(spaceView.invitationCreatedAt!)}',
+      onSpaceTab: (spaceView) {
+        Navigator.pushNamed(context, Routes.spaceInvitation,
+            arguments: spaceView);
+      },
     );
   }
 

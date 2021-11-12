@@ -6,6 +6,7 @@ SpaceRole getSpaceRoleFromString(String role) {
       return SpaceRole.ADMIN;
     case "REPRESENTATIVE":
       return SpaceRole.REPRESENTATIVE;
+    case "WORKER":
     default:
       return SpaceRole.WORKER;
   }
@@ -17,6 +18,7 @@ String getSpaceRoleString(SpaceRole? role) {
       return "ADMIN";
     case SpaceRole.REPRESENTATIVE:
       return "REPRESENTATIVE";
+    case SpaceRole.WORKER:
     default:
       return "WORKER";
   }

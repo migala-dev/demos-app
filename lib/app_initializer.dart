@@ -12,7 +12,8 @@ class AppInitializer {
   bool isAlreadyInitialize = false;
 
   void initApp() async {
-    if (!isAlreadyInitialize) {
+    final bool userIsAuthenticate = await TokenService().isAuthenticate();
+    if (!isAlreadyInitialize && userIsAuthenticate) {
       User? currentUser = await CurrentUserService().getCurrentUser();
       WebSocketService webSocketService = WebSocketService();
       webSocketService.createConnection(currentUser!.userId!);
