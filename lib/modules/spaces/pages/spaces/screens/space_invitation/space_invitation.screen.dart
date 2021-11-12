@@ -9,6 +9,7 @@ import 'package:demos_app/utils/ui/reload_spaces.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/general/select_options.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
 class SpaceInvitationScreen extends StatefulWidget {
@@ -71,26 +72,29 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                   )),
               Expanded(
                 flex: 3,
-                child: SelectOptionListWidget(
-                  options: getOptions(),
-                  onChange: (option) {
-                    setState(() {
-                      optionSelected = option;
-                    });
-                  },
-                ),
+                child: SafeWidgetValidator(
+                    child: SelectOptionListWidget(
+                    options: getOptions(),
+                    onChange: (option) {
+                      setState(() {
+                        optionSelected = option;
+                      });
+                    },
+                )),
               ),
             ],
           )),
-          BigButton(
-              text: "Continuar",
-              isLoading: isLoading,
-              disabled: optionSelected == null,
-              onPressed: () {
-                if (optionSelected != null) {
-                  optionSelected!.accept();
-                }
-              }),
+          SafeWidgetValidator(
+            child: BigButton(
+                text: "Continuar",
+                isLoading: isLoading,
+                disabled: optionSelected == null,
+                onPressed: () {
+                  if (optionSelected != null) {
+                    optionSelected!.accept();
+                  }
+                }),
+          )
         ],
       ),
     ));
@@ -137,7 +141,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
       await MemberService().acceptInvitation(spaceView!.spaceId);
 
       reloadSpaceList();
-      
+
       Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
           arguments: this.spaceView);
       Navigator.pushNamed(context, Routes.spacesDetails,
