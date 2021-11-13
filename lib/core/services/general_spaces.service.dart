@@ -1,12 +1,11 @@
 import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/models/member.dart';
 import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
-import 'package:demos_app/core/models/role_user_space.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/repositories/role_user_space.repository.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
-import 'package:demos_app/core/repositories/user_space.repository.dart';
+import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 
 import 'cache.service.dart';
@@ -22,16 +21,12 @@ class GeneralSpaceService {
         await SpacesRepository().insert(space);
       }
 
-       for (final userSpace in response.userSpaces) {
-        await UserSpaceRepository().insert(userSpace);
+       for (final member in response.members) {
+        await MembersRepository().insert(member);
       }
 
       for (final user in response.users) {
         await UsersRepository().insertOrUpdate(user);
-      }
-
-      for (final roleUser in response.roleUsers) {
-        await RoleUserSpaceRepository().insert(roleUser);
       }
 
       await CacheService().updateLastUpdatedDate();
@@ -47,10 +42,10 @@ class GeneralSpaceService {
   }
 
   Future<bool> isUserAdmin(String userId, String spaceId) async {
-    RoleUserSpace? userRole = await RoleUserSpaceRepository()
+    Member? member = await MembersRepository()
         .findByUserIdAndSpaceId(userId, spaceId);
 
-    return userRole != null ? userRole.role == SpaceRole.ADMIN : false;
+    return member != null ? member.role == SpaceRole.ADMIN : false;
   }
 
 }

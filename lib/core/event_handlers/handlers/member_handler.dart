@@ -6,13 +6,13 @@ import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 
-class UserSpaceHandler extends EventHandlerMixin {
-  static final _userSpaceHandler = UserSpaceHandler._internal();
-  UserSpaceHandler._internal();
-  factory UserSpaceHandler() => _userSpaceHandler;
+class MemberHandler extends EventHandlerMixin {
+  static final _memberHandler = MemberHandler._internal();
+  MemberHandler._internal();
+  factory MemberHandler() => _memberHandler;
 
   @override
-  String key = 'userSpace';
+  String key = 'member';
   @override
   final List<EventHandler> eventHandlers = [UserSpaceInvitationEvent()];
 }

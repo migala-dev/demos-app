@@ -1,8 +1,10 @@
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/user_space.dart';
+import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
-import 'package:demos_app/core/repositories/user_space.repository.dart';
+import 'package:demos_app/core/repositories/members.repository.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 
 class SpaceService {
@@ -24,20 +26,22 @@ class SpaceService {
 
   Future<List<SpaceView>> _getSpacesByInvitationStatus(
       InvitationStatus invitationStatus) async {
+    User? currentUser = await CurrentUserService().getCurrentUser();
     List<SpaceView> spacesView = [];
-    List<UserSpace> myUserSpaces =
-        await UserSpaceRepository().findByInvitationStatus(invitationStatus);
+    List<Member> myMemberships =
+        await MembersRepository().findByInvitationStatusAndUserId(invitationStatus, currentUser!.userId!);
 
-    for (UserSpace userSpace in myUserSpaces) {
-      Space? space = await SpacesRepository().findById(userSpace.spaceId!);
-      List<UserSpace> members =
-          await UserSpaceRepository().findBySpaceId(space!.spaceId);
+    for (Member member in myMemberships) {
+      Space? space = await SpacesRepository().findById(member.spaceId!);
+      List<Member> members =
+          await MembersRepository().findBySpaceIdAndInvitationStatus(space!.spaceId, InvitationStatus.ACCEPTED);
       SpaceView spaceView = SpaceView(
           spaceId: space.spaceId ?? '',
           name: space.name ?? '',
           pictureKey: space.pictureKey,
           membersCount: members.length,
-          invitationCreatedAt: userSpace.createdAt);
+          invitationCreatedAt: member.createdAt,
+          invitationExpiredAt: member.expiredAt);
       spacesView.add(spaceView);
     }
 

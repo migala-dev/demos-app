@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:demos_app/core/api/space.api.dart';
-import 'package:demos_app/core/models/role_user_space.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/user_space.dart';
-import 'package:demos_app/core/repositories/role_user_space.repository.dart';
+import 'package:demos_app/core/models/member.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
-import 'package:demos_app/core/repositories/user_space.repository.dart';
+import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 
 class NewSpaceService {
@@ -19,8 +17,7 @@ class NewSpaceService {
 
   Future<void> addSpaceEntitiesFromResponse(SpaceResponse response) async {
     await _saveSpace(response.space);
-    await _saveUserSpace(response.userSpace);
-    await _saveRoleUserSpace(response.roleUserSpace);
+    await _saveMember(response.member);
   }
 
   Future<Space?> uploadPicture(String spaceId, File file) async {
@@ -37,15 +34,9 @@ class NewSpaceService {
     }
   }
 
-  Future<void> _saveUserSpace(UserSpace? userSpace) async {
-    if (userSpace != null) {
-      await UserSpaceRepository().insert(userSpace);
-    }
-  }
-
-  Future<void> _saveRoleUserSpace(RoleUserSpace? roleUserSpace) async {
-    if (roleUserSpace != null) {
-      await RoleUserSpaceRepository().insert(roleUserSpace);
+  Future<void> _saveMember(Member? member) async {
+    if (member != null) {
+      await MembersRepository().insert(member);
     }
   }
 }

@@ -1,12 +1,12 @@
-import '../user_space.dart';
+import '../member.dart';
 
 class SendInvitationsResponse {
-  late List<UserSpace> _userSpaces;
+  late List<Member> _members;
   
-  List<UserSpace> get userSpaces => this._userSpaces;
+  List<Member> get members => this._members;
   
   SendInvitationsResponse.fromObject(dynamic list) {
-    List<dynamic> userSpacesResponse = list;
-    this._userSpaces = userSpacesResponse.map((s) => UserSpace.fromObject(s)).toList();
+    List<dynamic> membersResponse = list;
+    this._members = membersResponse.map((s) => Member.fromObject(s)).toList();
   }
 }
