@@ -1,3 +1,4 @@
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
 class ProfileField extends StatelessWidget {
@@ -25,13 +26,14 @@ class ProfileField extends StatelessWidget {
         child: Icon(icon),
       ),
       trailing: editable
-          ? IconButton(
+          ? SafeWidgetValidator(
+              child: IconButton(
               icon: Icon(
                 Icons.edit,
                 color: accentColor,
               ),
               onPressed: onEdit,
-            )
+            ))
           : Container(
               height: 14,
               width: 14,
