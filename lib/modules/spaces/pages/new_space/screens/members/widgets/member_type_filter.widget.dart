@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member_type.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/utils/labels.dart';
+
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_chip_button.widget.dart';
 
 class MemberTypeFilter extends StatelessWidget {
@@ -18,23 +18,27 @@ class MemberTypeFilter extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         MemberTypeChipButton(
-          text: all,
-          selected: selected.label == all,
+          text: 'Todos',
+          type: MemberType.ALL,
+          selected: selected == MemberType.ALL,
           onTap: onFilteredMembersChange,
         ),
         MemberTypeChipButton(
-          text: leader,
-          selected: selected.label == leader,
+          text: 'Trabajadores',
+          type: MemberType.WORKER,
+          selected: selected == MemberType.WORKER,
           onTap: onFilteredMembersChange,
         ),
         MemberTypeChipButton(
-          text: administrator,
-          selected: selected.label == administrator,
+          text: 'Admins',
+          type: MemberType.ADMINISTRATOR,
+          selected: selected == MemberType.ADMINISTRATOR,
           onTap: onFilteredMembersChange,
         ),
         MemberTypeChipButton(
-          text: invitations,
-          selected: selected.label == invitations,
+          text: 'Invitaciones',
+          type: MemberType.INVITED,
+          selected: selected == MemberType.INVITED,
           onTap: onFilteredMembersChange,
         ),
       ],

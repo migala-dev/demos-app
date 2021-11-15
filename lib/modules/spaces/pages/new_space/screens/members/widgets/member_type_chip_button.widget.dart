@@ -1,6 +1,8 @@
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:flutter/material.dart';
 
 class MemberTypeChipButton extends StatelessWidget {
+  final MemberType type;
   final String text;
   final bool selected;
   final Function onTap;
@@ -10,13 +12,14 @@ class MemberTypeChipButton extends StatelessWidget {
     required this.text,
     this.selected = false,
     required this.onTap,
+    required this.type,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (selected) return _getSelectedChip();
     return GestureDetector(
-      onTap: () => onTap(text),
+      onTap: () => onTap(type),
       child: Chip(
         label: Text(
           text,

@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
-import 'package:flutter/material.dart';
 
 class MemberTile extends StatelessWidget {
   final MemberView member;
@@ -23,16 +24,12 @@ class MemberTile extends StatelessWidget {
       ),
       title: Row(
         children: [
-          Text(
-            _getMemberDisplayName(),
-          ),
-          SizedBox(
-            width: 10,
-          ),
+          Text(member.displayName),
+          SizedBox(width: 10),
           _getRoleTile(),
         ],
       ),
-      subtitle: Text(_getSubtitle()),
+      subtitle: Text(_getSubtitleText()),
     );
   }
 
@@ -52,33 +49,24 @@ class MemberTile extends StatelessWidget {
     );
   }
 
-  String _getMemberDisplayName() {
-    if (member.name != null) if (member.name!.length > 0) return member.name!;
-
-    if (member.phoneNumber != null) return member.phoneNumber!;
-
-    return 'Miembro';
-  }
-
   String _getRoleName() {
-    if (member.role == null) return 'INVITADO';
-    if (member.invitationStatus == InvitationStatus.SENDED) return 'INVITADO';
-
-    switch (member.role) {
-      case SpaceRole.ADMIN:
+    switch (member.memberType) {
+      case MemberType.ADMINISTRATOR:
         return "ADMIN";
-      case SpaceRole.REPRESENTATIVE:
-        return "REPR";
-      case SpaceRole.WORKER:
+      case MemberType.INVITED:
+        return "INVITADO";
       default:
         return "TRABAJADOR";
     }
   }
 
-  String _getSubtitle() {
-    if (member.role == null) return 'Invitación recibida';
-    if (member.invitationStatus == InvitationStatus.SENDED)
-      return 'Invitación recibida';
+  String _getSubtitleText() {
+    if (member.memberType == MemberType.INVITED) {
+      if (member.invitationStatus == InvitationStatus.RECEIVED)
+        return 'Invitación recibida';
+
+      return 'Invitación enviada';
+    }
 
     String memberAt =
         DateFormatterService.parseToStandardDate(member.createdAt);

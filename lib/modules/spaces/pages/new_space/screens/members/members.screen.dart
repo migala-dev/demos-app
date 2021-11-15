@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member_type.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/utils/labels.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/members_screen.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_tile.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_filter.widget.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
-import 'package:demos_app/core/enums/invitation-status.enum.dart';
 
 class SpaceMembersScreen extends StatefulWidget {
   const SpaceMembersScreen({Key? key}) : super(key: key);
@@ -18,7 +15,7 @@ class SpaceMembersScreen extends StatefulWidget {
 
 class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
   bool isLoading = true;
-  MemberType selected = MemberType(all);
+  MemberType filter = MemberType.ALL;
 
   List<MemberView> members = [];
 
@@ -30,7 +27,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredMembers = _getMembersSelected(selected.label);
+    final filteredMembers = _getMembersFiltered(filter);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +41,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
           : Column(
               children: [
                 MemberTypeFilter(
-                  selected: selected,
+                  selected: filter,
                   onFilteredMembersChange: _onFilteredMembersChange,
                 ),
                 Expanded(
@@ -75,25 +72,13 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
     });
   }
 
-  void _onFilteredMembersChange(String newSelect) => setState(() {
-        selected = MemberType(newSelect);
+  void _onFilteredMembersChange(MemberType newFilter) => setState(() {
+        filter = newFilter;
       });
 
-  List<MemberView> _getMembersSelected(String newSelect) {
-    if (newSelect == invitations) {
-      return members
-          .where((member) => member.invitationStatus == InvitationStatus.SENDED)
-          .toList();
-    }
+  List<MemberView> _getMembersFiltered(MemberType filter) {
+    if (filter == MemberType.ALL) return this.members;
 
-    if (newSelect == administrator) {
-      return members.where((member) => member.role == SpaceRole.ADMIN).toList();
-    }
-
-    if (newSelect == leader) {
-      return [];
-    }
-
-    return members;
+    return members.where((member) => filter == member.memberType).toList();
   }
 }

@@ -1,0 +1,1 @@
+enum MemberType { ADMINISTRATOR, INVITED, WORKER, ALL }
