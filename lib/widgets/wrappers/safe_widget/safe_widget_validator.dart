@@ -42,7 +42,10 @@ class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
         if (isValid && isValidConnection(connectionState)) {
           return widget.child;
         }
-        return Container();
+        return Container(
+              height: 0,
+              width: 0,
+        );
       },
     );
   }

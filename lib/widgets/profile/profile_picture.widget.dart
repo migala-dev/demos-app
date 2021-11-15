@@ -1,4 +1,5 @@
 import 'package:demos_app/widgets/general/bucket_image.image.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePicture extends StatelessWidget {
@@ -27,13 +28,14 @@ class ProfilePicture extends StatelessWidget {
             bottom: 0,
             right: 0,
             child: this.editable
-                ? FloatingActionButton(
+                ? SafeWidgetValidator(
+                    child: FloatingActionButton(
                     elevation: 0,
                     mini: true,
                     child: Icon(Icons.photo_camera),
                     onPressed: onPictureEditPress,
-                  )
-                : Container())
+                  ))
+              : Container())
       ],
     );
   }

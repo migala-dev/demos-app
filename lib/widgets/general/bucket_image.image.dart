@@ -41,6 +41,7 @@ class _BucketImageState extends State<BucketImage> {
     }
     return CachedNetworkImage(
       placeholder: (context, url) => CircularProgressIndicator(),
+      errorWidget: (context, url, error) => Icon(Icons.error),
       imageUrl: imageUrl!,
       height: widget.width,
       width: widget.width,
