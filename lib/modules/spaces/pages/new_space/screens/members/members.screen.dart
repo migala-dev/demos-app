@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/search/members_search.delegate.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/members_screen.service.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_filter.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/members_screen.service.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_tile.widget.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_filter.widget.dart';
 
 class SpaceMembersScreen extends StatefulWidget {
   const SpaceMembersScreen({Key? key}) : super(key: key);
@@ -32,7 +32,14 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Miembros'),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.search))],
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await showSearch(
+                    context: context, delegate: MembersSearchDelegate());
+              },
+              icon: Icon(Icons.search))
+        ],
       ),
       body: isLoading
           ? Center(
@@ -44,15 +51,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
                   selected: filter,
                   onFilteredMembersChange: _onFilteredMembersChange,
                 ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: filteredMembers.length,
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return MemberTile(member: filteredMembers[index]);
-                    },
-                  ),
-                )
+                Expanded(child: MembersListView(memberViews: filteredMembers))
               ],
             ),
     );

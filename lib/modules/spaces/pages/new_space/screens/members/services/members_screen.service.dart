@@ -31,4 +31,15 @@ class MembersScreenService {
 
     return memberViews;
   }
+
+  Future<List<MemberView>> findMembersByDisplayName(String displayName) async {
+    final memberViews = await this.getMemberViews();
+
+    return memberViews.where((member) {
+      final memberDisplayName = member.displayName.toLowerCase();
+      final displayNameLowerCase = displayName.toLowerCase();
+
+      return memberDisplayName.contains(displayNameLowerCase);
+    }).toList();
+  }
 }
