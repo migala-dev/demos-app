@@ -1,7 +1,9 @@
 import 'package:demos_app/constans/member.path.dart';
 import 'package:demos_app/core/api/api.dart';
+import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
+import 'package:demos_app/core/models/responses/member_response.model.dart';
 import 'package:demos_app/core/models/responses/send_invitations_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 
@@ -42,5 +44,26 @@ class MemberApi {
         SendInvitationsResponse.fromObject(httpResponse);
 
     return response;
+  }
+
+  Future<MemberResponse> getMember(String spaceId, String memberId) async {
+    String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+
+    final httpResponse = await Api.get(endpoint);
+
+    MemberResponse response = MemberResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+    Future<bool> updateMember(String spaceId, String memberId,  String? name, SpaceRole role) async {
+    String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    Object params = {
+      "name": name,
+      "role": getSpaceRoleString(role),
+    };
+    final httpResponse = await Api.post(endpoint, params);
+
+    return httpResponse;
   }
 }

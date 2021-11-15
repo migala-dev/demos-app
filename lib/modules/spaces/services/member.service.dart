@@ -1,6 +1,8 @@
 import 'package:demos_app/core/api/member.api.dart';
+import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
+import 'package:demos_app/core/models/responses/member_response.model.dart';
 import 'package:demos_app/core/models/responses/send_invitations_response.model.dart';
 import 'package:demos_app/core/models/member.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
@@ -40,5 +42,17 @@ class MemberService {
     await MembersRepository().update(response.member);
 
     return response.member;
+  }
+
+  Future<void> getMember(String spaceId, String memberId) async {
+    MemberResponse response = await MemberApi().getMember(spaceId, memberId);
+
+    MembersRepository().insertOrUpdate(response.member);
+
+    UsersRepository().insertOrUpdate(response.user);
+  }
+
+   Future<void> updateMember(String spaceId, String memberId, String? name, SpaceRole role) async {
+    await MemberApi().updateMember(spaceId, memberId, name, role);
   }
 }
