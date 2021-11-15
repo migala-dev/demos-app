@@ -3,6 +3,7 @@ import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/members.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/space_percentage_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/space_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
@@ -72,4 +73,9 @@ var generalSettingsHandler = Handler(
 var profileSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return ProfileSettingScreen();
+});
+
+var spaceMembersHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return SpaceMembersScreen();
 });

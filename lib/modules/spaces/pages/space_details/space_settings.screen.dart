@@ -13,6 +13,14 @@ class SpaceSettingsScreen extends StatelessWidget {
     Navigator.pushNamed(context, Routes.spacePercentage);
   }
 
+  void goToSpaceMembers(BuildContext context) {
+    Navigator.pushNamed(context, Routes.spaceMembers);
+  }
+
+  void goToSpaceInvitations(BuildContext context) {
+    Navigator.pushNamed(context, Routes.invitations);
+  }
+
   @override
   Widget build(BuildContext context) {
     Space? currentSpace = CurrentSpaceService().getCurrentSpace();
@@ -51,21 +59,17 @@ class SpaceSettingsScreen extends StatelessWidget {
               subtitle:
                   "Porcentaje de participación y aprovación de las propuestas",
               icon: Icons.how_to_vote,
-              onTap: () {
-                goToSpacePercentageSettings(context);
-              }),
+              onTap: () => goToSpacePercentageSettings(context)),
           SettingItem(
               title: "Miembros",
               subtitle: "Usuarios, invitaciones y roles",
               icon: Icons.people,
-              onTap: () {}),
+              onTap: () => goToSpaceMembers(context)),
           SettingItem(
               title: "Invitaciones",
               subtitle: "Temporal",
               icon: Icons.sms,
-              onTap: () {
-                Navigator.pushNamed(context, Routes.invitations);
-              }),
+              onTap: () => goToSpaceInvitations(context)),
           Expanded(flex: 5, child: Container()),
           Expanded(
             flex: 1,
