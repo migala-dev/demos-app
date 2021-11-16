@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';

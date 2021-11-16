@@ -2,7 +2,7 @@
 
 import '../space.model.dart';
 import '../user.model.dart';
-import '../member.dart';
+import '../member.model.dart';
 
 class AcceptInvitationResponse {
   late Space _space;

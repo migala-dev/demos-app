@@ -1,6 +1,6 @@
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';

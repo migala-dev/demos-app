@@ -1,5 +1,5 @@
 
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 
 class MemberResponse {

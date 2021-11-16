@@ -1,5 +1,5 @@
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 
 class SpaceResponse {
   late Space _space;

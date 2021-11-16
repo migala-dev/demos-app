@@ -1,6 +1,6 @@
 import '../space.model.dart';
 import '../user.model.dart';
-import '../member.dart';
+import '../member.model.dart';
 
 class AllSpacesResponse {
   late List<Space> _spaces;

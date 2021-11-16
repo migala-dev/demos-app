@@ -1,5 +1,5 @@
 
-import '../member.dart';
+import '../member.model.dart';
 
 class InvitationResponse {
   late Member _member;

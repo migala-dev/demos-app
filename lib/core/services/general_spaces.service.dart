@@ -1,6 +1,6 @@
 import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/core/models/space.model.dart';

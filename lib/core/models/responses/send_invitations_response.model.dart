@@ -1,4 +1,4 @@
-import '../member.dart';
+import '../member.model.dart';
 
 class SendInvitationsResponse {
   late List<Member> _members;
