@@ -23,4 +23,8 @@ class MemberPath {
     return '${getInvitationPath(spaceId)}/reject';
   }
 
+  String getMemberPath(String spaceId, String memberId) {
+    return '${getMembersSpacePath(spaceId)}/$memberId';
+  }
+
 }
