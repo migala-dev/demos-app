@@ -1,5 +1,6 @@
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_chip.widget.dart';
 
 class MemberTypeChipButton extends StatelessWidget {
   final MemberType type;
@@ -17,28 +18,20 @@ class MemberTypeChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (selected) return _getFilteredChip();
+    if (selected)
+      return MemberTypeChip(
+        text: text,
+        backgroundColor: Colors.grey,
+        accentColor: Colors.white,
+      );
+
     return GestureDetector(
       onTap: () => onTap(type),
-      child: Chip(
-        label: Text(
-          text,
-          style: TextStyle(color: Colors.blue, fontWeight: FontWeight.w300),
-        ),
+      child: MemberTypeChip(
+        text: text,
+        accentColor: Colors.blue,
         backgroundColor: Colors.transparent,
-        side: BorderSide(color: Colors.blue, width: 0.5),
       ),
-    );
-  }
-
-  Chip _getFilteredChip() {
-    return Chip(
-      label: Text(
-        text,
-        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w300),
-      ),
-      backgroundColor: Colors.grey,
-      side: BorderSide(color: Colors.grey, width: 0.5),
     );
   }
 }

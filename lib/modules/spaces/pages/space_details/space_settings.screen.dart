@@ -17,10 +17,6 @@ class SpaceSettingsScreen extends StatelessWidget {
     Navigator.pushNamed(context, Routes.spaceMembers);
   }
 
-  void goToSpaceInvitations(BuildContext context) {
-    Navigator.pushNamed(context, Routes.invitations);
-  }
-
   @override
   Widget build(BuildContext context) {
     Space? currentSpace = CurrentSpaceService().getCurrentSpace();
@@ -65,11 +61,6 @@ class SpaceSettingsScreen extends StatelessWidget {
               subtitle: "Usuarios, invitaciones y roles",
               icon: Icons.people,
               onTap: () => goToSpaceMembers(context)),
-          SettingItem(
-              title: "Invitaciones",
-              subtitle: "Temporal",
-              icon: Icons.sms,
-              onTap: () => goToSpaceInvitations(context)),
           Expanded(flex: 5, child: Container()),
           Expanded(
             flex: 1,

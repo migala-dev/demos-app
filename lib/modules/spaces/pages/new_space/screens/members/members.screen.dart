@@ -1,4 +1,6 @@
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/search/members_search.delegate.dart';
@@ -60,9 +62,12 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
                 Expanded(child: MembersListView(memberViews: filteredMembers))
               ],
             ),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () => Navigator.pushNamed(context, Routes.invitations)),
+      floatingActionButton: SafeWidgetValidator(
+        validators: [IsCurrentUserAdminWidgetValidator()],
+        child: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => Navigator.pushNamed(context, Routes.invitations)),
+      ),
     );
   }
 
@@ -75,7 +80,11 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
   }
 
   void _onFilteredMembersChange(MemberType newFilter) => setState(() {
-        filter = newFilter;
+        if (filter == newFilter) {
+          filter = MemberType.ALL;
+        } else {
+          filter = newFilter;
+        }
       });
 
   List<MemberView> _getMembersFiltered(MemberType filter) {
