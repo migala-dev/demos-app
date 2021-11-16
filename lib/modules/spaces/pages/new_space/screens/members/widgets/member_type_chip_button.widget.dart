@@ -17,7 +17,7 @@ class MemberTypeChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (selected) return _getSelectedChip();
+    if (selected) return _getFilteredChip();
     return GestureDetector(
       onTap: () => onTap(type),
       child: Chip(
@@ -31,7 +31,7 @@ class MemberTypeChipButton extends StatelessWidget {
     );
   }
 
-  Chip _getSelectedChip() {
+  Chip _getFilteredChip() {
     return Chip(
       label: Text(
         text,

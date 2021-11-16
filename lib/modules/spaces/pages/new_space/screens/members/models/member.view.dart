@@ -10,7 +10,7 @@ class MemberView {
   final String? phoneNumber;
   final String? profilePictureKey;
   final SpaceRole? role;
-  final int noParticipations;
+  final int participationCount;
   final InvitationStatus? invitationStatus;
   final String createdAt;
 
@@ -19,7 +19,7 @@ class MemberView {
 
     if (this.phoneNumber != null) return this.phoneNumber!;
 
-    return 'Miembro';
+    return 'Sin Nombre';
   }
 
   MemberType get memberType {
@@ -32,6 +32,8 @@ class MemberView {
         return MemberType.ADMINISTRATOR;
       case SpaceRole.WORKER:
         return MemberType.WORKER;
+      case SpaceRole.REPRESENTATIVE:
+        return MemberType.REPRESENTATIVE;
       default:
         return MemberType.WORKER;
     }
@@ -39,7 +41,7 @@ class MemberView {
 
   MemberView({
     required this.userId,
-    required this.noParticipations,
+    required this.participationCount,
     required this.role,
     required this.createdAt,
     this.invitationStatus,

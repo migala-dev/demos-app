@@ -14,8 +14,9 @@ class MemberTypeFilter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      physics: BouncingScrollPhysics(),
       children: [
         MemberTypeChipButton(
           text: 'Todos',
@@ -23,18 +24,28 @@ class MemberTypeFilter extends StatelessWidget {
           selected: selected == MemberType.ALL,
           onTap: onFilteredMembersChange,
         ),
+        SizedBox(width: 10),
         MemberTypeChipButton(
           text: 'Trabajadores',
           type: MemberType.WORKER,
           selected: selected == MemberType.WORKER,
           onTap: onFilteredMembersChange,
         ),
+        SizedBox(width: 10),
         MemberTypeChipButton(
-          text: 'Admins',
+          text: 'Administradores',
           type: MemberType.ADMINISTRATOR,
           selected: selected == MemberType.ADMINISTRATOR,
           onTap: onFilteredMembersChange,
         ),
+        SizedBox(width: 10),
+        MemberTypeChipButton(
+          text: 'Representates',
+          type: MemberType.REPRESENTATIVE,
+          selected: selected == MemberType.REPRESENTATIVE,
+          onTap: onFilteredMembersChange,
+        ),
+        SizedBox(width: 10),
         MemberTypeChipButton(
           text: 'Invitaciones',
           type: MemberType.INVITED,

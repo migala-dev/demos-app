@@ -55,6 +55,8 @@ class MemberTile extends StatelessWidget {
         return "ADMIN";
       case MemberType.INVITED:
         return "INVITADO";
+      case MemberType.REPRESENTATIVE:
+        return 'REPR';
       default:
         return "TRABAJADOR";
     }

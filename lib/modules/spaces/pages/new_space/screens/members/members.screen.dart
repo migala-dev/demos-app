@@ -1,4 +1,6 @@
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/search/members_search.delegate.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/members_screen.service.dart';
@@ -13,8 +15,8 @@ class SpaceMembersScreen extends StatefulWidget {
   State<SpaceMembersScreen> createState() => _SpaceMembersScreenState();
 }
 
-class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
-  bool isLoading = true;
+class _SpaceMembersScreenState extends State<SpaceMembersScreen>
+    with LoadingStateHandler {
   MemberType filter = MemberType.ALL;
 
   List<MemberView> members = [];
@@ -47,27 +49,28 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
             )
           : Column(
               children: [
-                MemberTypeFilter(
-                  selected: filter,
-                  onFilteredMembersChange: _onFilteredMembersChange,
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  height: 70,
+                  child: MemberTypeFilter(
+                    selected: filter,
+                    onFilteredMembersChange: _onFilteredMembersChange,
+                  ),
                 ),
                 Expanded(child: MembersListView(memberViews: filteredMembers))
               ],
             ),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => Navigator.pushNamed(context, Routes.invitations)),
     );
   }
 
   Future<void> _getMembers() async {
-    setState(() {
-      isLoading = true;
-    });
-
-    final spacesMembersService = MembersScreenService();
-    final membersResult = await spacesMembersService.getMemberViews();
-    members = membersResult;
-
-    setState(() {
-      isLoading = false;
+    wrapLoadingTransaction(() async {
+      final spacesMembersService = MembersScreenService();
+      final membersResult = await spacesMembersService.getMemberViews();
+      members = membersResult;
     });
   }
 

@@ -16,7 +16,7 @@ class MembersScreenService {
       final user = await UsersRepository().findById(member.userId!);
       final memberView = MemberView(
           userId: member.userId!,
-          noParticipations: 0,
+          participationCount: 0,
           role: member.role,
           createdAt: member.createdAt!,
           invitationStatus: member.invitationStatus,
