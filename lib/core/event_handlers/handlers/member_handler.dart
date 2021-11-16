@@ -5,6 +5,7 @@ import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
+import 'package:demos_app/modules/spaces/services/member.service.dart';
 
 class MemberHandler extends EventHandlerMixin {
   static final _memberHandler = MemberHandler._internal();
@@ -12,12 +13,12 @@ class MemberHandler extends EventHandlerMixin {
   factory MemberHandler() => _memberHandler;
 
   @override
-  String key = 'member';
+  String key = 'members';
   @override
-  final List<EventHandler> eventHandlers = [UserSpaceInvitationEvent()];
+  final List<EventHandler> eventHandlers = [SpaceInvitationEvent(), UpdateMemberEvent()];
 }
 
-class UserSpaceInvitationEvent implements EventHandler {
+class SpaceInvitationEvent implements EventHandler {
   @override
   String key = 'invitation';
 
@@ -31,5 +32,18 @@ class UserSpaceInvitationEvent implements EventHandler {
 
     final spacesBloc = SpacesBloc();
     spacesBloc.add(LoadSpacesEvent());
+  }
+}
+
+class UpdateMemberEvent implements EventHandler {
+  @override
+  String key = 'updated';
+
+  @override
+  Future<void> handleEvent(Cache dataEvent) async {
+    String spaceId = dataEvent.data!['spaceId'];
+    String memberId = dataEvent.data!['memberId'];
+
+    MemberService().getMember(spaceId, memberId);
   }
 }
