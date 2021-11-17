@@ -18,16 +18,8 @@ class MemberTypeChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    late Color backgroundColor;
-    late Color accentColor;
-
-    if (selected) {
-      backgroundColor = Colors.grey;
-      accentColor = Colors.white;
-    } else {
-      backgroundColor = Colors.transparent;
-      accentColor = Colors.blue;
-    }
+    Color backgroundColor = selected ? Colors.grey : Colors.transparent;
+    Color accentColor = selected ? Colors.white : Colors.blue;
 
     return GestureDetector(
       onTap: () => onTap(type),
