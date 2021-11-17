@@ -65,7 +65,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
       floatingActionButton: SafeWidgetValidator(
         validators: [IsCurrentUserAdminWidgetValidator()],
         child: FloatingActionButton(
-            child: Icon(Icons.add),
+            child: Icon(Icons.person_add),
             onPressed: () => Navigator.pushNamed(context, Routes.invitations)),
       ),
     );
