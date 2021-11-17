@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 

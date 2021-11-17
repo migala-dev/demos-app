@@ -4,7 +4,7 @@ import 'package:demos_app/core/models/responses/accept_invitation_response.model
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/member_response.model.dart';
 import 'package:demos_app/core/models/responses/send_invitations_response.model.dart';
-import 'package:demos_app/core/models/member.dart';
+import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
