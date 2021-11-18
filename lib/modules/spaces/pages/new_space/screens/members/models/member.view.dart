@@ -9,13 +9,13 @@ class MemberView {
   final String? memberId;
   final String? spaceId;
   final String? userName;
-  final String? memberName;
   final String? phoneNumber;
   final String? profilePictureKey;
-  final SpaceRole? role;
   final int participationCount;
   final InvitationStatus? invitationStatus;
   final String? memberCreatedAt;
+  SpaceRole? role;
+  String? memberName;
 
   String get displayName {
     if (this.memberName != null) if (this.memberName!.length > 0)

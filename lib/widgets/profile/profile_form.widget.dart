@@ -1,7 +1,7 @@
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:prompt_dialog/prompt_dialog.dart';
+import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
+import 'package:demos_app/widgets/profile/profile_field.widget.dart';
+import 'package:demos_app/core/models/user.model.dart';
 
 class ProfileForm extends StatelessWidget {
   final void Function(String?)? onEditNamePress;
@@ -52,20 +52,9 @@ class ProfileForm extends StatelessWidget {
   }
 
   Future<String?> openUpdateNameModal(BuildContext context) async {
-    return await prompt(
-      context,
-      title: Text('Nombre'),
-      initialValue: user?.name,
-      textOK: Text('Guardar'),
-      textCancel: Text(
-        'Cancelar',
-        style: TextStyle(color: Colors.grey),
-      ),
-      hintText: 'Introduce tu nombre',
-      maxLines: 1,
-      autoFocus: true,
-      barrierDismissible: true,
-      textCapitalization: TextCapitalization.words,
-    );
+    return await openUpdateStringFieldModal(context,
+        title: 'Nombre',
+        hintText: 'Introduce tu nombre',
+        initialValue: user?.name);
   }
 }
