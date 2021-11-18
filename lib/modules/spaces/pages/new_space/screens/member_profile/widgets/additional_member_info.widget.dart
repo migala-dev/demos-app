@@ -14,7 +14,11 @@ class AdditionalMemberInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return member.isInvited
-        ? Container()
+        ? ProfileField(
+            title: 'La invitacion expira el',
+            icon: Icons.calendar_today,
+            value: member.invitationExpiredAtFormatted,
+          )
         : Column(
             children: [
               MemberProfileField(

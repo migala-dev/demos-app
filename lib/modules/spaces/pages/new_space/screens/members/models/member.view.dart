@@ -14,6 +14,7 @@ class MemberView {
   final int participationCount;
   final InvitationStatus? invitationStatus;
   final String? memberCreatedAt;
+  String? invitationExpiredAt;
   SpaceRole? role;
   String? memberName;
 
@@ -35,6 +36,9 @@ class MemberView {
   String get phoneNumberFormatted =>
       PhoneFormatterService.format(this.phoneNumber);
 
+  String get invitationExpiredAtFormatted =>
+      DateFormatterService.parseToStandardDate(this.invitationExpiredAt ?? '');
+
   MemberType get memberType {
     if (this.role == null) return MemberType.INVITED;
     if (this.invitationStatus == InvitationStatus.SENDED)
@@ -54,17 +58,17 @@ class MemberView {
 
   bool get isInvited => this.memberType == MemberType.INVITED;
 
-  MemberView({
-    required this.userId,
-    required this.participationCount,
-    required this.role,
-    required this.memberCreatedAt,
-    this.memberName,
-    this.invitationStatus,
-    this.profilePictureKey,
-    this.memberId,
-    this.spaceId,
-    this.userName,
-    this.phoneNumber,
-  });
+  MemberView(
+      {required this.userId,
+      required this.participationCount,
+      required this.role,
+      required this.memberCreatedAt,
+      this.memberName,
+      this.invitationStatus,
+      this.profilePictureKey,
+      this.memberId,
+      this.spaceId,
+      this.userName,
+      this.phoneNumber,
+      this.invitationExpiredAt});
 }

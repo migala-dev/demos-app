@@ -1,5 +1,6 @@
-import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
 
 class ProfileField extends StatelessWidget {
   final String title;
@@ -8,6 +9,7 @@ class ProfileField extends StatelessWidget {
   final bool editable;
   final VoidCallback? onEdit;
   final String placeholderPrefix;
+  final List<WidgetValidator>? editableButtonValidators;
 
   const ProfileField(
       {Key? key,
@@ -16,7 +18,8 @@ class ProfileField extends StatelessWidget {
       this.value,
       this.editable = false,
       this.placeholderPrefix = 'Introduce tu',
-      this.onEdit})
+      this.onEdit,
+      this.editableButtonValidators})
       : super(key: key);
 
   @override
@@ -29,13 +32,14 @@ class ProfileField extends StatelessWidget {
       ),
       trailing: editable
           ? SafeWidgetValidator(
+              validators: editableButtonValidators,
               child: IconButton(
-              icon: Icon(
-                Icons.edit,
-                color: accentColor,
-              ),
-              onPressed: onEdit,
-            ))
+                icon: Icon(
+                  Icons.edit,
+                  color: accentColor,
+                ),
+                onPressed: onEdit,
+              ))
           : Container(
               height: 14,
               width: 14,

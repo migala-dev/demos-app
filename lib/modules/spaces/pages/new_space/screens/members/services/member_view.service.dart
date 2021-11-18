@@ -25,7 +25,8 @@ class MemberViewService {
           userName: user?.name,
           spaceId: spaceId,
           phoneNumber: user?.phoneNumber,
-          profilePictureKey: user?.profilePictureKey);
+          profilePictureKey: user?.profilePictureKey,
+          invitationExpiredAt: member.expiredAt);
 
       memberViews.add(memberView);
     }

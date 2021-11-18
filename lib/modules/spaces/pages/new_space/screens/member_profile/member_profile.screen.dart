@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/additional_member_info.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/modals/select_role_modal.dart';
@@ -40,8 +41,11 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                   title: 'Nombre en el espacio',
                   icon: Icons.person,
                   value: widget.member.displayName,
-                  editable: true,
+                  editable: !widget.member.isInvited,
                   onEdit: openUpdateNameModal,
+                  editableButtonValidators: [
+                    IsCurrentUserAdminWidgetValidator()
+                  ],
                 ),
                 ProfileField(
                   placeholderPrefix: 'Sin ',
@@ -54,8 +58,11 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                   title: 'Rol',
                   icon: Icons.manage_accounts,
                   value: getSpaceRoleName(widget.member.role),
-                  editable: true,
+                  editable: !widget.member.isInvited,
                   onEdit: openUpdateRoleModel,
+                  editableButtonValidators: [
+                    IsCurrentUserAdminWidgetValidator()
+                  ],
                 ),
                 AdditionalMemberInfo(member: widget.member)
               ]),
