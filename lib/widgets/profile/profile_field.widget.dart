@@ -7,6 +7,7 @@ class ProfileField extends StatelessWidget {
   final IconData icon;
   final bool editable;
   final VoidCallback? onEdit;
+  final String placeholderPrefix;
 
   const ProfileField(
       {Key? key,
@@ -14,6 +15,7 @@ class ProfileField extends StatelessWidget {
       required this.icon,
       this.value,
       this.editable = false,
+      this.placeholderPrefix = 'Introduce tu',
       this.onEdit})
       : super(key: key);
 
@@ -56,7 +58,7 @@ class ProfileField extends StatelessWidget {
   }
 
   Widget getWithoutValueLabel() {
-    return Text('Introduce tu ${title.toLowerCase()}',
+    return Text('$placeholderPrefix ${title.toLowerCase()}',
         style: TextStyle(color: Colors.black26, fontSize: 18));
   }
 }

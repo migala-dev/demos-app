@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/member_profile_popup_menu_button.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/areas_list.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/member_profile_field.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/votes_text.widget.dart';
@@ -6,7 +9,9 @@ import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 
 class MemberProfileScreen extends StatelessWidget {
-  const MemberProfileScreen({Key? key}) : super(key: key);
+  const MemberProfileScreen(this.member, {Key? key}) : super(key: key);
+
+  final MemberView member;
 
   @override
   Widget build(BuildContext context) {
@@ -14,42 +19,33 @@ class MemberProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Perfil'),
         actions: [
-          PopupMenuButton(
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text("Cancelar Invitación"),
-                value: 0,
-              ),
-              PopupMenuItem(
-                child: Text("Eliminar Miembro"),
-                value: 1,
-              ),
-            ],
-          )
+          MemberProfilePopupMenuButton(memberIsInvited: member.isInvited)
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         child: Column(
           children: [
-            ProfilePicture(),
+            ProfilePicture(imageKey: member.profilePictureKey),
             Expanded(
               child: ListView(physics: BouncingScrollPhysics(), children: [
-                ProfileField(title: 'Nombre', icon: Icons.person),
-                ProfileField(title: 'Telefono', icon: Icons.phone),
-                ProfileField(title: 'Rol', icon: Icons.manage_accounts),
-                MemberProfileField(
-                    title: 'Áreas', icon: Icons.grid_view, child: AreasList()),
-                MemberProfileField(
-                    title: 'Propuestas',
-                    icon: Icons.info_outline,
-                    child: VotesText()),
-                MemberProfileField(
-                    title: 'Sugerencias',
-                    icon: Icons.info_outline,
-                    child: VotesText()),
                 ProfileField(
-                    title: 'Miembro desde', icon: Icons.calendar_today),
+                    placeholderPrefix: 'Sin ',
+                    title: 'Nombre en el espacio',
+                    icon: Icons.person,
+                    value: member.displayName),
+                ProfileField(
+                  placeholderPrefix: 'Sin ',
+                  title: 'Telefono',
+                  icon: Icons.phone,
+                  value: member.phoneNumberFormatted,
+                ),
+                ProfileField(
+                    placeholderPrefix: 'Sin ',
+                    title: 'Rol',
+                    icon: Icons.manage_accounts,
+                    value: getSpaceRoleName(member.role)),
+                _getAdditionalMemberInfo()
               ]),
             ),
           ],
@@ -57,4 +53,26 @@ class MemberProfileScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _getAdditionalMemberInfo() => member.isInvited
+      ? Container()
+      : Column(
+          children: [
+            MemberProfileField(
+                title: 'Áreas', icon: Icons.grid_view, child: AreasList()),
+            MemberProfileField(
+                title: 'Propuestas',
+                icon: Icons.info_outline,
+                child: VotesText()),
+            MemberProfileField(
+                title: 'Sugerencias',
+                icon: Icons.info_outline,
+                child: VotesText()),
+            ProfileField(
+              title: 'Miembro desde',
+              icon: Icons.calendar_today,
+              value: member.memberCreatedAtFormatted,
+            )
+          ],
+        );
 }

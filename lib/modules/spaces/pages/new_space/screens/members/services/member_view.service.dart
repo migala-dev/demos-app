@@ -4,7 +4,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 
-class MembersScreenService {
+class MemberViewService {
   Future<List<MemberView>> getMemberViews() async {
     final List<MemberView> memberViews = [];
 
@@ -16,12 +16,13 @@ class MembersScreenService {
       final user = await UsersRepository().findById(member.userId!);
       final memberView = MemberView(
           userId: member.userId!,
+          memberName: member.name,
           participationCount: 0,
           role: member.role,
-          createdAt: member.createdAt!,
+          memberCreatedAt: member.createdAt,
           invitationStatus: member.invitationStatus,
           memberId: member.memberId,
-          name: user?.name,
+          userName: user?.name,
           spaceId: spaceId,
           phoneNumber: user?.phoneNumber,
           profilePictureKey: user?.profilePictureKey);

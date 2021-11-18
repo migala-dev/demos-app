@@ -1,4 +1,3 @@
-import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/area_chip.widget.dart';
 import 'package:flutter/material.dart';
 
 class MemberProfileField extends StatelessWidget {

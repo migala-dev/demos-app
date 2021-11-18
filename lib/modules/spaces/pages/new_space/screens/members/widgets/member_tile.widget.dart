@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
-import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 
 class MemberTile extends StatelessWidget {
@@ -43,23 +42,10 @@ class MemberTile extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(100)),
       ),
       child: Text(
-        _getRoleName(),
+        getMemberTypeName(member.memberType),
         style: TextStyle(fontSize: 12, color: Colors.grey),
       ),
     );
-  }
-
-  String _getRoleName() {
-    switch (member.memberType) {
-      case MemberType.ADMINISTRATOR:
-        return "ADMIN";
-      case MemberType.INVITED:
-        return "INVITADO";
-      case MemberType.REPRESENTATIVE:
-        return 'REPR';
-      default:
-        return "TRABAJADOR";
-    }
   }
 
   String _getSubtitleText() {
@@ -70,8 +56,7 @@ class MemberTile extends StatelessWidget {
       return 'Invitación enviada';
     }
 
-    String memberAt =
-        DateFormatterService.parseToStandardDate(member.createdAt);
+    String memberAt = member.memberCreatedAtFormatted;
 
     return 'Desde el $memberAt';
   }
