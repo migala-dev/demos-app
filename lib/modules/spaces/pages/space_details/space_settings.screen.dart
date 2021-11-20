@@ -3,6 +3,7 @@ import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
+import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,12 @@ class SpaceSettingsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          InformationTile(space: currentSpace, onTap: () {}),
+          InformationTile(
+              picture:
+                  SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
+              name: currentSpace.name!,
+              subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
+              onTap: () {}),
           SizedBox(height: 8),
           Divider(thickness: 1),
           SettingItem(

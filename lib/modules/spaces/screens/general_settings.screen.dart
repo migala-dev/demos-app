@@ -1,3 +1,4 @@
+import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/user.model.dart';
@@ -22,8 +23,12 @@ class GeneralSettingsScreen extends StatelessWidget {
             return Column(
               children: [
                 InformationTile(
-                    onTap: () => goToProfileSettings(context),
-                    user: currentUser),
+                  picture: ProfilePicture(
+                      width: 164, imageKey: currentUser.profilePictureKey),
+                  name: currentUser.name,
+                  subtitle: 'Creado el ${currentUser.createdAtFormatted}',
+                  onTap: () => goToProfileSettings(context),
+                ),
                 SizedBox(height: 8),
                 Divider(thickness: 1),
                 SettingItem(
