@@ -6,13 +6,14 @@ class NoConnectionSnackbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.grey.shade200,
       width: double.infinity,
       height: 30,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.wifi),
+          Icon(Icons.wifi_off),
           SizedBox(
             width: 5,
           ),
