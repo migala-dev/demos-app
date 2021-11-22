@@ -14,6 +14,10 @@ class ConnectionStatusBloc
     on<ConnectionChangeEvent>((event, emit) {
       emit(event.newEvent);
     });
+
+    on<ConnectionStartedEvent>((event, emit) {
+      handleConnectivityResult(event.initConnectivityResult);
+    });
   }
 
   void listenStatusConnection() async {
