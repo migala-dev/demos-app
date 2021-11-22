@@ -3,7 +3,8 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
-import 'package:demos_app/shared/services/date_formatter.service.dart';
+import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
+import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
 import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 
@@ -20,10 +21,7 @@ class SpaceSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Space? currentSpace = CurrentSpaceService().getCurrentSpace();
-
-    String createdAt =
-        DateFormatterService.parseToStandardDate(currentSpace?.createdAt ?? '');
+    Space currentSpace = CurrentSpaceService().getCurrentSpace()!;
 
     return DemosScaffold(
       appBar: AppBar(
@@ -31,24 +29,12 @@ class SpaceSettingsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(top: 16),
-            child: ListTile(
-              leading:
-                  SpacePicture(width: 64, pictureKey: currentSpace?.pictureKey),
-              title: Text(
-                currentSpace?.name ?? '',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-              subtitle: Text("Creado el $createdAt"),
-              visualDensity:
-                  VisualDensity(vertical: VisualDensity.maximumDensity),
-              minVerticalPadding: 16,
-              onTap: () {},
-              contentPadding: EdgeInsets.symmetric(horizontal: 28),
-              horizontalTitleGap: 16,
-            ),
-          ),
+          InformationTile(
+              picture:
+                  SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
+              name: currentSpace.name!,
+              subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
+              onTap: () {}),
           SizedBox(height: 8),
           Divider(thickness: 1),
           SettingItem(
@@ -65,25 +51,7 @@ class SpaceSettingsScreen extends StatelessWidget {
           Expanded(flex: 5, child: Container()),
           Expanded(
             flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(right: 16),
-                  child: Column(
-                    children: [
-                      Text(
-                        "powered by",
-                        style: TextStyle(fontWeight: FontWeight.w300),
-                      ),
-                      Text("Migala",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold))
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            child: PoweredByMigala(),
           )
         ],
       ),
