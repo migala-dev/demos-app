@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/approval_percentage_slider.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/participation_percentage_slider.widget.dart';
@@ -7,8 +8,8 @@ import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
-import 'package:flutter/material.dart';
 
 class SpacePercentageSettingsScreen extends StatefulWidget {
   SpacePercentageSettingsScreen({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _SpacePercentageSettingsScreenState
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Scaffold(
+      child: DemosScaffold(
         appBar: AppBar(
           title: Text("Votos"),
         ),

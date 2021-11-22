@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
+import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
-import 'package:flutter/material.dart';
 
 class SpaceSettingsScreen extends StatelessWidget {
   const SpaceSettingsScreen({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class SpaceSettingsScreen extends StatelessWidget {
     String createdAt =
         DateFormatterService.parseToStandardDate(currentSpace?.createdAt ?? '');
 
-    return Scaffold(
+    return DemosScaffold(
       appBar: AppBar(
         title: Text("Ajustes"),
       ),

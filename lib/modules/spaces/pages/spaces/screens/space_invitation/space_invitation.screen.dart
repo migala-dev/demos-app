@@ -8,6 +8,7 @@ import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/reload_spaces.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/general/select_options.widget.dart';
+import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
     getSpace(spaceView);
     setStateView(spaceView);
 
-    return Scaffold(
+    return DemosScaffold(
         body: Container(
       padding:
           EdgeInsets.only(top: 32.0, bottom: 20.0, left: 24.0, right: 24.0),
@@ -74,12 +75,12 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                 flex: 3,
                 child: SafeWidgetValidator(
                     child: SelectOptionListWidget(
-                    options: getOptions(),
-                    onChange: (option) {
-                      setState(() {
-                        optionSelected = option;
-                      });
-                    },
+                  options: getOptions(),
+                  onChange: (option) {
+                    setState(() {
+                      optionSelected = option;
+                    });
+                  },
                 )),
               ),
             ],

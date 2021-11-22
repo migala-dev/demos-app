@@ -24,7 +24,7 @@ void main() async {
   final connectivityResult = await Connectivity().checkConnectivity();
   ConnectionStatusBloc().add(ConnectionStartedEvent(connectivityResult));
   if (connectivityResult != ConnectivityResult.none) {
-    AppInitializer().initApp();
+    await AppInitializer().initApp();
   }
 
   final userPrefs = UserPreferencesService();

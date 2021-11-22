@@ -1,5 +1,6 @@
-import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
+import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GeneralSettingsScreen extends StatelessWidget {
@@ -9,7 +10,7 @@ class GeneralSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeCubit = context.read<ThemeCubit>();
 
-    return Scaffold(
+    return DemosScaffold(
       appBar: AppBar(
         title: Text('Configuración'),
       ),
