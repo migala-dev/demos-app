@@ -84,7 +84,7 @@ class MembersRepository {
   Future<Member?> findById(String memberId) async {
     Database? db = await this.db;
     var result = await db!
-        .rawQuery("SELECT * FROM $tblMembers WHERE $colId = '$memberId'");
+        .rawQuery("SELECT * FROM $tblMembers WHERE $colId = '$memberId' AND $colDeleted = 0");
     return result.length > 0 ? Member.fromObject(result[0]) : null;
   }
 
@@ -92,7 +92,7 @@ class MembersRepository {
       String userId, String spaceId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId'");
+        "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
     return result.length > 0 ? Member.fromObject(result[0]) : null;
   }
 
@@ -100,7 +100,7 @@ class MembersRepository {
       String? spaceId, InvitationStatus invitationStatus) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colSpaceId = '$spaceId' AND $colInvitationStatus = ${invitationStatus.index}");
+        "SELECT * FROM $tblMembers WHERE $colSpaceId = '$spaceId' AND $colInvitationStatus = ${invitationStatus.index} AND $colDeleted = 0");
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
@@ -108,24 +108,26 @@ class MembersRepository {
       InvitationStatus invitationStatus, String userId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colInvitationStatus = ${invitationStatus.index} AND $colUserId = '$userId'");
+        "SELECT * FROM $tblMembers WHERE $colInvitationStatus = ${invitationStatus.index} AND $colUserId = '$userId' AND $colDeleted = 0");
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
-  Future<List<Member>> findBySpaceId(String? spaceId) async {
+  Future<List<Member>> findMembersAndInvitationsBySpaceId(String? spaceId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colSpaceId = '$spaceId'");
+        "SELECT * FROM $tblMembers " +
+        "WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 " +
+        "AND $colInvitationStatus != ${InvitationStatus.CANCELED.index}");
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
   Future<int> update(Member member) async {
     Database? db = await this.db;
     var result = await db!.rawUpdate("UPDATE $tblMembers " +
-        "SET $colInvitationStatus = '${member.invitationStatus?.index}'" +
+        "SET $colInvitationStatus = '${member.invitationStatus.index}'" +
         ", $colRole = '${getSpaceRoleString(member.role)}' " +
         ", $colName = '${member.name ?? ''}' " +
-        ", $colDeleted = ${member.deleted ? 0 : 1} " +
+        ", $colDeleted = ${member.deleted ? 1 : 0} " +
         ", $colUpdatedBy = '${member.updatedBy}' " +
         "WHERE $colId = '${member.memberId}'");
     return result;

@@ -1,4 +1,5 @@
 import 'package:demos_app/core/api/member.api.dart';
+import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
@@ -47,7 +48,7 @@ class MemberService {
   }
 
   Future<List<Member>> getSpaceMembers(String spaceId) async {
-    final members = await MembersRepository().findBySpaceId(spaceId);
+    final members = await MembersRepository().findMembersAndInvitationsBySpaceId(spaceId);
 
     return members;
   }
@@ -64,4 +65,21 @@ class MemberService {
       String spaceId, String memberId, String? name, SpaceRole role) async {
     await MemberApi().updateMember(spaceId, memberId, name, role);
   }
+
+  Future<void> cancelInvitation(String memberId) async {
+    Member? member = await MembersRepository().findById(memberId);
+    
+    member!.invitationStatus = InvitationStatus.CANCELED;
+
+    await MembersRepository().insertOrUpdate(member);
+  }
+
+  Future<void> removeMembership(String memberId, String spaceId) async {
+    Member? member = await MembersRepository().findById(memberId);
+    
+    member!.deleted = true;
+
+    await MembersRepository().update(member);
+  }
+
 }
