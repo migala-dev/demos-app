@@ -9,6 +9,7 @@ import 'package:demos_app/modules/spaces/pages/space_details/space_settings.scre
 import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation/space_invitation.screen.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/spaces.page.dart';
+import 'package:demos_app/modules/spaces/screens/general_configuration.screen.dart';
 import 'package:demos_app/modules/spaces/screens/general_settings.screen.dart';
 import 'package:demos_app/modules/spaces/screens/profile.screen.dart';
 import 'package:flutter/material.dart';
@@ -68,6 +69,11 @@ var spaceInvitationHandler = Handler(
 var generalSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return GeneralSettingsScreen();
+});
+
+var generalConfigurationHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return GeneralConfigurationScreen();
 });
 
 var profileSettingsHandler = Handler(
