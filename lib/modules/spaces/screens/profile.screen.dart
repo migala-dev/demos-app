@@ -1,5 +1,4 @@
 import 'package:demos_app/widgets/profile/profile.widget.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
@@ -12,7 +11,7 @@ class ProfileSettingScreen extends StatefulWidget {
 class _ProfileState extends State<ProfileSettingScreen> {
   @override
   Widget build(BuildContext context) {
-    return DemosScaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: Text('Perfil'),

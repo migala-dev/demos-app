@@ -7,7 +7,6 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentag
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/reload_spaces.util.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 
 enum NewSpaceScreenEnum { SpaceInfo, Percentages }
 
@@ -26,7 +25,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
 
   @override
   Widget build(BuildContext context) {
-    return DemosScaffold(
+    return Scaffold(
         appBar: AppBar(
           title: _appBarTitle(),
         ),

@@ -5,7 +5,6 @@ import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_ite
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 
 class SpaceSettingsScreen extends StatelessWidget {
@@ -23,7 +22,7 @@ class SpaceSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Space currentSpace = CurrentSpaceService().getCurrentSpace()!;
 
-    return DemosScaffold(
+    return Scaffold(
       appBar: AppBar(
         title: Text("Ajustes"),
       ),

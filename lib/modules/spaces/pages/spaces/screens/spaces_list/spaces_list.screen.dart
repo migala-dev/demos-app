@@ -5,7 +5,6 @@ import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widget
 import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_button.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +20,7 @@ class SpaceListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: DemosScaffold(
+      child: Scaffold(
           appBar: AppBar(
             title: getTitle(),
             actions: [PopupSpacesMenuButton()],

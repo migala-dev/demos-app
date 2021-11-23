@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 
 class SpaceDetailsScreen extends StatelessWidget {
@@ -20,7 +19,7 @@ class SpaceDetailsScreen extends StatelessWidget {
     CurrentSpaceService().setCurrentSpace(spaceView.spaceId);
 
     return Container(
-      child: DemosScaffold(
+      child: Scaffold(
         appBar: AppBar(
             titleSpacing: 0,
             title: GestureDetector(

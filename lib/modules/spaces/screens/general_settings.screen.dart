@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
@@ -13,7 +12,7 @@ class GeneralSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DemosScaffold(
+    return Scaffold(
       appBar: AppBar(title: Text('Ajustes')),
       body: FutureBuilder(
         future: CurrentUserService().getCurrentUser(),

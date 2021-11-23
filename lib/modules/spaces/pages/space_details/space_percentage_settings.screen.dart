@@ -8,7 +8,6 @@ import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
-import 'package:demos_app/widgets/scaffolds/demos_scaffold.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 
 class SpacePercentageSettingsScreen extends StatefulWidget {
@@ -35,7 +34,7 @@ class _SpacePercentageSettingsScreenState
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: DemosScaffold(
+      child: Scaffold(
         appBar: AppBar(
           title: Text("Votos"),
         ),
