@@ -22,7 +22,8 @@ class Routes {
 
   // Settings
   static final String settings = "/settings/general";
-  static final String settingsProfile = "/settings/profile";
+  static final String configuration = "/settings/configuration";
+  static final String profileSettings = "/settings/profile";
 
   static void configureRoutes(FluroRouter router, String initialRoute) {
     router.notFoundHandler = Handler(
@@ -50,6 +51,7 @@ class Routes {
 
     // Settings
     router.define(settings, handler: generalSettingsHandler);
-    router.define(settingsProfile, handler: profileSettingsHandler);
+    router.define(configuration, handler: generalConfigurationHandler);
+    router.define(profileSettings, handler: profileSettingsHandler);
   }
 }

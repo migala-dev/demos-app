@@ -1,3 +1,5 @@
+import 'package:demos_app/shared/services/date_formatter.service.dart';
+
 class User {
   String? _userId;
   String? _name;
@@ -12,6 +14,8 @@ class User {
   String get name => this._name ?? '';
   String get phoneNumber => this._phoneNumber;
   String? get profilePictureKey => this._profilePictureKey;
+  String get createdAtFormatted =>
+      DateFormatterService.parseToStandardDate(this._createdAt ?? '');
 
   set name(String name) => this._name = name;
 
@@ -30,7 +34,8 @@ class User {
     this._userId = o["userId"];
     this._name = o["name"];
     this._phoneNumber = o["phoneNumber"];
-    this._profilePictureKey = o["profilePictureKey"] == "null" ? null : o["profilePictureKey"];
+    this._profilePictureKey =
+        o["profilePictureKey"] == "null" ? null : o["profilePictureKey"];
     this._createdAt = o["createdAt"];
     this._updatedAt = o["updatedAt"];
   }

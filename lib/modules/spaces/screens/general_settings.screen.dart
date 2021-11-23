@@ -1,25 +1,58 @@
-import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
+import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
+import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
+import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
 
 class GeneralSettingsScreen extends StatelessWidget {
   const GeneralSettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final themeCubit = context.read<ThemeCubit>();
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Configuración'),
+      appBar: AppBar(title: Text('Ajustes')),
+      body: FutureBuilder(
+        future: CurrentUserService().getCurrentUser(),
+        builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.hasData) {
+            final User currentUser = snapshot.data!;
+
+            return Column(
+              children: [
+                InformationTile(
+                  picture: ProfilePicture(
+                      width: 164, imageKey: currentUser.profilePictureKey),
+                  name: currentUser.name,
+                  subtitle: 'Creado el ${currentUser.createdAtFormatted}',
+                  onTap: () => goToProfileSettings(context),
+                ),
+                SizedBox(height: 8),
+                Divider(thickness: 1),
+                SettingItem(
+                    title: 'Configuración',
+                    subtitle: 'Configura los colores de la aplicación',
+                    icon: Icons.settings,
+                    onTap: () => goToConfiguration(context)),
+                Spacer(),
+                PoweredByMigala(),
+                SizedBox(
+                  height: 10,
+                )
+              ],
+            );
+          }
+          return Container();
+        },
       ),
-      body: Column(children: [
-        SwitchListTile(
-            secondary: Icon(Icons.dark_mode_sharp),
-            title: Text('Modo oscuro'),
-            value: themeCubit.isDark,
-            onChanged: (v) => themeCubit.toggleTheme())
-      ]),
     );
   }
+
+  void goToConfiguration(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.configuration);
+
+  void goToProfileSettings(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.profileSettings);
 }
