@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 
 class SelectRoleModal extends StatelessWidget {
-  const SelectRoleModal({Key? key, required this.updateRol}) : super(key: key);
+  const SelectRoleModal({Key? key, required this.updateRole}) : super(key: key);
 
-  final Function(SpaceRole) updateRol;
+  final Function(SpaceRole) updateRole;
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +19,9 @@ class SelectRoleModal extends StatelessWidget {
                 ))),
         ...SpaceRole.values
             .map((SpaceRole spaceRole) => ListTile(
-                  title: Text('${getSpaceRoleName(spaceRole)}'),
+                  title: Text(getSpaceRoleName(spaceRole)),
                   onTap: () async {
-                    await updateRol(spaceRole);
+                    await updateRole(spaceRole);
                     Navigator.pop(context);
                   },
                 ))

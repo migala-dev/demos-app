@@ -11,7 +11,7 @@ class DateFormatterService {
       var outputFormat = DateFormat('dd/MMMM/yyyy', 'es');
       return outputFormat.format(inputDate);
     } catch (e) {
-      return '';
+      return date;
     }
   }
 }

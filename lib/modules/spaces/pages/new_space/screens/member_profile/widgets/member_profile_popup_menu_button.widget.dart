@@ -15,14 +15,8 @@ class MemberProfilePopupMenuButton extends StatelessWidget {
       child: PopupMenuButton(
         itemBuilder: (context) => [
           memberIsInvited
-              ? PopupMenuItem(
-                  child: Text("Cancelar Invitación"),
-                  value: 0,
-                )
-              : PopupMenuItem(
-                  child: Text("Eliminar Miembro"),
-                  value: 1,
-                ),
+              ? PopupMenuItem(child: Text("Cancelar Invitación"))
+              : PopupMenuItem(child: Text("Eliminar Miembro")),
         ],
       ),
     );
