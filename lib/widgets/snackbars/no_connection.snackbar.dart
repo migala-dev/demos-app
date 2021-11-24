@@ -17,7 +17,7 @@ class NoConnectionSnackbar extends StatelessWidget {
           SizedBox(
             width: 5,
           ),
-          Text('Sin conexión',
+          Text('Modo sin conexión',
               style: TextStyle(
                   fontSize: 15,
                   color: Colors.black,
