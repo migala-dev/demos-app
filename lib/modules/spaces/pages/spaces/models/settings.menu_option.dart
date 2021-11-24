@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 class SettingsMenuOption implements MenuOption {
   String name = 'Ajustes';
   IconData icon = Icons.settings;
-
-  void Function(BuildContext) open = (BuildContext context) {
+  
+  @override
+  void Function(BuildContext)? open = (BuildContext context) {
     Navigator.of(context).pushNamed(Routes.settings);
   };
+
+  @override
+  VoidCallback? onTab;
+
 }

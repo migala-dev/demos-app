@@ -1,17 +1,20 @@
-import 'package:demos_app/modules/spaces/pages/spaces/models/settings_menu_option.model.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
 import 'package:flutter/material.dart';
 
-class PopupSpacesMenuButton extends StatelessWidget {
-  final List<MenuOption> menuOptions = [SettingsMenuOption()];
+class PopupMenuOptions extends StatelessWidget {
+  final List<MenuOption> menuOptions;
 
-  PopupSpacesMenuButton({Key? key}) : super(key: key);
+  PopupMenuOptions({Key? key, required this.menuOptions}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<MenuOption>(
       onSelected: (MenuOption option) {
-        option.open(context);
+        if (option.open != null) {
+          option.open!(context);
+        } else if (option.onTab != null) {
+          option.onTab!();
+        }
       },
       itemBuilder: (BuildContext context) => menuOptions
           .map((option) => PopupMenuItem<MenuOption>(
