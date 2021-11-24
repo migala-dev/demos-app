@@ -5,7 +5,7 @@ class Member {
   String? _memberId;
   String? _spaceId;
   String? _userId;
-  InvitationStatus? _invitationStatus;
+  late InvitationStatus _invitationStatus;
   SpaceRole? _role;
   String? _name;
   String? _expiredAt;
@@ -18,7 +18,7 @@ class Member {
   String? get memberId => this._memberId;
   String? get spaceId => this._spaceId;
   String? get userId => this._userId;
-  InvitationStatus? get invitationStatus => this._invitationStatus;
+  InvitationStatus get invitationStatus => this._invitationStatus;
   SpaceRole? get role => this._role;
   String? get name => this._name;
   String? get expiredAt => this._expiredAt;
@@ -27,12 +27,15 @@ class Member {
   String? get updatedBy => this._updatedBy;
   String? get createdAt => this._createdAt;
 
+  set invitationStatus(InvitationStatus status) => this._invitationStatus = status;
+  set deleted(bool deleted) => this._deleted = deleted;
+
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map["memberId"] = _memberId;
     map["spaceId"] = _spaceId;
     map["userId"] = _userId;
-    map["invitationStatus"] = _invitationStatus?.index;
+    map["invitationStatus"] = _invitationStatus.index;
     map["role"] = getSpaceRoleString(_role);
     map["name"] = _name;
     map["expiredAt"] = _expiredAt;

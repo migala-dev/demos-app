@@ -42,7 +42,7 @@ class ProfilePicture extends StatelessWidget {
 
   Widget getImage(size) {
     double imageWidth = (width ?? size.width) * percentage;
-    return imageKey == null
+    return imageKey == null || imageKey == ''
         ? getDefaultImage(imageWidth)
         : getProfileImage(imageWidth);
   }

@@ -91,8 +91,8 @@ class UsersRepository {
     Database? db = await this.db;
     var result = await db!.rawUpdate("UPDATE $tblUsers " +
         "SET $colName = '${user.name}'" +
-        ", $colProfilePictureKey = '${user.profilePictureKey}' " +
-        "WHERE $colId = '${user.userId}'");
+        (user.profilePictureKey  != null ? ", $colProfilePictureKey = '${user.profilePictureKey}'" : "")+
+        " WHERE $colId = '${user.userId}'");
     return result;
   }
 
