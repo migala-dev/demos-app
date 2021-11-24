@@ -6,7 +6,6 @@ import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_options.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
-import 'package:demos_app/widgets/wrappers/top_snakbars_notification.dart';
 import 'package:flutter/material.dart';
 
 class SpaceListScreen extends StatelessWidget {
@@ -43,13 +42,11 @@ class SpaceListScreen extends StatelessWidget {
       return getInvitationList(context);
     if (areOnlySpaces(spaces, invitations)) return getSpaceList(context);
 
-    return TopSnakbarsNotification(
-      child: TabBarView(
-        children: [
-          getSpaceList(context),
-          getInvitationList(context),
-        ],
-      ),
+    return TabBarView(
+      children: [
+        getSpaceList(context),
+        getInvitationList(context),
+      ],
     );
   }
 

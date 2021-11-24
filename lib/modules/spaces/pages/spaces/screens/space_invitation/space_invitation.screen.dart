@@ -74,12 +74,12 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                 flex: 3,
                 child: SafeWidgetValidator(
                     child: SelectOptionListWidget(
-                    options: getOptions(),
-                    onChange: (option) {
-                      setState(() {
-                        optionSelected = option;
-                      });
-                    },
+                  options: getOptions(),
+                  onChange: (option) {
+                    setState(() {
+                      optionSelected = option;
+                    });
+                  },
                 )),
               ),
             ],

@@ -13,6 +13,7 @@ import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/widgets/general/no_connection_notificator.widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,8 +23,9 @@ void main() async {
   ));
 
   final connectivityResult = await Connectivity().checkConnectivity();
+  ConnectionStatusBloc().add(ConnectionStartedEvent(connectivityResult));
   if (connectivityResult != ConnectivityResult.none) {
-    AppInitializer().initApp();
+    await AppInitializer().initApp();
   }
 
   final userPrefs = UserPreferencesService();
@@ -68,11 +70,16 @@ class DemosApp extends StatelessWidget {
     final app = BlocBuilder<ThemeCubit, ThemeData>(
       builder: (context, theme) {
         return MaterialApp(
-          theme: theme,
-          title: 'DemosApp',
-          debugShowCheckedModeBanner: false,
-          onGenerateRoute: Application.router.generator,
-        );
+            theme: theme,
+            title: 'DemosApp',
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: Application.router.generator,
+            builder: (context, child) => Column(
+                  children: [
+                    Expanded(child: child ?? Container()),
+                    NoConnectionNotificator()
+                  ],
+                ));
       },
     );
 
