@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
-import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
-import 'package:flutter/material.dart';
+import 'package:demos_app/widgets/space/space_picture.widget.dart';
 
 class SpaceSettingsScreen extends StatelessWidget {
   const SpaceSettingsScreen({Key? key}) : super(key: key);

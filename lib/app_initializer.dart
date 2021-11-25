@@ -11,7 +11,7 @@ class AppInitializer {
 
   bool isAlreadyInitialize = false;
 
-  void initApp() async {
+  Future<void> initApp() async {
     final bool userIsAuthenticate = await TokenService().isAuthenticate();
     if (!isAlreadyInitialize && userIsAuthenticate) {
       User? currentUser = await CurrentUserService().getCurrentUser();

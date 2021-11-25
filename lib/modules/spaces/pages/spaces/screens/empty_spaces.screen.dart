@@ -1,7 +1,7 @@
-import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_button.widget.dart';
-import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_options.widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 
 class EmptySpacesScreen extends StatelessWidget {
   const EmptySpacesScreen({Key? key}) : super(key: key);
@@ -12,7 +12,7 @@ class EmptySpacesScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Demos'),
-          actions: [PopupSpacesMenuButton()],
+          actions: [PopupSpacesMenuOptions()],
         ),
         body: Center(
           child: Padding(

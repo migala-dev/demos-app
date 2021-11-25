@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
@@ -6,7 +7,6 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentag
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/reload_spaces.util.dart';
-import 'package:flutter/material.dart';
 
 enum NewSpaceScreenEnum { SpaceInfo, Percentages }
 
@@ -75,7 +75,8 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
       }
       reloadSpaceList();
       Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
-      Navigator.pushNamed(context, Routes.spacesDetails, arguments: space?.toSpapceView());
+      Navigator.pushNamed(context, Routes.spacesDetails,
+          arguments: space?.toSpapceView());
       Navigator.pushNamed(context, Routes.invitations);
     });
   }

@@ -25,7 +25,6 @@ class SpaceUpdatedEvent implements EventHandler {
 
     await GeneralSpaceService().updateSpace(spaceId);
 
-    final spacesBloc = SpacesBloc();
-    spacesBloc.add(LoadSpacesEvent());
+    SpacesBloc().add(LoadSpacesEvent());
   }
 }

@@ -59,7 +59,7 @@ class SpacesRepository {
       await db!.insert(tblSpaces, space.toMap());
       return space.spaceId!;
     }
-    return spaceSaved.spaceId!;
+    return updateSpace(spaceSaved).toString();
   }
 
   Future<Space?> findById(String spaceId) async {

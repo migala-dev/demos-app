@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
-import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/search/members_search.delegate.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/member_view.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_filter.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
-import 'package:demos_app/config/routes/routes.dart';
 
 class SpaceMembersScreen extends StatefulWidget {
   const SpaceMembersScreen({Key? key}) : super(key: key);

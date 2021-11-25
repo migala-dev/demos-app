@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
-import 'package:flutter/material.dart';
 
 class SpaceDetailsScreen extends StatelessWidget {
   const SpaceDetailsScreen({Key? key}) : super(key: key);

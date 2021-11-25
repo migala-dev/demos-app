@@ -10,8 +10,17 @@ abstract class ConnectionStatusEvent extends Equatable {
 class ConnectionChangeEvent extends ConnectionStatusEvent {
   final ConnectionStatusState newEvent;
 
-  ConnectionChangeEvent(this.newEvent);
+  const ConnectionChangeEvent(this.newEvent);
 
   @override
   List<Object> get props => [this.newEvent];
+}
+
+class ConnectionStartedEvent extends ConnectionStatusEvent {
+  final ConnectivityResult initConnectivityResult;
+
+  const ConnectionStartedEvent(this.initConnectivityResult);
+
+  @override
+  List<Object> get props => [this.initConnectivityResult];
 }

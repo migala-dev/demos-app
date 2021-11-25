@@ -15,7 +15,12 @@ class MemberHandler extends EventHandlerMixin {
   @override
   String key = 'members';
   @override
-  final List<EventHandler> eventHandlers = [SpaceInvitationEvent(), UpdateMemberEvent()];
+  final List<EventHandler> eventHandlers = [
+    SpaceInvitationEvent(), 
+    UpdateMemberEvent(), 
+    InvitationCanceledEvent(),
+    MembershipRemovedEvent()
+  ];
 }
 
 class SpaceInvitationEvent implements EventHandler {
@@ -30,8 +35,7 @@ class SpaceInvitationEvent implements EventHandler {
 
     await NewSpaceService().addSpaceEntitiesFromResponse(response);
 
-    final spacesBloc = SpacesBloc();
-    spacesBloc.add(LoadSpacesEvent());
+    SpacesBloc().add(LoadSpacesEvent());
   }
 }
 
@@ -45,5 +49,34 @@ class UpdateMemberEvent implements EventHandler {
     String memberId = dataEvent.data!['memberId'];
 
     MemberService().getMember(spaceId, memberId);
+  }
+}
+
+class InvitationCanceledEvent implements EventHandler {
+  @override
+  String key = 'invitation:canceled';
+
+  @override
+  Future<void> handleEvent(Cache dataEvent) async {
+    String memberId = dataEvent.data!['memberId'];
+
+    await MemberService().cancelInvitation(memberId);
+    
+    SpacesBloc().add(LoadSpacesEvent());
+  }
+}
+
+class MembershipRemovedEvent implements EventHandler {
+  @override
+  String key = 'deleted';
+
+  @override
+  Future<void> handleEvent(Cache dataEvent) async {
+    String memberId = dataEvent.data!['memberId'];
+    String spaceId = dataEvent.data!['spaceId'];
+
+    await MemberService().removeMembership(memberId, spaceId);
+    
+    SpacesBloc().add(LoadSpacesEvent());
   }
 }
