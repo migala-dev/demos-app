@@ -1,4 +1,5 @@
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_proposals.widget.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_representant_alert.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -38,7 +39,17 @@ class SpaceDetailsScreen extends StatelessWidget {
               ),
               onTap: () => goToSpaceSettings(context),
             )),
-        body: NoProposals(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(child: NoProposals()),
+              SizedBox(height: 55),
+              NoRepresentantAlert(),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -6,16 +6,14 @@ class NoProposals extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.how_to_vote_outlined, size: 125, color: this.color),
-          SizedBox(height: 10),
-          Text('Sin propuestas por el momento',
-              style: TextStyle(color: this.color))
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(Icons.how_to_vote_outlined, size: 135, color: this.color),
+        SizedBox(height: 10),
+        Text('Sin propuestas por el momento',
+            style: TextStyle(color: this.color))
+      ],
     );
   }
 }
