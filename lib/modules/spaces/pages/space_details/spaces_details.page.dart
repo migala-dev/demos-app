@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_proposals.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -37,6 +38,7 @@ class SpaceDetailsScreen extends StatelessWidget {
               ),
               onTap: () => goToSpaceSettings(context),
             )),
+        body: NoProposals(),
       ),
     );
   }
