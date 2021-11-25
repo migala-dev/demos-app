@@ -48,7 +48,8 @@ class MemberService {
   }
 
   Future<List<Member>> getSpaceMembers(String spaceId) async {
-    final members = await MembersRepository().findMembersAndInvitationsBySpaceId(spaceId);
+    final members =
+        await MembersRepository().findMembersAndInvitationsBySpaceId(spaceId);
 
     return members;
   }
@@ -68,7 +69,7 @@ class MemberService {
 
   Future<void> cancelInvitation(String memberId) async {
     Member? member = await MembersRepository().findById(memberId);
-    
+
     member!.invitationStatus = InvitationStatus.CANCELED;
 
     await MembersRepository().insertOrUpdate(member);
@@ -76,10 +77,13 @@ class MemberService {
 
   Future<void> removeMembership(String memberId, String spaceId) async {
     Member? member = await MembersRepository().findById(memberId);
-    
+
     member!.deleted = true;
 
     await MembersRepository().update(member);
   }
 
+  Future<List<Member>> getRepresentatives(String spaceId) async {
+    return await MembersRepository().findRepresentativesBySpaceId(spaceId);
+  }
 }

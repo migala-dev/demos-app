@@ -1,7 +1,9 @@
 import 'package:badges/badges.dart';
+import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widgets/space_list.widget.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_options.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
@@ -54,9 +56,13 @@ class SpaceListScreen extends StatelessWidget {
     return SpaceListWidget(
       spaces: spaces,
       getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
-      onSpaceTab: (spaceView) {
-        Navigator.pushNamed(context, Routes.spacesDetails,
-            arguments: spaceView);
+      onSpaceTab: (spaceView) async {
+        await CurrentSpaceService().setCurrentSpace(spaceView.spaceId);
+
+        Application.router.navigateTo(context, Routes.spacesDetails,
+            routeSettings: RouteSettings(
+              arguments: spaceView,
+            ));
       },
     );
   }

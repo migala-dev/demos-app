@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:demos_app/config/routes/routes.dart';
@@ -75,8 +76,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
       }
       reloadSpaceList();
       Navigator.pushNamedAndRemoveUntil(context, Routes.root, (r) => false);
-      Navigator.pushNamed(context, Routes.spacesDetails,
-          arguments: space?.toSpapceView());
+      await CurrentSpaceService().setCurrentSpace(space!.spaceId!);
       Navigator.pushNamed(context, Routes.invitations);
     });
   }
