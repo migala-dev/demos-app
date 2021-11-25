@@ -4,7 +4,5 @@ abstract class MenuOption {
   late String name;
   late IconData icon;
   late void Function(BuildContext)? open;
-  late VoidCallback? onTab;
+  late VoidCallback? onTap;
 }
-
-

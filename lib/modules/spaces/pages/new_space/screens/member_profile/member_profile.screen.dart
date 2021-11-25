@@ -25,7 +25,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
       appBar: AppBar(
         title: Text('Perfil'),
         actions: [
-          MemberProfilePopupMenuButton(memberIsInvited: widget.member.isInvited)
+          MemberProfilePopupMenuOptions(
+              memberIsInvited: widget.member.isInvited)
         ],
       ),
       body: Padding(
@@ -65,6 +66,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                 ),
                 widget.member.isInvited
                     ? ProfileField(
+                        placeholderPrefix: '',
                         title: 'La invitacion expira el',
                         icon: Icons.calendar_today,
                         value: widget.member.invitationExpiredAtFormatted,
