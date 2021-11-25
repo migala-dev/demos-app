@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
@@ -33,7 +33,9 @@ class SpaceSettingsScreen extends StatelessWidget {
                   SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
               name: currentSpace.name!,
               subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
-              onTap: () {}),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.editSpace);
+              }),
           SizedBox(height: 8),
           Divider(thickness: 1),
           SettingItem(

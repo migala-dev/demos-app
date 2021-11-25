@@ -18,6 +18,7 @@ class Routes {
   static final String spaceSettings = '/spaces/space-settings';
   static final String spacePercentage = '/spaces/space-percentage';
   static final String spaceMembers = '/spaces/space-members';
+  static final String editSpace = '/spaces/edit-space';
 
   // Settings
   static final String settings = "/settings/general";
@@ -46,6 +47,7 @@ class Routes {
     router.define(spaceSettings, handler: spaceSettingsHandler);
     router.define(spacePercentage, handler: spacePercentageSettingsHandler);
     router.define(spaceMembers, handler: spaceMembersHandler);
+    router.define(editSpace, handler: editSpaceHandler);
 
     // Settings
     router.define(settings, handler: generalSettingsHandler);
