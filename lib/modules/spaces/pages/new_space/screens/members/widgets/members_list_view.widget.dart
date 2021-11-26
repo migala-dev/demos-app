@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:demos_app/config/routes/application.dart';
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_tile.widget.dart';
 
@@ -16,8 +18,19 @@ class MembersListView extends StatelessWidget {
       itemCount: memberViews.length,
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return MemberTile(member: memberViews[index]);
+        final memberView = memberViews[index];
+
+        return GestureDetector(
+            child: MemberTile(member: memberView),
+            onTap: () => goToMemberProfile(context, memberView));
       },
     );
   }
+
+  void goToMemberProfile(BuildContext context, MemberView memberView) =>
+      Application.router.navigateTo(
+        context,
+        Routes.memberProfile,
+        routeSettings: RouteSettings(arguments: memberView),
+      );
 }

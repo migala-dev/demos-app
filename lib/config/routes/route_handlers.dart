@@ -3,7 +3,9 @@ import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/member_profile.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/members.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/space_percentage_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/space_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
@@ -84,4 +86,10 @@ var profileSettingsHandler = Handler(
 var spaceMembersHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return SpaceMembersScreen();
+});
+
+var memberProfileHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  final memberView = context!.settings!.arguments as MemberView;
+  return MemberProfileScreen(memberView);
 });
