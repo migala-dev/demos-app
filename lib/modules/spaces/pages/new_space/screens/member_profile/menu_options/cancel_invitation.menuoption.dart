@@ -7,8 +7,5 @@ class CancelInvitationMenuOption implements MenuOption {
   IconData icon = Icons.cancel;
 
   @override
-  VoidCallback? onTap = () {};
-
-  @override
-  void Function(BuildContext)? open;
+  void Function(BuildContext context) onTap = (context) { };
 }

@@ -6,8 +6,5 @@ class DeleteMemberMenuOption implements MenuOption {
   IconData icon = Icons.delete;
 
   @override
-  void Function(BuildContext)? open;
-
-  @override
-  VoidCallback? onTap = () {};
+  void Function(BuildContext context) onTap = (context) { };
 }
