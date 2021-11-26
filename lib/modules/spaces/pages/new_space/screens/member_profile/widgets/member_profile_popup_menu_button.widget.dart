@@ -14,13 +14,13 @@ class MemberProfilePopupMenuOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final MenuOption option = memberIsInvited
+    final MenuOption deleteOrCancelOption = memberIsInvited
         ? CancelInvitationMenuOption()
         : DeleteMemberMenuOption();
 
     return SafeWidgetValidator(
       validators: [IsCurrentUserAdminWidgetValidator()],
-      child: PopupMenuOptions(menuOptions: [option]),
+      child: PopupMenuOptions(menuOptions: [deleteOrCancelOption]),
     );
   }
 }

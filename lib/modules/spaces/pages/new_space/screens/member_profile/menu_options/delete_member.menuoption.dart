@@ -9,7 +9,5 @@ class DeleteMemberMenuOption implements MenuOption {
   void Function(BuildContext)? open;
 
   @override
-  VoidCallback? onTap = deleteMember;
+  VoidCallback? onTap = () {};
 }
-
-void deleteMember() {}
