@@ -133,8 +133,10 @@ class MembersRepository {
 
   Future<List<Member>> findRepresentativesBySpaceId(String spaceId) async {
     Database? db = await this.db;
+    final String representative = getSpaceRoleString(SpaceRole.REPRESENTATIVE);
+
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colRole = 'REPRESENTATIVE' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
+        "SELECT * FROM $tblMembers WHERE $colRole = '$representative' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
 
     return result.map((row) => Member.fromObject(row)).toList();
   }
