@@ -26,7 +26,10 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
         title: Text('Perfil'),
         actions: [
           MemberProfilePopupMenuOptions(
-              memberIsInvited: widget.member.isInvited)
+            memberIsInvited: widget.member.isInvited,
+            memberId: widget.member.memberId!,
+            spaceId: widget.member.spaceId!,
+          )
         ],
       ),
       body: Padding(

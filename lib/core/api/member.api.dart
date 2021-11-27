@@ -14,7 +14,7 @@ class MemberApi {
   factory MemberApi() {
     return _memberApi;
   }
-    Future<AcceptInvitationResponse> acceptInvitation(String spaceId) async {
+  Future<AcceptInvitationResponse> acceptInvitation(String spaceId) async {
     String endpoint = MemberPath().getAcceptInvitationPath(spaceId);
     final httpResponse = await Api.post(endpoint, null);
 
@@ -56,7 +56,8 @@ class MemberApi {
     return response;
   }
 
-    Future<bool> updateMember(String spaceId, String memberId,  String? name, SpaceRole role) async {
+  Future<bool> updateMember(
+      String spaceId, String memberId, String? name, SpaceRole role) async {
     String endpoint = MemberPath().getMemberPath(spaceId, memberId);
     Object params = {
       "name": name,
@@ -65,5 +66,15 @@ class MemberApi {
     final httpResponse = await Api.post(endpoint, params);
 
     return httpResponse;
+  }
+
+  Future<void> deleteMember(String spaceId, String memberId) async {
+    String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    await Api.delete(endpoint);
+  }
+
+  Future<void> cancelInvitation(String spaceId, String memberId) async {
+    String endpoint = MemberPath().getCancelInvitationPath(spaceId, memberId);
+    await Api.delete(endpoint);
   }
 }

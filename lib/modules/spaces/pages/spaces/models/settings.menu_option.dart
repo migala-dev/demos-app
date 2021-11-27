@@ -7,7 +7,7 @@ class SettingsMenuOption implements MenuOption {
   IconData icon = Icons.settings;
 
   @override
-  void Function(BuildContext) onTap = (BuildContext context) {
+  void onTap(BuildContext context) {
     Navigator.of(context).pushNamed(Routes.settings);
-  };
+  }
 }

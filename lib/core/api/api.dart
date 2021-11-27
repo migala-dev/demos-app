@@ -49,6 +49,15 @@ class Api {
     return jsonDecode(response!.body);
   }
 
+  static Future<dynamic> delete(String endpoint) async {
+    Future<http.Response> call = http.delete(
+      Uri.parse(endpoint),
+      headers: _getHeadersWithApplicationJSON(),
+    );
+    var response = await _handleErrors(call);
+    return response;
+  }
+
   static Future<dynamic> upload(String endpoint, File imageFile) async {
     var stream = new http.ByteStream(imageFile.openRead());
     stream.cast();
