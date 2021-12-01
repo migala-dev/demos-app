@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -5,8 +6,8 @@ import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widget
 import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_options.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
+import 'package:demos_app/utils/navigation/go_to_space_details.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
-import 'package:flutter/material.dart';
 
 class SpaceListScreen extends StatelessWidget {
   final List<SpaceView> spaces;
@@ -54,9 +55,8 @@ class SpaceListScreen extends StatelessWidget {
     return SpaceListWidget(
       spaces: spaces,
       getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
-      onSpaceTab: (spaceView) {
-        Navigator.pushNamed(context, Routes.spacesDetails,
-            arguments: spaceView);
+      onSpaceTab: (spaceView) async {
+        await goToSpaceDetails(context, spaceView);
       },
     );
   }

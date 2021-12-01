@@ -1,9 +1,12 @@
 import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/member_profile.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/members.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/edit_space/edit_space.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_percentage/space_percentage_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/space_settings.screen.dart';
@@ -37,9 +40,10 @@ var spacesHandler = Handler(
 });
 
 // Handler de los detalles del espacio
-var spaceDetailsHandler = Handler(
-    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpaceDetailsScreen();
+var spaceDetailsHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  final spaceView = context!.settings!.arguments as SpaceView;
+  return SpaceDetailsScreen(spaceView: spaceView);
 });
 
 var spaceSettingsHandler = Handler(
@@ -90,4 +94,10 @@ var profileSettingsHandler = Handler(
 var spaceMembersHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return SpaceMembersScreen();
+});
+
+var memberProfileHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  final memberView = context!.settings!.arguments as MemberView;
+  return MemberProfileScreen(memberView);
 });

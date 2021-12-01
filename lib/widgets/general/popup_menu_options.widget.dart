@@ -10,11 +10,7 @@ class PopupMenuOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return PopupMenuButton<MenuOption>(
       onSelected: (MenuOption option) {
-        if (option.open != null) {
-          option.open!(context);
-        } else if (option.onTab != null) {
-          option.onTab!();
-        }
+        option.onTap(context);
       },
       itemBuilder: (BuildContext context) => menuOptions
           .map((option) => PopupMenuItem<MenuOption>(

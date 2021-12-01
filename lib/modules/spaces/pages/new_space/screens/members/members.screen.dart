@@ -5,7 +5,7 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/search/members_search.delegate.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/members_screen.service.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/member_view.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_filter.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
@@ -73,7 +73,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
 
   Future<void> _getMembers() async {
     wrapLoadingTransaction(() async {
-      final spacesMembersService = MembersScreenService();
+      final spacesMembersService = MemberViewService();
       final membersResult = await spacesMembersService.getMemberViews();
       members = membersResult;
     });

@@ -1,8 +1,8 @@
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 import 'package:flutter/material.dart';
 
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/members_screen.service.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/member_view.service.dart';
 
 class MembersSearchDelegate extends SearchDelegate {
   @override
@@ -41,7 +41,7 @@ class MembersSearchDelegate extends SearchDelegate {
   }
 
   Widget _getWidgetResult() => FutureBuilder(
-        future: MembersScreenService().findMembersByDisplayName(query),
+        future: MemberViewService().findMembersByDisplayName(query),
         initialData: List<MemberView>.empty(),
         builder:
             (BuildContext context, AsyncSnapshot<List<MemberView>> snapshot) {

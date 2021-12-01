@@ -70,7 +70,6 @@ class MembersRepository {
     return update(member).toString();
   }
 
-
   Future<String> insert(Member member) async {
     Database? db = await this.db;
     Member? memberSaved = await findById(member.memberId!);
@@ -83,13 +82,12 @@ class MembersRepository {
 
   Future<Member?> findById(String memberId) async {
     Database? db = await this.db;
-    var result = await db!
-        .rawQuery("SELECT * FROM $tblMembers WHERE $colId = '$memberId' AND $colDeleted = 0");
+    var result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE $colId = '$memberId' AND $colDeleted = 0");
     return result.length > 0 ? Member.fromObject(result[0]) : null;
   }
 
-   Future<Member?> findByUserIdAndSpaceId(
-      String userId, String spaceId) async {
+  Future<Member?> findByUserIdAndSpaceId(String userId, String spaceId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
         "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
@@ -112,10 +110,10 @@ class MembersRepository {
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
-  Future<List<Member>> findMembersAndInvitationsBySpaceId(String? spaceId) async {
+  Future<List<Member>> findMembersAndInvitationsBySpaceId(
+      String? spaceId) async {
     Database? db = await this.db;
-    var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers " +
+    var result = await db!.rawQuery("SELECT * FROM $tblMembers " +
         "WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 " +
         "AND $colInvitationStatus != ${InvitationStatus.CANCELED.index}");
     return result.map((row) => Member.fromObject(row)).toList();
@@ -131,5 +129,15 @@ class MembersRepository {
         ", $colUpdatedBy = '${member.updatedBy}' " +
         "WHERE $colId = '${member.memberId}'");
     return result;
+  }
+
+  Future<List<Member>> findRepresentativesBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+    final String representative = getSpaceRoleString(SpaceRole.REPRESENTATIVE);
+
+    var result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE $colRole = '$representative' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
+
+    return result.map((row) => Member.fromObject(row)).toList();
   }
 }
