@@ -13,11 +13,11 @@ class MemberHandler extends EventHandlerMixin {
   factory MemberHandler() => _memberHandler;
 
   @override
-  String key = 'members';
+  String get key => 'members';
   @override
   final List<EventHandler> eventHandlers = [
-    SpaceInvitationEvent(), 
-    UpdateMemberEvent(), 
+    SpaceInvitationEvent(),
+    UpdateMemberEvent(),
     InvitationCanceledEvent(),
     MembershipRemovedEvent()
   ];
@@ -61,7 +61,7 @@ class InvitationCanceledEvent implements EventHandler {
     String memberId = dataEvent.data!['memberId'];
 
     await MemberService().cancelInvitation(memberId);
-    
+
     SpacesBloc().add(LoadSpacesEvent());
   }
 }
@@ -76,7 +76,7 @@ class MembershipRemovedEvent implements EventHandler {
     String spaceId = dataEvent.data!['spaceId'];
 
     await MemberService().removeMembership(memberId, spaceId);
-    
+
     SpacesBloc().add(LoadSpacesEvent());
   }
 }
