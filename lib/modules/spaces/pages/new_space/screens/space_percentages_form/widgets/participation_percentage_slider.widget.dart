@@ -31,8 +31,8 @@ class _ParticipationPercentageState
     return Column(
       children: [
         ListTile(
-          contentPadding: EdgeInsets.all(0),
-          title: Text(
+          contentPadding: const EdgeInsets.all(0),
+          title: const Text(
             'Porcentaje de participación',
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
           ),
@@ -49,7 +49,7 @@ class _ParticipationPercentageState
                 borderRadius: BorderRadius.circular(10)),
             child: Text(
               '${_currentSliderValue.toInt()} %',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
           ),
         ),
@@ -76,12 +76,12 @@ class _ParticipationPercentageState
             children: <TextSpan>[
               TextSpan(
                   text: '$_exampleTotalUsers usuarios',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(text: ' se necesitan'),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const TextSpan(text: ' se necesitan'),
               TextSpan(
                   text: ' ${getTotalUsersCount()} usuarios',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const TextSpan(
                   text: ' para aprobar una de las opciones de la propuesta.'),
             ],
           ),

@@ -4,7 +4,7 @@ mixin LoginFormValidationsMixin {
       return false;
     }
 
-    final String phoneRegex = r"^[0-9]{10}$";
+    const String phoneRegex = r'^[0-9]{10}$';
 
     return RegExp(phoneRegex).hasMatch(number);
   }
@@ -19,7 +19,7 @@ mixin LoginFormValidationsMixin {
 }
 
 mixin SpaceFormValidationsMixin {
-  bool isSpaceNameValid(String name) => name.length > 0 && name.length < 20;
+  bool isSpaceNameValid(String name) => name.isNotEmpty && name.length < 20;
   bool isSpaceDescriptionValid(String spaceName) =>
-      spaceName.length > 0 && spaceName.length <= 120;
+      spaceName.isNotEmpty && spaceName.length <= 120;
 }

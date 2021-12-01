@@ -11,7 +11,7 @@ class EmptySpacesScreen extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Demos'),
+          title: const Text('Demos'),
           actions: [PopupSpacesMenuOptions()],
         ),
         body: Center(
@@ -22,26 +22,27 @@ class EmptySpacesScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: 28.0),
+                  margin: const EdgeInsets.only(bottom: 28.0),
                   child: Icon(
                     Icons.category,
                     color: Colors.grey,
                     size: size.width * 0.35,
                   ),
                 ),
-                Text('No tienes espacios por el momento',
+                const Text('No tienes espacios por el momento',
                     style: TextStyle(color: Colors.grey, fontSize: 16.0)),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 SafeWidgetValidator(
                     child: ConstrainedBox(
-                  constraints: BoxConstraints.tightFor(width: double.infinity),
+                  constraints:
+                      const BoxConstraints.tightFor(width: double.infinity),
                   child: ElevatedButton(
                       onPressed: () {
                         goToCreateNewSpace(context);
                       },
-                      child: Text(
+                      child: const Text(
                         'Crea tu primer espacio',
                       )),
                 ))

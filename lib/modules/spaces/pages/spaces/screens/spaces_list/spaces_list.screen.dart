@@ -32,15 +32,16 @@ class SpaceListScreen extends StatelessWidget {
             onPressed: () {
               Navigator.pushNamed(context, Routes.newSpace);
             },
-            child: Icon(Icons.add),
+            child: const Icon(Icons.add),
           )),
           body: getBody(context)),
     );
   }
 
   Widget getBody(BuildContext context) {
-    if (areOnlySpaceInvitations(spaces, invitations))
+    if (areOnlySpaceInvitations(spaces, invitations)) {
       return getInvitationList(context);
+    }
     if (areOnlySpaces(spaces, invitations)) return getSpaceList(context);
 
     return TabBarView(
@@ -74,26 +75,29 @@ class SpaceListScreen extends StatelessWidget {
   }
 
   Widget getTitle() {
-    if (areOnlySpaceInvitations(spaces, invitations))
-      return Text('Tus Invitaciones');
-    if (areOnlySpaces(spaces, invitations)) return Text('Tus Espacios');
+    if (areOnlySpaceInvitations(spaces, invitations)) {
+      return const Text('Tus Invitaciones');
+    }
 
-    return Text('Demos');
+    if (areOnlySpaces(spaces, invitations)) return const Text('Tus Espacios');
+
+    return const Text('Demos');
   }
 
   PreferredSizeWidget? getSpacesTabBar() {
-    if (requiresTabBar(spaces, invitations))
+    if (requiresTabBar(spaces, invitations)) {
       return TabBar(
         tabs: [
-          Tab(icon: Text('Espacios')),
+          const Tab(icon: Text('Espacios')),
           Tab(
               icon: Badge(
-                  showBadge: invitations.length > 0,
+                  showBadge: invitations.isNotEmpty,
                   elevation: 0,
-                  position: BadgePosition(end: -28),
+                  position: const BadgePosition(end: -28),
                   badgeContent: Text('${invitations.length}'),
-                  child: Text('Invitaciones'))),
+                  child: const Text('Invitaciones'))),
         ],
       );
+    }
   }
 }

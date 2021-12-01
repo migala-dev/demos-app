@@ -21,17 +21,15 @@ const List<MaterialColor> primaries = <MaterialColor>[
 ];
 
 class InvitationContact extends User {
-  Color _color = primaries[Random().nextInt(primaries.length)];
+  final Color _color = primaries[Random().nextInt(primaries.length)];
 
   InvitationContact.withPhoneNumber(String phoneNumber)
       : super.withPhoneNumber(phoneNumber);
 
-  Color get color => this._color;
+  Color get color => _color;
 
   InvitationContact.fromUser(User user) : super.fromUserObject(user);
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        "phoneNumber": phoneNumber,
-        "userId": userId
-  };
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{'phoneNumber': phoneNumber, 'userId': userId};
 }

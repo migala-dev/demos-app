@@ -10,7 +10,7 @@ class ConnectionStatusBloc
   static final _connectionBloc = ConnectionStatusBloc._internal();
   factory ConnectionStatusBloc() => _connectionBloc;
 
-  ConnectionStatusBloc._internal() : super(ConnectionStatusState.Connecting) {
+  ConnectionStatusBloc._internal() : super(ConnectionStatusState.connecting) {
     on<ConnectionChangeEvent>((event, emit) {
       emit(event.newEvent);
     });
@@ -29,9 +29,9 @@ class ConnectionStatusBloc
 
   void handleConnectivityResult(ConnectivityResult result) {
     if (result == ConnectivityResult.none) {
-      this.add(ConnectionChangeEvent(ConnectionStatusState.Unconnected));
+      add(const ConnectionChangeEvent(ConnectionStatusState.unconnected));
     } else {
-      this.add(ConnectionChangeEvent(ConnectionStatusState.Connected));
+      add(const ConnectionChangeEvent(ConnectionStatusState.connected));
     }
   }
 }

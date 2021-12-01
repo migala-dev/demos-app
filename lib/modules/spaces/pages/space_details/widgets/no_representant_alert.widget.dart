@@ -12,11 +12,11 @@ class NoRepresentantAlert extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(15.0),
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(color: Colors.orange.shade200, width: 1.5),
-        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
       ),
       child: Column(
         children: [
@@ -34,15 +34,15 @@ class NoRepresentantAlert extends StatelessWidget {
                       style: TextStyle(color: fontColor)),
                   ElevatedButton(
                       onPressed: () => goToMembers(context),
-                      child: Text('Agrega el primero'),
+                      child: const Text('Agrega el primero'),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.orange.shade300,
-                          minimumSize: Size(245, 25)))
+                          minimumSize: const Size(245, 25)))
                 ],
               )
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             description,
             style: TextStyle(color: fontColor),

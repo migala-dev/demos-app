@@ -20,7 +20,7 @@ class ProfileForm extends StatelessWidget {
           onEdit: () async {
             String? newName = await openUpdateNameModal(context);
             if (newName != null && user?.name != newName) {
-              this.onEditNamePress!(newName);
+              onEditNamePress!(newName);
             }
           },
           editable: onEditNamePress != null,
@@ -40,11 +40,11 @@ class ProfileForm extends StatelessWidget {
 
     if (phoneNumber != null) {
       phoneNumberFormatted = phoneNumber.substring(0, 3) +
-          " (" +
+          ' (' +
           phoneNumber.substring(3, 6) +
-          ") " +
+          ') ' +
           phoneNumber.substring(6, 9) +
-          "-" +
+          '-' +
           phoneNumber.substring(9, phoneNumber.length);
     }
 

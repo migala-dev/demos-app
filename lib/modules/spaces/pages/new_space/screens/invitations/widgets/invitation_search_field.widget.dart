@@ -10,7 +10,7 @@ class InvitationSearchField extends StatefulWidget {
   final void Function(InvitationContact) unselectContact;
   final void Function(String) onSearchChange;
 
-  InvitationSearchField(
+  const InvitationSearchField(
       {Key? key,
       required this.contactsSelected,
       required this.unselectContact,
@@ -30,7 +30,7 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
-        padding: EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0),
+        padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0),
         width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.white,
@@ -40,17 +40,17 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
               .map((user) => getContactChip(user))
               .toList(),
           Container(
-            margin: EdgeInsets.only(left: 12.0),
+            margin: const EdgeInsets.only(left: 12.0),
             child: ConstrainedBox(
               constraints:
-                  BoxConstraints(minWidth: 60, maxWidth: double.infinity),
+                  const BoxConstraints(minWidth: 60, maxWidth: double.infinity),
               child: IntrinsicWidth(
                   child: RawKeyboardListener(
                 focusNode: textNode,
                 onKey: (key) {
                   if (key.logicalKey == LogicalKeyboardKey.backspace &&
                       key.runtimeType.toString() == 'RawKeyDownEvent') {
-                    if (widget.contactsSelected.length > 0) {
+                    if (widget.contactsSelected.isNotEmpty) {
                       InvitationContact lastContactSelected =
                           widget.contactsSelected.last;
                       widget.unselectContact(lastContactSelected);
@@ -58,12 +58,12 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
                   }
                 },
                 child: TextField(
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16.0,
                   ),
-                  decoration: new InputDecoration(
+                  decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: widget.contactsSelected.length == 0
+                    hintText: widget.contactsSelected.isEmpty
                         ? 'Añadir personas'
                         : '',
                   ),

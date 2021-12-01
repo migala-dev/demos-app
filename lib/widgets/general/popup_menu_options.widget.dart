@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class PopupMenuOptions extends StatelessWidget {
   final List<MenuOption> menuOptions;
 
-  PopupMenuOptions({Key? key, required this.menuOptions}) : super(key: key);
+  const PopupMenuOptions({Key? key, required this.menuOptions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +32,11 @@ class _MenuChildItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(this.icon),
-        SizedBox(
+        Icon(icon),
+        const SizedBox(
           width: 5,
         ),
-        Text(this.title)
+        Text(title)
       ],
     );
   }

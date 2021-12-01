@@ -1,3 +1,3 @@
 part of 'connection_status_bloc.dart';
 
-enum ConnectionStatusState { Connected, Unconnected, Connecting }
+enum ConnectionStatusState { connected, unconnected, connecting }

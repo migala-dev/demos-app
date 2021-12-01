@@ -70,7 +70,7 @@ class MemberService {
   Future<void> cancelInvitation(String memberId) async {
     Member? member = await MembersRepository().findById(memberId);
 
-    member!.invitationStatus = InvitationStatus.CANCELED;
+    member!.invitationStatus = InvitationStatus.canceled;
 
     await MembersRepository().insertOrUpdate(member);
   }

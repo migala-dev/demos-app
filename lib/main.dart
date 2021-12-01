@@ -17,7 +17,7 @@ import 'package:demos_app/widgets/general/no_connection_notificator.widget.dart'
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
   ));
@@ -77,7 +77,7 @@ class DemosApp extends StatelessWidget {
             builder: (context, child) => Column(
                   children: [
                     Expanded(child: child ?? Container()),
-                    NoConnectionNotificator()
+                    const NoConnectionNotificator()
                   ],
                 ));
       },
@@ -86,9 +86,9 @@ class DemosApp extends StatelessWidget {
     return BlocListener<ConnectionStatusBloc, ConnectionStatusState>(
       listener: (context, state) {
         final appInitializer = AppInitializer();
-        if (state == ConnectionStatusState.Connected) {
+        if (state == ConnectionStatusState.connected) {
           appInitializer.initApp();
-        } else if (state == ConnectionStatusState.Unconnected) {
+        } else if (state == ConnectionStatusState.unconnected) {
           appInitializer.disconnectWebsocket();
         }
       },

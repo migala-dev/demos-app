@@ -8,6 +8,8 @@ import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/simbols/demos_logo.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -26,18 +28,18 @@ class _LoginPageState extends State<LoginPage> with LoadingStateHandler {
             constraints: BoxConstraints(minHeight: constraint.maxHeight),
             child: IntrinsicHeight(
                 child: Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 12.0),
                     child: Column(
                       children: [
                         Container(
-                          child: DemosLogo(),
+                          child: const DemosLogo(),
                           margin: EdgeInsets.only(
                               top: size.height * 0.1, bottom: 35.0),
                         ),
                         Expanded(
                             child: Container(
-                          margin: EdgeInsets.only(bottom: 40.0),
+                          margin: const EdgeInsets.only(bottom: 40.0),
                           child: Form(
                               key: _formKey,
                               child: Column(

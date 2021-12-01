@@ -18,9 +18,8 @@ class SpaceFormScreen extends StatefulWidget {
 class _SpaceFormScreenState extends State<SpaceFormScreen> {
   final int maxLines = 4;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = new TextEditingController();
-  final TextEditingController _descriptionController =
-      new TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   File? spacePictureFile;
   int _descriptionLength = 0;
 
@@ -31,7 +30,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
         onPictureEditPress: onPictureEditPress,
         imageFile: spacePictureFile,
       ),
-      SizedBox(
+      const SizedBox(
         height: 25,
       ),
       Expanded(child: getForm(context))
@@ -42,7 +41,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
     File? imageFile = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ImageEditorPage(),
+          builder: (context) => const ImageEditorPage(),
         ));
     if (imageFile != null) {
       setState(() {
@@ -58,7 +57,8 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TextFormField(
-              decoration: InputDecoration(labelText: 'Nombre del espacio'),
+              decoration:
+                  const InputDecoration(labelText: 'Nombre del espacio'),
               controller: _nameController,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -67,7 +67,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
                 return null;
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             TextFormField(
@@ -86,7 +86,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
               },
               validator: isDescriptionValid,
             ),
-            Spacer(),
+            const Spacer(),
             SafeWidgetValidator(
                 child:
                     BigButton(text: 'CONTINUAR', onPressed: continueToNextStep))

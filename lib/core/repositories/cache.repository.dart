@@ -1,18 +1,16 @@
-
-
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/repositories/base.repository.dart';
 import 'package:sqflite/sqflite.dart';
 
 class CacheRepository extends BaseRepository {
-  static CacheRepository _cacheRepository = CacheRepository._internal();
+  static final CacheRepository _cacheRepository = CacheRepository._internal();
   @override
-  String fileName = "cache";
-  String tblCache = "cache";
-  String colId = "cacheId";
-  String colEventName = "eventName";
-  String colEntityName = "entityName";
-  String colCreatedAt = "createdAt";
+  final String fileName = 'cache';
+  final String tblCache = 'cache';
+  final String colId = 'cacheId';
+  final String colEventName = 'eventName';
+  final String colEntityName = 'entityName';
+  final String colCreatedAt = 'createdAt';
 
   CacheRepository._internal();
 
@@ -22,11 +20,11 @@ class CacheRepository extends BaseRepository {
 
   @override
   void createDb(Database db, int newVersion) async {
-    await db.execute("CREATE TABLE $tblCache(" +
-        "$colId TEXT PRIMARY KEY, " +
-        "$colEventName TEXT, " +
-        "$colEntityName TEXT, " +
-        "$colCreatedAt TEXT)");
+    await db.execute('CREATE TABLE $tblCache('
+        '$colId TEXT PRIMARY KEY, '
+        '$colEventName TEXT, '
+        '$colEntityName TEXT, '
+        '$colCreatedAt TEXT)');
   }
 
   Future<String> insert(Cache cache) async {
@@ -40,12 +38,9 @@ class CacheRepository extends BaseRepository {
   }
 
   Future<Cache?> findById(String cacheId) async {
-    Database? db = await this.db;
-    var result = await db!.rawQuery(
-        "SELECT * FROM $tblCache WHERE $colId = '$cacheId'");
-    return result.length > 0 ? Cache.fromObject(result[0]) : null;
+    final Database? db = await this.db;
+    final result =
+        await db!.rawQuery("SELECT * FROM $tblCache WHERE $colId = '$cacheId'");
+    return result.isNotEmpty ? Cache.fromObject(result[0]) : null;
   }
-
-
-
 }
