@@ -14,5 +14,6 @@ class DeleteMemberMenuOption implements MenuOption {
   @override
   void onTap(BuildContext context) async {
     await MemberApi().deleteMember(spaceId, memberId);
+    Navigator.pop(context);
   }
 }

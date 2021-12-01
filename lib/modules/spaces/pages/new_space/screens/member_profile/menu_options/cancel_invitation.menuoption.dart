@@ -13,6 +13,7 @@ class CancelInvitationMenuOption implements MenuOption {
   @override
   void onTap(BuildContext context) async {
     await MemberApi().cancelInvitation(spaceId, memberId);
+    Navigator.pop(context);
   }
 
   CancelInvitationMenuOption(this.spaceId, this.memberId);
