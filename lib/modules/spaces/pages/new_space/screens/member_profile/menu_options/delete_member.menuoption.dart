@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 
 class DeleteMemberMenuOption implements MenuOption {
   String name = 'Eliminar miembro';
+  @override
   IconData icon = Icons.delete;
 
   @override
-  void Function(BuildContext context) onTap = (context) { };
+  void Function(BuildContext context) onTap = (context) {};
 }

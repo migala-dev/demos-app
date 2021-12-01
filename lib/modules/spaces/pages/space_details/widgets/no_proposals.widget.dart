@@ -9,10 +9,9 @@ class NoProposals extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(Icons.how_to_vote_outlined, size: 135, color: this.color),
-        SizedBox(height: 10),
-        Text('Sin propuestas por el momento',
-            style: TextStyle(color: this.color))
+        Icon(Icons.how_to_vote_outlined, size: 135, color: color),
+        const SizedBox(height: 10),
+        Text('Sin propuestas por el momento', style: TextStyle(color: color))
       ],
     );
   }

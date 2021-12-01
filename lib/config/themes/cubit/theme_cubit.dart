@@ -11,9 +11,9 @@ class ThemeCubit extends Cubit<ThemeData> {
   ThemeCubit(this.isDark) : super(isDark ? darkTheme : ligthTheme);
 
   void toggleTheme() {
-    this.isDark = !this.isDark;
-    this._userPrefs.themeIsDark = this.isDark;
-    ThemeData theme = this.isDark ? darkTheme : ligthTheme;
+    isDark = !isDark;
+    _userPrefs.themeIsDark = isDark;
+    final ThemeData theme = isDark ? darkTheme : ligthTheme;
     emit(theme);
   }
 }

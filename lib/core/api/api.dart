@@ -50,17 +50,17 @@ class Api {
   }
 
   static Future<dynamic> upload(String endpoint, File imageFile) async {
-    var stream = new http.ByteStream(imageFile.openRead());
+    var stream = http.ByteStream(imageFile.openRead());
     stream.cast();
     var length = await imageFile.length();
 
     var uri = Uri.parse(endpoint);
 
-    var request = new http.MultipartRequest(
-      "POST",
+    var request = http.MultipartRequest(
+      'POST',
       uri,
     );
-    var multipartFile = new http.MultipartFile('file', stream, length,
+    var multipartFile = http.MultipartFile('file', stream, length,
         filename: imageFile.path.split('/').last);
 
     request.headers.addAll(_getDefaultHeaders());

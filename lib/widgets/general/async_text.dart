@@ -1,11 +1,9 @@
-
-
 import 'package:flutter/material.dart';
 
 class AsyncText extends StatefulWidget {
   final Future<String> Function() getText;
 
-  AsyncText(this.getText) : super();
+  const AsyncText(this.getText, {Key? key}) : super(key: key);
 
   @override
   _AsyncTextState createState() => _AsyncTextState();
@@ -13,7 +11,7 @@ class AsyncText extends StatefulWidget {
 
 class _AsyncTextState extends State<AsyncText> {
   String? text;
-  
+
   void getAsyncText() async {
     String newText = await widget.getText();
     setState(() {
@@ -23,7 +21,7 @@ class _AsyncTextState extends State<AsyncText> {
 
   @override
   Widget build(BuildContext context) {
-    if(text == null) {
+    if (text == null) {
       getAsyncText();
     }
     return Text(text ?? '');

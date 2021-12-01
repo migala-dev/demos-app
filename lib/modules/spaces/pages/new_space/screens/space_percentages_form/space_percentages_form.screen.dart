@@ -25,7 +25,7 @@ class _SpacePercentagesFormScreenState
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
+      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
       child: Column(
         children: [
           ApprovalPercentageSlider(
@@ -38,7 +38,7 @@ class _SpacePercentagesFormScreenState
           ),
           Container(
             height: 30.0,
-            margin: EdgeInsets.only(bottom: 12.0),
+            margin: const EdgeInsets.only(bottom: 12.0),
             decoration: BoxDecoration(
                 border: Border(bottom: BorderSide(color: greyColor))),
           ),
@@ -50,10 +50,11 @@ class _SpacePercentagesFormScreenState
               });
             },
           ),
-          Spacer(),
-          Text("* Estos porcentages podrán ser actualizados dentro del espacio.",
+          const Spacer(),
+          Text(
+              '* Estos porcentages podrán ser actualizados dentro del espacio.',
               style: TextStyle(color: Colors.grey[600])),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           BigButton(
               text: 'Crear',
               isLoading: widget.isLoading,

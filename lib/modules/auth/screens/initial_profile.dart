@@ -22,7 +22,7 @@ class _InitialProfileState extends State<InitialProfile> {
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Perfil',
                 style: TextStyle(
                   color: Colors.black,

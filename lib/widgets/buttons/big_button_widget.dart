@@ -18,12 +18,12 @@ class BigButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstrainedBox(
         constraints:
-            BoxConstraints.tightFor(width: double.infinity, height: 60),
+            const BoxConstraints.tightFor(width: double.infinity, height: 60),
         child: isLoading ? getLoadingButton() : getMainButton(context));
   }
 
   Widget getLoadingButton() {
-    return ElevatedButton(
+    return const ElevatedButton(
         onPressed: null,
         child: CircularProgressIndicator(
           color: Colors.black,
@@ -41,11 +41,10 @@ class BigButton extends StatelessWidget {
           }
         },
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(backgroundColor)
-        ),
+            backgroundColor: MaterialStateProperty.all(backgroundColor)),
         child: Text(
           text.toUpperCase(),
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ));
   }
 }

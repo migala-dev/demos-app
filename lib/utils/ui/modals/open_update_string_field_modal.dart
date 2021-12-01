@@ -11,8 +11,8 @@ Future<String?> openUpdateStringFieldModal(
     context,
     title: Text(title),
     initialValue: initialValue,
-    textOK: Text('Guardar'),
-    textCancel: Text(
+    textOK: const Text('Guardar'),
+    textCancel: const Text(
       'Cancelar',
       style: TextStyle(color: Colors.grey),
     ),

@@ -23,7 +23,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Perfil'),
+        title: const Text('Perfil'),
         actions: [
           MemberProfilePopupMenuOptions(
               memberIsInvited: widget.member.isInvited)
@@ -35,7 +35,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
           children: [
             ProfilePicture(imageKey: widget.member.profilePictureKey),
             Expanded(
-              child: ListView(physics: BouncingScrollPhysics(), children: [
+              child:
+                  ListView(physics: const BouncingScrollPhysics(), children: [
                 ProfileField(
                   placeholderPrefix: 'Sin ',
                   title: 'Nombre en el espacio',

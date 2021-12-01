@@ -1,5 +1,5 @@
 import 'package:demos_app/enviroments/enviroment.interface.dart';
-import 'package:demos_app/enviroments/get-enviroment.dart';
+import 'package:demos_app/enviroments/get_enviroment.dart';
 
 class SpacePath {
   String getSpacesPath() {
@@ -14,5 +14,4 @@ class SpacePath {
   String getUpdateSpaceImagePath(String spaceId) {
     return '${getSpacePath(spaceId)}/picture';
   }
-
 }
