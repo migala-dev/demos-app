@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/edit_space/widgets/edit_items.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/widgets/pages/image_editor.page.dart';
@@ -58,17 +59,13 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
             title: "Nombre",
             subtitle: space!.name ?? '',
             icon: Icons.business,
-            trailing: () {
-              updateSpaceName(context);
-            },
+            trailing: updateSpaceName,
           ),
           EditItems(
             title: "Descripción",
             subtitle: space!.description ?? '',
             icon: Icons.info_outline,
-            trailing: () {
-              updateSpaceDescription(context);
-            },
+            trailing: updateSpaceDescription,
           )
         ],
       ),
@@ -92,7 +89,33 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
     }
   }
 
-  Future<String?> updateSpaceName(BuildContext context) async {
+  void updateSpaceName() async {
+    String? newSpaceName = await updateSpaceNamePrompt(context);
+    if (newSpaceName != null &&
+        newSpaceName.isNotEmpty &&
+        newSpaceName != space!.name) {
+      setState(() {
+        space!.name = newSpaceName;
+        SpaceDetailsService().updateSpace(space!);
+      });
+    }
+  }
+
+  void updateSpaceDescription() async {
+    String? newSpaceDescription = await updateSpaceDescriptionPrompt(context);
+    if (newSpaceDescription != null &&
+        newSpaceDescription.isNotEmpty &&
+        newSpaceDescription != space!.description) {
+      setState(() {
+        space!.description = newSpaceDescription;
+        SpaceDetailsService().updateSpace(space!);
+      });
+    }
+  }
+
+  Future<String?> updateSpaceNamePrompt(
+    BuildContext context,
+  ) async {
     return await prompt(
       context,
       title: Text('Nombre del espacio'),
@@ -109,7 +132,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
     );
   }
 
-  Future<String?> updateSpaceDescription(BuildContext context) async {
+  Future<String?> updateSpaceDescriptionPrompt(BuildContext context) async {
     return await prompt(
       context,
       title: Text('Descripción del espacio'),
@@ -120,6 +143,11 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
         style: TextStyle(color: Colors.grey),
       ),
       hintText: 'Introduce una nueva descripción',
+      validator: (String? value) {
+        if (value != null && value.length > 120) {
+          return "La descripción no puede tener más de 120 caracteres";
+        }
+      },
       maxLines: 4,
       autoFocus: true,
       barrierDismissible: true,

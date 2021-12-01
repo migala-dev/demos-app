@@ -3,18 +3,18 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 import 'package:flutter/material.dart';
 
 class EditItems extends StatelessWidget {
-  const EditItems(
-      {Key? key,
-      required this.title,
-      required this.subtitle,
-      required this.icon,
-      required this.trailing})
-      : super(key: key);
-
   final String title;
   final String subtitle;
   final IconData icon;
   final VoidCallback trailing;
+
+  const EditItems({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.trailing,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
