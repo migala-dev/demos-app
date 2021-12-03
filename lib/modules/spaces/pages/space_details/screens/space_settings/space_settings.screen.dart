@@ -18,6 +18,10 @@ class SpaceSettingsScreen extends StatelessWidget {
     Navigator.pushNamed(context, Routes.spaceMembers);
   }
 
+  void goToEditSpace(BuildContext context) {
+    Navigator.pushNamed(context, Routes.editSpace);
+  }
+
   @override
   Widget build(BuildContext context) {
     Space currentSpace = CurrentSpaceService().getCurrentSpace()!;
@@ -29,13 +33,12 @@ class SpaceSettingsScreen extends StatelessWidget {
       body: Column(
         children: [
           InformationTile(
-              picture:
-                  SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
-              name: currentSpace.name!,
-              subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
-              onTap: () {
-                Navigator.pushNamed(context, Routes.editSpace);
-              }),
+            picture:
+                SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
+            name: currentSpace.name!,
+            subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
+            onTap: () => goToEditSpace(context),
+          ),
           SizedBox(height: 8),
           Divider(thickness: 1),
           SettingItem(
