@@ -24,7 +24,7 @@ class MemberTile extends StatelessWidget {
       title: Row(
         children: [
           Text(member.displayName),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           _getRoleTile(),
         ],
       ),
@@ -35,23 +35,24 @@ class MemberTile extends StatelessWidget {
   Widget _getRoleTile() {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       height: 20,
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.all(Radius.circular(100)),
+        borderRadius: const BorderRadius.all(Radius.circular(100)),
       ),
       child: Text(
         getMemberTypeName(member.memberType),
-        style: TextStyle(fontSize: 12, color: Colors.grey),
+        style: const TextStyle(fontSize: 12, color: Colors.grey),
       ),
     );
   }
 
   String _getSubtitleText() {
-    if (member.memberType == MemberType.INVITED) {
-      if (member.invitationStatus == InvitationStatus.RECEIVED)
+    if (member.memberType == MemberType.invited) {
+      if (member.invitationStatus == InvitationStatus.received) {
         return 'Invitación recibida';
+      }
 
       return 'Invitación enviada';
     }

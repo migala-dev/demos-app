@@ -10,40 +10,40 @@ class User {
 
   User.withPhoneNumber(this._phoneNumber);
 
-  String? get userId => this._userId;
-  String get name => this._name ?? '';
-  String get phoneNumber => this._phoneNumber;
-  String? get profilePictureKey => this._profilePictureKey;
+  String? get userId => _userId;
+  String get name => _name ?? '';
+  String get phoneNumber => _phoneNumber;
+  String? get profilePictureKey => _profilePictureKey;
   String get createdAtFormatted =>
-      DateFormatterService.parseToStandardDate(this._createdAt ?? '');
+      DateFormatterService.parseToStandardDate(_createdAt ?? '');
 
-  set name(String name) => this._name = name;
+  set name(String name) => _name = name;
 
   Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
-    map["userId"] = _userId;
-    map["name"] = _name;
-    map["phoneNumber"] = _phoneNumber;
-    map["profilePictureKey"] = _profilePictureKey;
-    map["createdAt"] = _createdAt;
-    map["updatedAt"] = _updatedAt;
+    final Map<String, dynamic> map = {};
+    map['userId'] = _userId;
+    map['name'] = _name;
+    map['phoneNumber'] = _phoneNumber;
+    map['profilePictureKey'] = _profilePictureKey;
+    map['createdAt'] = _createdAt;
+    map['updatedAt'] = _updatedAt;
     return map;
   }
 
   User.fromObject(dynamic o) {
-    this._userId = o["userId"];
-    this._name = o["name"];
-    this._phoneNumber = o["phoneNumber"];
-    this._profilePictureKey =
-        o["profilePictureKey"] == "null" ? null : o["profilePictureKey"];
-    this._createdAt = o["createdAt"];
-    this._updatedAt = o["updatedAt"];
+    _userId = o['userId'];
+    _name = o['name'];
+    _phoneNumber = o['phoneNumber'];
+    _profilePictureKey =
+        o['profilePictureKey'] == 'null' ? null : o['profilePictureKey'];
+    _createdAt = o['createdAt'];
+    _updatedAt = o['updatedAt'];
   }
 
   User.fromUserObject(User user) {
-    this._userId = user.userId;
-    this._name = user.name;
-    this._phoneNumber = user.phoneNumber;
-    this._profilePictureKey = user.profilePictureKey;
+    _userId = user.userId;
+    _name = user.name;
+    _phoneNumber = user.phoneNumber;
+    _profilePictureKey = user.profilePictureKey;
   }
 }

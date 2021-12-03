@@ -11,7 +11,6 @@ import 'package:demos_app/core/repositories/users.repository.dart';
 import 'cache.service.dart';
 
 class GeneralSpaceService {
-
   Future<void> getUserSpaces() async {
     List<Space> spaces = await SpacesRepository().getAll();
     if (spaces.isEmpty) {
@@ -21,7 +20,7 @@ class GeneralSpaceService {
         await SpacesRepository().insert(space);
       }
 
-       for (final member in response.members) {
+      for (final member in response.members) {
         await MembersRepository().insert(member);
       }
 
@@ -35,17 +34,16 @@ class GeneralSpaceService {
 
   Future<Space> updateSpace(String spaceId) async {
     SpaceResponse response = await SpaceApi().getSpace(spaceId);
-    
+
     await SpacesRepository().updateSpace(response.space);
-    
+
     return response.space;
   }
 
   Future<bool> isUserAdmin(String userId, String spaceId) async {
-    Member? member = await MembersRepository()
-        .findByUserIdAndSpaceId(userId, spaceId);
+    Member? member =
+        await MembersRepository().findByUserIdAndSpaceId(userId, spaceId);
 
-    return member != null ? member.role == SpaceRole.ADMIN : false;
+    return member != null ? member.role == SpaceRole.admin : false;
   }
-
 }

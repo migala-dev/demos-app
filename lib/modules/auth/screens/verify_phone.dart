@@ -17,7 +17,7 @@ class VerifyPhonePage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
           leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
         ),
         onPressed: () {
@@ -27,7 +27,7 @@ class VerifyPhonePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
         child: Column(
-          children: [
+          children: const [
             Text('Verifica tu número teléfono', style: TextStyle(fontSize: 42)),
             SizedBox(
               height: 100,
@@ -58,7 +58,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
   final TextEditingController _verifyCodeController = TextEditingController();
 
   BoxDecoration get _pinPutDecoration {
-    return BoxDecoration(
+    return const BoxDecoration(
       border: Border(bottom: BorderSide(color: Colors.black, width: 4.0)),
     );
   }
@@ -71,11 +71,11 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Código de seguridad',
               style: TextStyle(fontSize: 15),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             PinPut(
@@ -84,7 +84,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
                 hideKeyboard(context);
               },
               controller: _verifyCodeController,
-              textStyle: TextStyle(fontSize: 20.0),
+              textStyle: const TextStyle(fontSize: 20.0),
               submittedFieldDecoration: _pinPutDecoration.copyWith(
                 border: Border(
                     bottom: BorderSide(
@@ -92,11 +92,11 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
               ),
               selectedFieldDecoration: _pinPutDecoration,
               followingFieldDecoration: _pinPutDecoration.copyWith(
-                border: Border(
+                border: const Border(
                     bottom: BorderSide(color: Colors.blueAccent, width: 4.0)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TimerTextButton(
@@ -104,7 +104,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
               onPressed: (restartTimer) {
                 resendCode(restartTimer);
               },
-              duration: Duration(minutes: 2, seconds: 30),
+              duration: const Duration(minutes: 2, seconds: 30),
               disabled: isLoading,
             ),
           ],
@@ -133,7 +133,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
           User? user = await AuthService().verifyCode(code);
           if (user != null) {
             bool thisUserHasAlreadyInfo =
-                user.name != "" || user.profilePictureKey != null;
+                user.name != '' || user.profilePictureKey != null;
             String route =
                 thisUserHasAlreadyInfo ? Routes.spaces : Routes.initialProfile;
             Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);

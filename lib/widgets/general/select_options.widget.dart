@@ -5,7 +5,7 @@ class SelectOptionListWidget extends StatefulWidget {
   final List<Option> options;
   final void Function(Option)? onChange;
 
-  SelectOptionListWidget({Key? key, this.onChange, required this.options})
+  const SelectOptionListWidget({Key? key, this.onChange, required this.options})
       : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
           Color backgroundColor =
               isSelected ? Colors.blue.shade100 : Colors.white;
           return Container(
-              margin: EdgeInsets.only(bottom: 12.0),
+              margin: const EdgeInsets.only(bottom: 12.0),
               child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
@@ -36,12 +36,12 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
                     select(option);
                   },
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 8.0),
                     child: Row(
                       children: [
                         isSelected
-                            ? Icon(
+                            ? const Icon(
                                 Icons.check,
                                 color: Colors.black,
                               )
@@ -51,10 +51,10 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
                         Expanded(
                             child: Center(
                                 child: Container(
-                          margin: EdgeInsets.only(right: 12.0),
+                          margin: const EdgeInsets.only(right: 12.0),
                           child: Text(
                             option.label,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24,
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
@@ -67,7 +67,7 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
         });
   }
 
-  select(Option option) {
+  void select(Option option) {
     setState(() {
       optionSelected = option;
     });

@@ -5,10 +5,10 @@ import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class TokenService {
-  String _refreshTokenKey = 'refresh-token';
+  final String _refreshTokenKey = 'refresh-token';
   String? _accessToken;
-  static TokenService _tokenService = new TokenService._internal();
-  final _storage = new FlutterSecureStorage();
+  static final TokenService _tokenService = TokenService._internal();
+  final _storage = const FlutterSecureStorage();
 
   TokenService._internal() {
     createJobToRequestNewAccessToken();
@@ -18,10 +18,10 @@ class TokenService {
     return _tokenService;
   }
 
-  String? get accessToken => this._accessToken;
+  String? get accessToken => _accessToken;
 
   Future<void> saveTokens(Tokens tokens) async {
-    this._accessToken = tokens.accessToken;
+    _accessToken = tokens.accessToken;
     await _storage.write(key: _refreshTokenKey, value: tokens.refreshToken);
   }
 
@@ -32,7 +32,7 @@ class TokenService {
   }
 
   void createJobToRequestNewAccessToken() {
-    Duration duration = new Duration(hours: 20);
+    Duration duration = const Duration(hours: 20);
     Timer.periodic(duration, (timer) {
       refreshTokens();
     });

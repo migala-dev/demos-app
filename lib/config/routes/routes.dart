@@ -3,17 +3,17 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/widgets.dart';
 
 class Routes {
-  static final String root = "/";
+  static const String root = '/';
   // Authentification
-  static final String login = "/login";
-  static final String verifyPhone = "/verify-code";
-  static final String initialProfile = "/initial-profile";
-  static final String authLoading = "/auth-loading";
+  static const String login = '/login';
+  static const String verifyPhone = '/verify-code';
+  static const String initialProfile = '/initial-profile';
+  static const String authLoading = '/auth-loading';
   // Spaces
-  static final String spaces = "/spaces";
-  static final String newSpace = "/new-space";
-  static final String spacesDetails = "/spaces/spaces-details";
-  static final String invitations = "/invitations";
+  static final String spaces = '/spaces';
+  static final String newSpace = '/new-space';
+  static final String spacesDetails = '/spaces/spaces-details';
+  static final String invitations = '/invitations';
   static final String spaceInvitation = '/space-invitation';
   static final String spaceSettings = '/spaces/space-settings';
   static final String spacePercentage = '/spaces/space-percentage';
@@ -22,14 +22,14 @@ class Routes {
   static final String memberProfile = '/spaces/member-profile';
 
   // Settings
-  static final String settings = "/settings/general";
-  static final String configuration = "/settings/configuration";
-  static final String profileSettings = "/settings/profile";
+  static const String settings = '/settings/general';
+  static const String configuration = '/settings/configuration';
+  static const String profileSettings = '/settings/profile';
 
   static void configureRoutes(FluroRouter router, String initialRoute) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      print("ROUTE WAS NOT FOUND !!!");
+      print('ROUTE WAS NOT FOUND !!!');
       return;
     });
 

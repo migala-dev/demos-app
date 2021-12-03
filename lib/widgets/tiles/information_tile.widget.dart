@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class InformationTile extends StatelessWidget {
-  InformationTile({
+  const InformationTile({
     Key? key,
     required this.onTap,
     required this.picture,
     required this.subtitle,
     required this.name,
-  });
+  }) : super(key: key);
 
   final Widget picture;
   final String name;
@@ -17,18 +17,19 @@ class InformationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
+      margin: const EdgeInsets.only(top: 16),
       child: ListTile(
         leading: picture,
         title: Text(
           name,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         subtitle: Text(subtitle),
-        visualDensity: VisualDensity(vertical: VisualDensity.maximumDensity),
+        visualDensity:
+            const VisualDensity(vertical: VisualDensity.maximumDensity),
         minVerticalPadding: 16,
         onTap: onTap,
-        contentPadding: EdgeInsets.symmetric(horizontal: 28),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 28),
         horizontalTitleGap: 16,
       ),
     );

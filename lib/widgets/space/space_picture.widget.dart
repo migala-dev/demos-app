@@ -28,11 +28,11 @@ class SpacePicture extends StatelessWidget {
         Positioned(
             bottom: 0,
             right: 0,
-            child: this.editable
+            child: editable
                 ? FloatingActionButton(
                     elevation: 0,
                     mini: true,
-                    child: Icon(Icons.photo_camera),
+                    child: const Icon(Icons.photo_camera),
                     onPressed: onPictureEditPress,
                   )
                 : Container())
@@ -52,7 +52,7 @@ class SpacePicture extends StatelessWidget {
   }
 
   Widget getFileImage(double width) {
-    return Container(
+    return SizedBox(
       width: width,
       height: width,
       child: ClipRRect(
@@ -68,7 +68,7 @@ class SpacePicture extends StatelessWidget {
 
   Widget getDefaultImage(double width) {
     return Image(
-        image: AssetImage('assets/images/default-profile.png'),
+        image: const AssetImage('assets/images/default-profile.png'),
         width: width,
         height: width,
         fit: BoxFit.cover);

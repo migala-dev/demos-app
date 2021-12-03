@@ -17,19 +17,19 @@ class SettingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 8),
+      margin: const EdgeInsets.only(top: 8),
       child: ListTile(
-        leading: Icon(this.icon, size: 32),
+        leading: Icon(icon, size: 32),
         title: Text(
-          this.title,
-          style: TextStyle(fontSize: 18),
+          title,
+          style: const TextStyle(fontSize: 18),
         ),
         subtitle: Text(
-          this.subtitle,
-          style: TextStyle(fontSize: 12),
+          subtitle,
+          style: const TextStyle(fontSize: 12),
         ),
         onTap: onTap,
-        contentPadding: EdgeInsets.symmetric(horizontal: 28),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 28),
         horizontalTitleGap: 8,
       ),
     );

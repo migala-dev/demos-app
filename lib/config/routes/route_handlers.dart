@@ -21,22 +21,22 @@ import 'package:fluro/fluro.dart';
 
 var loginHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return LoginPage();
+  return const LoginPage();
 });
 
 var verifyPhoneHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return VerifyPhonePage();
+  return const VerifyPhonePage();
 });
 
 var initialProfileHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return InitialProfile();
+  return const InitialProfile();
 });
 
 var spacesHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpacesScreen();
+  return const SpacesScreen();
 });
 
 // Handler de los detalles del espacio
@@ -48,12 +48,12 @@ var spaceDetailsHandler =
 
 var spaceSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpaceSettingsScreen();
+  return const SpaceSettingsScreen();
 });
 
 var spacePercentageSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpacePercentageSettingsScreen();
+  return const SpacePercentageSettingsScreen();
 });
 
 var editSpaceHandler = Handler(
@@ -63,37 +63,37 @@ var editSpaceHandler = Handler(
 
 var newSpaceHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return NewSpaceScreen();
+  return const NewSpaceScreen();
 });
 
 var invitationsSpaceHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return InvitationsScreen();
+  return const InvitationsScreen();
 });
 
 var spaceInvitationHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpaceInvitationScreen();
+  return const SpaceInvitationScreen();
 });
 
 var generalSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return GeneralSettingsScreen();
+  return const GeneralSettingsScreen();
 });
 
 var generalConfigurationHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return GeneralConfigurationScreen();
+  return const GeneralConfigurationScreen();
 });
 
 var profileSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return ProfileSettingScreen();
+  return const ProfileSettingScreen();
 });
 
 var spaceMembersHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return SpaceMembersScreen();
+  return const SpaceMembersScreen();
 });
 
 var memberProfileHandler =

@@ -1,8 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
-import 'package:flutter/material.dart';
 
 class InvitationContactList extends StatelessWidget {
   final List<InvitationContact> contacts;
@@ -10,11 +11,13 @@ class InvitationContactList extends StatelessWidget {
   final String searchParam;
   final void Function(InvitationContact)? onContactTap;
 
-  InvitationContactList(
-      {required this.contactsSelected,
+  const InvitationContactList(
+      {Key? key,
       required this.contacts,
+      required this.contactsSelected,
       this.searchParam = '',
-      this.onContactTap});
+      this.onContactTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +43,9 @@ class InvitationContactList extends StatelessWidget {
                   ),
                   title: Text(contact.name),
                   subtitle: Container(
-                    padding: EdgeInsets.only(bottom: 8.0, top: 4.0),
-                    child: Text(PhoneFormatterService.format(contact.phoneNumber)),
+                    padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
+                    child:
+                        Text(PhoneFormatterService.format(contact.phoneNumber)),
                     decoration: BoxDecoration(
                         border: Border(bottom: BorderSide(color: greyColor))),
                   ),
@@ -52,8 +56,7 @@ class InvitationContactList extends StatelessWidget {
 
   List<InvitationContact> getContactsFiltered() {
     return contacts
-        .where((c) =>
-            c.name.toLowerCase().indexOf(searchParam.toLowerCase()) != -1)
+        .where((c) => c.name.toLowerCase().contains(searchParam.toLowerCase()))
         .toList();
   }
 
@@ -64,7 +67,7 @@ class InvitationContactList extends StatelessWidget {
         radius: 24.0,
         child: Text(
           getInitials(user.name),
-          style: TextStyle(color: Colors.white, fontSize: 22.0),
+          style: const TextStyle(color: Colors.white, fontSize: 22.0),
         ),
       );
     }
@@ -90,7 +93,7 @@ class InvitationContactList extends StatelessWidget {
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.green),
-            child: Center(
+            child: const Center(
               child: Icon(
                 Icons.done,
                 color: Colors.white,

@@ -19,44 +19,40 @@ class MemberView {
   String? memberName;
 
   String get displayName {
-    if (this.memberName != null) if (this.memberName!.length > 0)
-      return this.memberName!;
+    if (memberName != null) if (memberName!.isNotEmpty) return memberName!;
 
-    if (this.userName != null) if (this.userName!.length > 0)
-      return this.userName!;
+    if (userName != null) if (userName!.isNotEmpty) return userName!;
 
-    if (this.phoneNumber != null) return this.phoneNumberFormatted;
+    if (phoneNumber != null) return phoneNumberFormatted;
 
     return 'Sin Nombre';
   }
 
   String get memberCreatedAtFormatted =>
-      DateFormatterService.parseToStandardDate(this.memberCreatedAt ?? '');
+      DateFormatterService.parseToStandardDate(memberCreatedAt ?? '');
 
-  String get phoneNumberFormatted =>
-      PhoneFormatterService.format(this.phoneNumber);
+  String get phoneNumberFormatted => PhoneFormatterService.format(phoneNumber);
 
   String get invitationExpiredAtFormatted =>
-      DateFormatterService.parseToStandardDate(this.invitationExpiredAt ?? '');
+      DateFormatterService.parseToStandardDate(invitationExpiredAt ?? '');
 
   MemberType get memberType {
-    if (this.role == null) return MemberType.INVITED;
-    if (this.invitationStatus == InvitationStatus.SENDED)
-      return MemberType.INVITED;
+    if (role == null) return MemberType.invited;
+    if (invitationStatus == InvitationStatus.sended) return MemberType.invited;
 
-    switch (this.role) {
-      case SpaceRole.ADMIN:
-        return MemberType.ADMINISTRATOR;
-      case SpaceRole.WORKER:
-        return MemberType.WORKER;
-      case SpaceRole.REPRESENTATIVE:
-        return MemberType.REPRESENTATIVE;
+    switch (role) {
+      case SpaceRole.admin:
+        return MemberType.administrator;
+      case SpaceRole.worker:
+        return MemberType.worker;
+      case SpaceRole.representative:
+        return MemberType.representative;
       default:
-        return MemberType.WORKER;
+        return MemberType.worker;
     }
   }
 
-  bool get isInvited => this.memberType == MemberType.INVITED;
+  bool get isInvited => memberType == MemberType.invited;
 
   MemberView(
       {required this.userId,

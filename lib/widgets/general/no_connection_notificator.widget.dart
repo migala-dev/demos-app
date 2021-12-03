@@ -10,8 +10,9 @@ class NoConnectionNotificator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ConnectionStatusBloc, ConnectionStatusState>(
       builder: (context, state) {
-        if (state == ConnectionStatusState.Unconnected)
-          return NoConnectionSnackbar();
+        if (state == ConnectionStatusState.unconnected) {
+          return const NoConnectionSnackbar();
+        }
 
         return Container(height: 0);
       },

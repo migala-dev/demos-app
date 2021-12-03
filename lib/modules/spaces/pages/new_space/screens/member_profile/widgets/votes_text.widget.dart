@@ -11,10 +11,12 @@ class VotesText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text('$created', style: TextStyle(fontSize: 18, color: Colors.black)),
-        Text(' creadas   '),
-        Text('$votes', style: TextStyle(fontSize: 18, color: Colors.black)),
-        Text(' votos'),
+        Text('$created',
+            style: const TextStyle(fontSize: 18, color: Colors.black)),
+        const Text(' creadas   '),
+        Text('$votes',
+            style: const TextStyle(fontSize: 18, color: Colors.black)),
+        const Text(' votos'),
       ],
     );
   }

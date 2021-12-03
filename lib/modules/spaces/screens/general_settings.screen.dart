@@ -13,7 +13,7 @@ class GeneralSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ajustes')),
+      appBar: AppBar(title: const Text('Ajustes')),
       body: FutureBuilder(
         future: CurrentUserService().getCurrentUser(),
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
@@ -29,16 +29,16 @@ class GeneralSettingsScreen extends StatelessWidget {
                   subtitle: 'Creado el ${currentUser.createdAtFormatted}',
                   onTap: () => goToProfileSettings(context),
                 ),
-                SizedBox(height: 8),
-                Divider(thickness: 1),
+                const SizedBox(height: 8),
+                const Divider(thickness: 1),
                 SettingItem(
                     title: 'Configuración',
                     subtitle: 'Configura los colores de la aplicación',
                     icon: Icons.settings,
                     onTap: () => goToConfiguration(context)),
-                Spacer(),
-                PoweredByMigala(),
-                SizedBox(
+                const Spacer(),
+                const PoweredByMigala(),
+                const SizedBox(
                   height: 10,
                 )
               ],

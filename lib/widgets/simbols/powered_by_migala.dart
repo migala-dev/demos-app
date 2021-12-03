@@ -11,14 +11,14 @@ class PoweredByMigala extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
-          margin: EdgeInsets.only(right: 16),
+          margin: const EdgeInsets.only(right: 16),
           child: Column(
-            children: [
+            children: const [
               Text(
-                "powered by",
+                'powered by',
                 style: TextStyle(fontWeight: FontWeight.w300),
               ),
-              Text("Migala",
+              Text('Migala',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))
             ],
           ),

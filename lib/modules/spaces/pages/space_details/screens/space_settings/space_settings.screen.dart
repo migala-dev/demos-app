@@ -28,7 +28,7 @@ class SpaceSettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ajustes"),
+        title: const Text('Ajustes'),
       ),
       body: Column(
         children: [
@@ -42,18 +42,18 @@ class SpaceSettingsScreen extends StatelessWidget {
           SizedBox(height: 8),
           Divider(thickness: 1),
           SettingItem(
-              title: "Votos",
+              title: 'Votos',
               subtitle:
-                  "Porcentaje de participación y aprovación de las propuestas",
+                  'Porcentaje de participación y aprovación de las propuestas',
               icon: Icons.how_to_vote,
               onTap: () => goToSpacePercentageSettings(context)),
           SettingItem(
-              title: "Miembros",
-              subtitle: "Usuarios, invitaciones y roles",
+              title: 'Miembros',
+              subtitle: 'Usuarios, invitaciones y roles',
               icon: Icons.people,
               onTap: () => goToSpaceMembers(context)),
           Expanded(flex: 5, child: Container()),
-          Expanded(
+          const Expanded(
             flex: 1,
             child: PoweredByMigala(),
           )

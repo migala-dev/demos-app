@@ -12,7 +12,7 @@ class NoConnectionSnackbar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+        children: const [
           Icon(Icons.wifi_off),
           SizedBox(
             width: 5,

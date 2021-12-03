@@ -9,7 +9,7 @@ class TimerTextButton extends StatefulWidget {
   final String text;
   final bool disabled;
 
-  TimerTextButton(
+  const TimerTextButton(
       {Key? key,
       required this.onPressed,
       required this.duration,
@@ -18,29 +18,22 @@ class TimerTextButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  _TimerTextButtonState createState() =>
-      _TimerTextButtonState(onPressed, duration, text, disabled);
+  _TimerTextButtonState createState() => _TimerTextButtonState();
 }
 
 class _TimerTextButtonState extends State<TimerTextButton> {
-  final void Function(void Function()) onPressed;
-  final Duration duration;
-  final String text;
-  bool disabled = false;
-
   String _currentTimeRemaining = '';
 
   bool _done = false;
 
   StreamSubscription<CountdownTimer>? sub;
 
-  _TimerTextButtonState(
-      this.onPressed, this.duration, this.text, this.disabled);
+  _TimerTextButtonState();
 
   void startTimer() {
     CountdownTimer countDownTimer = CountdownTimer(
-      duration,
-      Duration(seconds: 1),
+      widget.duration,
+      const Duration(seconds: 1),
     );
 
     sub = countDownTimer.listen(null);
@@ -67,7 +60,7 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   void start() {
     _done = false;
-    _currentTimeRemaining = _formatDuration(duration);
+    _currentTimeRemaining = _formatDuration(widget.duration);
     startTimer();
   }
 
@@ -91,22 +84,23 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   Widget getTimer() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(text), Text(_currentTimeRemaining)],
+        children: [Text(widget.text), Text(_currentTimeRemaining)],
       ),
     );
   }
 
   Widget getLink() {
     return TextButton(
-        onPressed: disabled ? null : onActionPressed, child: Text(text));
+        onPressed: widget.disabled ? null : onActionPressed,
+        child: Text(widget.text));
   }
 
   void onActionPressed() {
     if (_done) {
-      this.onPressed(() => start());
+      widget.onPressed(() => start());
     }
   }
 }

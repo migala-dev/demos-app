@@ -30,8 +30,8 @@ class _ApprovalPercentageSliderState extends State<ApprovalPercentageSlider> {
     return Column(
       children: [
         ListTile(
-          contentPadding: EdgeInsets.all(0),
-          title: Text('Porcentaje de aprovación',
+          contentPadding: const EdgeInsets.all(0),
+          title: const Text('Porcentaje de aprovación',
               style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400)),
           subtitle: Text('En votaciones A favor/En contra',
               style: TextStyle(color: Colors.grey[600])),
@@ -44,7 +44,7 @@ class _ApprovalPercentageSliderState extends State<ApprovalPercentageSlider> {
                 borderRadius: BorderRadius.circular(10)),
             child: Text(
               '${_currentSliderValue.toInt()} %',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
           ),
         ),
@@ -71,12 +71,12 @@ class _ApprovalPercentageSliderState extends State<ApprovalPercentageSlider> {
             children: <TextSpan>[
               TextSpan(
                   text: '$_exampleTotalUsers usuarios',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(text: ' se necesitan'),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const TextSpan(text: ' se necesitan'),
               TextSpan(
                   text: ' ${getTotalUsersCount()} usuarios',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(text: ' para aprobar la propuesta'),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const TextSpan(text: ' para aprobar la propuesta'),
             ],
           ),
         )

@@ -6,7 +6,7 @@ class InvitationContactChip extends StatefulWidget {
   final InvitationContact contact;
   final void Function() unselectContact;
 
-  InvitationContactChip(
+  const InvitationContactChip(
       {Key? key, required this.contact, required this.unselectContact})
       : super(key: key);
 
@@ -26,7 +26,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
       child: FittedBox(
           child: Container(
         height: 32.0,
-        margin: EdgeInsets.only(right: 4.0, top: 4.0, bottom: 4.0),
+        margin: const EdgeInsets.only(right: 4.0, top: 4.0, bottom: 4.0),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             color: !unselectMode ? Colors.grey[200] : color),
@@ -47,10 +47,10 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
                             !unselectMode
                                 ? Text(
                                     widget.contact.name[0].toUpperCase(),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white, fontSize: 16.0),
                                   )
-                                : Icon(
+                                : const Icon(
                                     Icons.close,
                                     color: Colors.white,
                                     size: 22.0,
@@ -71,7 +71,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
                     width: 95,
                   ),
             Container(
-              margin: EdgeInsets.only(left: 4, right: 16),
+              margin: const EdgeInsets.only(left: 4, right: 16),
               child: Text(
                 widget.contact.name.split(' ')[0],
                 style: TextStyle(

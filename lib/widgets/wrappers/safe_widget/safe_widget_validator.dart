@@ -42,9 +42,9 @@ class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
         if (isValid && isValidConnection(connectionState)) {
           return widget.child;
         }
-        return Container(
-              height: 0,
-              width: 0,
+        return const SizedBox(
+          height: 0,
+          width: 0,
         );
       },
     );
@@ -63,6 +63,6 @@ class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
 
   bool isValidConnection(ConnectionStatusState connectionState) {
     return !widget.safeInternetConnectionMode ||
-        connectionState == ConnectionStatusState.Connected;
+        connectionState == ConnectionStatusState.connected;
   }
 }

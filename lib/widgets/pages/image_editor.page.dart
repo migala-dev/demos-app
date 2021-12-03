@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:image_crop/image_crop.dart';
 
 class ImageEditorPage extends StatefulWidget {
+  const ImageEditorPage({Key? key}) : super(key: key);
+
   @override
   _ImageEditorPageState createState() => _ImageEditorPageState();
 }
@@ -38,7 +40,7 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
 
   Widget _buildOpeningImage() {
     _openImage();
-    return Center();
+    return const Center();
   }
 
   Widget _buildCroppingImage() {
@@ -68,7 +70,7 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
 
   Widget _buildCancelOption() {
     return GestureDetector(
-      child: Icon(
+      child: const Icon(
         Icons.close,
         color: Colors.white,
       ),
@@ -78,7 +80,7 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
 
   Widget _buildSaveOption() {
     return GestureDetector(
-      child: Icon(
+      child: const Icon(
         Icons.done,
         color: Colors.white,
       ),
