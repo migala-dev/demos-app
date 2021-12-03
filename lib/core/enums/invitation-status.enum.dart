@@ -1,23 +1,17 @@
-enum InvitationStatus {
-  SENDED,
-  RECEIVED,
-  ACCEPTED,
-  CANCELED,
-  REJECTED
-}
+enum InvitationStatus { sended, received, accepted, canceled, rejected }
 
 InvitationStatus getInvitationStatusFromInt(int status) {
   switch (status) {
     case 0:
-      return InvitationStatus.SENDED;
+      return InvitationStatus.sended;
     case 1:
-      return InvitationStatus.RECEIVED;
+      return InvitationStatus.received;
     case 2:
-      return InvitationStatus.ACCEPTED;
+      return InvitationStatus.accepted;
     case 3:
-      return InvitationStatus.CANCELED;
+      return InvitationStatus.canceled;
     case 4:
     default:
-      return InvitationStatus.REJECTED;
+      return InvitationStatus.rejected;
   }
 }

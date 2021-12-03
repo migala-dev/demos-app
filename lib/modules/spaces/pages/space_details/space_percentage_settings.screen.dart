@@ -11,7 +11,7 @@ import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 
 class SpacePercentageSettingsScreen extends StatefulWidget {
-  SpacePercentageSettingsScreen({Key? key}) : super(key: key);
+  const SpacePercentageSettingsScreen({Key? key}) : super(key: key);
 
   @override
   _SpacePercentageSettingsScreenState createState() =>
@@ -33,48 +33,46 @@ class _SpacePercentageSettingsScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Votos"),
-        ),
-        body: Container(
-          margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-          child: Column(
-            children: [
-              ApprovalPercentageSlider(
-                initialValue: approvalPercentage,
-                onChange: (approvalPercentage) {
-                  setState(() {
-                    this.approvalPercentage = approvalPercentage;
-                  });
-                },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Votos'),
+      ),
+      body: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Column(
+          children: [
+            ApprovalPercentageSlider(
+              initialValue: approvalPercentage,
+              onChange: (approvalPercentage) {
+                setState(() {
+                  this.approvalPercentage = approvalPercentage;
+                });
+              },
+            ),
+            Container(
+              height: 30.0,
+              margin: const EdgeInsets.only(bottom: 12.0),
+              decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide(color: greyColor))),
+            ),
+            ParticipationPercentageSlider(
+              initialValue: participationPercentage,
+              onChange: (participationPercentage) {
+                setState(() {
+                  this.participationPercentage = participationPercentage;
+                });
+              },
+            ),
+            const Spacer(),
+            SafeWidgetValidator(
+              validators: [IsCurrentUserAdminWidgetValidator()],
+              child: BigButton(
+                text: 'Guardar',
+                onPressed: save,
+                isLoading: isLoading,
               ),
-              Container(
-                height: 30.0,
-                margin: EdgeInsets.only(bottom: 12.0),
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: greyColor))),
-              ),
-              ParticipationPercentageSlider(
-                initialValue: participationPercentage,
-                onChange: (participationPercentage) {
-                  setState(() {
-                    this.participationPercentage = participationPercentage;
-                  });
-                },
-              ),
-              Spacer(),
-              SafeWidgetValidator(
-                validators: [IsCurrentUserAdminWidgetValidator()],
-                child: BigButton(
-                  text: 'Guardar',
-                  onPressed: save,
-                  isLoading: isLoading,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

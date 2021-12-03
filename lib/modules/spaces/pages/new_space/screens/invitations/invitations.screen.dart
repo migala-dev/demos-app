@@ -55,18 +55,20 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Invitaciones'),
+        const Text('Invitaciones'),
         Text(
           '${contactsSelected.length} seleccionados',
-          style: TextStyle(color: Colors.grey, fontSize: 14),
+          style: const TextStyle(color: Colors.grey, fontSize: 14),
         )
       ],
     );
   }
 
   Widget getBody() {
-    if (fetchingContacts) return Center(child: CircularProgressIndicator());
-    if (contacts.length == 0) return Center(child: Text('Sin contactos'));
+    if (fetchingContacts) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (contacts.isEmpty) return const Center(child: Text('Sin contactos'));
     return Column(children: [
       InvitationSearchField(
           contactsSelected: contactsSelected,
@@ -96,8 +98,8 @@ class _InvitationsScreenState extends State<InvitationsScreen>
               onPressed: sendInvitations,
               isLoading: isLoading,
             )),
-        padding: EdgeInsets.symmetric(horizontal: 12.0),
-        margin: EdgeInsets.only(bottom: 12.0),
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        margin: const EdgeInsets.only(bottom: 12.0),
       )
     ]);
   }

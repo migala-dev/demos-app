@@ -7,11 +7,11 @@ class Cache {
   Map<String, dynamic>? _data;
   String _createdAt;
 
-  String get cacheId => this._cacheId;
-  String get entityName => this._entityName;
-  String get eventName => this._eventName;
-  Map<String, dynamic>? get data => this._data;
-  String? get createdAt => this._createdAt;
+  String get cacheId => _cacheId;
+  String get entityName => _entityName;
+  String get eventName => _eventName;
+  Map<String, dynamic>? get data => _data;
+  String? get createdAt => _createdAt;
 
   Cache(
       {required String cacheId,
@@ -19,18 +19,18 @@ class Cache {
       required String eventName,
       Map<String, dynamic>? data,
       required String createdAt})
-      : this._cacheId = cacheId,
-        this._entityName = entityName,
-        this._eventName = eventName,
-        this._data = data,
-        this._createdAt = createdAt;
+      : _cacheId = cacheId,
+        _entityName = entityName,
+        _eventName = eventName,
+        _data = data,
+        _createdAt = createdAt;
 
   factory Cache.fromObject(Map<String, dynamic> o) => Cache(
-        cacheId: o["cacheId"],
-        entityName: o["entityName"],
-        eventName: o["eventName"],
-        data: o["data"] != null ? jsonDecode(o["data"]) : null,
-        createdAt: o["createdAt"],
+        cacheId: o['cacheId'],
+        entityName: o['entityName'],
+        eventName: o['eventName'],
+        data: o['data'] != null ? jsonDecode(o['data']) : null,
+        createdAt: o['createdAt'],
       );
 
   factory Cache.fromJson(String str) {
@@ -40,11 +40,11 @@ class Cache {
   }
 
   Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
-    map["cacheId"] = _cacheId;
-    map["entityName"] = _entityName;
-    map["eventName"] = _eventName;
-    map["createdAt"] = _createdAt;
+    final Map<String, dynamic> map = <String, dynamic>{};
+    map['cacheId'] = _cacheId;
+    map['entityName'] = _entityName;
+    map['eventName'] = _eventName;
+    map['createdAt'] = _createdAt;
     return map;
   }
 }

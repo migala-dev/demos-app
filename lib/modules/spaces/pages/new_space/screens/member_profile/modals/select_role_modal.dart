@@ -12,8 +12,8 @@ class SelectRoleModal extends StatelessWidget {
       children: [
         Center(
             child: Container(
-                margin: EdgeInsets.symmetric(vertical: 15),
-                child: Text(
+                margin: const EdgeInsets.symmetric(vertical: 15),
+                child: const Text(
                   'Selecciona un nuevo rol',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ))),

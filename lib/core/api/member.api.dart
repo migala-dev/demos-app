@@ -36,7 +36,7 @@ class MemberApi {
   Future<SendInvitationsResponse> sendInvitations(
       String spaceId, List<InvitationContact> contacts) async {
     String endpoint = MemberPath().getInvitationPath(spaceId);
-    Object params = {"users": contacts.map((c) => c.toJson()).toList()};
+    Object params = {'users': contacts.map((c) => c.toJson()).toList()};
 
     final httpResponse = await Api.post(endpoint, params);
 
@@ -59,8 +59,8 @@ class MemberApi {
     Future<bool> updateMember(String spaceId, String memberId,  String? name, SpaceRole role) async {
     String endpoint = MemberPath().getMemberPath(spaceId, memberId);
     Object params = {
-      "name": name,
-      "role": getSpaceRoleString(role),
+      'name': name,
+      'role': getSpaceRoleString(role),
     };
     final httpResponse = await Api.post(endpoint, params);
 

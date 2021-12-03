@@ -1,4 +1,3 @@
-
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/modules/auth/models/verify_code_response.model.dart';
@@ -15,7 +14,7 @@ class AuthApi {
   Future<String> signIn(String phoneNumber) async {
     String endpoint = ApiPath().getSignInPath();
     Object params = {
-      "phoneNumber": phoneNumber,
+      'phoneNumber': phoneNumber,
     };
 
     final response = await Api.post(endpoint, params);
@@ -23,12 +22,13 @@ class AuthApi {
     return response['session'];
   }
 
-   Future<VerifyCodeReponse> verifyCode(String code, String phoneNumber, String session) async {
+  Future<VerifyCodeReponse> verifyCode(
+      String code, String phoneNumber, String session) async {
     String endpoint = ApiPath().getVerifyCodePath();
     Object params = {
-      "phoneNumber": phoneNumber,
-      "code": code,
-      "session": session,
+      'phoneNumber': phoneNumber,
+      'code': code,
+      'session': session,
     };
     final httpResponse = await Api.post(endpoint, params);
 

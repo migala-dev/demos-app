@@ -13,7 +13,7 @@ class ConnectionChangeEvent extends ConnectionStatusEvent {
   const ConnectionChangeEvent(this.newEvent);
 
   @override
-  List<Object> get props => [this.newEvent];
+  List<Object> get props => [newEvent];
 }
 
 class ConnectionStartedEvent extends ConnectionStatusEvent {
@@ -22,5 +22,5 @@ class ConnectionStartedEvent extends ConnectionStatusEvent {
   const ConnectionStartedEvent(this.initConnectivityResult);
 
   @override
-  List<Object> get props => [this.initConnectivityResult];
+  List<Object> get props => [initConnectivityResult];
 }

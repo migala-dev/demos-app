@@ -16,7 +16,7 @@ class MembersListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: memberViews.length,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
         final memberView = memberViews[index];
 

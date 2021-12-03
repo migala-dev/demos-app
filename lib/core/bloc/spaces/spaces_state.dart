@@ -12,7 +12,7 @@ class SpacesState extends Equatable {
           invitations: invitations ?? this.invitations);
 
   @override
-  List<Object> get props => [this.spaces, this.invitations];
+  List<Object> get props => [spaces, invitations];
 }
 
 class LoadingSpaces extends SpacesState {

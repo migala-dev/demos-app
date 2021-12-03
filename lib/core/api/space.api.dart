@@ -6,7 +6,7 @@ import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 
 class SpaceApi {
-  static SpaceApi _spaceApi = SpaceApi._internal();
+  static final SpaceApi _spaceApi = SpaceApi._internal();
 
   SpaceApi._internal();
 
@@ -26,10 +26,10 @@ class SpaceApi {
   Future<SpaceResponse> createSpace(Space newSpace) async {
     String endpoint = SpacePath().getSpacesPath();
     Object params = {
-      "name": newSpace.name,
-      "description": newSpace.description,
-      "participationPercentage": newSpace.participationPercentage.toString(),
-      "approvalPercentage": newSpace.approvalPercentage.toString()
+      'name': newSpace.name,
+      'description': newSpace.description,
+      'participationPercentage': newSpace.participationPercentage.toString(),
+      'approvalPercentage': newSpace.approvalPercentage.toString()
     };
     final httpResponse = await Api.post(endpoint, params);
 
@@ -41,10 +41,10 @@ class SpaceApi {
   Future<void> updateSpace(Space space) async {
     String endpoint = SpacePath().getSpacePath(space.spaceId!);
     Object params = {
-      "name": space.name,
-      "description": space.description,
-      "participationPercentage": space.participationPercentage.toString(),
-      "approvalPercentage": space.approvalPercentage.toString()
+      'name': space.name,
+      'description': space.description,
+      'participationPercentage': space.participationPercentage.toString(),
+      'approvalPercentage': space.approvalPercentage.toString()
     };
     await Api.post(endpoint, params);
   }

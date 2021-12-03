@@ -1,5 +1,5 @@
 import 'package:demos_app/enviroments/enviroment.interface.dart';
-import 'package:demos_app/enviroments/get-enviroment.dart';
+import 'package:demos_app/enviroments/get_enviroment.dart';
 
 class ApiPath {
   //  Auth paths
@@ -33,7 +33,7 @@ class ApiPath {
   String getWebsocketServicePath(String userId) {
     Enviroment enviroment = getEnviroment();
     return '${enviroment.websocketServiceUrl}/$userId';
-  } 
+  }
 
   String getGetCachePath() {
     Enviroment enviroment = getEnviroment();

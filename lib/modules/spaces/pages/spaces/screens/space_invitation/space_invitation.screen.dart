@@ -13,7 +13,7 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 import 'package:flutter/material.dart';
 
 class SpaceInvitationScreen extends StatefulWidget {
-  SpaceInvitationScreen({Key? key}) : super(key: key);
+  const SpaceInvitationScreen({Key? key}) : super(key: key);
 
   @override
   State<SpaceInvitationScreen> createState() => _SpaceInvitationScreenState();
@@ -35,8 +35,8 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
     return Scaffold(
         body: Container(
-      padding:
-          EdgeInsets.only(top: 32.0, bottom: 20.0, left: 24.0, right: 24.0),
+      padding: const EdgeInsets.only(
+          top: 32.0, bottom: 20.0, left: 24.0, right: 24.0),
       child: Column(
         children: [
           Row(
@@ -46,7 +46,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                   onPressed: () {
                     goBack(context);
                   },
-                  icon: Icon(Icons.close))
+                  icon: const Icon(Icons.close))
             ],
           ),
           Expanded(
@@ -64,7 +64,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                               pictureKey: space?.pictureKey,
                             )
                           : Container(),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: _invitationSpaceName(),
                       ),
@@ -86,7 +86,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
           )),
           SafeWidgetValidator(
             child: BigButton(
-                text: "Continuar",
+                text: 'Continuar',
                 isLoading: isLoading,
                 disabled: optionSelected == null,
                 onPressed: () {
@@ -119,10 +119,10 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Espacio"),
+        const Text('Espacio'),
         Text(
           space?.name ?? '',
-          style: TextStyle(fontSize: 40),
+          style: const TextStyle(fontSize: 40),
         )
       ],
     );
@@ -143,9 +143,8 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
       reloadSpaceList();
 
       Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
-          arguments: this.spaceView);
-      Navigator.pushNamed(context, Routes.spacesDetails,
-          arguments: this.spaceView);
+          arguments: spaceView);
+      Navigator.pushNamed(context, Routes.spacesDetails, arguments: spaceView);
     });
   }
 
