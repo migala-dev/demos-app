@@ -1,7 +1,6 @@
+import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/percentage_sliders.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/approval_percentage_slider.widget.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/participation_percentage_slider.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
@@ -42,13 +41,15 @@ class _SpacePercentageSettingsScreenState
           margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
           child: Column(
             children: [
-              ApprovalPercentageSlider(
+              PercentageSliders(
                 initialValue: approvalPercentage,
                 onChange: (approvalPercentage) {
                   setState(() {
                     this.approvalPercentage = approvalPercentage;
                   });
                 },
+                sliderTitle: 'Porcentaje de aprovación',
+                sliderSubtitle: 'En votaciones A favor/En contra',
               ),
               Container(
                 height: 30.0,
@@ -56,13 +57,15 @@ class _SpacePercentageSettingsScreenState
                 decoration: BoxDecoration(
                     border: Border(bottom: BorderSide(color: greyColor))),
               ),
-              ParticipationPercentageSlider(
+              PercentageSliders(
                 initialValue: participationPercentage,
                 onChange: (participationPercentage) {
                   setState(() {
                     this.participationPercentage = participationPercentage;
                   });
                 },
+                sliderTitle: "Porcentaje de participación",
+                sliderSubtitle: 'En votaciones con opción multiple',
               ),
               Spacer(),
               SafeWidgetValidator(
