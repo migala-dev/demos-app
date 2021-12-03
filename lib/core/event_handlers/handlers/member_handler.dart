@@ -33,7 +33,7 @@ class SpaceInvitationEvent implements EventHandler {
 
     SpaceResponse response = await SpaceApi().getSpace(spaceId);
 
-    await NewSpaceService().addSpaceEntitiesFromResponse(response);
+    await NewSpaceService().handleSpaceInvitation(response);
 
     SpacesBloc().add(LoadSpacesEvent());
   }
