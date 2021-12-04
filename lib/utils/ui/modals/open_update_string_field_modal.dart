@@ -6,6 +6,7 @@ Future<String?> openUpdateStringFieldModal(
   required String title,
   required String hintText,
   String? initialValue,
+  String? Function(String?)? validator,
 }) async {
   return await prompt(
     context,
@@ -17,6 +18,7 @@ Future<String?> openUpdateStringFieldModal(
       style: TextStyle(color: Colors.grey),
     ),
     hintText: hintText,
+    validator: validator,
     maxLines: 1,
     autoFocus: true,
     barrierDismissible: true,

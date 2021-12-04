@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
@@ -18,6 +18,10 @@ class SpaceSettingsScreen extends StatelessWidget {
     Navigator.pushNamed(context, Routes.spaceMembers);
   }
 
+  void goToEditSpace(BuildContext context) {
+    Navigator.pushNamed(context, Routes.editSpace);
+  }
+
   @override
   Widget build(BuildContext context) {
     Space currentSpace = CurrentSpaceService().getCurrentSpace()!;
@@ -29,11 +33,12 @@ class SpaceSettingsScreen extends StatelessWidget {
       body: Column(
         children: [
           InformationTile(
-              picture:
-                  SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
-              name: currentSpace.name!,
-              subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
-              onTap: () {}),
+            picture:
+                SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
+            name: currentSpace.name!,
+            subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
+            onTap: () => goToEditSpace(context),
+          ),
           const SizedBox(height: 8),
           const Divider(thickness: 1),
           SettingItem(
