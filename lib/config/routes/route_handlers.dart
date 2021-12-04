@@ -58,7 +58,7 @@ var spacePercentageSettingsHandler = Handler(
 
 var editSpaceHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return EditSpaceScreen();
+  return const EditSpaceScreen();
 });
 
 var newSpaceHandler = Handler(

@@ -10,16 +10,16 @@ class Routes {
   static const String initialProfile = '/initial-profile';
   static const String authLoading = '/auth-loading';
   // Spaces
-  static final String spaces = '/spaces';
-  static final String newSpace = '/new-space';
-  static final String spacesDetails = '/spaces/spaces-details';
-  static final String invitations = '/invitations';
-  static final String spaceInvitation = '/space-invitation';
-  static final String spaceSettings = '/spaces/space-settings';
-  static final String spacePercentage = '/spaces/space-percentage';
-  static final String spaceMembers = '/spaces/space-members';
-  static final String editSpace = '/spaces/edit-space';
-  static final String memberProfile = '/spaces/member-profile';
+  static const String spaces = '/spaces';
+  static const String newSpace = '/new-space';
+  static const String spacesDetails = '/spaces/spaces-details';
+  static const String invitations = '/invitations';
+  static const String spaceInvitation = '/space-invitation';
+  static const String spaceSettings = '/spaces/space-settings';
+  static const String spacePercentage = '/spaces/space-percentage';
+  static const String spaceMembers = '/spaces/space-members';
+  static const String editSpace = '/spaces/edit-space';
+  static const String memberProfile = '/spaces/member-profile';
 
   // Settings
   static const String settings = '/settings/general';

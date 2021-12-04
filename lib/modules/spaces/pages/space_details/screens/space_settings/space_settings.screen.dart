@@ -39,8 +39,8 @@ class SpaceSettingsScreen extends StatelessWidget {
             subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
             onTap: () => goToEditSpace(context),
           ),
-          SizedBox(height: 8),
-          Divider(thickness: 1),
+          const SizedBox(height: 8),
+          const Divider(thickness: 1),
           SettingItem(
               title: 'Votos',
               subtitle:

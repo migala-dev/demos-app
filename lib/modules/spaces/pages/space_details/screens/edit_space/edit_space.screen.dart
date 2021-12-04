@@ -13,7 +13,7 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 import 'package:flutter/material.dart';
 
 class EditSpaceScreen extends StatefulWidget {
-  EditSpaceScreen({Key? key}) : super(key: key);
+  const EditSpaceScreen({Key? key}) : super(key: key);
 
   @override
   _EditSpaceScreenState createState() => _EditSpaceScreenState();
@@ -27,12 +27,12 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text('Espacio'),
+        title: const Text('Espacio'),
       ),
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(vertical: 24),
+            margin: const EdgeInsets.symmetric(vertical: 24),
             child: Stack(
               children: [
                 SpacePicture(
@@ -49,7 +49,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
                           onPictureEditPress();
                         },
                         mini: true,
-                        child: Icon(Icons.photo_camera),
+                        child: const Icon(Icons.photo_camera),
                       )),
                 )
               ],
@@ -76,7 +76,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
     File? imageFile = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ImageEditorPage(),
+          builder: (context) => const ImageEditorPage(),
         ));
     if (imageFile != null) {
       Space? spaceUpdated =

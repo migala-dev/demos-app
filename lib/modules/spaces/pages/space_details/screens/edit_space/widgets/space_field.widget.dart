@@ -19,15 +19,15 @@ class SpaceField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+      margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
       child: ListTile(
         title: Text(
           title,
-          style: TextStyle(fontSize: 14, color: Colors.grey),
+          style: const TextStyle(fontSize: 14, color: Colors.grey),
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w400,
             color: Colors.black,
@@ -40,7 +40,7 @@ class SpaceField extends StatelessWidget {
         trailing: SafeWidgetValidator(
           validators: [IsCurrentUserAdminWidgetValidator()],
           child: IconButton(
-            icon: Icon(Icons.edit, color: Colors.blue),
+            icon: const Icon(Icons.edit, color: Colors.blue),
             onPressed: onEdit,
           ),
         ),
