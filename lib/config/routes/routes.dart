@@ -28,7 +28,6 @@ class Routes {
   static void configureRoutes(FluroRouter router, String initialRoute) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      print('ROUTE WAS NOT FOUND !!!');
       return;
     });
 

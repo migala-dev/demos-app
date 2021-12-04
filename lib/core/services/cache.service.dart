@@ -69,9 +69,8 @@ class CacheService {
       } else {
         ToastUtil.showError('Entidad no implementada: ${dataEvent.entityName}');
       }
-    } catch (e) {
-      print(e);
-    }
+    // ignore: empty_catches
+    } catch(e) {}
   }
 
   Future<void> updateLastUpdatedDate() async {
