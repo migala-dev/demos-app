@@ -6,7 +6,9 @@ class DeleteMemberMenuOption implements MenuOption {
   final String spaceId;
   final String memberId;
 
+  @override
   String name = 'Eliminar miembro';
+  @override
   IconData icon = Icons.delete;
 
   DeleteMemberMenuOption(this.spaceId, this.memberId);
@@ -17,3 +19,4 @@ class DeleteMemberMenuOption implements MenuOption {
     Navigator.pop(context);
   }
 }
+

@@ -6,9 +6,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CurrentUserService {
   User? _currentUser;
-  String _currentUserIdKey = 'current-user-id-key';
-  final _storage = new FlutterSecureStorage();
-  static CurrentUserService _userService = new CurrentUserService._internal();
+  final String _currentUserIdKey = 'current-user-id-key';
+  final _storage = const FlutterSecureStorage();
+  static final CurrentUserService _userService = CurrentUserService._internal();
 
   CurrentUserService._internal();
 
@@ -35,7 +35,7 @@ class CurrentUserService {
 
   Future<User?> updateUserName(String? name) async {
     User userSaved = await UserApi.updateUserName(name);
-    
+
     UsersRepository().updateUser(userSaved);
 
     _currentUser = userSaved;

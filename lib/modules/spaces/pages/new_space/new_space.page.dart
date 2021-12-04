@@ -9,7 +9,7 @@ import 'package:demos_app/utils/navigation/go_to_space_details.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/reload_spaces.util.dart';
 
-enum NewSpaceScreenEnum { SpaceInfo, Percentages }
+enum NewSpaceScreenEnum { spaceInfo, percentages }
 
 class NewSpaceScreen extends StatefulWidget {
   const NewSpaceScreen({Key? key}) : super(key: key);
@@ -20,9 +20,9 @@ class NewSpaceScreen extends StatefulWidget {
 
 class _NewSpaceScreenState extends State<NewSpaceScreen>
     with LoadingStateHandler {
-  Space newSpace = new Space();
+  Space newSpace = Space();
   File? spacePictureFile;
-  NewSpaceScreenEnum currentStep = NewSpaceScreenEnum.SpaceInfo;
+  NewSpaceScreenEnum currentStep = NewSpaceScreenEnum.spaceInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
                         BoxConstraints(minHeight: constraints.maxHeight),
                     child: IntrinsicHeight(
                       child: Container(
-                        margin: EdgeInsets.symmetric(
+                        margin: const EdgeInsets.symmetric(
                             horizontal: 20.0, vertical: 12.0),
                         child: getCurrentScreen(),
                       ),
@@ -47,7 +47,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
   }
 
   Widget getCurrentScreen() {
-    return currentStep == NewSpaceScreenEnum.SpaceInfo
+    return currentStep == NewSpaceScreenEnum.spaceInfo
         ? SpaceFormScreen(
             goToNextStep: goToNextStep,
           )
@@ -60,7 +60,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
       newSpace.name = name;
       newSpace.description = description;
       spacePictureFile = image;
-      currentStep = NewSpaceScreenEnum.Percentages;
+      currentStep = NewSpaceScreenEnum.percentages;
     });
   }
 
@@ -85,10 +85,10 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Nuevo Espacio'),
+        const Text('Nuevo Espacio'),
         Text(
           'Paso ${currentStep.index + 1} de 2',
-          style: TextStyle(color: Colors.grey, fontSize: 14),
+          style: const TextStyle(color: Colors.grey, fontSize: 14),
         )
       ],
     );

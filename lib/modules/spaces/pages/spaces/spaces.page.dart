@@ -14,11 +14,11 @@ class SpacesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SpacesBloc, SpacesState>(builder: (context, state) {
       if (state is LoadingSpaces) {
-        return LoadingSpacesScreen();
+        return const LoadingSpacesScreen();
       }
 
       if (areSpacesEmpty(state)) {
-        return EmptySpacesScreen();
+        return const EmptySpacesScreen();
       }
 
       return SpaceListScreen(

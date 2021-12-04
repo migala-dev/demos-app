@@ -23,55 +23,54 @@ class SpaceDetailsScreen extends StatelessWidget {
     final List<Member> representatives =
         await MemberService().getRepresentatives(spaceView.spaceId);
 
-    return representatives.length != 0;
+    return representatives.isNotEmpty;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-        appBar: AppBar(
-            titleSpacing: 0,
-            title: GestureDetector(
-              child: Row(
-                children: [
-                  Container(
-                    child: SpacePicture(
-                      width: 32,
-                      pictureKey: spaceView.pictureKey,
-                    ),
-                    margin: EdgeInsets.only(right: 12.0),
+    return Scaffold(
+      appBar: AppBar(
+          titleSpacing: 0,
+          title: GestureDetector(
+            child: Row(
+              children: [
+                Container(
+                  child: SpacePicture(
+                    width: 32,
+                    pictureKey: spaceView.pictureKey,
                   ),
-                  Text(spaceView.name)
-                ],
-              ),
-              onTap: () => goToSpaceSettings(context),
-            )),
-        body: FutureBuilder(
-          future: areAnyRepresentativesOnCurrentSpace(),
-          initialData: false,
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (!snapshot.hasData)
-              return Center(child: CircularProgressIndicator());
+                  margin: const EdgeInsets.only(right: 12.0),
+                ),
+                Text(spaceView.name)
+              ],
+            ),
+            onTap: () => goToSpaceSettings(context),
+          )),
+      body: FutureBuilder(
+        future: areAnyRepresentativesOnCurrentSpace(),
+        initialData: false,
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            final bool hasNotRepresentative = !snapshot.data!;
+          final bool hasNotRepresentative = !snapshot.data!;
 
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: NoProposals()),
-                  SizedBox(height: 55),
-                  if (hasNotRepresentative)
-                    SafeWidgetValidator(
-                        validators: [IsCurrentUserAdminWidgetValidator()],
-                        child: NoRepresentantAlert())
-                ],
-              ),
-            );
-          },
-        ),
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Center(child: NoProposals()),
+                const SizedBox(height: 55),
+                if (hasNotRepresentative)
+                  SafeWidgetValidator(
+                      validators: [IsCurrentUserAdminWidgetValidator()],
+                      child: NoRepresentantAlert())
+              ],
+            ),
+          );
+        },
       ),
     );
   }

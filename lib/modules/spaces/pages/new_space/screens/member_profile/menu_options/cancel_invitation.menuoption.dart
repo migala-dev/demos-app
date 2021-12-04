@@ -6,8 +6,10 @@ class CancelInvitationMenuOption implements MenuOption {
   final String spaceId;
   final String memberId;
 
+  @override
   String name = 'Cancelar Invitación';
 
+  @override
   IconData icon = Icons.cancel;
 
   @override

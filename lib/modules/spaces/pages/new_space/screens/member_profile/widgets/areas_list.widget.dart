@@ -8,7 +8,7 @@ class AreasList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 10,
-      children: [
+      children: const [
         AreaChip(color: Colors.purple, text: 'App', borderRadiusSize: 5),
         AreaChip(color: Colors.red, text: 'Blockchain', borderRadiusSize: 5),
         AreaChip(color: Colors.green, text: 'Token', borderRadiusSize: 5),

@@ -13,9 +13,9 @@ class CacheService {
   bool isPendingCache = false;
   bool isRequestInProgress = false;
   final String _lastUpdatedDateKey = 'last-updated-date';
-  final _storage = new FlutterSecureStorage();
+  final _storage = const FlutterSecureStorage();
 
-  static CacheService _cacheService = new CacheService._internal();
+  static final CacheService _cacheService = CacheService._internal();
 
   CacheService._internal();
 
@@ -30,7 +30,7 @@ class CacheService {
       await _requestCache();
 
       isRequestInProgress = false;
-      
+
       _getPendingCache();
     } else {
       isPendingCache = true;
@@ -46,8 +46,8 @@ class CacheService {
 
   Future<void> _handleEvents(List<Cache> dataEventList) async {
     for (final event in dataEventList) {
-      bool isNew  = await _isNewEvent(event);
-      if(isNew) {
+      bool isNew = await _isNewEvent(event);
+      if (isNew) {
         await handleEvent(event);
       }
     }
@@ -63,7 +63,7 @@ class CacheService {
   Future<void> handleEvent(Cache dataEvent) async {
     try {
       EventHandler? handler = _getEventHandler(dataEvent.entityName);
-      if(handler != null) {
+      if (handler != null) {
         await handler.handleEvent(dataEvent);
         await _saveEvent(dataEvent);
       } else {

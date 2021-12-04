@@ -3,9 +3,9 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class BucketService {
   String? _bucketName;
-  String _bucketNameKey = 'bucket-name-key';
-  final _storage = new FlutterSecureStorage();
-  static BucketService _imageService = new BucketService._internal();
+  final String _bucketNameKey = 'bucket-name-key';
+  final _storage = const FlutterSecureStorage();
+  static final BucketService _imageService = BucketService._internal();
 
   BucketService._internal();
 

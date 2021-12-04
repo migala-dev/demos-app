@@ -27,7 +27,7 @@ class ProfileField extends StatelessWidget {
     final accentColor = Theme.of(context).colorScheme.secondary;
     return ListTile(
       leading: Container(
-        margin: EdgeInsets.only(top: 6.0),
+        margin: const EdgeInsets.only(top: 6.0),
         child: Icon(icon),
       ),
       trailing: editable
@@ -40,13 +40,13 @@ class ProfileField extends StatelessWidget {
                 ),
                 onPressed: onEdit,
               ))
-          : Container(
+          : const SizedBox(
               height: 14,
               width: 14,
             ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.grey, fontSize: 14),
+        style: const TextStyle(color: Colors.grey, fontSize: 14),
       ),
       subtitle: hasValue() ? getValueLabel() : getWithoutValueLabel(),
     );
@@ -58,11 +58,11 @@ class ProfileField extends StatelessWidget {
 
   Widget getValueLabel() {
     return Text(value ?? '',
-        style: TextStyle(color: Colors.black, fontSize: 18));
+        style: const TextStyle(color: Colors.black, fontSize: 18));
   }
 
   Widget getWithoutValueLabel() {
     return Text('$placeholderPrefix ${title.toLowerCase()}',
-        style: TextStyle(color: Colors.black26, fontSize: 18));
+        style: const TextStyle(color: Colors.black26, fontSize: 18));
   }
 }

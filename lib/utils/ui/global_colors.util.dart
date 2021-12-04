@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-Color greyColor = Color(0xffeeeeee);
+Color greyColor = const Color(0xffeeeeee);
