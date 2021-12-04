@@ -19,7 +19,7 @@ class SpaceMembersScreen extends StatefulWidget {
 
 class _SpaceMembersScreenState extends State<SpaceMembersScreen>
     with LoadingStateHandler {
-  MemberType filter = MemberType.ALL;
+  MemberType filter = MemberType.all;
 
   List<MemberView> members = [];
 
@@ -35,24 +35,24 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Miembros'),
+        title: const Text('Miembros'),
         actions: [
           IconButton(
               onPressed: () async {
                 await showSearch(
                     context: context, delegate: MembersSearchDelegate());
               },
-              icon: Icon(Icons.search))
+              icon: const Icon(Icons.search))
         ],
       ),
       body: isLoading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   height: 70,
                   child: MemberTypeFilter(
                     selected: filter,
@@ -65,7 +65,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
       floatingActionButton: SafeWidgetValidator(
         validators: [IsCurrentUserAdminWidgetValidator()],
         child: FloatingActionButton(
-            child: Icon(Icons.person_add),
+            child: const Icon(Icons.person_add),
             onPressed: () => Navigator.pushNamed(context, Routes.invitations)),
       ),
     );
@@ -81,14 +81,14 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen>
 
   void _onFilteredMembersChange(MemberType newFilter) => setState(() {
         if (filter == newFilter) {
-          filter = MemberType.ALL;
+          filter = MemberType.all;
         } else {
           filter = newFilter;
         }
       });
 
   List<MemberView> _getMembersFiltered(MemberType filter) {
-    if (filter == MemberType.ALL) return this.members;
+    if (filter == MemberType.all) return members;
 
     return members.where((member) => filter == member.memberType).toList();
   }

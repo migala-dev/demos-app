@@ -15,7 +15,7 @@ class MemberProfileField extends StatelessWidget {
         leading: Icon(icon),
         title: Text(
           title,
-          style: TextStyle(color: Colors.grey, fontSize: 14),
+          style: const TextStyle(color: Colors.grey, fontSize: 14),
         ),
         subtitle: child);
   }

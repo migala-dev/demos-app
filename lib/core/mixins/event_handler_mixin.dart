@@ -5,7 +5,7 @@ import 'package:demos_app/core/models/cache.model.dart';
 class EventHandlerMixin implements EventHandler {
   @override
   String key = '';
-  List<EventHandler> eventHandlers = [];
+  List<EventHandler> get eventHandlers => [];
 
   @override
   Future<void> handleEvent(Cache dataEvent) async {

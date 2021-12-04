@@ -10,7 +10,7 @@ class SpaceHandler extends EventHandlerMixin {
   factory SpaceHandler() => _spaceHandler;
 
   @override
-  String key = 'space';
+  String get key => 'space';
   @override
   final List<EventHandler> eventHandlers = [SpaceUpdatedEvent()];
 }

@@ -5,11 +5,11 @@ class SpaceResponse {
   late Space _space;
   late Member _member;
 
-  Space get space => this._space;
-  Member get member => this._member;
+  Space get space => _space;
+  Member get member => _member;
 
   SpaceResponse.fromObject(dynamic o) {
-    this._space = Space.fromObject(o["space"]);
-    this._member = Member.fromObject(o["member"]);
+    _space = Space.fromObject(o['space']);
+    _member = Member.fromObject(o['member']);
   }
 }

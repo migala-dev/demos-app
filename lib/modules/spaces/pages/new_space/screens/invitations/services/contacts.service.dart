@@ -18,15 +18,15 @@ class ContactService {
       List<Contact> contacts) async {
     List<InvitationContact> userContacts = [];
     await Future.forEach(contacts, (Contact contact) async {
-      if (contact.phones.length > 0) {
+      if (contact.phones.isNotEmpty) {
         String phoneNumber =
-            contact.phones[0].number.replaceAll(new RegExp(r'[^0-9]'), '');
+            contact.phones[0].number.replaceAll(RegExp(r'[^0-9]'), '');
         if (phoneNumber.length >= 10) {
           User? user =
               await UsersRepository().getUserByPhoneNumber(phoneNumber);
           if (user == null) {
             InvitationContact userContact =
-                new InvitationContact.withPhoneNumber(phoneNumber);
+                InvitationContact.withPhoneNumber(phoneNumber);
             userContact.name = contact.displayName;
             userContacts.add(userContact);
           } else {

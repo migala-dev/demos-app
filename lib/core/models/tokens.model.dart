@@ -4,11 +4,11 @@ class Tokens {
 
   Tokens(this._refreshToken, this._accessToken);
 
-  String get refreshToken => this._refreshToken;
-  String get accessToken => this._accessToken;
+  String get refreshToken => _refreshToken;
+  String get accessToken => _accessToken;
 
   Tokens.fromObject(dynamic o) {
-    this._refreshToken = o["refreshToken"];
-    this._accessToken = o["accessToken"];
+    _refreshToken = o['refreshToken'];
+    _accessToken = o['accessToken'];
   }
 }

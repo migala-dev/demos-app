@@ -1,14 +1,14 @@
-enum MemberType { ADMINISTRATOR, INVITED, WORKER, ALL, REPRESENTATIVE }
+enum MemberType { administrator, invited, worker, all, representative }
 
 String getMemberTypeName(MemberType memberType) {
   switch (memberType) {
-    case MemberType.ADMINISTRATOR:
-      return "ADMIN";
-    case MemberType.INVITED:
-      return "INVITADO";
-    case MemberType.REPRESENTATIVE:
+    case MemberType.administrator:
+      return 'ADMIN';
+    case MemberType.invited:
+      return 'INVITADO';
+    case MemberType.representative:
       return 'REPRESENTANTE';
     default:
-      return "TRABAJADOR";
+      return 'TRABAJADOR';
   }
 }

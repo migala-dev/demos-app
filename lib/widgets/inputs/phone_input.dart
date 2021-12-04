@@ -8,12 +8,10 @@ class PhoneInput extends StatefulWidget {
   const PhoneInput({Key? key, required this.controller, this.disabled = false})
       : super(key: key);
   @override
-  _PhoneInputState createState() => _PhoneInputState(controller, disabled);
+  _PhoneInputState createState() => _PhoneInputState();
 }
 
 class _PhoneInputState extends State<PhoneInput> {
-  final TextEditingController controller;
-  final bool disabled;
   final countries = [
     'MX',
     'AR',
@@ -29,22 +27,22 @@ class _PhoneInputState extends State<PhoneInput> {
     'VE'
   ];
 
-  _PhoneInputState(this.controller, this.disabled);
+  _PhoneInputState();
 
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
       countries: countries,
-      enabled: !disabled,
+      enabled: !widget.disabled,
       searchText: 'Buscar por nombre de país',
       autoValidate: false,
       validator: validatePhone,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         labelText: 'Número Teléfonico',
       ),
       initialCountryCode: 'MX',
       onChanged: (phone) {
-        controller.text = phone.completeNumber;
+        widget.controller.text = phone.completeNumber;
       },
     );
   }
@@ -60,8 +58,8 @@ class _PhoneInputState extends State<PhoneInput> {
       return false;
     }
 
-    final String phoneRegex =
-        r"^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$";
+    const String phoneRegex =
+        r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
 
     RegExp regExp = RegExp(phoneRegex);
 

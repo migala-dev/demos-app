@@ -16,7 +16,7 @@ class SpaceListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       itemCount: spaces.length,
       itemBuilder: (context, index) {

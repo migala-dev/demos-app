@@ -11,15 +11,19 @@ class GeneralConfigurationScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Configuración'),
+        title: const Text('Configuración'),
       ),
-      body: Column(children: [
-        SwitchListTile(
-            secondary: Icon(Icons.dark_mode_sharp),
-            title: Text('Modo oscuro'),
-            value: themeCubit.isDark,
-            onChanged: (v) => themeCubit.toggleTheme())
-      ]),
+      body: BlocBuilder<ThemeCubit, ThemeData>(
+        builder: (context, state) {
+          return Column(children: [
+            SwitchListTile(
+                secondary: const Icon(Icons.dark_mode_sharp),
+                title: const Text('Modo oscuro'),
+                value: themeCubit.isDark,
+                onChanged: (v) => themeCubit.toggleTheme())
+          ]);
+        },
+      ),
     );
   }
 }

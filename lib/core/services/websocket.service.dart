@@ -3,7 +3,7 @@ import 'package:demos_app/core/services/cache.service.dart';
 import 'package:web_socket_channel/io.dart';
 
 class WebSocketService {
-  final Duration pingInterval = Duration(seconds: 2);
+  final Duration pingInterval = const Duration(seconds: 2);
   static final WebSocketService _webSocketService =
       WebSocketService._internal();
   IOWebSocketChannel? connection;
@@ -18,7 +18,7 @@ class WebSocketService {
       String websocketPath = ApiPath().getWebsocketServicePath(userId);
       connection =
           IOWebSocketChannel.connect(websocketPath, pingInterval: pingInterval);
-      this._startListening();
+      _startListening();
     }
   }
 

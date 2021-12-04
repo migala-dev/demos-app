@@ -1,37 +1,37 @@
-enum SpaceRole { WORKER, ADMIN, REPRESENTATIVE }
+enum SpaceRole { worker, admin, representative }
 
 SpaceRole getSpaceRoleFromString(String role) {
   switch (role) {
-    case "ADMIN":
-      return SpaceRole.ADMIN;
-    case "REPRESENTATIVE":
-      return SpaceRole.REPRESENTATIVE;
-    case "WORKER":
+    case 'ADMIN':
+      return SpaceRole.admin;
+    case 'REPRESENTATIVE':
+      return SpaceRole.representative;
+    case 'WORKER':
     default:
-      return SpaceRole.WORKER;
+      return SpaceRole.worker;
   }
 }
 
 String getSpaceRoleString(SpaceRole? role) {
   switch (role) {
-    case SpaceRole.ADMIN:
-      return "ADMIN";
-    case SpaceRole.REPRESENTATIVE:
-      return "REPRESENTATIVE";
-    case SpaceRole.WORKER:
+    case SpaceRole.admin:
+      return 'ADMIN';
+    case SpaceRole.representative:
+      return 'REPRESENTATIVE';
+    case SpaceRole.worker:
     default:
-      return "WORKER";
+      return 'WORKER';
   }
 }
 
 String getSpaceRoleName(SpaceRole? role) {
   switch (role) {
-    case SpaceRole.ADMIN:
-      return "Administrador";
-    case SpaceRole.REPRESENTATIVE:
-      return "Representante";
-    case SpaceRole.WORKER:
+    case SpaceRole.admin:
+      return 'Administrador';
+    case SpaceRole.representative:
+      return 'Representante';
+    case SpaceRole.worker:
     default:
-      return "Trabajador";
+      return 'Trabajador';
   }
 }

@@ -7,7 +7,7 @@ class BucketImage extends StatefulWidget {
   final double width;
   final double boderRadius;
 
-  BucketImage(
+  const BucketImage(
       {Key? key,
       required this.imageKey,
       required this.width,
@@ -34,14 +34,14 @@ class _BucketImageState extends State<BucketImage> {
   Widget build(BuildContext context) {
     initializeImageUrl();
     if (imageUrl == null) {
-      return Container(
+      return SizedBox(
         width: widget.width,
         height: widget.width,
       );
     }
     return CachedNetworkImage(
-      placeholder: (context, url) => CircularProgressIndicator(),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      placeholder: (context, url) => const CircularProgressIndicator(),
+      errorWidget: (context, url, error) => const Icon(Icons.error),
       imageUrl: imageUrl!,
       height: widget.width,
       width: widget.width,

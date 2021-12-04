@@ -3,25 +3,27 @@ import 'package:demos_app/widgets/general/slider_common_theme.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
-class PercentageSliders extends StatefulWidget {
+class SpacePercentage extends StatefulWidget {
   final int initialValue;
   final void Function(int) onChange;
-  final String sliderTitle;
-  final String sliderSubtitle;
+  final String title;
+  final String subtitle;
+  final String toBeApprovedLabel;
 
-  const PercentageSliders(
+  const SpacePercentage(
       {Key? key,
       required this.onChange,
       this.initialValue = 51,
-      required this.sliderTitle,
-      required this.sliderSubtitle})
+      required this.title,
+      required this.subtitle,
+      required this.toBeApprovedLabel})
       : super(key: key);
 
   @override
-  _PercentageSlidersState createState() => _PercentageSlidersState();
+  _SpacePercentageState createState() => _SpacePercentageState();
 }
 
-class _PercentageSlidersState extends State<PercentageSliders> {
+class _SpacePercentageState extends State<SpacePercentage> {
   final double _minimumPercentage = 51;
   final int _exampleTotalUsers = 30;
   double _currentSliderValue = 0;
@@ -37,13 +39,13 @@ class _PercentageSlidersState extends State<PercentageSliders> {
     return Column(
       children: [
         ListTile(
-          contentPadding: EdgeInsets.all(0),
+          contentPadding: const EdgeInsets.all(0),
           title: Text(
-            widget.sliderTitle,
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
+            widget.title,
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
           ),
           subtitle: Text(
-            widget.sliderSubtitle,
+            widget.subtitle,
             style: TextStyle(color: Colors.grey[600]),
           ),
           trailing: Container(
@@ -55,7 +57,7 @@ class _PercentageSlidersState extends State<PercentageSliders> {
                 borderRadius: BorderRadius.circular(10)),
             child: Text(
               '${_currentSliderValue.toInt()} %',
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
             ),
           ),
         ),
@@ -67,10 +69,10 @@ class _PercentageSlidersState extends State<PercentageSliders> {
             max: 100,
             divisions: 100,
             value: _currentSliderValue,
-            onChanged: (participationPercentage) {
-              widget.onChange(participationPercentage.toInt());
+            onChanged: (percentage) {
+              widget.onChange(percentage.toInt());
               setState(() {
-                _currentSliderValue = participationPercentage;
+                _currentSliderValue = percentage;
               });
             },
           )),
@@ -85,13 +87,12 @@ class _PercentageSlidersState extends State<PercentageSliders> {
             children: <TextSpan>[
               TextSpan(
                   text: '$_exampleTotalUsers usuarios',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(text: ' se necesitan'),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const TextSpan(text: ' se necesitan'),
               TextSpan(
                   text: ' ${getTotalUsersCount()} usuarios',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              TextSpan(
-                  text: ' para aprobar una de las opciones de la propuesta.'),
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              TextSpan(text: widget.toBeApprovedLabel),
             ],
           ),
         )

@@ -14,13 +14,12 @@ class CacheApi {
   Future<List<Cache>> getCache(String? lastUpdatedDate) async {
     String endpoint = ApiPath().getGetCachePath();
 
-    Object params = {
-      "lastUpdatedDate": lastUpdatedDate ?? ''
-    };
+    Object params = {'lastUpdatedDate': lastUpdatedDate ?? ''};
 
-    final List httpResponse  = await Api.post(endpoint, params);
+    final List httpResponse = await Api.post(endpoint, params);
 
-    final events = httpResponse.map((event) => Cache.fromObject(event)).toList();
+    final events =
+        httpResponse.map((event) => Cache.fromObject(event)).toList();
 
     return events;
   }

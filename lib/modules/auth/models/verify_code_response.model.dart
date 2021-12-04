@@ -7,17 +7,17 @@ class VerifyCodeReponse {
   late String? _bucketName;
   late String? _session;
 
-  User? get user => this._user;
-  Tokens? get tokens => this._tokens;
-  String? get bucketName => this._bucketName;
-  String? get session => this._session;
+  User? get user => _user;
+  Tokens? get tokens => _tokens;
+  String? get bucketName => _bucketName;
+  String? get session => _session;
 
   VerifyCodeReponse.fromObject(dynamic o) {
-    this._session = o["session"];
-    if (o["user"] != null && o["tokens"] != null) {
-      this._user = User.fromObject(o["user"]);
-      this._tokens = Tokens.fromObject(o["tokens"]);
-      this._bucketName = o["bucketName"];
+    _session = o['session'];
+    if (o['user'] != null && o['tokens'] != null) {
+      _user = User.fromObject(o['user']);
+      _tokens = Tokens.fromObject(o['tokens']);
+      _bucketName = o['bucketName'];
     }
   }
 }

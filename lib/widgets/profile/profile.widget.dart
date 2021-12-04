@@ -8,17 +8,16 @@ import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
   final List<Widget>? children;
-  Profile({Key? key, this.children}) : super(key: key);
+  const Profile({Key? key, this.children}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState(children);
+  _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> with LoadingStateHandler {
   User? _currentUser;
-  final List<Widget>? children;
 
-  _ProfileState(this.children) {
+  _ProfileState() {
     initCurrentUser();
   }
 
@@ -45,7 +44,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
                 onPictureEditPress: onPictureEditPress,
               )),
               Container(
-                margin: EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.only(top: 20.0),
                 child: ProfileForm(
                   onEditNamePress: (String? name) {
                     updateName(name);
@@ -56,7 +55,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
             ],
           ),
           Column(
-            children: children ?? [],
+            children: widget.children ?? [],
           ),
         ],
       ),
@@ -78,7 +77,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
     final image = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ImageEditorPage(),
+          builder: (context) => const ImageEditorPage(),
         ));
 
     wrapLoadingTransaction(() async {
