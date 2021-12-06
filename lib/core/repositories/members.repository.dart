@@ -84,8 +84,8 @@ class MembersRepository {
 
   Future<Member?> findByUserIdAndSpaceId(String userId, String spaceId) async {
     Database? db = await this.db;
-    final result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
+    var result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0 AND $colInvitationStatus = ${InvitationStatus.accepted.index}");
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 

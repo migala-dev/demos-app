@@ -5,7 +5,7 @@ import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
-import 'package:demos_app/modules/spaces/pages/space_details/widgets/setting_items.widget.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/widgets/setting_items.widget.dart';
 
 class GeneralSettingsScreen extends StatelessWidget {
   const GeneralSettingsScreen({Key? key}) : super(key: key);

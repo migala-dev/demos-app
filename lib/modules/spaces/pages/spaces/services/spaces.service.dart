@@ -43,7 +43,8 @@ class SpaceService {
           pictureKey: space.pictureKey,
           membersCount: members.length,
           invitationCreatedAt: member.createdAt,
-          invitationExpiredAt: member.expiredAt);
+          invitationExpiredAt: member.expiredAt,
+          invitedBy: member.createdBy);
       spacesView.add(spaceView);
     }
 

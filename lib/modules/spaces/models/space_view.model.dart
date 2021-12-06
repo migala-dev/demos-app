@@ -5,6 +5,7 @@ class SpaceView {
   final int membersCount;
   final String? invitationCreatedAt;
   final String? invitationExpiredAt;
+  final String? invitedBy;
 
   SpaceView(
       {required this.spaceId,
@@ -12,12 +13,14 @@ class SpaceView {
       this.pictureKey,
       this.membersCount = 0,
       this.invitationCreatedAt,
-      this.invitationExpiredAt});
+      this.invitationExpiredAt,
+      this.invitedBy});
 
   factory SpaceView.fromObject(Map<String, dynamic> o) => SpaceView(
       spaceId: o['id'],
       name: o['name'],
       membersCount: o['members'],
       invitationCreatedAt: o['createdAt'],
-      invitationExpiredAt: o['expiredAt']);
+      invitationExpiredAt: o['expiredAt'],
+      invitedBy: o['invitedBy']);
 }

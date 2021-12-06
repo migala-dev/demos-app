@@ -1,21 +1,29 @@
+import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/widgets/general/slider_common_theme.widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
-class ParticipationPercentageSlider extends StatefulWidget {
+class SpacePercentage extends StatefulWidget {
   final int initialValue;
   final void Function(int) onChange;
+  final String title;
+  final String subtitle;
+  final String toBeApprovedLabel;
 
-  const ParticipationPercentageSlider(
-      {Key? key, required this.onChange, this.initialValue = 51})
+  const SpacePercentage(
+      {Key? key,
+      required this.onChange,
+      this.initialValue = 51,
+      required this.title,
+      required this.subtitle,
+      required this.toBeApprovedLabel})
       : super(key: key);
 
   @override
-  _ParticipationPercentageState createState() =>
-      _ParticipationPercentageState();
+  _SpacePercentageState createState() => _SpacePercentageState();
 }
 
-class _ParticipationPercentageState
-    extends State<ParticipationPercentageSlider> {
+class _SpacePercentageState extends State<SpacePercentage> {
   final double _minimumPercentage = 51;
   final int _exampleTotalUsers = 30;
   double _currentSliderValue = 0;
@@ -32,12 +40,12 @@ class _ParticipationPercentageState
       children: [
         ListTile(
           contentPadding: const EdgeInsets.all(0),
-          title: const Text(
-            'Porcentaje de participación',
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
+          title: Text(
+            widget.title,
+            style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w400),
           ),
           subtitle: Text(
-            'En votaciones con opción multiple',
+            widget.subtitle,
             style: TextStyle(color: Colors.grey[600]),
           ),
           trailing: Container(
@@ -53,19 +61,22 @@ class _ParticipationPercentageState
             ),
           ),
         ),
-        SliderCommonTheme(
-            child: Slider(
-          min: _minimumPercentage,
-          max: 100,
-          divisions: 100,
-          value: _currentSliderValue,
-          onChanged: (participationPercentage) {
-            widget.onChange(participationPercentage.toInt());
-            setState(() {
-              _currentSliderValue = participationPercentage;
-            });
-          },
-        )),
+        SafeWidgetValidator(
+          validators: [IsCurrentUserAdminWidgetValidator()],
+          child: SliderCommonTheme(
+              child: Slider(
+            min: _minimumPercentage,
+            max: 100,
+            divisions: 100,
+            value: _currentSliderValue,
+            onChanged: (percentage) {
+              widget.onChange(percentage.toInt());
+              setState(() {
+                _currentSliderValue = percentage;
+              });
+            },
+          )),
+        ),
         RichText(
           text: TextSpan(
             text: 'Ejemplo: Si se tiene un total de ',
@@ -81,8 +92,7 @@ class _ParticipationPercentageState
               TextSpan(
                   text: ' ${getTotalUsersCount()} usuarios',
                   style: const TextStyle(fontWeight: FontWeight.bold)),
-              const TextSpan(
-                  text: ' para aprobar una de las opciones de la propuesta.'),
+              TextSpan(text: widget.toBeApprovedLabel),
             ],
           ),
         )

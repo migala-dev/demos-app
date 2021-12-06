@@ -14,8 +14,6 @@ mixin LoadingStateHandler<T extends StatefulWidget> on State<T> {
       setIsLoadingState(true);
       try {
         await method();
-      } catch (err) {
-        print(err);
       } finally {
         setIsLoadingState(false);
       }

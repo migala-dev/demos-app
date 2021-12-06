@@ -73,10 +73,13 @@ class SpacesRepository {
 
   Future<int> updateSpace(Space space) async {
     Database? db = await this.db;
-    final result = await db!.rawUpdate('UPDATE $tblSpaces '
+    var result = await db!.rawUpdate('UPDATE $tblSpaces '
             "SET $colName = '${space.name}'" +
         (space.pictureKey != null
             ? ", $colPictureKey = '${space.pictureKey}' "
+            : '') +
+        (space.description != null
+            ? ", $colDescription = '${space.description}' "
             : '') +
         ", $colApprovalPercentage = '${space.approvalPercentage}' " +
         ", $colParticipationPercentage = '${space.participationPercentage}' " +

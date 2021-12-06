@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/pages/space_details/widgets/space_picture_header.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_proposals.widget.dart';
@@ -6,7 +7,6 @@ import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_represen
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
-import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:demos_app/config/routes/routes.dart';
 
 class SpaceDetailsScreen extends StatelessWidget {
@@ -34,13 +34,7 @@ class SpaceDetailsScreen extends StatelessWidget {
           title: GestureDetector(
             child: Row(
               children: [
-                Container(
-                  child: SpacePicture(
-                    width: 32,
-                    pictureKey: spaceView.pictureKey,
-                  ),
-                  margin: const EdgeInsets.only(right: 12.0),
-                ),
+                SpacePictureHeader(spaceView: spaceView),
                 Text(spaceView.name)
               ],
             ),

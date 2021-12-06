@@ -18,6 +18,7 @@ class Routes {
   static const String spaceSettings = '/spaces/space-settings';
   static const String spacePercentage = '/spaces/space-percentage';
   static const String spaceMembers = '/spaces/space-members';
+  static const String editSpace = '/spaces/edit-space';
   static const String memberProfile = '/spaces/member-profile';
 
   // Settings
@@ -28,7 +29,6 @@ class Routes {
   static void configureRoutes(FluroRouter router, String initialRoute) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      print('ROUTE WAS NOT FOUND !!!');
       return;
     });
 
@@ -47,6 +47,7 @@ class Routes {
     router.define(spaceSettings, handler: spaceSettingsHandler);
     router.define(spacePercentage, handler: spacePercentageSettingsHandler);
     router.define(spaceMembers, handler: spaceMembersHandler);
+    router.define(editSpace, handler: editSpaceHandler);
     router.define(memberProfile, handler: memberProfileHandler);
 
     // Settings

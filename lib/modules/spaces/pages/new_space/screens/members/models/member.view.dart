@@ -38,15 +38,16 @@ class MemberView {
 
   MemberType get memberType {
     if (role == null) return MemberType.invited;
-    if (invitationStatus == InvitationStatus.sended) return MemberType.invited;
+    if (invitationStatus == InvitationStatus.sended || invitationStatus == InvitationStatus.received) {
+      return MemberType.invited;
+    }
 
     switch (role) {
       case SpaceRole.admin:
         return MemberType.administrator;
-      case SpaceRole.worker:
-        return MemberType.worker;
       case SpaceRole.representative:
         return MemberType.representative;
+      case SpaceRole.worker:
       default:
         return MemberType.worker;
     }
