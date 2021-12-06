@@ -1,4 +1,5 @@
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/space_percentage.widget.dart';
+import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
@@ -74,7 +75,8 @@ class _SpacePercentageSettingsScreenState
               validators: [IsCurrentUserAdminWidgetValidator()],
               child: BigButton(
                 text: 'Guardar',
-                onPressed: save,
+                onPressed: () => openConfirmationDialog(context,
+                    content: '¿Deseas guardar los cambios?', accept: save),
                 isLoading: isLoading,
               ),
             ),
