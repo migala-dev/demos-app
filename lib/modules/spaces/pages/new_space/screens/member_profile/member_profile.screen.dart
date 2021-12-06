@@ -7,6 +7,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/
 import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 
 class MemberProfileScreen extends StatefulWidget {
@@ -25,8 +26,25 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
       appBar: AppBar(
         title: const Text('Perfil'),
         actions: [
-          MemberProfilePopupMenuOptions(
-              memberIsInvited: widget.member.isInvited)
+          FutureBuilder(
+            future: isCurrentUser(),
+            initialData: false,
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData) {
+                final isCurrentUser = snapshot.data!;
+                if (isCurrentUser) {
+                  return Container();
+                }
+
+                return MemberProfilePopupMenuOptions(
+                    memberIsInvited: widget.member.isInvited,
+                    memberId: widget.member.memberId!,
+                    spaceId: widget.member.spaceId!);
+              }
+
+              return const CircularProgressIndicator();
+            },
+          ),
         ],
       ),
       body: Padding(
@@ -83,6 +101,13 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> isCurrentUser() async {
+    final currentUser = await CurrentUserService().getCurrentUser();
+    if (currentUser == null) return false;
+
+    return widget.member.userId == currentUser.userId;
   }
 
   void openUpdateNameModal() async {
