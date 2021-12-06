@@ -7,20 +7,14 @@ class DemosLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width * 0.65;
     return Column(
       children: [
-        const Text('Powered by Migala               '),
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 10),
-          height: 150,
-          width: 150,
-          color: Colors.grey,
-        ),
-        const Text(
-          'DÊMOS',
-          style: TextStyle(fontSize: 45),
-        ),
-        const Text('Democratiza tus espacios de trabajo')
+      Image(
+        image: const AssetImage('assets/images/demos-logo.png'),
+        width: width,
+        height: width,
+        fit: BoxFit.cover)
       ],
     );
   }
