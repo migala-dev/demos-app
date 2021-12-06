@@ -1,6 +1,6 @@
-import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/widgets/general/slider_common_theme.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
 import 'package:flutter/material.dart';
 
 class SpacePercentage extends StatefulWidget {
@@ -9,15 +9,17 @@ class SpacePercentage extends StatefulWidget {
   final String title;
   final String subtitle;
   final String toBeApprovedLabel;
+  final List<WidgetValidator>? validators;
 
-  const SpacePercentage(
-      {Key? key,
-      required this.onChange,
-      this.initialValue = 51,
-      required this.title,
-      required this.subtitle,
-      required this.toBeApprovedLabel})
-      : super(key: key);
+  const SpacePercentage({
+    Key? key,
+    required this.onChange,
+    this.initialValue = 51,
+    required this.title,
+    required this.subtitle,
+    required this.toBeApprovedLabel,
+    this.validators,
+  }) : super(key: key);
 
   @override
   _SpacePercentageState createState() => _SpacePercentageState();
@@ -62,7 +64,7 @@ class _SpacePercentageState extends State<SpacePercentage> {
           ),
         ),
         SafeWidgetValidator(
-          validators: [IsCurrentUserAdminWidgetValidator()],
+          validators: widget.validators,
           child: SliderCommonTheme(
               child: Slider(
             min: _minimumPercentage,
