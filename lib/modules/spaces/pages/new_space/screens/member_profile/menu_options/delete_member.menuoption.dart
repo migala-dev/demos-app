@@ -1,5 +1,6 @@
 import 'package:demos_app/core/api/member.api.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
+import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 
 class DeleteMemberMenuOption implements MenuOption {
@@ -15,8 +16,11 @@ class DeleteMemberMenuOption implements MenuOption {
 
   @override
   void onTap(BuildContext context) async {
-    await MemberApi().deleteMember(spaceId, memberId);
-    Navigator.pop(context);
+    await openConfirmationDialog(context,
+        content: '¿Estás seguro de eliminar a este miembro del espacio?',
+        accept: () async {
+      await MemberApi().deleteMember(spaceId, memberId);
+      Navigator.pop(context);
+    });
   }
 }
-

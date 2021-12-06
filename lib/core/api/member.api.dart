@@ -74,7 +74,7 @@ class MemberApi {
   }
 
   Future<void> cancelInvitation(String spaceId, String memberId) async {
-    String endpoint = MemberPath().getCancelInvitationPath(spaceId, memberId);
+    String endpoint = MemberPath().getMemberInvitationPath(spaceId, memberId);
     await Api.delete(endpoint);
   }
 }
