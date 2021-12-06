@@ -15,3 +15,19 @@ InvitationStatus getInvitationStatusFromInt(int status) {
       return InvitationStatus.rejected;
   }
 }
+
+int getIntStatusFromInvitationStatus(InvitationStatus invitationStatus) {
+  switch (invitationStatus) {
+    case InvitationStatus.sended:
+      return 0;
+    case InvitationStatus.received:
+      return 1;
+    case InvitationStatus.accepted:
+      return 2;
+    case InvitationStatus.canceled:
+      return 3;
+    case InvitationStatus.rejected:
+    default:
+      return 4;
+  }
+}
