@@ -135,7 +135,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
     await showModalBottomSheet(
       context: context,
       builder: (context) {
-        return SelectRoleModal(updateRole: updateRole);
+        return SelectRoleModal(
+            updateRole: updateRole, currentRole: widget.member.role!);
       },
     );
   }
