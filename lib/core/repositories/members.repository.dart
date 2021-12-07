@@ -138,10 +138,9 @@ class MembersRepository {
 
   Future<List<Member>> findInvitedMembersBySpaceId(String spaceId) async {
     Database? db = await this.db;
-    final String aceptedStatus =
-        '${getIntStatusFromInvitationStatus(InvitationStatus.accepted)},'
-        '${getIntStatusFromInvitationStatus(InvitationStatus.sended)},'
-        '${getIntStatusFromInvitationStatus(InvitationStatus.received)}';
+    final String aceptedStatus = '${InvitationStatus.accepted.index},'
+        '${InvitationStatus.sended.index},'
+        '${InvitationStatus.received.index}';
 
     final result = await db!.rawQuery(
         "SELECT * FROM $tblMembers WHERE $colInvitationStatus IN($aceptedStatus) AND $colSpaceId = '$spaceId'");

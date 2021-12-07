@@ -23,11 +23,11 @@ class ContactService {
     final List<Contact> filteredContacts = [];
     final spaceId = CurrentSpaceService().getCurrentSpace()!.spaceId!;
 
-    final invitedMembers =
+    final members =
         await MembersRepository().findInvitedMembersBySpaceId(spaceId);
 
     for (final contact in contacts) {
-      if (!await existsContactInInvitedMembers(contact, invitedMembers)) {
+      if (!await isContactAlreadyOnTheSpace(contact, members)) {
         filteredContacts.add(contact);
       }
     }
