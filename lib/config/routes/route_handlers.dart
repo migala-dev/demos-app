@@ -12,6 +12,7 @@ import 'package:demos_app/modules/spaces/pages/space_details/screens/space_perce
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/space_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation/space_invitation.screen.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/spaces.page.dart';
 import 'package:demos_app/modules/spaces/screens/general_configuration.screen.dart';
 import 'package:demos_app/modules/spaces/screens/general_settings.screen.dart';
@@ -43,7 +44,10 @@ var spacesHandler = Handler(
 var spaceDetailsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   final spaceView = context!.settings!.arguments as SpaceView;
-  return SpaceDetailsScreen(spaceView: spaceView);
+  
+  SpaceBloc().add(SetSpaceEvent(spaceView.spaceId));
+
+  return const SpaceDetailsScreen();
 });
 
 var spaceSettingsHandler = Handler(

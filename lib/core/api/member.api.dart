@@ -63,9 +63,10 @@ class MemberApi {
       'name': name,
       'role': getSpaceRoleString(role),
     };
-    final httpResponse = await Api.post(endpoint, params);
+    
+    await Api.post(endpoint, params);
 
-    return httpResponse;
+    return true;
   }
 
   Future<void> deleteMember(String spaceId, String memberId) async {

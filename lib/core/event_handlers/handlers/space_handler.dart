@@ -3,6 +3,7 @@ import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/services/general_spaces.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 
 class SpaceHandler extends EventHandlerMixin {
   static final _spaceHandler = SpaceHandler._internal();
@@ -26,5 +27,6 @@ class SpaceUpdatedEvent implements EventHandler {
     await GeneralSpaceService().updateSpace(spaceId);
 
     SpacesBloc().add(LoadSpacesEvent());
+    SpaceBloc().add(UpdateSpaceEvent(spaceId));
   }
 }
