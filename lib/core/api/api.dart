@@ -38,7 +38,7 @@ class Api {
     Future<http.Response> call =
         http.post(Uri.parse(endpoint), headers: headers, body: bodyFormatted);
     var response = await _handleErrors(call);
-    return jsonDecode(response!.body);
+    return response!.body != '' ?jsonDecode(response.body) : null;
   }
 
   static Future<dynamic> patch(String endpoint, Object? body) async {

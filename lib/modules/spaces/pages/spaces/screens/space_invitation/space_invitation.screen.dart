@@ -65,7 +65,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      space?.pictureKey == ''
+                      space?.pictureKey != null
                           ? SpacePicture(
                               width: 150,
                               pictureKey: space?.pictureKey,

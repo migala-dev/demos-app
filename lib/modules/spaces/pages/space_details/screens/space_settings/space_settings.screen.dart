@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/widgets/setting_items.widget.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SpaceSettingsScreen extends StatelessWidget {
   const SpaceSettingsScreen({Key? key}) : super(key: key);
@@ -24,21 +25,26 @@ class SpaceSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Space currentSpace = CurrentSpaceService().getCurrentSpace()!;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Ajustes'),
       ),
       body: Column(
         children: [
-          InformationTile(
-            picture:
-                SpacePicture(width: 64, pictureKey: currentSpace.pictureKey),
-            name: currentSpace.name!,
-            subtitle: 'Creado el ${currentSpace.createdAtFormatted}',
-            onTap: () => goToEditSpace(context),
-          ),
+          BlocBuilder<SpaceBloc, Space?>(
+              bloc: SpaceBloc(),
+              builder: (context, space) {
+                if (space == null) {
+                  return Container();
+                }
+                return InformationTile(
+                  picture:
+                      SpacePicture(width: 64, pictureKey: space.pictureKey),
+                  name: space.name ?? '',
+                  subtitle: 'Creado el ${space.createdAtFormatted}',
+                  onTap: () => goToEditSpace(context),
+                );
+              }),
           const SizedBox(height: 8),
           const Divider(thickness: 1),
           SettingItem(

@@ -4,7 +4,7 @@ import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interfac
 import 'package:flutter/material.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/current_space.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
@@ -28,7 +28,7 @@ class _SpacePercentageSettingsScreenState
   @override
   void initState() {
     super.initState();
-    Space? space = CurrentSpaceService().getCurrentSpace();
+    Space? space = SpaceBloc().state;
     approvalPercentage = space!.approvalPercentage;
     participationPercentage = space.participationPercentage;
   }
@@ -90,7 +90,7 @@ class _SpacePercentageSettingsScreenState
 
   void save() {
     wrapLoadingTransaction(() async {
-      Space? space = CurrentSpaceService().getCurrentSpace();
+      Space? space = SpaceBloc().state;
       space!.approvalPercentage = approvalPercentage;
       space.participationPercentage = participationPercentage;
 
