@@ -1,4 +1,4 @@
-package com.example.demos_app
+package com.migala.demos
 
 import io.flutter.embedding.android.FlutterActivity
 
