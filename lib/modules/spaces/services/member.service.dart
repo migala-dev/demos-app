@@ -86,4 +86,8 @@ class MemberService {
   Future<List<Member>> getRepresentatives(String spaceId) async {
     return await MembersRepository().findRepresentativesBySpaceId(spaceId);
   }
+
+  Future<List<Member>> getAdministrators(String spaceId) async {
+    return await MembersRepository().findAdministratorsBySpaceId(spaceId);
+  }
 }

@@ -135,4 +135,14 @@ class MembersRepository {
 
     return result.map((row) => Member.fromObject(row)).toList();
   }
+
+  Future<List<Member>> findAdministratorsBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+    final String admin = getSpaceRoleString(SpaceRole.admin);
+
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE $colRole = '$admin' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
+
+    return result.map((row) => Member.fromObject(row)).toList();
+  }
 }

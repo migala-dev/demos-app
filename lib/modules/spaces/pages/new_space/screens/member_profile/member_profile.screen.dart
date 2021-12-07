@@ -9,6 +9,7 @@ import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
+import 'package:demos_app/utils/ui/modals/open_alert_dialog.dart';
 
 class MemberProfileScreen extends StatefulWidget {
   const MemberProfileScreen(this.member, {Key? key}) : super(key: key);
@@ -28,7 +29,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
         actions: [
           FutureBuilder(
             future: isCurrentUser(),
-            initialData: false,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData) {
                 final isCurrentUser = snapshot.data!;
@@ -143,6 +143,18 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
 
   Future<void> updateRole(SpaceRole newRole) async {
     if (newRole != widget.member.role) {
+      if (widget.member.role == SpaceRole.admin) {
+        final admins =
+            await MemberService().getAdministrators(widget.member.spaceId!);
+
+        final existsAnotherAdministrator = admins.length > 1;
+        if (!existsAnotherAdministrator) {
+          await openAlertDialog(context,
+              content: 'No puedes dejar al espacio sin administrador');
+          return;
+        }
+      }
+
       await MemberService().updateMember(widget.member.spaceId!,
           widget.member.memberId!, widget.member.memberName, newRole);
       setState(() {
