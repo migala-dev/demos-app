@@ -21,6 +21,8 @@ void main() async {
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
   ));
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   final connectivityResult = await Connectivity().checkConnectivity();
   ConnectionStatusBloc().add(ConnectionStartedEvent(connectivityResult));
