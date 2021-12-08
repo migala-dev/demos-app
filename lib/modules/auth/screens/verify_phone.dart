@@ -90,6 +90,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
             PinPut(
               fieldsCount: 6,
               onSubmit: (String pin) {
+                verifyCode();
                 hideKeyboard(context);
               },
               controller: _verifyCodeController,
