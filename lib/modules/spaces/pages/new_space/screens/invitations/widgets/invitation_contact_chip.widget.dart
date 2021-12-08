@@ -68,7 +68,7 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
                   )
                 : ProfilePicture(
                     imageKey: widget.contact.profilePictureKey,
-                    width: 95,
+                    width: 80,
                   ),
             Container(
               margin: const EdgeInsets.only(left: 4, right: 16),
