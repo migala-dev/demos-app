@@ -1,3 +1,4 @@
+import 'package:demos_app/widgets/simbols/get_version_and_buildnumber.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/auth/services/auth.service.dart';
@@ -51,6 +52,11 @@ class _LoginPageState extends State<LoginPage> with LoadingStateHandler {
                                 ],
                               )),
                         )),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [GetVersionAndBuildNumber()],
+                        ),
+                        const SizedBox(height: 10),
                         BigButton(
                             isLoading: isLoading,
                             text: 'SIGUIENTE',
