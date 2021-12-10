@@ -1,6 +1,7 @@
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/space_picture_header.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/validators/is_current_user_representative.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_proposals.widget.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
@@ -36,6 +37,12 @@ class SpaceDetailsScreen extends StatelessWidget {
                       ],
                     ),
                     onTap: () => goToSpaceSettings(context),
+                  )),
+              floatingActionButton: SafeWidgetValidator(
+                  validators: [IsCurrentUserRepresentativeValidator()],
+                  child: FloatingActionButton(
+                    child: const Icon(Icons.add),
+                    onPressed: () {},
                   )),
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
