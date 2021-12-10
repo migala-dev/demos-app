@@ -1,8 +1,8 @@
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:flutter/material.dart';
 
-class GetVersionAndBuildNumber extends StatelessWidget {
-  const GetVersionAndBuildNumber({
+class VersionAndBuildNumber extends StatelessWidget {
+  const VersionAndBuildNumber({
     Key? key,
   }) : super(key: key);
 
