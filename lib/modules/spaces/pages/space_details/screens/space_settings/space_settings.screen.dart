@@ -24,12 +24,14 @@ class SpaceSettingsScreen extends StatelessWidget {
     Navigator.pushNamed(context, Routes.editSpace);
   }
 
-  void goToSpacesAndConfirm(BuildContext context) {
-    openConfirmationDialog(context, content: '¿Deseas salir de este espacio?',
-        accept: () {
-      Navigator.pushNamedAndRemoveUntil(
-          context, Routes.spaces, (route) => false);
-    });
+  void goToSpaces(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (route) => false);
+  }
+
+  void exitSpace(BuildContext context) {
+    openConfirmationDialog(context,
+        content: '¿Deseas salir de este espacio?',
+        accept: () => goToSpaces(context));
   }
 
   @override
@@ -59,9 +61,10 @@ class SpaceSettingsScreen extends StatelessWidget {
           SettingItem(
               title: 'Votos',
               subtitle:
-                  'Porcentaje de participación y aprovación de las propuestas',
+                  'Porcentajes de participación y aprovación de las propuestas',
               icon: Icons.how_to_vote,
               onTap: () => goToSpacePercentageSettings(context)),
+          const SizedBox(height: 12),
           SettingItem(
               title: 'Miembros',
               subtitle: 'Usuarios, invitaciones y roles',
@@ -72,7 +75,7 @@ class SpaceSettingsScreen extends StatelessWidget {
               subtitle: 'Esta opción te removera del espacio',
               icon: Icons.logout,
               color: Colors.red,
-              onTap: () => goToSpacesAndConfirm(context)),
+              onTap: () => exitSpace(context)),
           Expanded(flex: 4, child: Container()),
           const Expanded(
             flex: 1,
