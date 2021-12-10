@@ -61,7 +61,7 @@ class SpaceSettingsScreen extends StatelessWidget {
           SettingItem(
               title: 'Votos',
               subtitle:
-                  'Porcentajes de participación y aprovación de las propuestas',
+                  'Porcentaje de participación y aprovación de las propuestas',
               icon: Icons.how_to_vote,
               onTap: () => goToSpacePercentageSettings(context)),
           const SizedBox(height: 12),
