@@ -3,6 +3,7 @@ import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
+import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
@@ -47,8 +48,13 @@ class UpdateMemberEvent implements EventHandler {
   Future<void> handleEvent(Cache dataEvent) async {
     String spaceId = dataEvent.data!['spaceId'];
     String memberId = dataEvent.data!['memberId'];
-
-    MemberService().getMember(spaceId, memberId);
+    try {
+      MemberService().getMember(spaceId, memberId);
+    } catch (err) {
+      if (err != UserIsNotMemberError()) {
+        rethrow;
+      }
+    }
   }
 }
 
@@ -74,9 +80,14 @@ class MembershipRemovedEvent implements EventHandler {
   Future<void> handleEvent(Cache dataEvent) async {
     String memberId = dataEvent.data!['memberId'];
     String spaceId = dataEvent.data!['spaceId'];
+    try {
+      await MemberService().removeMembership(memberId, spaceId);
 
-    await MemberService().removeMembership(memberId, spaceId);
-
-    SpacesBloc().add(LoadSpacesEvent());
+      SpacesBloc().add(LoadSpacesEvent());
+    } catch (err) {
+      if (err != UserIsNotMemberError()) {
+        rethrow;
+      }
+    }
   }
 }

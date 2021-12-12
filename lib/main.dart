@@ -1,3 +1,4 @@
+import 'package:demos_app/config/themes/cubit/api-pending.cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +15,7 @@ import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/widgets/general/no_connection_notificator.widget.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,6 +54,7 @@ void main() async {
       BlocProvider(
         create: (_) => ConnectionStatusBloc(),
       ),
+      BlocProvider(create: (_) => ApiPendingCubit())
     ],
     child: DemosApp(
         initialRoute: userIsAuthenticate ? Routes.spaces : Routes.login),
@@ -69,6 +72,15 @@ class DemosApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: prefer_function_declarations_over_variables
+    final isLoadingWrapper = (Widget child) =>
+        BlocBuilder<ApiPendingCubit, bool>(builder: (context, isLoading) {
+          return LoadingOverlay(
+            child: child,
+            isLoading: isLoading,
+          );
+        });
+
     final app = BlocBuilder<ThemeCubit, ThemeData>(
       builder: (context, theme) {
         return MaterialApp(
@@ -78,7 +90,10 @@ class DemosApp extends StatelessWidget {
             onGenerateRoute: Application.router.generator,
             builder: (context, child) => Column(
                   children: [
-                    Expanded(child: child ?? Container()),
+                    Expanded(
+                        child: child != null
+                            ? isLoadingWrapper(child)
+                            : Container()),
                     const NoConnectionNotificator()
                   ],
                 ));

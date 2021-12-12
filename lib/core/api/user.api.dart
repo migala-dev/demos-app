@@ -16,7 +16,7 @@ class UserApi {
 
     Object params = {'name': name};
 
-    final httpResponse = await Api.patch(endpoint, params);
+    final httpResponse = await Api.patch(endpoint, params, null);
 
     User user = User.fromObject(httpResponse);
 
@@ -26,7 +26,7 @@ class UserApi {
   static Future<User?> uploadProfileImage(File file) async {
     String endpoint = ApiPath().getUpdateProfileImagePath();
 
-    final httpResponse = await Api.upload(endpoint, file);
+    final httpResponse = await Api.upload(endpoint, file, null);
 
     User user = User.fromObject(httpResponse);
 
