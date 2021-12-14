@@ -1,3 +1,4 @@
+import 'package:demos_app/widgets/simbols/version_and_build_number.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/user.model.dart';
@@ -37,7 +38,10 @@ class GeneralSettingsScreen extends StatelessWidget {
                     icon: Icons.settings,
                     onTap: () => goToConfiguration(context)),
                 const Spacer(),
-                const PoweredByMigala(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [VersionAndBuildNumber(), PoweredByMigala()],
+                ),
                 const SizedBox(
                   height: 10,
                 )
