@@ -13,9 +13,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SpaceDetailsScreen extends StatelessWidget {
   const SpaceDetailsScreen({Key? key}) : super(key: key);
 
-  void goToSpaceSettings(BuildContext context) {
-    Navigator.pushNamed(context, Routes.spaceSettings);
-  }
+  void goToSpaceSettings(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.spaceSettings);
+
+  void goToNewProposal(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.newProposal);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,7 @@ class SpaceDetailsScreen extends StatelessWidget {
                   validators: [IsCurrentUserRepresentativeValidator()],
                   child: FloatingActionButton(
                     child: const Icon(Icons.add),
-                    onPressed: () {},
+                    onPressed: () => goToNewProposal(context),
                   )),
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
