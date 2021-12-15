@@ -17,7 +17,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: _appBarTitle()),
+      appBar: AppBar(title: getAppBarTitle()),
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
           child: ConstrainedBox(
@@ -46,7 +46,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
 
   void createProposal() => Navigator.pop(context);
 
-  Column _appBarTitle() {
+  Column getAppBarTitle() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

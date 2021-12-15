@@ -43,7 +43,7 @@ class SpaceDetailsScreen extends StatelessWidget {
               floatingActionButton: SafeWidgetValidator(
                   validators: [IsCurrentUserRepresentativeValidator()],
                   child: FloatingActionButton(
-                    child: const Icon(Icons.add),
+                    child: const Icon(Icons.how_to_vote),
                     onPressed: () => goToNewProposal(context),
                   )),
               body: Padding(
