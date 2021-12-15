@@ -50,7 +50,7 @@ class TokenService {
       'refreshToken': refreshToken,
     };
 
-    final httpResponse = await Api.post(endpoint, params);
+    final httpResponse = await Api.post(endpoint, params, null);
 
     Tokens tokens = Tokens.fromObject(httpResponse);
 

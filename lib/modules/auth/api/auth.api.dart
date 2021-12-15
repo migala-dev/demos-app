@@ -17,7 +17,7 @@ class AuthApi {
       'phoneNumber': phoneNumber,
     };
 
-    final response = await Api.post(endpoint, params);
+    final response = await Api.post(endpoint, params, null);
 
     return response['session'];
   }
@@ -30,7 +30,7 @@ class AuthApi {
       'code': code,
       'session': session,
     };
-    final httpResponse = await Api.post(endpoint, params);
+    final httpResponse = await Api.post(endpoint, params, null);
 
     VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
 

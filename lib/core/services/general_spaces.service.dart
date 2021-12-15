@@ -34,7 +34,6 @@ class GeneralSpaceService {
 
   Future<Space> updateSpace(String spaceId) async {
     SpaceResponse response = await SpaceApi().getSpace(spaceId);
-
     await SpacesRepository().updateSpace(response.space);
 
     return response.space;
