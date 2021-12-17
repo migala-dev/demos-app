@@ -2,21 +2,21 @@
 
 ## [Unreleased]
 
-## [0.0.4] 
+## [1.0.3] 
 - Sugeriacias
 
-## [0.0.3] 
-- Comentarios dentro de propuestas
-- Votaciones
+## [1.0.2] 
+ - Comentarios dentro de propuestas
 
-## [0.0.2] 
-  - Crear propuesta
-  - Nuevo servicio propuestas
-
-## [0.0.1] 
+## [1.0.1] 
+ - Nuevo diseño implementado
+## [1.0.0]
  ### Added
-- Administrar miembros de un espacio (P)
-- Configuracion del espacio (P)
+- Crear propuesta
+- Nuevo servicio propuestas
+- Votaciones
+- Administrar miembros de un espacio
+- Configuracion del espacio 
 - Registro de usuarios y autentificación
 - Actualizar tu información de perfil
 - Creación de nuevos espacios

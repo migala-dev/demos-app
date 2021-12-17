@@ -1,32 +1,34 @@
 import 'package:flutter/material.dart';
 
 class SettingItem extends StatelessWidget {
-  const SettingItem(
-      {Key? key,
-      required this.title,
-      required this.subtitle,
-      required this.icon,
-      required this.onTap})
-      : super(key: key);
+  const SettingItem({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.onTap,
+    this.color,
+  }) : super(key: key);
 
   final String title;
   final String subtitle;
   final IconData icon;
+  final Color? color;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 8),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       child: ListTile(
-        leading: Icon(icon, size: 32),
+        leading: Icon(icon, size: 32, color: color),
         title: Text(
           title,
-          style: const TextStyle(fontSize: 18),
+          style: TextStyle(fontSize: 18, color: color),
         ),
         subtitle: Text(
           subtitle,
-          style: const TextStyle(fontSize: 12),
+          style: TextStyle(fontSize: 12, color: color),
         ),
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 28),

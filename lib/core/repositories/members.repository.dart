@@ -145,4 +145,16 @@ class MembersRepository {
 
     return result.map((row) => Member.fromObject(row)).toList();
   }
+
+  Future<List<Member>> findInvitedMembersBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+    final String aceptedStatus = '${InvitationStatus.accepted.index},'
+        '${InvitationStatus.sended.index},'
+        '${InvitationStatus.received.index}';
+
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE $colInvitationStatus IN($aceptedStatus) AND $colSpaceId = '$spaceId'");
+
+    return result.map((row) => Member.fromObject(row)).toList();
+  }
 }

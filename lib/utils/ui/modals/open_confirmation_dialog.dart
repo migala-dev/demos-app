@@ -31,8 +31,8 @@ AlertDialog showAndroidAlertDialog(
           child: const Text('Cancelar', style: TextStyle(color: Colors.grey))),
       TextButton(
           onPressed: () {
-            accept();
             Navigator.pop(context);
+            accept();
           },
           child: const Text('Aceptar')),
     ],

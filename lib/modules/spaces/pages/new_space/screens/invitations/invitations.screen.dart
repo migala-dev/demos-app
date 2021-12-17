@@ -25,6 +25,7 @@ class _InvitationsScreenState extends State<InvitationsScreen>
   List<InvitationContact> contacts = [];
   bool fetchingContacts = true;
   String searchParam = '';
+  TextEditingController searchTextFieldController = TextEditingController();
 
   @override
   void initState() {
@@ -72,6 +73,7 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     return Column(children: [
       InvitationSearchField(
           contactsSelected: contactsSelected,
+          searchTextFieldController: searchTextFieldController,
           onSearchChange: (searchParamValue) {
             setState(() {
               searchParam = searchParamValue;
@@ -116,6 +118,8 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     setState(() {
       if (!contactsSelected.contains(contact)) {
         contactsSelected.add(contact);
+        searchTextFieldController.clear();
+        searchParam = '';
       }
     });
   }

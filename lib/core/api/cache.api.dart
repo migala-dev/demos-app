@@ -16,7 +16,7 @@ class CacheApi {
 
     Object params = {'lastUpdatedDate': lastUpdatedDate ?? ''};
 
-    final List httpResponse = await Api.post(endpoint, params);
+    final List httpResponse = await Api.post(endpoint, params, null);
 
     final events =
         httpResponse.map((event) => Cache.fromObject(event)).toList();

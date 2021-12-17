@@ -38,7 +38,8 @@ class AuthService {
   }
 
   Future<User?> verifyCode(String code) async {
-    VerifyCodeReponse response = await AuthApi().verifyCode(code, _phoneNumber!, _session!);
+    VerifyCodeReponse response =
+        await AuthApi().verifyCode(code, _phoneNumber!, _session!);
 
     if (!_isCodeValid(response)) {
       _attemptCount -= 1;
@@ -89,5 +90,9 @@ class AuthService {
   void createWebSocketConnection(User? user) {
     WebSocketService webSocketService = WebSocketService();
     webSocketService.createConnection(user!.userId!);
+  }
+
+  String? getPhoneNumber() {
+    return _phoneNumber;
   }
 }

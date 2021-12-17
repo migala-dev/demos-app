@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'invitation_contact_chip.widget.dart';
 
 class InvitationSearchField extends StatefulWidget {
+  final TextEditingController searchTextFieldController;
   final List<InvitationContact> contactsSelected;
   final void Function(InvitationContact) unselectContact;
   final void Function(String) onSearchChange;
@@ -14,7 +15,8 @@ class InvitationSearchField extends StatefulWidget {
       {Key? key,
       required this.contactsSelected,
       required this.unselectContact,
-      required this.onSearchChange})
+      required this.onSearchChange,
+      required this.searchTextFieldController})
       : super(key: key);
 
   @override
@@ -61,6 +63,7 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
                   style: const TextStyle(
                     fontSize: 16.0,
                   ),
+                  controller: widget.searchTextFieldController,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: widget.contactsSelected.isEmpty

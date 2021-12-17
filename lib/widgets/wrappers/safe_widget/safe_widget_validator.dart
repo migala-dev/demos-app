@@ -30,9 +30,11 @@ class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
 
   void runValidations() async {
     bool isValid = await validate();
-    setState(() {
-      this.isValid = isValid;
-    });
+    if (mounted) {
+      setState(() {
+        this.isValid = isValid;
+      });
+    }
   }
 
   @override
