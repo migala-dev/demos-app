@@ -1,4 +1,3 @@
-import 'package:demos_app/config/themes/cubit/api-pending.cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,10 +5,12 @@ import 'package:fluro/fluro.dart';
 import 'package:connectivity/connectivity.dart';
 
 import 'package:demos_app/app_initializer.dart';
+import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
+import 'package:demos_app/config/themes/cubit/api-pending.cubit.dart';
 
 import 'package:demos_app/shared/services/user_preferences_service.dart';
 import 'package:demos_app/config/routes/application.dart';
@@ -61,13 +62,42 @@ void main() async {
   ));
 }
 
-class DemosApp extends StatelessWidget {
+class DemosApp extends StatefulWidget {
   final String initialRoute;
 
   DemosApp({Key? key, required this.initialRoute}) : super(key: key) {
     final router = FluroRouter();
     Routes.configureRoutes(router, initialRoute);
     Application.router = router;
+  }
+
+  @override
+  State<DemosApp> createState() => _DemosAppState();
+}
+
+class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance?.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance?.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.resumed) {
+      final bool userIsAuthenticate = await TokenService().isAuthenticate();
+
+      if (userIsAuthenticate) {
+        CacheService().getCache();
+      }
+    }
   }
 
   @override
