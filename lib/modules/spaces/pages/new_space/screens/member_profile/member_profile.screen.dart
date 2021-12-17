@@ -132,6 +132,20 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
   }
 
   void openUpdateRoleModel() async {
+    if (widget.member.role == SpaceRole.admin) {
+      final admins =
+          await MemberService().getAdministrators(widget.member.spaceId!);
+
+      final existsAnotherAdministrator = admins.length > 1;
+      if (!existsAnotherAdministrator) {
+        await openAlertDialog(context,
+            title: 'No es posible actualizar él rol',
+            content:
+                'Es requerido tener al menos un administrador dentro del espacio.');
+        return;
+      }
+    }
+
     await showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -143,18 +157,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
 
   Future<void> updateRole(SpaceRole newRole) async {
     if (newRole != widget.member.role) {
-      if (widget.member.role == SpaceRole.admin) {
-        final admins =
-            await MemberService().getAdministrators(widget.member.spaceId!);
-
-        final existsAnotherAdministrator = admins.length > 1;
-        if (!existsAnotherAdministrator) {
-          await openAlertDialog(context,
-              content: 'No puedes dejar al espacio sin administrador');
-          return;
-        }
-      }
-
       await MemberService().updateMember(widget.member.spaceId!,
           widget.member.memberId!, widget.member.memberName, newRole);
       setState(() {

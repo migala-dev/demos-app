@@ -4,24 +4,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Future<String?>? openAlertDialog(BuildContext context,
-    {required String content}) {
+    {required String content, required String title}) {
   if (Platform.isAndroid) {
     return showDialog<String>(
       context: context,
       builder: (BuildContext context) =>
-          _showAndroidAlertDialog(context, content),
+          _showAndroidAlertDialog(context, content, title),
     );
   } else if (Platform.isIOS) {
     return showDialog<String>(
       context: context,
-      builder: (BuildContext context) => _showIOSAlertDialog(context, content),
+      builder: (BuildContext context) =>
+          _showIOSAlertDialog(context, content, title),
     );
   }
 }
 
-AlertDialog _showAndroidAlertDialog(BuildContext context, String content) {
+AlertDialog _showAndroidAlertDialog(
+    BuildContext context, String content, String title) {
   return AlertDialog(
-    title: const Text('Alerta'),
+    title: Text(title),
     content: Text(content),
     actions: <Widget>[
       TextButton(
@@ -33,9 +35,10 @@ AlertDialog _showAndroidAlertDialog(BuildContext context, String content) {
   );
 }
 
-CupertinoAlertDialog _showIOSAlertDialog(BuildContext context, String content) {
+CupertinoAlertDialog _showIOSAlertDialog(
+    BuildContext context, String content, String title) {
   return CupertinoAlertDialog(
-    title: const Text('Alerta'),
+    title: Text(title),
     content: Text(content),
     actions: <Widget>[
       CupertinoDialogAction(
