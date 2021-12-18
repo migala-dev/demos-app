@@ -36,7 +36,7 @@ class ProfileField extends StatelessWidget {
               child: IconButton(
                 icon: Icon(
                   Icons.edit,
-                  color: accentColor,
+                  color: onEdit == null ? Colors.grey : accentColor,
                 ),
                 onPressed: onEdit,
               ))
