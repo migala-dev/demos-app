@@ -59,7 +59,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                   placeholderPrefix: 'Sin ',
                   title: 'Nombre en el espacio',
                   icon: Icons.person,
-                  value: widget.member.memberNameInDetail,
+                  value: widget.member.currentMemberName,
                   editable: !widget.member.isInvited,
                   onEdit: openUpdateNameModal,
                   editableButtonValidators: [

@@ -20,19 +20,19 @@ class MemberView {
   String? memberName;
 
   String get displayName {
-    if (memberName != null) if (memberName!.isNotEmpty) return memberName!;
+    if (memberName != null && memberName!.isNotEmpty) return memberName!;
 
-    if (userName != null) if (userName!.isNotEmpty) return userName!;
+    if (userName != null && userName!.isNotEmpty) return userName!;
 
     if (phoneNumber != null) return phoneNumberFormatted;
 
     return defaultName;
   }
 
-  String get memberNameInDetail {
-    if (memberName != null) if (memberName!.isNotEmpty) return memberName!;
+  String get currentMemberName {
+    if (memberName != null && memberName!.isNotEmpty) return memberName!;
 
-    if (userName != null) if (userName!.isNotEmpty) return userName!;
+    if (userName != null && userName!.isNotEmpty) return userName!;
 
     return defaultName;
   }

@@ -63,8 +63,7 @@ class _ProfileState extends State<Profile> with LoadingStateHandler {
   }
 
   void updateName(String? name) async {
-    if (name == null) return;
-    if (name == '') return;
+    if (name == null && name == '') return;
 
     wrapLoadingTransaction(() async {
       User? user = await CurrentUserService().updateUserName(name);
