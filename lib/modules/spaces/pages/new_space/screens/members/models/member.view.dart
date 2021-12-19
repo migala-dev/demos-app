@@ -5,6 +5,7 @@ import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
 
 class MemberView {
+  final String defaultName = 'Sin Nombre';
   final String userId;
   final String? memberId;
   final String? spaceId;
@@ -19,13 +20,21 @@ class MemberView {
   String? memberName;
 
   String get displayName {
-    if (memberName != null) if (memberName!.isNotEmpty) return memberName!;
+    if (memberName != null && memberName!.isNotEmpty) return memberName!;
 
-    if (userName != null) if (userName!.isNotEmpty) return userName!;
+    if (userName != null && userName!.isNotEmpty) return userName!;
 
     if (phoneNumber != null) return phoneNumberFormatted;
 
-    return 'Sin Nombre';
+    return defaultName;
+  }
+
+  String get currentMemberName {
+    if (memberName != null && memberName!.isNotEmpty) return memberName!;
+
+    if (userName != null && userName!.isNotEmpty) return userName!;
+
+    return defaultName;
   }
 
   String get memberCreatedAtFormatted =>
@@ -38,7 +47,8 @@ class MemberView {
 
   MemberType get memberType {
     if (role == null) return MemberType.invited;
-    if (invitationStatus == InvitationStatus.sended || invitationStatus == InvitationStatus.received) {
+    if (invitationStatus == InvitationStatus.sended ||
+        invitationStatus == InvitationStatus.received) {
       return MemberType.invited;
     }
 
