@@ -33,6 +33,7 @@ class SettingItem extends StatelessWidget {
         onTap: onTap,
         contentPadding: const EdgeInsets.symmetric(horizontal: 28),
         horizontalTitleGap: 8,
+        dense: true,
       ),
     );
   }
