@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/modals/select_role_modal.dart';
@@ -128,6 +129,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
         widget.member.memberId!, newName, widget.member.role!);
     setState(() {
       widget.member.memberName = newName;
+      SpaceMembersBloc().add(LoadSpaceMembers());
     });
   }
 
@@ -147,6 +149,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
           widget.member.memberId!, widget.member.memberName, newRole);
       setState(() {
         widget.member.role = newRole;
+        SpaceMembersBloc().add(LoadSpaceMembers());
       });
     }
   }
