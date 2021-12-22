@@ -9,6 +9,8 @@ import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
+import 'package:demos_app/utils/ui/modals/open_alert_dialog.dart';
+import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 
 class MemberProfileScreen extends StatefulWidget {
   const MemberProfileScreen(this.member, {Key? key}) : super(key: key);
@@ -19,7 +21,8 @@ class MemberProfileScreen extends StatefulWidget {
   State<MemberProfileScreen> createState() => _MemberProfileScreenState();
 }
 
-class _MemberProfileScreenState extends State<MemberProfileScreen> {
+class _MemberProfileScreenState extends State<MemberProfileScreen>
+    with LoadingStateHandler {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +31,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
         actions: [
           FutureBuilder(
             future: isCurrentUser(),
-            initialData: false,
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData) {
                 final isCurrentUser = snapshot.data!;
@@ -59,9 +61,9 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                   placeholderPrefix: 'Sin ',
                   title: 'Nombre en el espacio',
                   icon: Icons.person,
-                  value: widget.member.displayName,
+                  value: widget.member.currentMemberName,
                   editable: !widget.member.isInvited,
-                  onEdit: openUpdateNameModal,
+                  onEdit: isLoading ? null : openUpdateNameModal,
                   editableButtonValidators: [
                     IsCurrentUserAdminWidgetValidator()
                   ],
@@ -78,7 +80,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
                   icon: Icons.manage_accounts,
                   value: getSpaceRoleName(widget.member.role),
                   editable: !widget.member.isInvited,
-                  onEdit: openUpdateRoleModel,
+                  onEdit: isLoading ? null : openUpdateRoleModel,
                   editableButtonValidators: [
                     IsCurrentUserAdminWidgetValidator()
                   ],
@@ -119,19 +121,35 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
         widget.member.memberName != newName && newName != null;
 
     if (isNewNameValid) {
-      await updateMemberName(newName);
+      updateMemberName(newName);
     }
   }
 
-  Future<void> updateMemberName(String newName) async {
-    await MemberService().updateMember(widget.member.spaceId!,
-        widget.member.memberId!, newName, widget.member.role!);
-    setState(() {
-      widget.member.memberName = newName;
+  void updateMemberName(String newName) {
+    wrapLoadingTransaction(() async {
+      await MemberService().updateMember(widget.member.spaceId!,
+          widget.member.memberId!, newName, widget.member.role!);
+      setState(() {
+        widget.member.memberName = newName;
+      });
     });
   }
 
   void openUpdateRoleModel() async {
+    if (widget.member.role == SpaceRole.admin) {
+      final admins =
+          await MemberService().getAdministrators(widget.member.spaceId!);
+
+      final existsAnotherAdministrator = admins.length > 1;
+      if (!existsAnotherAdministrator) {
+        await openAlertDialog(context,
+            title: 'No es posible actualizar él rol',
+            content:
+                'Es requerido tener al menos un administrador dentro del espacio.');
+        return;
+      }
+    }
+
     await showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -141,13 +159,15 @@ class _MemberProfileScreenState extends State<MemberProfileScreen> {
     );
   }
 
-  Future<void> updateRole(SpaceRole newRole) async {
-    if (newRole != widget.member.role) {
-      await MemberService().updateMember(widget.member.spaceId!,
-          widget.member.memberId!, widget.member.memberName, newRole);
-      setState(() {
-        widget.member.role = newRole;
-      });
-    }
+  void updateRole(SpaceRole newRole) {
+    wrapLoadingTransaction(() async {
+      if (newRole != widget.member.role) {
+        await MemberService().updateMember(widget.member.spaceId!,
+            widget.member.memberId!, widget.member.memberName, newRole);
+        setState(() {
+          widget.member.role = newRole;
+        });
+      }
+    });
   }
 }

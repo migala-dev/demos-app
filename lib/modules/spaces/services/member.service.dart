@@ -90,4 +90,8 @@ class MemberService {
   Future<Member?> getMemberByMemberId(String memberId) async {
     return await MembersRepository().findById(memberId);
   }
+
+  Future<List<Member>> getAdministrators(String spaceId) async {
+    return await MembersRepository().findAdministratorsBySpaceId(spaceId);
+  }
 }

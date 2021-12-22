@@ -21,6 +21,9 @@ class Routes {
   static const String editSpace = '/spaces/edit-space';
   static const String memberProfile = '/spaces/member-profile';
 
+  // Proposals
+  static const String newProposal = '/new-proposal';
+
   // Settings
   static const String settings = '/settings/general';
   static const String configuration = '/settings/configuration';
@@ -49,6 +52,9 @@ class Routes {
     router.define(spaceMembers, handler: spaceMembersHandler);
     router.define(editSpace, handler: editSpaceHandler);
     router.define(memberProfile, handler: memberProfileHandler);
+
+    // Proposals
+    router.define(newProposal, handler: newProposalHandler);
 
     // Settings
     router.define(settings, handler: generalSettingsHandler);

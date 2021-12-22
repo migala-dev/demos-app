@@ -45,4 +45,11 @@ class GeneralSpaceService {
 
     return member != null ? member.role == SpaceRole.admin : false;
   }
+
+  Future<bool> isUserRepresentative(String userId, String spaceId) async {
+    Member? member =
+        await MembersRepository().findByUserIdAndSpaceId(userId, spaceId);
+
+    return member != null ? member.role == SpaceRole.representative : false;
+  }
 }
