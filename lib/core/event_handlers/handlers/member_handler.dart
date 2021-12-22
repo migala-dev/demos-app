@@ -5,7 +5,9 @@ import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 
 class MemberHandler extends EventHandlerMixin {
@@ -49,7 +51,13 @@ class UpdateMemberEvent implements EventHandler {
     String spaceId = dataEvent.data!['spaceId'];
     String memberId = dataEvent.data!['memberId'];
     try {
-      MemberService().getMember(spaceId, memberId);
+      final spaceMembersBloc = SpaceMembersBloc();
+      final currerntSpaceId = SpaceBloc().state?.spaceId;
+      await MemberService().getMember(spaceId, memberId);
+
+      if (currerntSpaceId == spaceId) {
+        spaceMembersBloc.add(LoadSpaceMembers());
+      }
     } catch (err) {
       if (err != UserIsNotMemberError()) {
         rethrow;
