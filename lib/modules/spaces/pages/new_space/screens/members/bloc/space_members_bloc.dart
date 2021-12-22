@@ -17,5 +17,19 @@ class SpaceMembersBloc extends Bloc<SpaceMembersEvent, SpaceMembersState> {
       final memberViews = await MemberViewService().getMemberViews();
       emit(SpaceMembersWithData(memberViews));
     });
+
+    on<UpdateSpaceMember>((event, emit) async {
+      final currentState = state;
+      emit(SpaceMembersLoadInProgress());
+
+      final member =
+          await MemberViewService().getMemberViewByMemberId(event.memberId);
+
+      if (member != null && currentState is SpaceMembersWithData) {
+        emit(currentState.copyWithMemberUpdate(member));
+      } else {
+        emit(currentState);
+      }
+    });
   }
 }

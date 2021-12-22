@@ -56,7 +56,7 @@ class UpdateMemberEvent implements EventHandler {
       await MemberService().getMember(spaceId, memberId);
 
       if (currerntSpaceId == spaceId) {
-        spaceMembersBloc.add(LoadSpaceMembers());
+        spaceMembersBloc.add(UpdateSpaceMember(memberId));
       }
     } catch (err) {
       if (err != UserIsNotMemberError()) {

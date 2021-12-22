@@ -57,9 +57,9 @@ class MemberService {
   Future<void> getMember(String spaceId, String memberId) async {
     MemberResponse response = await MemberApi().getMember(spaceId, memberId);
 
-    MembersRepository().insertOrUpdate(response.member);
+    await MembersRepository().insertOrUpdate(response.member);
 
-    UsersRepository().insertOrUpdate(response.user);
+    await UsersRepository().insertOrUpdate(response.user);
   }
 
   Future<void> updateMember(
@@ -85,5 +85,9 @@ class MemberService {
 
   Future<List<Member>> getRepresentatives(String spaceId) async {
     return await MembersRepository().findRepresentativesBySpaceId(spaceId);
+  }
+
+  Future<Member?> getMemberByMemberId(String memberId) async {
+    return await MembersRepository().findById(memberId);
   }
 }

@@ -13,4 +13,15 @@ class SpaceMembersWithData extends SpaceMembersState {
   final List<MemberView> memberViews;
 
   const SpaceMembersWithData(this.memberViews);
+
+  SpaceMembersWithData copyWithMemberUpdate(MemberView updatedMember) {
+    int memberIndex = memberViews
+        .indexWhere((member) => member.memberId == updatedMember.memberId);
+    if (memberIndex != -1) {
+      memberViews.removeAt(memberIndex);
+      memberViews.insert(memberIndex, updatedMember);
+    }
+
+    return SpaceMembersWithData([...memberViews]);
+  }
 }
