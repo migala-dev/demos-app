@@ -24,4 +24,14 @@ class SpaceMembersWithData extends SpaceMembersState {
 
     return SpaceMembersWithData([...memberViews]);
   }
+
+  bool hasRepresentative() {
+    for (final member in memberViews) {
+      if (member.role == SpaceRole.representative) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 }

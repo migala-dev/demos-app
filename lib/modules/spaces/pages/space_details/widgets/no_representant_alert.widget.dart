@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +18,7 @@ class NoRepresentantAlert extends StatefulWidget {
 
 class _NoRepresentantAlertState extends State<NoRepresentantAlert> {
   bool showAlert = false;
+  late final StreamSubscription spaceMembersBlocSubscription;
 
   final Color fontColor = Colors.grey.shade600;
 
@@ -26,12 +30,24 @@ class _NoRepresentantAlertState extends State<NoRepresentantAlert> {
   @override
   void initState() {
     init();
+    spaceMembersBlocSubscription = SpaceMembersBloc().stream.listen((event) {
+      if (event is SpaceMembersWithData) {
+        setState(() {
+          showAlert = !event.hasRepresentative();
+        });
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    spaceMembersBlocSubscription.cancel();
+    super.dispose();
   }
 
   Future<void> init() async {
     if (widget.space != null) {
-
       final List<Member> representatives =
           await MemberService().getRepresentatives(widget.space!.spaceId!);
 
