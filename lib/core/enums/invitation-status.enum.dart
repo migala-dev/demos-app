@@ -1,4 +1,4 @@
-enum InvitationStatus { sended, received, accepted, canceled, rejected }
+enum InvitationStatus { sended, received, accepted, canceled, rejected, expired }
 
 InvitationStatus getInvitationStatusFromInt(int status) {
   switch (status) {
@@ -11,7 +11,9 @@ InvitationStatus getInvitationStatusFromInt(int status) {
     case 3:
       return InvitationStatus.canceled;
     case 4:
-    default:
       return InvitationStatus.rejected;
+    case 5:
+    default:
+      return InvitationStatus.expired;
   }
 }
