@@ -104,11 +104,14 @@ class Api {
   static Future<http.Response>  _loadingWrapper(Future<http.Response> call) async {
     ApiTimestamp timestamp = ApiTimestamp();
     ApiPendingCubit().addApiTimestamp(timestamp);
-    http.Response response = await call;
-
-    ApiPendingCubit().removeApiTimestamp(timestamp);
-
-    return response;
+    try {
+      http.Response response = await call;
+      return response;
+    } catch(err) {
+      rethrow;
+    } finally {
+      ApiPendingCubit().removeApiTimestamp(timestamp);
+    }
   }
 
   static Future<void> _handleServerErrors(http.Response response) async {
