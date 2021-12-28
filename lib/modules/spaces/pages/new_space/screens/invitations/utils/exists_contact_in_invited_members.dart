@@ -1,22 +1,18 @@
-import 'package:demos_app/core/models/member.model.dart';
-import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
 
 Future<bool> isContactAlreadyOnTheSpace(
-    Contact contact, List<Member> members) async {
+    Contact contact, List<MemberView> members) async {
   final contactPhoneNumber =
       contact.phones[0].number.replaceAll(RegExp(r'[^0-9]'), '');
 
   for (final member in members) {
-    final user = await UsersRepository().findById(member.userId!);
-    if (user != null) {
-      final userPhoneNumber = user.phoneNumber.length > 10
-          ? user.phoneNumber.substring(3)
-          : user.phoneNumber;
+    final userPhoneNumber = member.phoneNumber!.length > 10
+        ? member.phoneNumber!.substring(3)
+        : member.phoneNumber;
 
-      if (userPhoneNumber == contactPhoneNumber) {
-        return true;
-      }
+    if (contactPhoneNumber == userPhoneNumber) {
+      return true;
     }
   }
 
