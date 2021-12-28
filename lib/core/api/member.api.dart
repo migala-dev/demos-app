@@ -79,4 +79,9 @@ class MemberApi {
     String endpoint = MemberPath().getMemberInvitationPath(spaceId, memberId);
     await Api.delete(endpoint, null);
   }
+
+  Future<void> leaveSpace(String spaceId) async {
+    String endpoint = MemberPath().getMembersSpacePath(spaceId);
+    await Api.delete(endpoint, null);
+  }
 }

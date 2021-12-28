@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -24,10 +25,14 @@ class SpaceSettingsScreen extends StatelessWidget {
   void goToSpaces(BuildContext context) => Navigator.pushNamedAndRemoveUntil(
       context, Routes.spaces, (route) => false);
 
-  void exitSpace(BuildContext context) {
+  void leaveSpace(BuildContext context) {
     openConfirmationDialog(context,
-        content: '¿Deseas salir de este espacio?',
-        accept: () => goToSpaces(context));
+        content: '¿Estás seguro que deseas dejar este espacio?',
+        accept: () async { 
+          Space? space = SpaceBloc().state;
+          await MemberService().leaveSpace(space!.spaceId!);
+          goToSpaces(context);
+        });
   }
 
   @override
@@ -67,11 +72,11 @@ class SpaceSettingsScreen extends StatelessWidget {
               icon: Icons.people,
               onTap: () => goToSpaceMembers(context)),
           SettingItem(
-              title: 'Salir del Espacio',
+              title: 'Dejar el Espacio',
               subtitle: 'Esta opción te removera del espacio',
               icon: Icons.logout,
               color: Colors.red,
-              onTap: () => exitSpace(context)),
+              onTap: () => leaveSpace(context)),
           Expanded(flex: 4, child: Container()),
           const Expanded(
             flex: 1,
