@@ -17,6 +17,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: getAppBarTitle()),
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
