@@ -9,8 +9,14 @@ abstract class SpaceMembersEvent extends Equatable {
 
 class LoadSpaceMembers extends SpaceMembersEvent {}
 
-class UpdateSpaceMember extends SpaceMembersEvent {
+class SpaceMemberUpdated extends SpaceMembersEvent {
   final String memberId;
 
-  const UpdateSpaceMember(this.memberId);
+  const SpaceMemberUpdated(this.memberId);
+}
+
+class SpaceMemberDeleted extends SpaceMembersEvent {
+  final String userId;
+
+  const SpaceMemberDeleted(this.userId);
 }

@@ -9,6 +9,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_filter.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
+import 'package:demos_app/core/enums/invitation-status.enum.dart';
 
 class SpaceMembersScreen extends StatefulWidget {
   const SpaceMembersScreen({Key? key}) : super(key: key);
@@ -92,6 +93,11 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
       MemberType filter, List<MemberView> members) {
     if (filter == MemberType.all) return members;
 
-    return members.where((member) => filter == member.memberType).toList();
+    return members
+        .where((member) =>
+            filter == member.memberType &&
+            member.invitationStatus != InvitationStatus.canceled &&
+            member.invitationStatus != InvitationStatus.rejected)
+        .toList();
   }
 }

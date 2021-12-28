@@ -56,7 +56,7 @@ class UpdateMemberEvent implements EventHandler {
       await MemberService().getMember(spaceId, memberId);
 
       if (currerntSpaceId == spaceId) {
-        spaceMembersBloc.add(UpdateSpaceMember(memberId));
+        spaceMembersBloc.add(SpaceMemberUpdated(memberId));
       }
     } catch (err) {
       if (err != UserIsNotMemberError()) {
@@ -73,10 +73,17 @@ class InvitationCanceledEvent implements EventHandler {
   @override
   Future<void> handleEvent(Cache dataEvent) async {
     String memberId = dataEvent.data!['memberId'];
+    String spaceId = dataEvent.data!['spaceId'];
+    final spaceMembersBloc = SpaceMembersBloc();
+    final currerntSpaceId = SpaceBloc().state?.spaceId;
 
     await MemberService().cancelInvitation(memberId);
 
     SpacesBloc().add(LoadSpacesEvent());
+
+    if (currerntSpaceId == spaceId) {
+      spaceMembersBloc.add(SpaceMemberDeleted(memberId));
+    }
   }
 }
 

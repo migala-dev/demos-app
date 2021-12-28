@@ -25,6 +25,18 @@ class SpaceMembersWithData extends SpaceMembersState {
     return SpaceMembersWithData([...memberViews]);
   }
 
+  SpaceMembersWithData copyWithMemberDeleted(String memberId) {
+    memberViews.removeWhere((member) => member.memberId == memberId);
+
+    return SpaceMembersWithData([...memberViews]);
+  }
+
+  SpaceMembersWithData copyWithNewInvitation(MemberView newMember) {
+    memberViews.add(newMember);
+
+    return SpaceMembersWithData([...memberViews]);
+  }
+
   bool hasRepresentative() =>
       memberViews.any((member) => member.role == SpaceRole.representative);
 }
