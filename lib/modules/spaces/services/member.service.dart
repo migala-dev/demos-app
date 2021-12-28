@@ -1,4 +1,5 @@
 import 'package:demos_app/core/api/member.api.dart';
+import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
@@ -6,9 +7,11 @@ import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/member_response.model.dart';
 import 'package:demos_app/core/models/responses/send_invitations_response.model.dart';
 import 'package:demos_app/core/models/member.model.dart';
+import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
+import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 
 class MemberService {
@@ -81,6 +84,19 @@ class MemberService {
     member!.deleted = true;
 
     await MembersRepository().update(member);
+  }
+
+  Future<void> leaveSpace(String spaceId) async {
+    await MemberApi().leaveSpace(spaceId);
+
+    User? user = await CurrentUserService().getCurrentUser();
+    Member? member = await MembersRepository().findByUserIdAndSpaceId(user!.userId!, spaceId);
+
+    member!.deleted = true;
+
+    await MembersRepository().update(member);
+
+    SpacesBloc().add(LoadSpacesEvent());
   }
 
   Future<List<Member>> getRepresentatives(String spaceId) async {
