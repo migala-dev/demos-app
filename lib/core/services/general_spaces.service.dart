@@ -41,14 +41,14 @@ class GeneralSpaceService {
 
   Future<bool> isUserAdmin(String userId, String spaceId) async {
     Member? member =
-        await MembersRepository().findByUserIdAndSpaceId(userId, spaceId);
+        await MembersRepository().findByUserIdAndSpaceIdAndInvitationStatusAccepted(userId, spaceId);
 
     return member != null ? member.role == SpaceRole.admin : false;
   }
 
   Future<bool> isUserRepresentative(String userId, String spaceId) async {
     Member? member =
-        await MembersRepository().findByUserIdAndSpaceId(userId, spaceId);
+        await MembersRepository().findByUserIdAndSpaceIdAndInvitationStatusAccepted(userId, spaceId);
 
     return member != null ? member.role == SpaceRole.representative : false;
   }
