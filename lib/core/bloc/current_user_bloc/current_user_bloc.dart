@@ -20,17 +20,16 @@ class CurrentUserBloc extends Bloc<CurrentUserEvent, User?> {
   CurrentUserBloc._internal() : super(null) {
     on<CurrentUserLoaded>((event, emit) async {
       if (state == null) {
-        String? currentUserId = await _storage.read(key: _currentUserIdKey);
-        if (currentUserId != null) {
-          User? user = await UsersRepository().findById(currentUserId);
-          emit(user);
-        }
+        final currentUser = await getCurrentUser();
+        emit(currentUser);
       }
     });
 
     on<CurrentUserSetted>((event, emit) async {
       await _storage.write(
           key: _currentUserIdKey, value: event.userId.toString());
+
+      add(CurrentUserLoaded());
     });
 
     on<CurrentUserNameUpdated>((event, emit) async {
@@ -48,5 +47,17 @@ class CurrentUserBloc extends Bloc<CurrentUserEvent, User?> {
 
       emit(userSaved);
     });
+  }
+
+  Future<User?> getCurrentUser() async {
+    if (state == null) {
+      String? currentUserId = await _storage.read(key: _currentUserIdKey);
+      if (currentUserId != null) {
+        User? user = await UsersRepository().findById(currentUserId);
+        return user;
+      }
+    }
+
+    return state;
   }
 }

@@ -1,10 +1,10 @@
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 
 class SpaceService {
@@ -26,7 +26,7 @@ class SpaceService {
 
   Future<List<SpaceView>> _getSpacesByInvitationStatus(
       InvitationStatus invitationStatus) async {
-    User? currentUser = await CurrentUserService().getCurrentUser();
+    User? currentUser = await CurrentUserBloc().getCurrentUser();
     List<SpaceView> spacesView = [];
     List<Member> myMemberships = await MembersRepository()
         .findByInvitationStatusAndUserId(

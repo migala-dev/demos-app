@@ -1,3 +1,4 @@
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
@@ -5,7 +6,6 @@ import 'package:demos_app/core/services/bucket.service.dart';
 import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/services/general_spaces.service.dart';
 import 'package:demos_app/core/services/token.service.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
 import 'package:demos_app/modules/auth/api/auth.api.dart';
 import 'package:demos_app/modules/auth/models/verify_code_response.model.dart';
@@ -76,7 +76,7 @@ class AuthService {
     if (user != null) {
       await UsersRepository().insert(user);
 
-      await CurrentUserService().setCurrentUser(user.userId);
+      CurrentUserBloc().add(CurrentUserSetted(user.userId!));
     }
   }
 

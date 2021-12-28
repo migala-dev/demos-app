@@ -1,3 +1,4 @@
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,8 @@ void main() async {
   ));
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  CurrentUserBloc().add(CurrentUserLoaded());
 
   final connectivityResult = await Connectivity().checkConnectivity();
   ConnectionStatusBloc().add(ConnectionStartedEvent(connectivityResult));
