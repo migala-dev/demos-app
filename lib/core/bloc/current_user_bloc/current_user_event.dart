@@ -15,14 +15,8 @@ class CurrentUserSetted extends CurrentUserEvent {
   const CurrentUserSetted(this.userId);
 }
 
-class CurrentUserNameUpdated extends CurrentUserEvent {
-  final String newName;
+class CurrentUserUpdated extends CurrentUserEvent {
+  final User? user;
 
-  const CurrentUserNameUpdated(this.newName);
-}
-
-class CurrentUserImageProfileUploaded extends CurrentUserEvent {
-  final File file;
-
-  const CurrentUserImageProfileUploaded(this.file);
+  const CurrentUserUpdated(this.user);
 }

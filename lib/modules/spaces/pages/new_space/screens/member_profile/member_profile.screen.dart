@@ -106,7 +106,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
   }
 
   Future<bool> isCurrentUser() async {
-    final currentUser = await CurrentUserBloc().getCurrentUser();
+    final currentUser = CurrentUserBloc().state;
     if (currentUser == null) return false;
 
     return widget.member.userId == currentUser.userId;

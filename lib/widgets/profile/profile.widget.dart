@@ -1,3 +1,4 @@
+import 'package:demos_app/core/services/current_user/current_user.service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
@@ -52,7 +53,8 @@ class Profile extends StatelessWidget {
   void updateName(String? name) async {
     if (name == null && name == '') return;
 
-    CurrentUserBloc().add(CurrentUserNameUpdated(name!));
+    final user = await CurrentUserService().updateUserName(name);
+    CurrentUserBloc().add(CurrentUserUpdated(user));
   }
 
   void onPictureEditPress(BuildContext context) async {
@@ -63,7 +65,8 @@ class Profile extends StatelessWidget {
         ));
 
     if (image != null) {
-      CurrentUserBloc().add(CurrentUserImageProfileUploaded(image));
+      final user = await CurrentUserService().uploadProfileImage(image);
+      CurrentUserBloc().add(CurrentUserUpdated(user));
     }
   }
 }

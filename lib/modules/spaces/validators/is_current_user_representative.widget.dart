@@ -15,7 +15,7 @@ class IsCurrentUserRepresentativeValidator implements WidgetValidator {
       return false;
     }
 
-    User? user = await CurrentUserBloc().getCurrentUser();
+    User? user = CurrentUserBloc().state;
 
     bool isRepresentative = await GeneralSpaceService()
         .isUserRepresentative(user!.userId!, space.spaceId!);

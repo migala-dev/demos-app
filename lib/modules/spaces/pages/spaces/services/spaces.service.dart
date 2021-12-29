@@ -26,7 +26,7 @@ class SpaceService {
 
   Future<List<SpaceView>> _getSpacesByInvitationStatus(
       InvitationStatus invitationStatus) async {
-    User? currentUser = await CurrentUserBloc().getCurrentUser();
+    User? currentUser = CurrentUserBloc().state;
     List<SpaceView> spacesView = [];
     List<Member> myMemberships = await MembersRepository()
         .findByInvitationStatusAndUserId(

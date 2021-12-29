@@ -89,7 +89,7 @@ class MemberService {
   Future<void> leaveSpace(String spaceId) async {
     await MemberApi().leaveSpace(spaceId);
 
-    User? user = await CurrentUserBloc().getCurrentUser();
+    User? user = CurrentUserBloc().state;
     Member? member = await MembersRepository()
         .findByUserIdAndSpaceId(user!.userId!, spaceId);
 
