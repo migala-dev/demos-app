@@ -1,9 +1,8 @@
 import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/utils/exists_contact_in_invited_members.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/member_view.service.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 
 class ContactService {
@@ -21,10 +20,8 @@ class ContactService {
   static Future<List<Contact>> getUninvitedContacts(
       List<Contact> contacts) async {
     final List<Contact> filteredContacts = [];
-    final spaceId = SpaceBloc().state!.spaceId!;
 
-    final members =
-        await MembersRepository().findInvitedMembersBySpaceId(spaceId);
+    final members = await MemberViewService().getMemberViews();
 
     for (final contact in contacts) {
       if (!await isContactAlreadyOnTheSpace(contact, members)) {

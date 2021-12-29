@@ -3,6 +3,8 @@ import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/models/errors/invalid_invitation_status.error.dart';
+import 'package:demos_app/core/models/errors/invitation_expired.error.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/member_response.model.dart';
@@ -28,17 +30,25 @@ class MemberService {
   }
 
   Future<void> acceptInvitation(String spaceId) async {
-    AcceptInvitationResponse response =
-        await MemberApi().acceptInvitation(spaceId);
+    try {
+      AcceptInvitationResponse response =
+          await MemberApi().acceptInvitation(spaceId);
 
-    await SpacesRepository().updateSpace(response.space);
+      await SpacesRepository().updateSpace(response.space);
 
-    for (final member in response.members) {
-      await MembersRepository().insertOrUpdate(member);
-    }
+      for (final member in response.members) {
+        await MembersRepository().insertOrUpdate(member);
+      }
 
-    for (final user in response.users) {
-      await UsersRepository().insertOrUpdate(user);
+      for (final user in response.users) {
+        await UsersRepository().insertOrUpdate(user);
+      }
+    } catch (err) {
+      if (err == InvitationExpiredError() ||
+          err == InvalidInvitationStatusError()) {
+        await removeInvitationForExpiration(spaceId);
+      }
+      rethrow;
     }
   }
 
@@ -60,9 +70,9 @@ class MemberService {
   Future<void> getMember(String spaceId, String memberId) async {
     MemberResponse response = await MemberApi().getMember(spaceId, memberId);
 
-    MembersRepository().insertOrUpdate(response.member);
+    await MembersRepository().insertOrUpdate(response.member);
 
-    UsersRepository().insertOrUpdate(response.user);
+    await UsersRepository().insertOrUpdate(response.user);
   }
 
   Future<void> updateMember(
@@ -91,7 +101,8 @@ class MemberService {
 
     User? user = CurrentUserBloc().state;
     Member? member = await MembersRepository()
-        .findByUserIdAndSpaceId(user!.userId!, spaceId);
+        .findByUserIdAndSpaceIdAndInvitationStatusAccepted(
+            user!.userId!, spaceId);
 
     member!.deleted = true;
 
@@ -104,7 +115,27 @@ class MemberService {
     return await MembersRepository().findRepresentativesBySpaceId(spaceId);
   }
 
+  Future<Member?> getMemberByMemberId(String memberId) async {
+    return await MembersRepository().findById(memberId);
+  }
+
   Future<List<Member>> getAdministrators(String spaceId) async {
     return await MembersRepository().findAdministratorsBySpaceId(spaceId);
+  }
+
+  Future<void> removeInvitationForExpiration(String spaceId) async {
+    User? user = CurrentUserBloc().state;
+
+    List<InvitationStatus> invitationStatus = [
+      InvitationStatus.received,
+      InvitationStatus.sended
+    ];
+    Member? member = await MembersRepository()
+        .findByUserIdAndSpaceIdAndInvitationStatuses(
+            user!.userId!, spaceId, invitationStatus);
+    if (member != null) {
+      member.invitationStatus = InvitationStatus.expired;
+      await MembersRepository().update(member);
+    }
   }
 }

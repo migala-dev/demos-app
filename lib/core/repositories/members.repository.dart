@@ -82,7 +82,17 @@ class MembersRepository {
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 
-  Future<Member?> findByUserIdAndSpaceId(String userId, String spaceId) async {
+   Future<Member?> findByUserIdAndSpaceIdAndInvitationStatuses(String userId, String spaceId, List<InvitationStatus> invitationStatus) async {
+    Database? db = await this.db;
+    final String status = invitationStatus.map((i) => i.index).join(', ');
+
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE  $colUserId = '$userId' AND $colInvitationStatus IN($status) AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
+
+    return result.isNotEmpty ? Member.fromObject(result[0]) : null;
+  }
+
+  Future<Member?> findByUserIdAndSpaceIdAndInvitationStatusAccepted(String userId, String spaceId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
         "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0 AND $colInvitationStatus = ${InvitationStatus.accepted.index}");
@@ -117,7 +127,7 @@ class MembersRepository {
   Future<int> update(Member member) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblMembers '
-        "SET $colInvitationStatus = '${member.invitationStatus.index}'"
+        "SET $colInvitationStatus = '${member.invitationStatus?.index}'"
         ", $colRole = '${getSpaceRoleString(member.role)}' "
         ", $colName = '${member.name ?? ''}' "
         ', $colDeleted = ${member.deleted ? 1 : 0} '
