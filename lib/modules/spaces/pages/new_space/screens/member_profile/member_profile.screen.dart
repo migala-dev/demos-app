@@ -7,7 +7,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/
 import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:demos_app/utils/ui/modals/open_alert_dialog.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
@@ -106,7 +106,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
   }
 
   Future<bool> isCurrentUser() async {
-    final currentUser = await CurrentUserService().getCurrentUser();
+    final currentUser = CurrentUserBloc().state;
     if (currentUser == null) return false;
 
     return widget.member.userId == currentUser.userId;

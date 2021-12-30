@@ -1,4 +1,5 @@
 import 'package:demos_app/core/api/member.api.dart';
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
@@ -13,7 +14,6 @@ import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 
 class MemberService {
@@ -44,7 +44,8 @@ class MemberService {
         await UsersRepository().insertOrUpdate(user);
       }
     } catch (err) {
-      if (err == InvitationExpiredError() || err == InvalidInvitationStatusError()) {
+      if (err == InvitationExpiredError() ||
+          err == InvalidInvitationStatusError()) {
         await removeInvitationForExpiration(spaceId);
       }
       rethrow;
@@ -98,9 +99,10 @@ class MemberService {
   Future<void> leaveSpace(String spaceId) async {
     await MemberApi().leaveSpace(spaceId);
 
-    User? user = await CurrentUserService().getCurrentUser();
+    User? user = CurrentUserBloc().state;
     Member? member = await MembersRepository()
-        .findByUserIdAndSpaceIdAndInvitationStatusAccepted(user!.userId!, spaceId);
+        .findByUserIdAndSpaceIdAndInvitationStatusAccepted(
+            user!.userId!, spaceId);
 
     member!.deleted = true;
 
@@ -122,10 +124,15 @@ class MemberService {
   }
 
   Future<void> removeInvitationForExpiration(String spaceId) async {
-    User? user = await CurrentUserService().getCurrentUser();
-    List<InvitationStatus> invitationStatus = [InvitationStatus.received, InvitationStatus.sended];
+    User? user = CurrentUserBloc().state;
+
+    List<InvitationStatus> invitationStatus = [
+      InvitationStatus.received,
+      InvitationStatus.sended
+    ];
     Member? member = await MembersRepository()
-        .findByUserIdAndSpaceIdAndInvitationStatuses(user!.userId!, spaceId, invitationStatus);
+        .findByUserIdAndSpaceIdAndInvitationStatuses(
+            user!.userId!, spaceId, invitationStatus);
     if (member != null) {
       member.invitationStatus = InvitationStatus.expired;
       await MembersRepository().update(member);
