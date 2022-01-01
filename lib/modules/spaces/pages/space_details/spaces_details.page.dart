@@ -27,7 +27,6 @@ class SpaceDetailsScreen extends StatelessWidget {
           if (space == null) {
             return const Center(child: CircularProgressIndicator());
           }
-
           return Scaffold(
               appBar: AppBar(
                   titleSpacing: 0,
