@@ -16,8 +16,8 @@ class ProposalRepository extends BaseRepository {
     await db.execute('CREATE TABLE $tbProposals('
         '$colId TEXT PRIMARY KEY, '
         '$colManifestoId TEXT,'
-        '$colStatus TEXT,'
-        '$colProgressStatus TEXT,'
+        '$colStatus INTEGER,'
+        '$colProgressStatus INTEGER,'
         '$colExpiratedAt TEXT,');
   }
 }
