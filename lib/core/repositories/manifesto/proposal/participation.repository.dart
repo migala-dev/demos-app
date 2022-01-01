@@ -5,9 +5,9 @@ class ParticipationRepository extends BaseRepository {
   @override
   String get fileName => 'participations';
   final String tbProposals = 'participations';
-  final String colId = 'participation_id';
-  final String colUserId = 'user_id';
-  final String colProposalId = 'proposal_id';
+  final String colId = 'participationId';
+  final String colUserId = 'userId';
+  final String colProposalId = 'proposalId';
 
   @override
   void createDb(Database db, int newVersion) async {

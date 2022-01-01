@@ -3,11 +3,11 @@ import 'package:demos_app/core/repositories/base.repository.dart';
 
 class VotoProposalRepository extends BaseRepository {
   @override
-  String get fileName => 'voto';
-  final String tbProposals = 'voto_proposals';
-  final String colUserHash = 'user_hash';
-  final String colOptionId = 'option_id';
-  final String colCreatedAt = 'created_at';
+  String get fileName => 'votoProposals';
+  final String tbProposals = 'votoProposals';
+  final String colUserHash = 'userHash';
+  final String colOptionId = 'optionId';
+  final String colCreatedAt = 'createdAt';
 
   @override
   void createDb(Database db, int newVersion) async {

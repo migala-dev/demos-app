@@ -6,14 +6,14 @@ class Participation {
   Participation(this.participationId, this.userId, this.proposalId);
 
   factory Participation.fromObject(dynamic o) => Participation(
-        o['participation_id'],
-        o['user_id'],
-        o['proposal_id'],
+        o['participationId'],
+        o['userId'],
+        o['proposalId'],
       );
 
   Map<String, dynamic> toMap() => {
-        'participation_id': participationId,
-        'user_id': userId,
-        'proposal_id': proposalId,
+        'participationId': participationId,
+        'userId': userId,
+        'proposalId': proposalId,
       };
 }

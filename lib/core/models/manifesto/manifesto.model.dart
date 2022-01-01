@@ -10,19 +10,20 @@ class Manifesto {
       this.optionType, this.spaceId);
 
   factory Manifesto.fromObject(dynamic o) => Manifesto(
-      o['manifesto_id'],
-      o['title'],
-      o['content'],
-      o['create_by'],
-      o['option_type'],
-      o['space_id']);
+        o['manifestoId'],
+        o['title'],
+        o['content'],
+        o['createdBy'],
+        o['optionType'],
+        o['spaceId'],
+      );
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-        'manifesto_id': manifestoId,
+        'manifestoId': manifestoId,
         'title': title,
         'content': content,
-        'create_by': createdBy,
-        'option_type': optionType,
-        'space_id': spaceId
+        'createdBy': createdBy,
+        'optionType': optionType,
+        'spaceId': spaceId
       };
 }

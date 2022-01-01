@@ -6,14 +6,14 @@ class ManifestoReferences {
   ManifestoReferences(this.referenceId, this.parentId, this.manifestoId);
 
   factory ManifestoReferences.fromObject(dynamic o) => ManifestoReferences(
-        o['reference_id'],
-        o['parent_id'],
-        o['manifesto_id'],
+        o['referenceId'],
+        o['parentId'],
+        o['manifestoId'],
       );
 
   Map<String, dynamic> toMap() => {
-        'reference_id': referenceId,
-        'parent_id': parentId,
-        'manifesto_id': manifestoId
+        'referenceId': referenceId,
+        'parentId': parentId,
+        'manifestoId': manifestoId
       };
 }

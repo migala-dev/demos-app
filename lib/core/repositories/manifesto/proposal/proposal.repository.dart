@@ -5,11 +5,11 @@ class ProposalRepository extends BaseRepository {
   @override
   String get fileName => 'proposals';
   final String tbProposals = 'proposals';
-  final String colId = 'proposal_id';
-  final String colManifestoId = 'manifesto_id';
+  final String colId = 'proposalId';
+  final String colManifestoId = 'manifestoId';
   final String colStatus = 'status';
-  final String colProgressStatus = 'progress_status';
-  final String colExpiratedAt = 'expirated_at';
+  final String colProgressStatus = 'progressStatus';
+  final String colExpiratedAt = 'expiratedAt';
 
   @override
   void createDb(Database db, int newVersion) async {

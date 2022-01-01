@@ -6,14 +6,14 @@ class VotoProposal {
   VotoProposal(this.userHash, this.optionId, this.createdAt);
 
   factory VotoProposal.fromObject(dynamic o) => VotoProposal(
-        o['user_hash'],
-        o['option_id'],
-        o['created_at'],
+        o['userHash'],
+        o['optionId'],
+        o['createdAt'],
       );
 
   Map<String, dynamic> toMap() => {
-        'user_hash': userHash,
-        'option_id': optionId,
-        'created_at': createdAt,
+        'userHash': userHash,
+        'optionId': optionId,
+        'createdAt': createdAt,
       };
 }

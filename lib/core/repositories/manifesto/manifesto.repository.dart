@@ -5,12 +5,12 @@ class ManifestoRepository extends BaseRepository {
   @override
   String get fileName => 'manifesto';
   final String tbManifesto = 'manifesto';
-  final String colId = 'manifesto_id';
+  final String colId = 'manifestoId';
   final String colTitle = 'title';
   final String colContent = 'content';
-  final String colCreatedBy = 'create_by';
-  final String colOptionType = 'option_type';
-  final String colSpaceId = 'space_id';
+  final String colCreatedBy = 'createdBy';
+  final String colOptionType = 'optionType';
+  final String colSpaceId = 'spaceId';
 
   @override
   void createDb(Database db, int newVersion) async {
