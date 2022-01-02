@@ -100,6 +100,7 @@ class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
       final bool userIsAuthenticate = await TokenService().isAuthenticate();
 
       if (userIsAuthenticate) {
+        await TokenService().refreshTokens();
         CacheService().getCache();
       }
     }
@@ -123,7 +124,7 @@ class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
             title: 'DemosApp',
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Application.router.generator,
-            navigatorKey: NavigationService.navigatorKey, 
+            navigatorKey: NavigationService.navigatorKey,
             builder: (context, child) => Column(
                   children: [
                     Expanded(
