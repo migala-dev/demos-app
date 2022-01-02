@@ -6,11 +6,9 @@ class ViewContent extends StatelessWidget {
   const ViewContent({
     Key? key,
     required this.controller,
-    required this.focusNode,
   }) : super(key: key);
 
   final QuillController controller;
-  final FocusNode focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class ViewContent extends StatelessWidget {
       controller: controller,
       scrollController: ScrollController(),
       scrollable: true,
-      focusNode: focusNode,
+      focusNode: FocusNode(),
       autoFocus: false,
       readOnly: true,
       expands: false,

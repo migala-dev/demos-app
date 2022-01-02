@@ -19,8 +19,7 @@ class ContentStepScreen extends StatefulWidget {
 class _ContentStepScreenState extends State<ContentStepScreen> {
   final TextEditingController titleController = TextEditingController();
   QuillController controller = QuillController.basic();
-  dynamic content;
-  final FocusNode focusNode = FocusNode();
+  String? content;
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +28,19 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          getProposalName(),
+          getProposalNameField(),
           const SizedBox(height: 16),
-          Expanded(child: SingleChildScrollView(child: getAndShowContent())),
+          Expanded(child: SingleChildScrollView(child: getContentField())),
           BigButton(text: 'Continuar', onPressed: () => widget.goToNextStep())
         ],
       ),
     );
   }
 
-  Widget getAndShowContent() {
+  Widget getContentField() {
     return ListTile(
       title: const Text('Contenido'),
-      subtitle: ViewContent(controller: controller, focusNode: focusNode),
+      subtitle: ViewContent(controller: controller),
       trailing: IconButton(
         onPressed: () => openContentEditor(),
         icon: const Icon(
@@ -53,7 +52,7 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
     );
   }
 
-  Widget getProposalName() {
+  Widget getProposalNameField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Título de la propuesta'),
       textCapitalization: TextCapitalization.words,

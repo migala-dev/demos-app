@@ -89,7 +89,9 @@ var newProposalHandler = Handler(
 
 var editProposalContentHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return EditContentScreen();
+  return EditContentScreen(
+    content: '',
+  );
 });
 
 var generalSettingsHandler = Handler(

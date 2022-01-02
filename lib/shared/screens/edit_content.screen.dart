@@ -3,13 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 
-// ignore: must_be_immutable
 class EditContentScreen extends StatelessWidget {
-  String? content;
-  late QuillController controller;
-  final FocusNode focusNode = FocusNode();
+  final String? content;
+  late final QuillController controller;
 
-  EditContentScreen({Key? key, this.content}) : super(key: key) {
+  EditContentScreen({Key? key, required this.content}) : super(key: key) {
     if (content != null) {
       controller = QuillController(
           document: Document.fromJson(jsonDecode(content!)),
@@ -23,7 +21,7 @@ class EditContentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: save(context),
+      appBar: getAppBar(context),
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -42,7 +40,7 @@ class EditContentScreen extends StatelessWidget {
     );
   }
 
-  AppBar save(BuildContext context) {
+  AppBar getAppBar(BuildContext context) {
     return AppBar(
       actions: [
         IconButton(
@@ -63,7 +61,7 @@ class EditContentScreen extends StatelessWidget {
         controller: controller,
         scrollController: ScrollController(),
         scrollable: true,
-        focusNode: focusNode,
+        focusNode: FocusNode(),
         autoFocus: true,
         readOnly: false,
         placeholder: 'Agrega tu propuesta aquí.',
