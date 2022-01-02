@@ -19,6 +19,8 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/widgets/general/no_connection_notificator.widget.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
+import 'navigation.service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -121,6 +123,7 @@ class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
             title: 'DemosApp',
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Application.router.generator,
+            navigatorKey: NavigationService.navigatorKey, 
             builder: (context, child) => Column(
                   children: [
                     Expanded(

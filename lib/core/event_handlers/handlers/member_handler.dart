@@ -9,6 +9,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/sp
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
+import 'package:demos_app/shared/services/new_invitation_dialog.service.dart';
 
 class MemberHandler extends EventHandlerMixin {
   static final _memberHandler = MemberHandler._internal();
@@ -37,7 +38,7 @@ class SpaceInvitationEvent implements EventHandler {
     SpaceResponse response = await SpaceApi().getSpace(spaceId);
 
     await NewSpaceService().handleSpaceInvitation(response);
-
+    NewInvitationDialogService().open(response.space, response.member);
     SpacesBloc().add(LoadSpacesEvent());
   }
 }
