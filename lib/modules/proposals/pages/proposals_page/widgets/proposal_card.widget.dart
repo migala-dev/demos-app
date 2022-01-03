@@ -1,10 +1,12 @@
+import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/proposals/pages/proposals_page/widgets/proposal_card/created_by_info.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals_page/widgets/proposal_card/finished_in_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals_page/widgets/proposal_card/vote_counter_tile.widget.dart';
 
 class ProposalCard extends StatelessWidget {
-  const ProposalCard({Key? key}) : super(key: key);
+  final Manifesto manifesto;
+  const ProposalCard({Key? key, required this.manifesto}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +25,18 @@ class ProposalCard extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           '#1',
                           style: TextStyle(color: Colors.grey),
                         ),
-                        SizedBox(width: 10),
-                        CreatedByChip()
+                        const SizedBox(width: 10),
+                        CreatedByChip(userId: manifesto.createdBy)
                       ],
                     ),
-                    const Text(
-                      'Primera Propuesta',
-                      style: TextStyle(fontSize: 18),
+                    Text(
+                      manifesto.title,
+                      style: const TextStyle(fontSize: 18),
                     )
                   ],
                 ),
@@ -44,7 +46,14 @@ class ProposalCard extends StatelessWidget {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [FinishedInTile(), VoteCounter()],
+              children: [
+                FinishedInTile(
+                  manifestoId: manifesto.manifestoId,
+                ),
+                VoteCounter(
+                  manifestoId: manifesto.manifestoId,
+                )
+              ],
             )
           ],
         ),

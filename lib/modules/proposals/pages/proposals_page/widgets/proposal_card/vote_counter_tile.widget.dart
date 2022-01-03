@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class VoteCounter extends StatelessWidget {
-  const VoteCounter({Key? key}) : super(key: key);
+  final String manifestoId;
+
+  const VoteCounter({Key? key, required this.manifestoId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,18 +13,31 @@ class VoteCounter extends StatelessWidget {
         const SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
+          children: [
+            const Text(
               'VOTOS:',
               style: TextStyle(color: Colors.grey),
             ),
-            Text(
-              '12/20',
-              style: TextStyle(fontSize: 18),
-            )
+            FutureBuilder(
+              future: getVotesProgress(),
+              initialData: '',
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (!snapshot.hasData) {
+                  return Container();
+                }
+                return Text(
+                  snapshot.data!,
+                  style: const TextStyle(fontSize: 18),
+                );
+              },
+            ),
           ],
         )
       ],
     );
+  }
+
+  Future<String> getVotesProgress() async {
+    return '12/20';
   }
 }
