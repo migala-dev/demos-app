@@ -1,3 +1,5 @@
+import 'package:demos_app/core/bloc/manifestos/manifestos_bloc.dart';
+import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answers_step.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/content_step.screen.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +46,19 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
   void goToNextStep() =>
       setState(() => currentStep = NewProposalScreenEnum.answers);
 
-  void createProposal() => Navigator.pop(context);
+  void createProposal() {
+    // TODO: cambiar propuesta ficticia por llamada a API
+    ManifestosBloc().add(ManifestoAdded(Manifesto(
+      '123',
+      'Primera Propuesta',
+      '0',
+      '4c2965c9-e5be-4b91-b6d7-db29956334c8',
+      '',
+      '0',
+    )));
+
+    Navigator.pop(context);
+  }
 
   Column getAppBarTitle() {
     return Column(

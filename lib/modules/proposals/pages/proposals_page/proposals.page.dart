@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/bloc/manifestos/manifestos_bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposals_page/widgets/no_proposals.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals_page/screens/no_proposals_screen.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposals_page/widgets/manifestos_lisviews.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals_page/widgets/proposal_history_filter_bar/proposal_history_filter_bar.dart';
 import 'package:demos_app/modules/proposals/pages/proposals_page/enums/proposal_history_filter.dart';
@@ -23,10 +23,10 @@ class _ProposalsPageState extends State<ProposalsPage> {
       builder: (context, state) {
         if (state is ManifestosLoadSuccess) {
           if (state.manifestos.isEmpty) {
-            return Center(child: NoProposals());
+            return const NoProposalsScreen();
           }
 
-          Column(
+          return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(height: 15),

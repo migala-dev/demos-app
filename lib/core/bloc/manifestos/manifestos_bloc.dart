@@ -22,8 +22,9 @@ class ManifestosBloc extends Bloc<ManifestosEvent, ManifestosState> {
 
     on<ManifestoAdded>((event, emit) {
       if (state is ManifestosLoadSuccess) {
-        emit((state as ManifestosLoadSuccess)
-            .copyWithNewManifesto(event.newManifesto));
+        final currentState = (state as ManifestosLoadSuccess);
+        emit(ManifestosLoadInProgress());
+        emit(currentState.copyWithNewManifesto(event.newManifesto));
       }
     });
   }
