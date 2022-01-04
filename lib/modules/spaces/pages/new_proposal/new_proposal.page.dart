@@ -1,4 +1,5 @@
 import 'package:demos_app/core/bloc/manifestos/manifestos_bloc.dart';
+import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
 import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answers_step.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/content_step.screen.dart';
@@ -53,7 +54,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
       'Primera Propuesta',
       '0',
       '4c2965c9-e5be-4b91-b6d7-db29956334c8',
-      '',
+      ProposalOptionType.aFavorEnContra,
       '0',
     )));
 
