@@ -1,3 +1,4 @@
+import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/repositories/base.repository.dart';
 
@@ -22,5 +23,36 @@ class ManifestoRepository extends BaseRepository {
         '$colCreatedBy TEXT,'
         '$colOptionType TEXT,'
         '$colSpaceId TEXT,');
+  }
+
+  Future<String> insert(Manifesto manifesto) async {
+    Database? db = await this.db;
+
+    Manifesto? manifestoSaved = await findByManifestoId(manifesto.manifestoId);
+    if (manifestoSaved == null) {
+      await db!.insert(tbManifesto, manifesto.toMap());
+
+      return manifesto.manifestoId;
+    }
+
+    return manifestoSaved.manifestoId;
+  }
+
+  Future<Manifesto?> findByManifestoId(String manifestoId) async {
+    Database? db = await this.db;
+
+    final result = await db!
+        .rawQuery("SELECT * FROM $tbManifesto WHERE  $colId = '$manifestoId'");
+
+    return result.isNotEmpty ? Manifesto.fromObject(result[0]) : null;
+  }
+
+  Future<List<Manifesto>> findBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+
+    final result = await db!
+        .rawQuery("SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId'");
+
+    return result.map((row) => Manifesto.fromObject(row)).toList();
   }
 }

@@ -24,9 +24,20 @@ class _ProposalsPageState extends State<ProposalsPage> {
             selected: filterSelected,
             onFilteredChange: _onFilteredHistoricalProposalsChange),
         const SizedBox(height: 15),
-        ProposalCard(
-            manifesto: Manifesto('445', 'Primera Propuesta', ':0',
-                '4c2965c9-e5be-4b91-b6d7-db29956334c8', 'aaa', ' aa'))
+        Expanded(
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: 20,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 10),
+                child: ProposalCard(
+                    manifesto: Manifesto('445', 'Primera Propuesta', ':0',
+                        '4c2965c9-e5be-4b91-b6d7-db29956334c8', 'aaa', ' aa')),
+              );
+            },
+          ),
+        ),
       ],
     );
   }

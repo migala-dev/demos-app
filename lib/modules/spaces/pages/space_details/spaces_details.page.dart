@@ -49,12 +49,12 @@ class SpaceDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Column(
                   children: [
-                    const ProposalsPage(),
-                    const Spacer(),
+                    const Expanded(child: ProposalsPage()),
                     SafeWidgetValidator(
                         validators: [IsCurrentUserAdminWidgetValidator()],
-                        child: NoRepresentantAlert(space: space)),
-                    const SizedBox(height: 20)
+                        child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
+                            child: NoRepresentantAlert(space: space))),
                   ],
                 ),
               ));
