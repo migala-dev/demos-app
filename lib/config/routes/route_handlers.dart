@@ -1,3 +1,4 @@
+import 'package:demos_app/core/bloc/manifestos/manifestos_bloc.dart';
 import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
@@ -48,6 +49,7 @@ var spaceDetailsHandler =
   final spaceView = context!.settings!.arguments as SpaceView;
 
   SpaceBloc().add(SetSpaceEvent(spaceView.spaceId));
+  ManifestosBloc().add(ManifestosLoaded(spaceView.spaceId));
 
   return const SpaceDetailsScreen();
 });

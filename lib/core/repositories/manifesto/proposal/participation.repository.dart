@@ -14,6 +14,6 @@ class ParticipationRepository extends BaseRepository {
     await db.execute('CREATE TABLE $tbProposals('
         '$colId TEXT PRIMARY KEY, '
         '$colUserId TEXT,'
-        '$colProposalId TEXT,');
+        '$colProposalId TEXT)');
   }
 }

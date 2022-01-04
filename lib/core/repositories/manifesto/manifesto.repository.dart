@@ -17,12 +17,11 @@ class ManifestoRepository extends BaseRepository {
   void createDb(Database db, int newVersion) async {
     await db.execute('CREATE TABLE $tbManifesto('
         '$colId TEXT PRIMARY KEY, '
-        '$colSpaceId TEXT, '
         '$colTitle TEXT,'
         '$colContent TEXT,'
         '$colCreatedBy TEXT,'
         '$colOptionType TEXT,'
-        '$colSpaceId TEXT,');
+        '$colSpaceId TEXT)');
   }
 
   Future<String> insert(Manifesto manifesto) async {

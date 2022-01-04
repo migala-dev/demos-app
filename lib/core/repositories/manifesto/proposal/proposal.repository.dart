@@ -18,6 +18,6 @@ class ProposalRepository extends BaseRepository {
         '$colManifestoId TEXT,'
         '$colStatus INTEGER,'
         '$colProgressStatus INTEGER,'
-        '$colExpiratedAt TEXT,');
+        '$colExpiratedAt TEXT)');
   }
 }

@@ -14,6 +14,6 @@ class ManifestoReferencesRepository extends BaseRepository {
     await db.execute('CREATE TABLE $tbManifestoReferences('
         '$colId TEXT PRIMARY KEY, '
         '$colParentId TEXT,'
-        '$colManifestoId TEXT,');
+        '$colManifestoId TEXT)');
   }
 }

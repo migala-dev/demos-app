@@ -16,6 +16,6 @@ class ManifestoOptionRepository extends BaseRepository {
         '$colId TEXT PRIMARY KEY, '
         '$colTitle TEXT,'
         '$colManifestoId TEXT,'
-        '$colCreatedBy TEXT,');
+        '$colCreatedBy TEXT)');
   }
 }

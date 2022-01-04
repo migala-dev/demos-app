@@ -14,6 +14,6 @@ class VotoProposalRepository extends BaseRepository {
     await db.execute('CREATE TABLE $tbProposals('
         '$colUserHash TEXT,'
         '$colOptionId TEXT,'
-        '$colCreatedAt TEXT,');
+        '$colCreatedAt TEXT)');
   }
 }
