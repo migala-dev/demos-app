@@ -12,7 +12,7 @@ class Member {
   String? _updatedBy;
   String? _createdAt;
   String? _updatedAt;
-  late InvitationStatus invitationStatus;
+  InvitationStatus? invitationStatus;
   bool deleted = false;
 
   String? get memberId => _memberId;
@@ -30,7 +30,7 @@ class Member {
     map['memberId'] = _memberId;
     map['spaceId'] = _spaceId;
     map['userId'] = _userId;
-    map['invitationStatus'] = invitationStatus.index;
+    map['invitationStatus'] = invitationStatus?.index;
     map['role'] = getSpaceRoleString(_role);
     map['name'] = _name;
     map['expiredAt'] = _expiredAt;

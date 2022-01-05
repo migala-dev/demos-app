@@ -7,6 +7,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:demos_app/app_initializer.dart';
 import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
@@ -18,6 +19,8 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/widgets/general/no_connection_notificator.widget.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
+import 'navigation.service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
@@ -26,6 +29,8 @@ void main() async {
   ));
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  CurrentUserBloc().add(CurrentUserLoaded());
 
   final connectivityResult = await Connectivity().checkConnectivity();
   ConnectionStatusBloc().add(ConnectionStartedEvent(connectivityResult));
@@ -95,6 +100,7 @@ class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
       final bool userIsAuthenticate = await TokenService().isAuthenticate();
 
       if (userIsAuthenticate) {
+        await TokenService().refreshTokens();
         CacheService().getCache();
       }
     }
@@ -118,6 +124,7 @@ class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
             title: 'DemosApp',
             debugShowCheckedModeBanner: false,
             onGenerateRoute: Application.router.generator,
+            navigatorKey: NavigationService.navigatorKey,
             builder: (context, child) => Column(
                   children: [
                     Expanded(

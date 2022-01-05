@@ -20,7 +20,6 @@ class SpacesScreen extends StatelessWidget {
       if (areSpacesEmpty(state)) {
         return const EmptySpacesScreen();
       }
-
       return SpaceListScreen(
           spaces: state.spaces, invitations: state.invitations);
     });

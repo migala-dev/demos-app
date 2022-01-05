@@ -5,8 +5,11 @@ import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
+import 'package:demos_app/shared/services/new_invitation_dialog.service.dart';
 
 class MemberHandler extends EventHandlerMixin {
   static final _memberHandler = MemberHandler._internal();
@@ -35,7 +38,7 @@ class SpaceInvitationEvent implements EventHandler {
     SpaceResponse response = await SpaceApi().getSpace(spaceId);
 
     await NewSpaceService().handleSpaceInvitation(response);
-
+    NewInvitationDialogService().open(response.space, response.member);
     SpacesBloc().add(LoadSpacesEvent());
   }
 }
@@ -49,7 +52,13 @@ class UpdateMemberEvent implements EventHandler {
     String spaceId = dataEvent.data!['spaceId'];
     String memberId = dataEvent.data!['memberId'];
     try {
-      MemberService().getMember(spaceId, memberId);
+      final spaceMembersBloc = SpaceMembersBloc();
+      final currerntSpaceId = SpaceBloc().state?.spaceId;
+      await MemberService().getMember(spaceId, memberId);
+
+      if (currerntSpaceId == spaceId) {
+        spaceMembersBloc.add(SpaceMemberUpdated(memberId));
+      }
     } catch (err) {
       if (err != UserIsNotMemberError()) {
         rethrow;
@@ -65,10 +74,17 @@ class InvitationCanceledEvent implements EventHandler {
   @override
   Future<void> handleEvent(Cache dataEvent) async {
     String memberId = dataEvent.data!['memberId'];
+    String spaceId = dataEvent.data!['spaceId'];
+    final spaceMembersBloc = SpaceMembersBloc();
+    final currerntSpaceId = SpaceBloc().state?.spaceId;
 
     await MemberService().cancelInvitation(memberId);
 
     SpacesBloc().add(LoadSpacesEvent());
+
+    if (currerntSpaceId == spaceId) {
+      spaceMembersBloc.add(SpaceMemberDeleted(memberId));
+    }
   }
 }
 

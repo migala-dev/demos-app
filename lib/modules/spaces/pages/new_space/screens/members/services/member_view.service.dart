@@ -34,6 +34,29 @@ class MemberViewService {
     return memberViews;
   }
 
+  Future<MemberView?> getMemberViewByMemberId(String memberId) async {
+    final member = await MemberService().getMemberByMemberId(memberId);
+    if (member == null) return null;
+    final user = await UsersRepository().findById(member.userId!);
+    if (user == null) return null;
+
+    final memberView = MemberView(
+        userId: member.userId!,
+        memberName: member.name,
+        participationCount: 0,
+        role: member.role,
+        memberCreatedAt: member.createdAt,
+        invitationStatus: member.invitationStatus,
+        memberId: member.memberId,
+        userName: user.name,
+        spaceId: member.spaceId,
+        phoneNumber: user.phoneNumber,
+        profilePictureKey: user.profilePictureKey,
+        invitationExpiredAt: member.expiredAt);
+
+    return memberView;
+  }
+
   Future<List<MemberView>> findMembersByDisplayName(String displayName) async {
     final memberViews = await getMemberViews();
 

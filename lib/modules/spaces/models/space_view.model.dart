@@ -5,7 +5,7 @@ class SpaceView {
   final int membersCount;
   final String? invitationCreatedAt;
   final String? invitationExpiredAt;
-  final String? invitedBy;
+  late String? invitedBy;
 
   SpaceView(
       {required this.spaceId,

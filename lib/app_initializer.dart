@@ -1,6 +1,5 @@
-import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/services/cache.service.dart';
-import 'package:demos_app/core/services/current_user.service.dart';
+import 'package:demos_app/core/services/current_user/current_user.storage.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
 
@@ -13,12 +12,13 @@ class AppInitializer {
 
   Future<void> initApp() async {
     final bool userIsAuthenticate = await TokenService().isAuthenticate();
-    if (!isAlreadyInitialize && userIsAuthenticate) {
-      User? currentUser = await CurrentUserService().getCurrentUser();
+    final String? currentUserId = await CurrentUserStorage().getCurrentUserId();
+
+    if (!isAlreadyInitialize && userIsAuthenticate && currentUserId != null) {
       WebSocketService webSocketService = WebSocketService();
-      webSocketService.createConnection(currentUser!.userId!);
+      webSocketService.createConnection(currentUserId);
       await TokenService().refreshTokens();
-      CacheService().getCache();
+      await CacheService().getCache();
 
       isAlreadyInitialize = true;
     }

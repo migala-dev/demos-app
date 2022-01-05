@@ -1,4 +1,6 @@
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/models/errors/invalid_invitation_status.error.dart';
+import 'package:demos_app/core/models/errors/invitation_expired.error.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
@@ -200,13 +202,22 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
   void accept() {
     wrapLoadingTransaction(() async {
-      await MemberService().acceptInvitation(spaceView!.spaceId);
+      try {
+        await MemberService().acceptInvitation(spaceView!.spaceId);
 
-      reloadSpaceList();
+        reloadSpaceList();
 
-      Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
-          arguments: spaceView);
-      await goToSpaceDetails(context, spaceView!);
+        Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
+            arguments: spaceView);
+        await goToSpaceDetails(context, spaceView!);
+      } catch (err) {
+        if (err == InvitationExpiredError() || err == InvalidInvitationStatusError()) {
+          reloadSpaceList();
+          goBack(context);
+        } else {
+          rethrow;
+        }
+      }
     });
   }
 
