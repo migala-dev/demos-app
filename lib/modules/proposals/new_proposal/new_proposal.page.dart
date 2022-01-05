@@ -1,6 +1,6 @@
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/answers_step.screen.dart';
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/content_step/content_step.screen.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/modules/proposals/new_proposal/screens/answer_step/answers_step.screen.dart';
+import 'package:demos_app/modules/proposals/new_proposal/screens/content_step/content_step.screen.dart';
 
 class NewProposalScreen extends StatefulWidget {
   const NewProposalScreen({Key? key}) : super(key: key);
