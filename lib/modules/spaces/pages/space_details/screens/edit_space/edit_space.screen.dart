@@ -24,55 +24,57 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SpaceBloc, Space?>(
-        bloc: SpaceBloc(),
-        builder: (context, space) {
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: AppBar(
-              title: const Text('Espacio'),
-            ),
-            body: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 24),
-                  child: Stack(
-                    children: [
-                      SpacePicture(
-                        width: 164,
-                        pictureKey: space!.pictureKey,
+      bloc: SpaceBloc(),
+      builder: (context, space) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            title: const Text('Espacio'),
+          ),
+          body: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 24),
+                child: Stack(
+                  children: [
+                    SpacePicture(
+                      width: 164,
+                      pictureKey: space!.pictureKey,
+                    ),
+                    SafeWidgetValidator(
+                      validators: [IsCurrentUserAdminWidgetValidator()],
+                      child: Positioned(
+                        right: 0,
+                        bottom: 0,
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            onPictureEditPress(space);
+                          },
+                          mini: true,
+                          child: const Icon(Icons.photo_camera),
+                        ),
                       ),
-                      SafeWidgetValidator(
-                        validators: [IsCurrentUserAdminWidgetValidator()],
-                        child: Positioned(
-                            right: 0,
-                            bottom: 0,
-                            child: FloatingActionButton(
-                              onPressed: () {
-                                onPictureEditPress(space);
-                              },
-                              mini: true,
-                              child: const Icon(Icons.photo_camera),
-                            )),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-                SpaceField(
-                  title: 'Nombre',
-                  subtitle: space.name ?? '',
-                  icon: Icons.business,
-                  onEdit: () => updateSpaceName(space),
-                ),
-                SpaceField(
-                  title: 'Descripción',
-                  subtitle: space.description ?? '',
-                  icon: Icons.info_outline,
-                  onEdit: () => updateSpaceDescription(space),
-                )
-              ],
-            ),
-          );
-        });
+              ),
+              SpaceField(
+                title: 'Nombre',
+                subtitle: space.name ?? '',
+                icon: Icons.business,
+                onEdit: () => updateSpaceName(space),
+              ),
+              SpaceField(
+                title: 'Descripción',
+                subtitle: space.description ?? '',
+                icon: Icons.info_outline,
+                onEdit: () => updateSpaceDescription(space),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   void onPictureEditPress(Space? space) async {

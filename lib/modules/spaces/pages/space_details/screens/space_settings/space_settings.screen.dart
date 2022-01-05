@@ -13,21 +13,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SpaceSettingsScreen extends StatelessWidget {
   const SpaceSettingsScreen({Key? key}) : super(key: key);
 
-  void goToSpacePercentageSettings(BuildContext context) {
-    Navigator.pushNamed(context, Routes.spacePercentage);
-  }
+  void goToSpacePercentageSettings(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.spacePercentage);
 
-  void goToSpaceMembers(BuildContext context) {
-    Navigator.pushNamed(context, Routes.spaceMembers);
-  }
+  void goToSpaceMembers(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.spaceMembers);
 
-  void goToEditSpace(BuildContext context) {
-    Navigator.pushNamed(context, Routes.editSpace);
-  }
+  void goToEditSpace(BuildContext context) =>
+      Navigator.pushNamed(context, Routes.editSpace);
 
-  void goToSpaces(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (route) => false);
-  }
+  void goToSpaces(BuildContext context) => Navigator.pushNamedAndRemoveUntil(
+      context, Routes.spaces, (route) => false);
 
   void leaveSpace(BuildContext context) {
     openConfirmationDialog(context,

@@ -23,6 +23,8 @@ class Routes {
 
   // Proposals
   static const String newProposal = '/new-proposal';
+  static const String editProposalContent =
+      '/new-proposal/edit-proposal-content';
 
   // Settings
   static const String settings = '/settings/general';
@@ -55,6 +57,7 @@ class Routes {
 
     // Proposals
     router.define(newProposal, handler: newProposalHandler);
+    router.define(editProposalContent, handler: editProposalContentHandler);
 
     // Settings
     router.define(settings, handler: generalSettingsHandler);

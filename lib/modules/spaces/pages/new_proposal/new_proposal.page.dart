@@ -1,5 +1,5 @@
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answers_step.screen.dart';
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/content_step.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/answers_step.screen.dart';
+import 'package:demos_app/modules/spaces/pages/new_proposal/screens/content_step/content_step.screen.dart';
 import 'package:flutter/material.dart';
 
 class NewProposalScreen extends StatefulWidget {
@@ -17,6 +17,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: getAppBarTitle()),
       body: LayoutBuilder(
         builder: (context, constraints) => SingleChildScrollView(
