@@ -118,10 +118,12 @@ class MembersRepository {
   Future<List<Member>> findMembersAndInvitationsBySpaceId(
       String? spaceId) async {
     Database? db = await this.db;
+    final String validStatus = '${InvitationStatus.accepted.index}, '
+        '${InvitationStatus.sended.index}, '
+        '${InvitationStatus.received.index}';
     final result = await db!.rawQuery('SELECT * FROM $tblMembers '
         "WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 "
-        'AND $colInvitationStatus != ${InvitationStatus.canceled.index} '
-        'AND $colInvitationStatus != ${InvitationStatus.expired.index}');
+        'AND $colInvitationStatus IN($validStatus)');
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
