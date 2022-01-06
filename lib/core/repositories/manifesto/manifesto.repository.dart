@@ -8,19 +8,24 @@ class ManifestoRepository extends BaseRepository {
   final String colId = 'manifestoId';
   final String colTitle = 'title';
   final String colContent = 'content';
-  final String colCreatedBy = 'createdBy';
   final String colOptionType = 'optionType';
   final String colSpaceId = 'spaceId';
+  final String colCreatedBy = 'createdBy';
+  final String colCreatedAt = 'createdAt';
+  final String colUpdatedBy = 'colUpdatedBy';
+  final String colUpdatedAt = 'colUpdatedAt';
 
   @override
   void createDb(Database db, int newVersion) async {
     await db.execute('CREATE TABLE $tbManifesto('
         '$colId TEXT PRIMARY KEY, '
-        '$colSpaceId TEXT, '
-        '$colTitle TEXT,'
+        '$colTitle TEXT, '
         '$colContent TEXT,'
+        '$colOptionType INTEGER,'
+        '$colSpaceId TEXT,'
         '$colCreatedBy TEXT,'
-        '$colOptionType TEXT,'
-        '$colSpaceId TEXT,');
+        '$colCreatedAt TEXT,'
+        '$colUpdatedBy TEXT,'
+        '$colUpdatedAt TEXT)');
   }
 }

@@ -7,9 +7,21 @@ class Proposal {
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
   final String expiratedAt;
+  final String createdBy;
+  final String createdAt;
+  final String updatedBy;
+  final String updatedAt;
 
-  Proposal(this.proposalId, this.manifestoId, this.status, this.progressStatus,
-      this.expiratedAt);
+  Proposal(
+      this.proposalId,
+      this.manifestoId,
+      this.status,
+      this.progressStatus,
+      this.expiratedAt,
+      this.createdBy,
+      this.createdAt,
+      this.updatedBy,
+      this.updatedAt);
 
   factory Proposal.fromObject(dynamic o) => Proposal(
         o['proposalId'],
@@ -17,6 +29,10 @@ class Proposal {
         getProposalStatusFromInt(o['status']),
         getProposalProgressStatusFromInt(o['progressStatus']),
         o['expiratedAt'],
+        o['createdBy'],
+        o['createdAt'],
+        o['updatedBy'],
+        o['updatedAt'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -25,5 +41,9 @@ class Proposal {
         'status': status.index,
         'progressStatus': progressStatus.index,
         'expiratedAt': expiratedAt,
+        'createdBy': createdBy,
+        'createdAt': createdAt,
+        'updatedBy': updatedBy,
+        'updatedAt': updatedAt,
       };
 }
