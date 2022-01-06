@@ -120,7 +120,8 @@ class MembersRepository {
     Database? db = await this.db;
     final result = await db!.rawQuery('SELECT * FROM $tblMembers '
         "WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 "
-        'AND $colInvitationStatus != ${InvitationStatus.canceled.index}');
+        'AND $colInvitationStatus != ${InvitationStatus.canceled.index} '
+        'AND $colInvitationStatus != ${InvitationStatus.expired.index}');
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
