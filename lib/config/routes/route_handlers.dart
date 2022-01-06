@@ -2,6 +2,7 @@ import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/proposals/new_proposal/new_proposal.page.dart';
+import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
@@ -85,6 +86,7 @@ var spaceInvitationHandler = Handler(
 
 var newProposalHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  NewProposalContentService().emptyNewProposal();
   return const NewProposalScreen();
 });
 

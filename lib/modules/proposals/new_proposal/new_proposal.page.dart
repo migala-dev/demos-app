@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/proposals/new_proposal/modals/open_publish_proposal_dialog.dart';
 import 'package:demos_app/modules/proposals/new_proposal/modals/open_save_proposal_draft_dialog.modal.dart';
 import 'package:demos_app/modules/proposals/new_proposal/screens/answer_step/answers_step.screen.dart';
@@ -21,13 +22,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (currentStep == NewProposalScreenEnum.content) {
-          final optionSelected =
-              await openSaveProposalDraftDialog(context, onSaveDraft: () {});
-          if (optionSelected == 'cancel') {
-            return false;
-          }
-
-          return true;
+          return await handlePopInFirstStep();
         }
 
         goToContent();
@@ -52,6 +47,20 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> handlePopInFirstStep() async {
+    if (NewProposalContentService().isEmpty()) {
+      return true;
+    }
+
+    final optionSelected =
+        await openSaveProposalDraftDialog(context, onSaveDraft: () {});
+    if (optionSelected == 'cancel') {
+      return false;
+    }
+
+    return true;
   }
 
   void goToContent() =>
