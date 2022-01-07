@@ -2,10 +2,8 @@ import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:flutter/material.dart';
 
 class ProposalAnswerWidget extends StatefulWidget {
-  ProposalAnswerWidget({Key? key, this.title, required this.isVisible})
-      : super(key: key);
-  String? title;
-  late bool isVisible;
+  ProposalAnswerWidget({Key? key, this.title}) : super(key: key);
+  late final String? title;
 
   @override
   State<ProposalAnswerWidget> createState() => _ProposalAnswerWidgetState();
@@ -38,13 +36,10 @@ class _ProposalAnswerWidgetState extends State<ProposalAnswerWidget> {
               children: [
                 SizedBox(
                   width: 36,
-                  child: Visibility(
-                    visible: widget.isVisible,
-                    child: IconButton(
-                      icon: const Icon(Icons.delete),
-                      color: Colors.grey,
-                      onPressed: () {},
-                    ),
+                  child: IconButton(
+                    icon: const Icon(Icons.delete),
+                    color: Colors.grey,
+                    onPressed: () {},
                   ),
                 ),
                 SizedBox(
@@ -52,7 +47,7 @@ class _ProposalAnswerWidgetState extends State<ProposalAnswerWidget> {
                   child: IconButton(
                     icon: const Icon(Icons.edit),
                     color: Colors.blue,
-                    onPressed: () => changeVisibility(),
+                    onPressed: () => getProposalTitle(context),
                   ),
                 ),
               ],
@@ -70,17 +65,11 @@ class _ProposalAnswerWidgetState extends State<ProposalAnswerWidget> {
     );
   }
 
-  void changeVisibility() {
-    return setState(() {
-      widget.isVisible = !widget.isVisible;
-    });
-  }
-
   void getProposalTitle(BuildContext context) async {
     String? title = await openUpdateStringFieldModal(
       context,
-      title: 'title',
-      hintText: 'hintText',
+      title: 'Título de la respuesta',
+      hintText: 'Escribe el título de tu respuesta aquí.',
       initialValue: widget.title,
     );
 

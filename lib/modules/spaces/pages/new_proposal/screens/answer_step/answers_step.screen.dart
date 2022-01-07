@@ -1,6 +1,6 @@
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/add_proposal_answer.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/proposal_answer.widget.dart';
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/proposal_list.widget.dart';
+import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/answers_list.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -21,15 +21,16 @@ class _AnswersStepScreenState extends State<AnswersStepScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Expanded(child: ProposalAnswerWidget(title: 'A favor')),
+        Expanded(child: ProposalAnswerWidget(title: 'En contra')),
         Expanded(
-            child: ProposalAnswerWidget(isVisible: true, title: 'A favor')),
-        Expanded(
-            child: ProposalAnswerWidget(isVisible: true, title: 'En contra')),
+          child: AnswersListWidget(answers: answers, title: ''),
+        ),
 
         // Expanded(
         //   child: ProposalListWidget(title: '', answers: answers),
         // ),
-        Expanded(child: AddProposalAnswer(add: addNewProposal)),
+        Expanded(child: AddProposalAnswer(add: () {})),
         Expanded(flex: 5, child: Container()),
         Expanded(
           child: BigButton(
@@ -39,9 +40,5 @@ class _AnswersStepScreenState extends State<AnswersStepScreen> {
         )
       ],
     );
-  }
-
-  Widget addNewProposal() {
-    return ProposalAnswerWidget(isVisible: true);
   }
 }

@@ -1,8 +1,8 @@
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/proposal_answer.widget.dart';
 import 'package:flutter/material.dart';
 
-class ProposalListWidget extends StatelessWidget {
-  const ProposalListWidget(
+class AnswersListWidget extends StatelessWidget {
+  const AnswersListWidget(
       {Key? key, required this.title, required this.answers})
       : super(key: key);
 
@@ -16,7 +16,6 @@ class ProposalListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         Widget answer = answers[index];
         return ProposalAnswerWidget(
-          isVisible: true,
           title: title,
         );
       },
