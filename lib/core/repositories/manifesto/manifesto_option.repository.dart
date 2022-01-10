@@ -5,10 +5,14 @@ class ManifestoOptionRepository extends BaseRepository {
   @override
   String get fileName => 'manifesto_options';
   final String tbManifestoOptions = 'manifesto_options';
-  final String colId = 'optionId';
+  final String colId = 'manifestoOptionId';
   final String colTitle = 'title';
   final String colManifestoId = 'manifestoId';
+  final String colDeleted = 'deleted';
   final String colCreatedBy = 'createdBy';
+  final String colCreatedAt = 'createdAt';
+  final String colUpdatedBy = 'updatedBy';
+  final String colUpdatedAt = 'updatedAt';
 
   @override
   void createDb(Database db, int newVersion) async {
@@ -16,6 +20,10 @@ class ManifestoOptionRepository extends BaseRepository {
         '$colId TEXT PRIMARY KEY, '
         '$colTitle TEXT,'
         '$colManifestoId TEXT,'
-        '$colCreatedBy TEXT,');
+        '$colDeleted INTEGER,'
+        '$colCreatedBy TEXT,'
+        '$colCreatedAt TEXT,'
+        '$colUpdatedBy TEXT,'
+        '$colUpdatedAt TEXT)');
   }
 }

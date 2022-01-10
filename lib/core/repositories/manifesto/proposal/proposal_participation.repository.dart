@@ -1,11 +1,11 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/repositories/base.repository.dart';
 
-class ParticipationRepository extends BaseRepository {
+class ProposalParticipationRepository extends BaseRepository {
   @override
-  String get fileName => 'participations';
-  final String tbProposals = 'participations';
-  final String colId = 'participationId';
+  String get fileName => 'proposalParticipations';
+  final String tbProposals = 'proposalParticipations';
+  final String colId = 'proposalParticipationId';
   final String colUserId = 'userId';
   final String colProposalId = 'proposalId';
 
@@ -14,6 +14,6 @@ class ParticipationRepository extends BaseRepository {
     await db.execute('CREATE TABLE $tbProposals('
         '$colId TEXT PRIMARY KEY, '
         '$colUserId TEXT,'
-        '$colProposalId TEXT,');
+        '$colProposalId TEXT)');
   }
 }

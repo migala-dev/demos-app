@@ -10,6 +10,10 @@ class ProposalRepository extends BaseRepository {
   final String colStatus = 'status';
   final String colProgressStatus = 'progressStatus';
   final String colExpiratedAt = 'expiratedAt';
+  final String colCreatedBy = 'createdBy';
+  final String colCreatedAt = 'createdAt';
+  final String colUpdatedBy = 'updatedBy';
+  final String colUpdatedAt = 'updatedAt';
 
   @override
   void createDb(Database db, int newVersion) async {
@@ -18,6 +22,10 @@ class ProposalRepository extends BaseRepository {
         '$colManifestoId TEXT,'
         '$colStatus INTEGER,'
         '$colProgressStatus INTEGER,'
-        '$colExpiratedAt TEXT,');
+        '$colExpiratedAt TEXT,'
+        '$colCreatedBy TEXT,'
+        '$colCreatedAt TEXT,'
+        '$colUpdatedBy TEXT,'
+        '$colUpdatedAt TEXT)');
   }
 }
