@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:demos_app/shared/screens/edit_content.screen.dart';
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/content_step/widgets/view_content.widget.dart';
-import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
+import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
+import 'package:demos_app/modules/proposals/new_proposal/screens/content_step/widgets/view_content.widget.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/shared/screens/edit_content.screen.dart';
 
 class ContentStepScreen extends StatefulWidget {
   final VoidCallback goToNextStep;
@@ -17,9 +18,18 @@ class ContentStepScreen extends StatefulWidget {
 }
 
 class _ContentStepScreenState extends State<ContentStepScreen> {
-  final TextEditingController titleController = TextEditingController();
+  NewProposalContentService newProposalContent = NewProposalContentService();
   QuillController controller = QuillController.basic();
-  String? content;
+
+  @override
+  void initState() {
+    if (newProposalContent.content != null) {
+      controller = QuillController(
+          document: Document.fromJson(jsonDecode(newProposalContent.content!)),
+          selection: const TextSelection.collapsed(offset: 0));
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +65,16 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
   Widget getProposalNameField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Título de la propuesta'),
+      initialValue: newProposalContent.title,
       textCapitalization: TextCapitalization.words,
-      controller: titleController,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
+      onChanged: (title) {
+        newProposalContent.title = title;
+      },
+      validator: (title) {
+        if (title == null || title.isEmpty) {
           return 'El título de la propuesta es requerido';
         }
+
         return null;
       },
     );
@@ -70,12 +84,13 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
     String? content = await Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => EditContentScreen(content: this.content)));
+            builder: (context) =>
+                EditContentScreen(content: newProposalContent.content)));
 
     if (content != null) {
       setState(
         () {
-          this.content = content;
+          newProposalContent.content = content;
           controller = QuillController(
               document: Document.fromJson(jsonDecode(content)),
               selection: const TextSelection.collapsed(offset: 0));

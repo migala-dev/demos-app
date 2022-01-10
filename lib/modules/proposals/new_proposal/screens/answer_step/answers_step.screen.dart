@@ -1,5 +1,5 @@
-import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
 class AnswersStepScreen extends StatefulWidget {
   final VoidCallback createProposal;
