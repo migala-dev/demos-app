@@ -14,6 +14,9 @@ class SpaceMembersWithData extends SpaceMembersState {
 
   const SpaceMembersWithData(this.memberViews);
 
+  @override
+  List<Object> get props => [memberViews];
+
   SpaceMembersWithData copyWithMemberUpdate(MemberView updatedMember) {
     int memberIndex = memberViews
         .indexWhere((member) => member.memberId == updatedMember.memberId);

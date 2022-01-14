@@ -1,7 +1,14 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:demos_app/core/repositories/base.repository.dart';
 
 class ManifestoRepository extends BaseRepository {
+  static final ManifestoRepository _manifestoRepository =
+      ManifestoRepository._internal();
+
+  factory ManifestoRepository() => _manifestoRepository;
+  ManifestoRepository._internal();
+
   @override
   String get fileName => 'manifesto';
   final String tbManifesto = 'manifesto';
@@ -27,5 +34,14 @@ class ManifestoRepository extends BaseRepository {
         '$colCreatedAt TEXT,'
         '$colUpdatedBy TEXT,'
         '$colUpdatedAt TEXT)');
+  }
+
+  Future<List<Manifesto>> findBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+
+    final result = await db!
+        .rawQuery("SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId'");
+
+    return result.map((row) => Manifesto.fromObject(row)).toList();
   }
 }
