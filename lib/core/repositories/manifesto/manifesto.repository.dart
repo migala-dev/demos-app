@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:demos_app/core/repositories/base.repository.dart';
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 
 class ManifestoRepository extends BaseRepository {
   static final ManifestoRepository _manifestoRepository =
@@ -43,5 +44,19 @@ class ManifestoRepository extends BaseRepository {
         .rawQuery("SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId'");
 
     return result.map((row) => Manifesto.fromObject(row)).toList();
+  }
+
+  Future<Manifesto?> findOneBySpaceId(String spaceId) async {
+    Database? db = await this.db;
+
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId' LIMIT 1");
+
+    return Manifesto.fromObject(result);
+  }
+
+  Future<List<Manifesto>> findBySpaceIdAndProposalStatus(
+      String spaceId, ProposalStatus status) async {
+    return [];
   }
 }

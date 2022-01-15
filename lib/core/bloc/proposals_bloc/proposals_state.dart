@@ -7,13 +7,13 @@ abstract class ProposalsState extends Equatable {
   List<Object> get props => [];
 }
 
-class ProposalLoadingInProgress extends ProposalsState {}
+class ProposalsLoadingInProgress extends ProposalsState {}
 
-class ProposalBlocStateWithData extends ProposalsState {
+class ProposalsStateWithData extends ProposalsState {
   final List<Manifesto> proposals;
   final ProposalListType type;
 
-  const ProposalBlocStateWithData(this.proposals, this.type);
+  const ProposalsStateWithData(this.proposals, this.type);
 
   @override
   List<Object> get props => [proposals, type];

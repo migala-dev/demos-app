@@ -7,11 +7,21 @@ abstract class ProposalsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ProposalEventInitialized extends ProposalsEvent {
+class ProposalsInitialized extends ProposalsEvent {
   final String spaceId;
 
-  const ProposalEventInitialized(this.spaceId);
+  const ProposalsInitialized(this.spaceId);
 
   @override
   List<Object> get props => [spaceId];
+}
+
+class ProposalsLoaded extends ProposalsEvent {
+  final String spaceId;
+  final ProposalListType type;
+
+  const ProposalsLoaded(this.spaceId, this.type);
+
+  @override
+  List<Object> get props => [spaceId, type];
 }

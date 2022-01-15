@@ -11,18 +11,26 @@ part 'proposals_state.dart';
 class ProposalsBloc extends Bloc<ProposalsEvent, ProposalsState> {
   static final ProposalsBloc _proposalsBloc = ProposalsBloc._internal();
   factory ProposalsBloc() => _proposalsBloc;
-  ProposalsBloc._internal() : super(ProposalLoadingInProgress()) {
-    on<ProposalEventInitialized>((event, emit) async {
+  ProposalsBloc._internal() : super(ProposalsLoadingInProgress()) {
+    on<ProposalsInitialized>((event, emit) async {
       for (final type in proposalListTypeMenuOrder) {
         final proposals =
             await ManifestoRepository().findBySpaceId(event.spaceId);
         if (proposals.isNotEmpty) {
-          emit(ProposalBlocStateWithData(proposals, type));
+          emit(ProposalsStateWithData(proposals, type));
           return;
         }
       }
-      emit(
-          ProposalBlocStateWithData(const [], proposalListTypeMenuOrder.first));
+      emit(ProposalsStateWithData(const [], proposalListTypeMenuOrder.first));
+    });
+
+    on<ProposalsLoaded>((event, emit) async {
+      emit(ProposalsLoadingInProgress());
+
+      final proposals =
+          await ManifestoRepository().findBySpaceId(event.spaceId);
+
+      emit(ProposalsStateWithData(proposals, event.type));
     });
   }
 }
