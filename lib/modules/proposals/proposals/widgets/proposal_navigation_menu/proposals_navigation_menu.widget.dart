@@ -1,79 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/bloc/proposals_bloc/proposals_bloc.dart';
 import 'package:demos_app/core/enums/proposal_list_type.enum.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/shared/constants/proposal_list_type_menu_order.dart';
-import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 
-class ProposalsNavigationMenu extends StatefulWidget {
-  const ProposalsNavigationMenu({Key? key}) : super(key: key);
-
-  @override
-  State<ProposalsNavigationMenu> createState() =>
-      _ProposalsNavigationMenuState();
-}
-
-class _ProposalsNavigationMenuState extends State<ProposalsNavigationMenu>
-    with LoadingStateHandler {
-  ProposalListType currentMenuOption = ProposalListType.inProgress;
-  List<ProposalListType> menuOptions = [];
-  @override
-  void initState() {
-    isLoading = true;
-    getMenuOptions();
-    super.initState();
-  }
+class ProposalsNavigationMenu extends StatelessWidget {
+  final ProposalListType optionSelected;
+  const ProposalsNavigationMenu({Key? key, required this.optionSelected})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (menuOptions.isEmpty || isLoading) {
-      return Container();
-    }
-
-    return BlocListener<ProposalsBloc, ProposalsState>(
-      listener: (context, state) {
-        if (state is ProposalsStateWithData) {
-          getMenuOptions();
+    return FutureBuilder(
+      future: getMenuOptions(),
+      initialData: const <ProposalListType>[],
+      builder: (BuildContext context,
+          AsyncSnapshot<List<ProposalListType>> snapshot) {
+        if (!snapshot.hasData) {
+          return Container();
         }
+        final menuOptions = snapshot.data!;
+        if (menuOptions.isEmpty) {
+          return Container();
+        }
+
+        return SizedBox(
+          height: 25,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            physics: const BouncingScrollPhysics(),
+            children: [
+              const SizedBox(width: 15),
+              ...menuOptions
+                  .map((menuOption) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: ProposalsNavigationOption(
+                            text: getOptionText(menuOption),
+                            selected: optionSelected == menuOption,
+                            onTap: () => changeCurrentMenuOption(menuOption)),
+                      ))
+                  .toList()
+            ],
+          ),
+        );
       },
-      child: SizedBox(
-        height: 20,
-        child: ListView(
-          scrollDirection: Axis.horizontal,
-          physics: const BouncingScrollPhysics(),
-          children: [
-            const SizedBox(width: 15),
-            ...menuOptions
-                .map((menuOption) => ProposalsNavigationOption(
-                    text: getOptionText(menuOption),
-                    selected: currentMenuOption == menuOption,
-                    onTap: () => changeCurrentMenuOption(menuOption)))
-                .toList()
-          ],
-        ),
-      ),
     );
   }
 
-  void getMenuOptions() => wrapLoadingTransaction(() async {
-        menuOptions = [];
-        final String spaceId = SpaceBloc().state!.spaceId!;
-        for (final type in proposalListTypeMenuOrder) {
-          final proposal =
-              await ManifestoRepository().findOneBySpaceId(spaceId);
-          if (proposal != null) {
-            menuOptions.add(type);
-          }
-        }
+  Future<List<ProposalListType>> getMenuOptions() async {
+    final List<ProposalListType> menuOptions = [];
+    final String spaceId = SpaceBloc().state!.spaceId!;
+    for (final type in proposalListTypeMenuOrder) {
+      final proposal = await ManifestoRepository().findOneBySpaceId(spaceId);
+      if (proposal != null) {
+        menuOptions.add(type);
+      }
+    }
 
-        if (menuOptions.isNotEmpty &&
-            !menuOptions.contains(currentMenuOption)) {
-          currentMenuOption = menuOptions.first;
-        }
-      });
+    return menuOptions;
+  }
 
   String getOptionText(ProposalListType option) {
     switch (option) {

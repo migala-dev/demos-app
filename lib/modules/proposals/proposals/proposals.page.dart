@@ -10,36 +10,31 @@ class ProposalsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const ProposalsNavigationMenu(),
-        Expanded(
-          child: BlocBuilder<ProposalsBloc, ProposalsState>(
-            bloc: ProposalsBloc(),
-            builder: (context, state) {
-              if (state is ProposalsLoadingInProgress) {
-                return const Center(child: CircularProgressIndicator());
-              }
+    return BlocBuilder<ProposalsBloc, ProposalsState>(
+      bloc: ProposalsBloc(),
+      builder: (context, state) {
+        if (state is ProposalsLoadingInProgress) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-              final areProposalsEmpty =
-                  (state as ProposalsStateWithData).proposals.isEmpty;
-              if (areProposalsEmpty) {
-                return Center(child: NoProposals());
-              }
+        final areProposalsEmpty =
+            (state as ProposalsStateWithData).proposals.isEmpty;
+        if (areProposalsEmpty) {
+          return Center(child: NoProposals());
+        }
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 15),
-                  Expanded(
-                    child: ProposalsListView(proposals: state.proposals),
-                  ),
-                ],
-              );
-            },
-          ),
-        ),
-      ],
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 15),
+            ProposalsNavigationMenu(optionSelected: state.type),
+            const SizedBox(height: 15),
+            Expanded(
+              child: ProposalsListView(proposals: state.proposals),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -52,7 +52,7 @@ class ManifestoRepository extends BaseRepository {
     final result = await db!.rawQuery(
         "SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId' LIMIT 1");
 
-    return Manifesto.fromObject(result);
+    return result.isNotEmpty ? Manifesto.fromObject(result.first) : null;
   }
 
   Future<List<Manifesto>> findBySpaceIdAndProposalStatus(
