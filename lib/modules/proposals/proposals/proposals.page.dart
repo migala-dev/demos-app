@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demos_app/core/bloc/proposals_bloc/proposals_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposals_bloc.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/no_proposals.widget.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_menu.widget.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposals_listview.widget.dart';

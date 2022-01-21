@@ -2,6 +2,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/repositories/base.repository.dart';
 
 class ProposalRepository extends BaseRepository {
+  static final ProposalRepository _proposalRepository =
+      ProposalRepository.internal();
+  ProposalRepository.internal();
+  factory ProposalRepository() => _proposalRepository;
+
   @override
   String get fileName => 'proposals';
   final String tbProposals = 'proposals';
