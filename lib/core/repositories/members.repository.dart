@@ -1,10 +1,11 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/models/member.model.dart';
 
-class MembersRepository extends AppRepository {
+class MembersRepository extends AppRepository implements Table {
   static final MembersRepository _memberRepository =
       MembersRepository._internal();
   final String tblMembers = 'member';

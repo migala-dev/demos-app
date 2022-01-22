@@ -1,8 +1,9 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/models/user.model.dart';
 
-class UsersRepository extends AppRepository {
+class UsersRepository extends AppRepository implements Table {
   static final UsersRepository _usersRepository = UsersRepository._internal();
   final String tblUsers = 'user';
   final String colId = 'userId';

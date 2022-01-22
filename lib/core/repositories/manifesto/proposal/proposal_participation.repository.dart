@@ -1,6 +1,7 @@
+import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 
-class ProposalParticipationRepository extends AppRepository {
+class ProposalParticipationRepository extends AppRepository implements Table {
   final String tbProposals = 'proposalParticipations';
   final String colId = 'proposalParticipationId';
   final String colUserId = 'userId';
