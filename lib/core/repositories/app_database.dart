@@ -1,6 +1,9 @@
 import 'dart:io';
+import 'package:sqflite/sqflite.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/cache.repository.dart';
-import 'package:demos_app/core/repositories/demos_table.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_references.repository.dart';
@@ -10,11 +13,9 @@ import 'package:demos_app/core/repositories/manifesto/proposal/proposal_vote.rep
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 
-class DemosRepository {
-  static final List<DemosTable> tables = [
+class AppDatabase {
+  static final List<Table> tables = [
     ProposalParticipationRepository(),
     ProposalVoteRepository(),
     ProposalRepository(),

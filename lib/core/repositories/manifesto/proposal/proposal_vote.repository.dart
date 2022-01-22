@@ -1,6 +1,6 @@
-import 'package:demos_app/core/repositories/demos_table.repository.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 
-class ProposalVoteRepository extends DemosTable {
+class ProposalVoteRepository extends AppRepository {
   final String tbProposals = 'proposalVotes';
   final String colId = 'proposalVoteId';
   final String colProposalId = 'proposalId';

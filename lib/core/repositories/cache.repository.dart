@@ -1,8 +1,8 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/models/cache.model.dart';
-import 'package:demos_app/core/repositories/demos_table.repository.dart';
 
-class CacheRepository extends DemosTable {
+class CacheRepository extends AppRepository {
   static final CacheRepository _cacheRepository = CacheRepository._internal();
   final String tblCache = 'cache';
   final String colId = 'cacheId';

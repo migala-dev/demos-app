@@ -1,8 +1,8 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/repositories/demos_table.repository.dart';
 
-class SpacesRepository extends DemosTable {
+class SpacesRepository extends AppRepository {
   static final SpacesRepository _spacesRepository =
       SpacesRepository._internal();
   final String tblSpaces = 'space';

@@ -1,6 +1,6 @@
-import 'package:demos_app/core/repositories/demos_table.repository.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 
-class ManifestoRepository extends DemosTable {
+class ManifestoRepository extends AppRepository {
   final String tbManifesto = 'manifesto';
   final String colId = 'manifestoId';
   final String colTitle = 'title';
