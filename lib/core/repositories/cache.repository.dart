@@ -1,11 +1,9 @@
-import 'package:demos_app/core/models/cache.model.dart';
-import 'package:demos_app/core/repositories/base.repository.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/models/cache.model.dart';
+import 'package:demos_app/core/repositories/demos_table.repository.dart';
 
-class CacheRepository extends BaseRepository {
+class CacheRepository extends DemosTable {
   static final CacheRepository _cacheRepository = CacheRepository._internal();
-  @override
-  final String fileName = 'cache';
   final String tblCache = 'cache';
   final String colId = 'cacheId';
   final String colEventName = 'eventName';
@@ -19,12 +17,12 @@ class CacheRepository extends BaseRepository {
   }
 
   @override
-  void createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tblCache('
+  String getCreateTableQuery() {
+    return 'CREATE TABLE $tblCache('
         '$colId TEXT PRIMARY KEY, '
         '$colEventName TEXT, '
         '$colEntityName TEXT, '
-        '$colCreatedAt TEXT)');
+        '$colCreatedAt TEXT)';
   }
 
   Future<String> insert(Cache cache) async {

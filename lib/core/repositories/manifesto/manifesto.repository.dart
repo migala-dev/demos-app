@@ -1,9 +1,6 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:demos_app/core/repositories/base.repository.dart';
+import 'package:demos_app/core/repositories/demos_table.repository.dart';
 
-class ManifestoRepository extends BaseRepository {
-  @override
-  String get fileName => 'manifesto';
+class ManifestoRepository extends DemosTable {
   final String tbManifesto = 'manifesto';
   final String colId = 'manifestoId';
   final String colTitle = 'title';
@@ -16,16 +13,14 @@ class ManifestoRepository extends BaseRepository {
   final String colUpdatedAt = 'colUpdatedAt';
 
   @override
-  void createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tbManifesto('
-        '$colId TEXT PRIMARY KEY, '
-        '$colTitle TEXT, '
-        '$colContent TEXT,'
-        '$colOptionType INTEGER,'
-        '$colSpaceId TEXT,'
-        '$colCreatedBy TEXT,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedBy TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  String getCreateTableQuery() => 'CREATE TABLE $tbManifesto('
+      '$colId TEXT PRIMARY KEY, '
+      '$colTitle TEXT, '
+      '$colContent TEXT,'
+      '$colOptionType INTEGER,'
+      '$colSpaceId TEXT,'
+      '$colCreatedBy TEXT,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedBy TEXT,'
+      '$colUpdatedAt TEXT)';
 }

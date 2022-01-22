@@ -1,9 +1,8 @@
-import 'dart:io';
-import 'package:demos_app/core/models/space.model.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/models/space.model.dart';
+import 'package:demos_app/core/repositories/demos_table.repository.dart';
 
-class SpacesRepository {
+class SpacesRepository extends DemosTable {
   static final SpacesRepository _spacesRepository =
       SpacesRepository._internal();
   final String tblSpaces = 'space';
@@ -23,29 +22,17 @@ class SpacesRepository {
     return _spacesRepository;
   }
 
-  static Database? _db;
-
-  Future<Database?> get db async => _db ??= await initializaDb();
-
-  Future<Database> initializaDb() async {
-    Directory dir = await getApplicationDocumentsDirectory();
-    String path = dir.path + 'spaces.db';
-    var db = await openDatabase(path, version: 1, onCreate: _createDb);
-    return db;
-  }
-
-  void _createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tblSpaces('
-        '$colId TEXT PRIMARY KEY, '
-        '$colName TEXT, '
-        '$colDescription TEXT,'
-        '$colPictureKey TEXT,'
-        '$colOwnerId TEXT,'
-        '$colApprovalPercentage INTEGER,'
-        '$colParticipationPercentage INTEGER,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  @override
+  String getCreateTableQuery() => 'CREATE TABLE $tblSpaces('
+      '$colId TEXT PRIMARY KEY, '
+      '$colName TEXT, '
+      '$colDescription TEXT,'
+      '$colPictureKey TEXT,'
+      '$colOwnerId TEXT,'
+      '$colApprovalPercentage INTEGER,'
+      '$colParticipationPercentage INTEGER,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedAt TEXT)';
 
   Future<String> insert(Space space) async {
     Database? db = await this.db;

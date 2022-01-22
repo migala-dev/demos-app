@@ -1,10 +1,8 @@
-import 'dart:io';
-
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/models/user.model.dart';
+import 'package:demos_app/core/repositories/demos_table.repository.dart';
 
-class UsersRepository {
+class UsersRepository extends DemosTable {
   static final UsersRepository _usersRepository = UsersRepository._internal();
   final String tblUsers = 'user';
   final String colId = 'userId';
@@ -20,26 +18,14 @@ class UsersRepository {
     return _usersRepository;
   }
 
-  static Database? _db;
-
-  Future<Database?> get db async => _db ??= await initializaDb();
-
-  Future<Database> initializaDb() async {
-    Directory dir = await getApplicationDocumentsDirectory();
-    String path = dir.path + 'users.db';
-    final dbUsers = await openDatabase(path, version: 1, onCreate: _createDb);
-    return dbUsers;
-  }
-
-  void _createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tblUsers('
-        '$colId TEXT PRIMARY KEY, '
-        '$colName TEXT, '
-        '$colPhoneNumber TEXT UNIQUE,'
-        '$colProfilePictureKey TEXT,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  @override
+  String getCreateTableQuery() => 'CREATE TABLE $tblUsers('
+      '$colId TEXT PRIMARY KEY, '
+      '$colName TEXT, '
+      '$colPhoneNumber TEXT UNIQUE,'
+      '$colProfilePictureKey TEXT,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedAt TEXT)';
 
   Future<String> insertOrUpdate(User user) async {
     Database? db = await this.db;
