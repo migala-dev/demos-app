@@ -1,17 +1,16 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/interfaces/table.interface.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
-import 'package:demos_app/core/repositories/base.repository.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 
-class ManifestoRepository extends BaseRepository {
+class ManifestoRepository extends AppRepository implements Table {
   static final ManifestoRepository _manifestoRepository =
       ManifestoRepository._internal();
 
   factory ManifestoRepository() => _manifestoRepository;
   ManifestoRepository._internal();
 
-  @override
-  String get fileName => 'manifesto';
   final String tbManifesto = 'manifesto';
   final String colId = 'manifestoId';
   final String colTitle = 'title';
@@ -24,18 +23,16 @@ class ManifestoRepository extends BaseRepository {
   final String colUpdatedAt = 'colUpdatedAt';
 
   @override
-  void createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tbManifesto('
-        '$colId TEXT PRIMARY KEY, '
-        '$colTitle TEXT, '
-        '$colContent TEXT,'
-        '$colOptionType INTEGER,'
-        '$colSpaceId TEXT,'
-        '$colCreatedBy TEXT,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedBy TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  String getCreateTableQuery() => 'CREATE TABLE $tbManifesto('
+      '$colId TEXT PRIMARY KEY, '
+      '$colTitle TEXT, '
+      '$colContent TEXT,'
+      '$colOptionType INTEGER,'
+      '$colSpaceId TEXT,'
+      '$colCreatedBy TEXT,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedBy TEXT,'
+      '$colUpdatedAt TEXT)';
 
   Future<List<Manifesto>> findBySpaceId(String spaceId) async {
     Database? db = await this.db;

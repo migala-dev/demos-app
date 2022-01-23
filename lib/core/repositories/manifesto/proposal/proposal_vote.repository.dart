@@ -1,9 +1,7 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:demos_app/core/repositories/base.repository.dart';
+import 'package:demos_app/core/interfaces/table.interface.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 
-class ProposalVote extends BaseRepository {
-  @override
-  String get fileName => 'proposalVotes';
+class ProposalVoteRepository extends AppRepository implements Table {
   final String tbProposals = 'proposalVotes';
   final String colId = 'proposalVoteId';
   final String colProposalId = 'proposalId';
@@ -13,13 +11,11 @@ class ProposalVote extends BaseRepository {
   final String colUpdatedAt = 'updatedAt';
 
   @override
-  void createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tbProposals('
-        '$colId TEXT PRIMARY KEY, '
-        '$colProposalId TEXT,'
-        '$colUserHash TEXT,'
-        '$colManifestoOptionId TEXT,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  String getCreateTableQuery() => 'CREATE TABLE $tbProposals('
+      '$colId TEXT PRIMARY KEY, '
+      '$colProposalId TEXT,'
+      '$colUserHash TEXT,'
+      '$colManifestoOptionId TEXT,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedAt TEXT)';
 }

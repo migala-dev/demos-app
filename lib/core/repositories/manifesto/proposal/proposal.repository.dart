@@ -1,14 +1,12 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:demos_app/core/repositories/base.repository.dart';
+import 'package:demos_app/core/interfaces/table.interface.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 
-class ProposalRepository extends BaseRepository {
+class ProposalRepository extends AppRepository implements Table {
   static final ProposalRepository _proposalRepository =
       ProposalRepository.internal();
   ProposalRepository.internal();
   factory ProposalRepository() => _proposalRepository;
 
-  @override
-  String get fileName => 'proposals';
   final String tbProposals = 'proposals';
   final String colId = 'proposalId';
   final String colManifestoId = 'manifestoId';
@@ -21,16 +19,14 @@ class ProposalRepository extends BaseRepository {
   final String colUpdatedAt = 'updatedAt';
 
   @override
-  void createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tbProposals('
-        '$colId TEXT PRIMARY KEY, '
-        '$colManifestoId TEXT,'
-        '$colStatus INTEGER,'
-        '$colProgressStatus INTEGER,'
-        '$colExpiratedAt TEXT,'
-        '$colCreatedBy TEXT,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedBy TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  String getCreateTableQuery() => 'CREATE TABLE $tbProposals('
+      '$colId TEXT PRIMARY KEY, '
+      '$colManifestoId TEXT,'
+      '$colStatus INTEGER,'
+      '$colProgressStatus INTEGER,'
+      '$colExpiratedAt TEXT,'
+      '$colCreatedBy TEXT,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedBy TEXT,'
+      '$colUpdatedAt TEXT)';
 }
