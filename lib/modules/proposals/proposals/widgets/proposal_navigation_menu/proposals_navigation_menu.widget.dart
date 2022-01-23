@@ -1,6 +1,6 @@
-import 'package:demos_app/modules/proposals/proposals/bloc/proposals_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_views_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/enums/proposal_list_type.enum.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/core/enums/proposal_list_type.enum.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
@@ -77,6 +77,6 @@ class ProposalsNavigationMenu extends StatelessWidget {
 
   void changeCurrentMenuOption(ProposalListType newOption) {
     final String spaceId = SpaceBloc().state!.spaceId!;
-    ProposalsBloc().add(ProposalsLoaded(spaceId, newOption));
+    ProposalViewsBloc().add(ProposalViewsLoaded(spaceId, newOption));
   }
 }

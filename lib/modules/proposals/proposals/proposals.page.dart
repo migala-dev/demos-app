@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposals_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_views_bloc.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/no_proposals.widget.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_menu.widget.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposals_listview.widget.dart';
@@ -10,10 +10,10 @@ class ProposalsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProposalsBloc, ProposalsState>(
-      bloc: ProposalsBloc(),
+    return BlocBuilder<ProposalViewsBloc, ProposalViewsState>(
+      bloc: ProposalViewsBloc(),
       builder: (context, state) {
-        if (state is ProposalsLoadingInProgress) {
+        if (state is ProposalViewsLoadingInProgress) {
           return const Center(child: CircularProgressIndicator());
         }
 

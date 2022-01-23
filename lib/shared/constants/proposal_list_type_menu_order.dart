@@ -1,8 +1,8 @@
-import 'package:demos_app/core/enums/proposal_list_type.enum.dart';
+import 'package:demos_app/modules/proposals/proposals/enums/proposal_list_type.enum.dart';
 
 const List<ProposalListType> proposalListTypeMenuOrder = [
-  ProposalListType.inProgress,
   ProposalListType.draft,
+  ProposalListType.inProgress,
   ProposalListType.recent,
   ProposalListType.history
 ];
