@@ -26,7 +26,7 @@ class ProposalView {
         o['spaceId'],
         o['createdBy'],
         o['createdAt'],
-        o['status'],
-        o['progressStatus'],
+        ProposalStatus.values[o['status']],
+        ProposalProgressStatus.values[o['progressStatus']],
       );
 }

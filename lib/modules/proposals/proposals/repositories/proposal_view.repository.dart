@@ -1,3 +1,4 @@
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:sqflite/sqflite.dart';
@@ -17,6 +18,7 @@ class ProposalViewsRepository extends AppRepository {
     final colProgressStatus = ProposalRepository().colProgressStatus;
     final colCreatedBy = ManifestoRepository().colCreatedBy;
     final colCreatedAt = ManifestoRepository().colCreatedAt;
+    final proposalStatus = ProposalStatus.draft.index;
 
     final result = await db!.rawQuery("""
       SELECT $tbManifesto.$colManifestoId,
@@ -30,7 +32,7 @@ class ProposalViewsRepository extends AppRepository {
       INNER
         JOIN $tbProposals ON 
             $tbManifesto.$colManifestoId = $tbProposals.$colManifestoId
-      WHERE $tbProposals.$colStatus = 2
+      WHERE $tbProposals.$colStatus = $proposalStatus
         AND $tbManifesto.$colSpaceId = '$spaceId';
     """);
 

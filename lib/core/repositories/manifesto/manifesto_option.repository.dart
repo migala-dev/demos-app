@@ -1,4 +1,6 @@
+import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/interfaces/table.interface.dart';
+import 'package:demos_app/core/models/manifesto/manifesto_option.model.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 
 class ManifestoOptionRepository extends AppRepository implements Table {
@@ -22,4 +24,22 @@ class ManifestoOptionRepository extends AppRepository implements Table {
       '$colCreatedAt TEXT,'
       '$colUpdatedBy TEXT,'
       '$colUpdatedAt TEXT)';
+
+  Future<String> insert(ManifestoOption manifestoOption) async {
+    Database? db = await this.db;
+    ManifestoOption? manifestoOptionSaved =
+        await findById(manifestoOption.manifestoId);
+    if (manifestoOptionSaved == null) {
+      await db!.insert(tbManifestoOptions, manifestoOption.toMap());
+      return manifestoOption.manifestoOptionId;
+    }
+    return manifestoOptionSaved.manifestoOptionId;
+  }
+
+  Future<ManifestoOption?> findById(String manifestoOptionId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tbManifestoOptions WHERE $colId = '$manifestoOptionId'");
+    return result.isNotEmpty ? ManifestoOption.fromObject(result[0]) : null;
+  }
 }

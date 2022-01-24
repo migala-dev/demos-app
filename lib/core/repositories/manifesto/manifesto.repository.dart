@@ -34,6 +34,23 @@ class ManifestoRepository extends AppRepository implements Table {
       '$colUpdatedBy TEXT,'
       '$colUpdatedAt TEXT)';
 
+  Future<String> insert(Manifesto manifesto) async {
+    Database? db = await this.db;
+    Manifesto? manifestoSaved = await findById(manifesto.manifestoId);
+    if (manifestoSaved == null) {
+      await db!.insert(tbManifesto, manifesto.toMap());
+      return manifesto.manifestoId;
+    }
+    return manifestoSaved.manifestoId;
+  }
+
+  Future<Manifesto?> findById(String manifestoId) async {
+    Database? db = await this.db;
+    final result = await db!
+        .rawQuery("SELECT * FROM $tbManifesto WHERE $colId = '$manifestoId'");
+    return result.isNotEmpty ? Manifesto.fromObject(result[0]) : null;
+  }
+
   Future<List<Manifesto>> findBySpaceId(String spaceId) async {
     Database? db = await this.db;
 
