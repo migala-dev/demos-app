@@ -6,7 +6,7 @@ class Proposal {
   final String manifestoId;
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
-  final String expiratedAt;
+  final String? expiratedAt;
   final String createdBy;
   final String createdAt;
   final String updatedBy;
@@ -26,8 +26,8 @@ class Proposal {
   factory Proposal.fromObject(dynamic o) => Proposal(
         o['proposalId'],
         o['manifestoId'],
-        getProposalStatusFromInt(o['status']),
-        getProposalProgressStatusFromInt(o['progressStatus']),
+        ProposalStatus.values[o['status']],
+        ProposalProgressStatus.values[o['progressStatus']],
         o['expiratedAt'],
         o['createdBy'],
         o['createdAt'],

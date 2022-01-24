@@ -2,8 +2,8 @@ import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
 
 class Manifesto {
   final String manifestoId;
-  final String title;
-  final String content;
+  final String? title;
+  final String? content;
   final ProposalOptionType optionType;
   final String spaceId;
   final String createdBy;
@@ -26,7 +26,9 @@ class Manifesto {
         o['manifestoId'],
         o['title'],
         o['content'],
-        getProposalOptionTypeFromInt(o['optionType']),
+        ProposalOptionType.values[o['optionType'].runtimeType == int
+            ? o['optionType']
+            : int.parse(o['optionType'])],
         o['spaceId'],
         o['createdBy'],
         o['createdAt'],
