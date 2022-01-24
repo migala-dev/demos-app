@@ -10,8 +10,8 @@ class ManifestoRepository extends AppRepository implements Table {
   final String colSpaceId = 'spaceId';
   final String colCreatedBy = 'createdBy';
   final String colCreatedAt = 'createdAt';
-  final String colUpdatedBy = 'colUpdatedBy';
-  final String colUpdatedAt = 'colUpdatedAt';
+  final String colUpdatedBy = 'updatedBy';
+  final String colUpdatedAt = 'updatedAt';
 
   @override
   String getCreateTableQuery() => 'CREATE TABLE $tbManifesto('
