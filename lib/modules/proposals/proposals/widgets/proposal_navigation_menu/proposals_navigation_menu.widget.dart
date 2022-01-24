@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_views_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/proposals/enums/proposal_list_type.enum.dart';
 import 'package:demos_app/modules/proposals/proposals/services/proposal_views.service.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
@@ -38,7 +38,7 @@ class ProposalsNavigationMenu extends StatelessWidget {
                   .map((menuOption) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ProposalsNavigationOption(
-                            text: getOptionText(menuOption),
+                            title: getOptionText(menuOption),
                             selected: optionSelected == menuOption,
                             onTap: () => changeCurrentMenuOption(menuOption)),
                       ))
@@ -54,9 +54,9 @@ class ProposalsNavigationMenu extends StatelessWidget {
     final List<ProposalListType> menuOptions = [];
     final String spaceId = SpaceBloc().state!.spaceId!;
     for (final type in proposalListTypeMenuOrder) {
-      final proposal = await ProposalViewsService()
-          .getOneProposalViewsByProposalListTypeAndSpaceId(type, spaceId);
-      if (proposal != null) {
+      final itHasProposalsOnType =
+          await ProposalViewsService().itHasProposalsOnType(type, spaceId);
+      if (itHasProposalsOnType) {
         menuOptions.add(type);
       }
     }
@@ -79,6 +79,7 @@ class ProposalsNavigationMenu extends StatelessWidget {
 
   void changeCurrentMenuOption(ProposalListType newOption) {
     final String spaceId = SpaceBloc().state!.spaceId!;
-    ProposalViewsBloc().add(ProposalViewsNewOptionSelected(spaceId, newOption));
+    ProposalViewListBloc()
+        .add(ProposalViewListNewOptionSelected(spaceId, newOption));
   }
 }

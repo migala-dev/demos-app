@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_views_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/proposals/new_proposal/modals/open_publish_proposal_dialog.dart';
 import 'package:demos_app/modules/proposals/new_proposal/modals/open_save_proposal_draft_dialog.modal.dart';
@@ -93,9 +93,9 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     final content = NewProposalContentService().content;
 
     await ProposalService().createNewProposalDraft(
-        spaceId, title!, content!, ProposalOptionType.inFavourOrOpposing, []);
+        spaceId, title, content, ProposalOptionType.inFavourOrOpposing, []);
 
-    ProposalViewsBloc().add(ProposalViewsLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
 
   Column getAppBarTitle() {

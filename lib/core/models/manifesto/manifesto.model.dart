@@ -2,8 +2,8 @@ import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
 
 class Manifesto {
   final String manifestoId;
-  final String title;
-  final String content;
+  final String? title;
+  final String? content;
   final ProposalOptionType optionType;
   final String spaceId;
   final String createdBy;

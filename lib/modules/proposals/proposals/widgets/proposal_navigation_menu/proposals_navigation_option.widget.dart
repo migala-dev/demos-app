@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class ProposalsNavigationOption extends StatelessWidget {
-  final String text;
+  final String title;
   final bool selected;
   final void Function() onTap;
 
   const ProposalsNavigationOption(
       {Key? key,
-      required this.text,
+      required this.title,
       required this.selected,
       required this.onTap})
       : super(key: key);
@@ -17,7 +17,7 @@ class ProposalsNavigationOption extends StatelessWidget {
     if (selected) {
       return GestureDetector(
         onTap: onTap,
-        child: Text(text,
+        child: Text(title,
             style: const TextStyle(
                 fontSize: 18,
                 color: Colors.black,
@@ -27,7 +27,7 @@ class ProposalsNavigationOption extends StatelessWidget {
 
     return GestureDetector(
       onTap: onTap,
-      child: Text(text,
+      child: Text(title,
           style: const TextStyle(
             fontSize: 18,
             color: Colors.grey,

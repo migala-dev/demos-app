@@ -5,34 +5,37 @@ import 'package:demos_app/modules/proposals/proposals/models/proposal_view.model
 import 'package:demos_app/modules/proposals/proposals/services/proposal_views.service.dart';
 import 'package:demos_app/shared/constants/proposal_list_type_menu_order.dart';
 
-part 'proposal_views_event.dart';
-part 'proposal_views_state.dart';
+part 'proposal_view_list_event.dart';
+part 'proposal_view_list_state.dart';
 
-class ProposalViewsBloc extends Bloc<ProposalViewsEvent, ProposalViewsState> {
-  static final ProposalViewsBloc _proposalsBloc = ProposalViewsBloc._internal();
-  factory ProposalViewsBloc() => _proposalsBloc;
-  ProposalViewsBloc._internal() : super(ProposalViewsLoadingInProgress()) {
-    on<ProposalViewsLoaded>((event, emit) async {
-      emit(ProposalViewsLoadingInProgress());
+class ProposalViewListBloc
+    extends Bloc<ProposalViewListEvent, ProposalViewListState> {
+  static final ProposalViewListBloc _proposalsBloc =
+      ProposalViewListBloc._internal();
+  factory ProposalViewListBloc() => _proposalsBloc;
+  ProposalViewListBloc._internal()
+      : super(ProposalViewListLoadingInProgress()) {
+    on<ProposalViewListLoaded>((event, emit) async {
+      emit(ProposalViewListLoadingInProgress());
       for (final type in proposalListTypeMenuOrder) {
         final proposals = await ProposalViewsService()
             .getProposalViewsByProposalListTypeAndSpaceId(type, event.spaceId);
         if (proposals.isNotEmpty) {
-          emit(ProposalsStateWithData(proposals, type));
+          emit(ProposalViewListWithData(proposals, type));
           return;
         }
       }
-      emit(ProposalsStateWithData(const [], proposalListTypeMenuOrder.first));
+      emit(ProposalViewListEmpty());
     });
 
-    on<ProposalViewsNewOptionSelected>((event, emit) async {
-      emit(ProposalViewsLoadingInProgress());
+    on<ProposalViewListNewOptionSelected>((event, emit) async {
+      emit(ProposalViewListLoadingInProgress());
 
       final proposals = await ProposalViewsService()
           .getProposalViewsByProposalListTypeAndSpaceId(
               event.type, event.spaceId);
 
-      emit(ProposalsStateWithData(proposals, event.type));
+      emit(ProposalViewListWithData(proposals, event.type));
     });
   }
 }

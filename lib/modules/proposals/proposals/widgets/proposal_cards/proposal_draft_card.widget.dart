@@ -20,7 +20,8 @@ class ProposalDraftCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(proposal.title, style: const TextStyle(fontSize: 20)),
+              Text(proposal.title ?? 'Sin titulo',
+                  style: const TextStyle(fontSize: 20)),
               const SizedBox(height: 10),
               Row(
                 children: [

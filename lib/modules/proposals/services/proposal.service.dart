@@ -7,13 +7,13 @@ import 'package:demos_app/core/repositories/manifesto/proposal/proposal.reposito
 class ProposalService {
   Future<void> createNewProposalDraft(
     String spaceId,
-    String title,
-    String content,
+    String? title,
+    String? content,
     ProposalOptionType type,
     List<Map<String, dynamic>> options,
   ) async {
     final response = await ProposalApi()
-        .sendProposalDraft(spaceId, title, content, type, options);
+        .createProposalDraft(spaceId, title, content, type, options);
 
     await ManifestoRepository().insert(response.manifesto);
     for (final manifestoOption in response.manifestoOptions) {

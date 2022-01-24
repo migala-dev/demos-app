@@ -4,7 +4,8 @@ import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class ProposalView {
   final String manifestoId;
-  final String title;
+  final String proposalId;
+  final String? title;
   final String spaceId;
   final String createdBy;
   final String createdAt;
@@ -16,6 +17,7 @@ class ProposalView {
 
   ProposalView(
     this.manifestoId,
+    this.proposalId,
     this.title,
     this.spaceId,
     this.createdBy,
@@ -26,6 +28,7 @@ class ProposalView {
 
   factory ProposalView.fromObject(dynamic o) => ProposalView(
         o['manifestoId'],
+        o['proposalId'],
         o['title'],
         o['spaceId'],
         o['createdBy'],

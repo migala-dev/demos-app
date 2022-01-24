@@ -2,7 +2,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
-import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 
 class ManifestoRepository extends AppRepository implements Table {
   static final ManifestoRepository _manifestoRepository =
@@ -49,28 +48,5 @@ class ManifestoRepository extends AppRepository implements Table {
     final result = await db!
         .rawQuery("SELECT * FROM $tbManifesto WHERE $colId = '$manifestoId'");
     return result.isNotEmpty ? Manifesto.fromObject(result[0]) : null;
-  }
-
-  Future<List<Manifesto>> findBySpaceId(String spaceId) async {
-    Database? db = await this.db;
-
-    final result = await db!
-        .rawQuery("SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId'");
-
-    return result.map((row) => Manifesto.fromObject(row)).toList();
-  }
-
-  Future<Manifesto?> findOneBySpaceId(String spaceId) async {
-    Database? db = await this.db;
-
-    final result = await db!.rawQuery(
-        "SELECT * FROM $tbManifesto WHERE  $colSpaceId = '$spaceId' LIMIT 1");
-
-    return result.isNotEmpty ? Manifesto.fromObject(result.first) : null;
-  }
-
-  Future<List<Manifesto>> findBySpaceIdAndProposalStatus(
-      String spaceId, ProposalStatus status) async {
-    return [];
   }
 }

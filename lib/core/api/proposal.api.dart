@@ -1,13 +1,13 @@
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
 import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
-import 'package:demos_app/core/models/responses/proposals/send_proposal_draft_response.dart';
+import 'package:demos_app/core/models/responses/proposal_response.dart';
 
 class ProposalApi {
-  Future<SendProposalDraftResponse> sendProposalDraft(
+  Future<ProposalResponse> createProposalDraft(
     String spaceId,
-    String title,
-    String content,
+    String? title,
+    String? content,
     ProposalOptionType type,
     List<Map<String, dynamic>> options,
   ) async {
@@ -20,7 +20,7 @@ class ProposalApi {
     };
 
     final httpResponse = await Api.post(endpoint, body, null);
-    final response = SendProposalDraftResponse.fromObject(httpResponse);
+    final response = ProposalResponse.fromObject(httpResponse);
 
     return response;
   }

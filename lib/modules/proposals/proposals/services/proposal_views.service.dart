@@ -20,20 +20,22 @@ class ProposalViewsService {
     }
   }
 
-  Future<ProposalView?> getOneProposalViewsByProposalListTypeAndSpaceId(
+  Future<bool> itHasProposalsOnType(
       ProposalListType type, String spaceId) async {
     switch (type) {
       case ProposalListType.draft:
-        return ProposalViewsRepository().findOneDraftsBySpaceId(spaceId);
+        final proposal =
+            await ProposalViewsRepository().findOneDraftsBySpaceId(spaceId);
+        return proposal != null;
 
       case ProposalListType.inProgress:
-        return null;
+        return false;
 
       case ProposalListType.recent:
-        return null;
+        return false;
 
       case ProposalListType.history:
-        return null;
+        return false;
     }
   }
 }
