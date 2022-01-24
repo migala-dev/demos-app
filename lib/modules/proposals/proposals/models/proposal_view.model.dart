@@ -1,5 +1,6 @@
 import 'package:demos_app/core/enums/proposal/proposal_progress_status.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
+import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class ProposalView {
   final String manifestoId;
@@ -9,6 +10,9 @@ class ProposalView {
   final String createdAt;
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
+
+  String get createdAtFormated =>
+      DateFormatterService.parseToDayMonthYearDate(createdAt);
 
   ProposalView(
     this.manifestoId,

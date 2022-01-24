@@ -30,7 +30,8 @@ class ProposalsPage extends StatelessWidget {
             ProposalsNavigationMenu(optionSelected: state.type),
             const SizedBox(height: 15),
             Expanded(
-              child: ProposalsListView(proposals: state.proposals),
+              child: ProposalsListView(
+                  proposals: state.proposals, type: state.type),
             ),
           ],
         );
