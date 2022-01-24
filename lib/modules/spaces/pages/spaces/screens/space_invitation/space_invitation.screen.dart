@@ -206,7 +206,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
         await MemberService().acceptInvitation(spaceView!.spaceId);
 
         reloadSpaceList();
-
+        Navigator.pop(context);
         Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
             arguments: spaceView);
         await goToSpaceDetails(context, spaceView!);

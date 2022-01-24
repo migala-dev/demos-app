@@ -3,6 +3,7 @@ import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/
 import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/answers_list.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
 class AnswersStepScreen extends StatefulWidget {
   final VoidCallback createProposal;

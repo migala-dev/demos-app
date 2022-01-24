@@ -1,11 +1,11 @@
-import 'dart:io';
+import 'package:sqflite/sqflite.dart';
+import 'package:demos_app/core/interfaces/table.interface.dart';
+import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space-role.enum.dart';
 import 'package:demos_app/core/models/member.model.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart';
 
-class MembersRepository {
+class MembersRepository extends AppRepository implements Table {
   static final MembersRepository _memberRepository =
       MembersRepository._internal();
   final String tblMembers = 'member';
@@ -28,32 +28,20 @@ class MembersRepository {
     return _memberRepository;
   }
 
-  static Database? _db;
-
-  Future<Database?> get db async => _db ??= await initializaDb();
-
-  Future<Database> initializaDb() async {
-    Directory dir = await getApplicationDocumentsDirectory();
-    String path = dir.path + 'member.db';
-    var db = await openDatabase(path, version: 1, onCreate: _createDb);
-    return db;
-  }
-
-  void _createDb(Database db, int newVersion) async {
-    await db.execute('CREATE TABLE $tblMembers('
-        '$colId TEXT PRIMARY KEY, '
-        '$colSpaceId TEXT, '
-        '$colUserId TEXT,'
-        '$colInvitationStatus INTEGER,'
-        '$colRole TEXT,'
-        '$colName TEXT,'
-        '$colExpiredAt TEXT,'
-        '$colDeleted BOOLEAN,'
-        '$colCreatedBy TEXT,'
-        '$colUpdatedBy TEXT,'
-        '$colCreatedAt TEXT,'
-        '$colUpdatedAt TEXT)');
-  }
+  @override
+  String getCreateTableQuery() => 'CREATE TABLE $tblMembers('
+      '$colId TEXT PRIMARY KEY, '
+      '$colSpaceId TEXT, '
+      '$colUserId TEXT,'
+      '$colInvitationStatus INTEGER,'
+      '$colRole TEXT,'
+      '$colName TEXT,'
+      '$colExpiredAt TEXT,'
+      '$colDeleted BOOLEAN,'
+      '$colCreatedBy TEXT,'
+      '$colUpdatedBy TEXT,'
+      '$colCreatedAt TEXT,'
+      '$colUpdatedAt TEXT)';
 
   Future<String> insertOrUpdate(Member member) async {
     Database? db = await this.db;
@@ -82,7 +70,8 @@ class MembersRepository {
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 
-   Future<Member?> findByUserIdAndSpaceIdAndInvitationStatuses(String userId, String spaceId, List<InvitationStatus> invitationStatus) async {
+  Future<Member?> findByUserIdAndSpaceIdAndInvitationStatuses(String userId,
+      String spaceId, List<InvitationStatus> invitationStatus) async {
     Database? db = await this.db;
     final String status = invitationStatus.map((i) => i.index).join(', ');
 
@@ -92,7 +81,8 @@ class MembersRepository {
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 
-  Future<Member?> findByUserIdAndSpaceIdAndInvitationStatusAccepted(String userId, String spaceId) async {
+  Future<Member?> findByUserIdAndSpaceIdAndInvitationStatusAccepted(
+      String userId, String spaceId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
         "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0 AND $colInvitationStatus = ${InvitationStatus.accepted.index}");
@@ -118,9 +108,12 @@ class MembersRepository {
   Future<List<Member>> findMembersAndInvitationsBySpaceId(
       String? spaceId) async {
     Database? db = await this.db;
+    final String validStatus = '${InvitationStatus.accepted.index}, '
+        '${InvitationStatus.sended.index}, '
+        '${InvitationStatus.received.index}';
     final result = await db!.rawQuery('SELECT * FROM $tblMembers '
         "WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 "
-        'AND $colInvitationStatus != ${InvitationStatus.canceled.index}');
+        'AND $colInvitationStatus IN($validStatus)');
     return result.map((row) => Member.fromObject(row)).toList();
   }
 
