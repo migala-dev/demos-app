@@ -7,20 +7,20 @@ abstract class ProposalViewsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ProposalViewsInitialized extends ProposalViewsEvent {
+class ProposalViewsLoaded extends ProposalViewsEvent {
   final String spaceId;
 
-  const ProposalViewsInitialized(this.spaceId);
+  const ProposalViewsLoaded(this.spaceId);
 
   @override
   List<Object> get props => [spaceId];
 }
 
-class ProposalViewsLoaded extends ProposalViewsEvent {
+class ProposalViewsNewOptionSelected extends ProposalViewsEvent {
   final String spaceId;
   final ProposalListType type;
 
-  const ProposalViewsLoaded(this.spaceId, this.type);
+  const ProposalViewsNewOptionSelected(this.spaceId, this.type);
 
   @override
   List<Object> get props => [spaceId, type];

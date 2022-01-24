@@ -51,7 +51,7 @@ var spaceDetailsHandler =
   final spaceView = context!.settings!.arguments as SpaceView;
 
   SpaceBloc().add(SetSpaceEvent(spaceView.spaceId));
-  ProposalViewsBloc().add(ProposalViewsInitialized(spaceView.spaceId));
+  ProposalViewsBloc().add(ProposalViewsLoaded(spaceView.spaceId));
 
   return const SpaceDetailsScreen();
 });

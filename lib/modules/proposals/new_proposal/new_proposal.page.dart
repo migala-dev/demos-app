@@ -95,7 +95,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     await ProposalService().createNewProposalDraft(
         spaceId, title!, content!, ProposalOptionType.inFavourOrOpposing, []);
 
-    ProposalViewsBloc().add(ProposalViewsInitialized(spaceId));
+    ProposalViewsBloc().add(ProposalViewsLoaded(spaceId));
   }
 
   Column getAppBarTitle() {

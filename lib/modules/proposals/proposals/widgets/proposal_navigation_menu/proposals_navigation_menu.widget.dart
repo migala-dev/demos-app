@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:demos_app/modules/proposals/proposals/bloc/proposal_views_bloc.dart';
 import 'package:demos_app/modules/proposals/proposals/enums/proposal_list_type.enum.dart';
-import 'package:flutter/material.dart';
-import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
+import 'package:demos_app/modules/proposals/proposals/services/proposal_views.service.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/shared/constants/proposal_list_type_menu_order.dart';
@@ -29,6 +29,7 @@ class ProposalsNavigationMenu extends StatelessWidget {
         return SizedBox(
           height: 25,
           child: ListView(
+            shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             children: [
@@ -53,7 +54,8 @@ class ProposalsNavigationMenu extends StatelessWidget {
     final List<ProposalListType> menuOptions = [];
     final String spaceId = SpaceBloc().state!.spaceId!;
     for (final type in proposalListTypeMenuOrder) {
-      final proposal = await ManifestoRepository().findOneBySpaceId(spaceId);
+      final proposal = await ProposalViewsService()
+          .getOneProposalViewsByProposalListTypeAndSpaceId(type, spaceId);
       if (proposal != null) {
         menuOptions.add(type);
       }
@@ -77,6 +79,6 @@ class ProposalsNavigationMenu extends StatelessWidget {
 
   void changeCurrentMenuOption(ProposalListType newOption) {
     final String spaceId = SpaceBloc().state!.spaceId!;
-    ProposalViewsBloc().add(ProposalViewsLoaded(spaceId, newOption));
+    ProposalViewsBloc().add(ProposalViewsNewOptionSelected(spaceId, newOption));
   }
 }

@@ -19,4 +19,21 @@ class ProposalViewsService {
         return [];
     }
   }
+
+  Future<ProposalView?> getOneProposalViewsByProposalListTypeAndSpaceId(
+      ProposalListType type, String spaceId) async {
+    switch (type) {
+      case ProposalListType.draft:
+        return ProposalViewsRepository().findOneDraftsBySpaceId(spaceId);
+
+      case ProposalListType.inProgress:
+        return null;
+
+      case ProposalListType.recent:
+        return null;
+
+      case ProposalListType.history:
+        return null;
+    }
+  }
 }

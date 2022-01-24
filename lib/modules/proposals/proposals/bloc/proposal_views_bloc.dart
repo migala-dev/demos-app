@@ -12,7 +12,7 @@ class ProposalViewsBloc extends Bloc<ProposalViewsEvent, ProposalViewsState> {
   static final ProposalViewsBloc _proposalsBloc = ProposalViewsBloc._internal();
   factory ProposalViewsBloc() => _proposalsBloc;
   ProposalViewsBloc._internal() : super(ProposalViewsLoadingInProgress()) {
-    on<ProposalViewsInitialized>((event, emit) async {
+    on<ProposalViewsLoaded>((event, emit) async {
       emit(ProposalViewsLoadingInProgress());
       for (final type in proposalListTypeMenuOrder) {
         final proposals = await ProposalViewsService()
@@ -25,7 +25,7 @@ class ProposalViewsBloc extends Bloc<ProposalViewsEvent, ProposalViewsState> {
       emit(ProposalsStateWithData(const [], proposalListTypeMenuOrder.first));
     });
 
-    on<ProposalViewsLoaded>((event, emit) async {
+    on<ProposalViewsNewOptionSelected>((event, emit) async {
       emit(ProposalViewsLoadingInProgress());
 
       final proposals = await ProposalViewsService()
