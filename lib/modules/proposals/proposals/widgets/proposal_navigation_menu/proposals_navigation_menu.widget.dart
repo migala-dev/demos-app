@@ -29,7 +29,6 @@ class ProposalsNavigationMenu extends StatelessWidget {
         return SizedBox(
           height: 25,
           child: ListView(
-            shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
             children: [
