@@ -10,7 +10,8 @@ class NewProposalContentService {
 
   bool isEmpty() =>
       (title == null && content == null) ||
-      (title!.isEmpty && content!.isEmpty);
+      (title != null && title!.isEmpty) ||
+      (content != null && content!.isEmpty);
 
   void emptyNewProposal() {
     title = null;

@@ -3,6 +3,7 @@ import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/proposals/new_proposal/new_proposal.page.dart';
 import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
@@ -50,6 +51,7 @@ var spaceDetailsHandler =
   final spaceView = context!.settings!.arguments as SpaceView;
 
   SpaceBloc().add(SetSpaceEvent(spaceView.spaceId));
+  ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId));
 
   return const SpaceDetailsScreen();
 });

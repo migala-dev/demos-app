@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/services/proposal.service.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/proposals/new_proposal/modals/open_publish_proposal_dialog.dart';
 import 'package:demos_app/modules/proposals/new_proposal/modals/open_save_proposal_draft_dialog.modal.dart';
@@ -55,7 +59,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     }
 
     final optionSelected =
-        await openSaveProposalDraftDialog(context, onSaveDraft: () {});
+        await openSaveProposalDraftDialog(context, onSaveDraft: saveDraft);
     if (optionSelected == 'cancel') {
       return false;
     }
@@ -81,6 +85,17 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     }, onSaveDraft: () {
       Navigator.pop(context);
     });
+  }
+
+  void saveDraft() async {
+    final spaceId = SpaceBloc().state!.spaceId!;
+    final title = NewProposalContentService().title;
+    final content = NewProposalContentService().content;
+
+    await ProposalService().createNewProposalDraft(
+        spaceId, title, content, ProposalOptionType.inFavourOrOpposing, []);
+
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
 
   Column getAppBarTitle() {
