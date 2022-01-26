@@ -17,22 +17,40 @@ class AnswersStepScreen extends StatefulWidget {
 
 class _AnswersStepScreenState extends State<AnswersStepScreen> {
   late final List<Widget> answers;
+  final List<String> items = ['Votación a favor/en contra', 'Opción multiple'];
+  String? value = 'Votación a favor/en contra';
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(child: ProposalAnswerWidget(title: 'A favor')),
-        Expanded(child: ProposalAnswerWidget(title: 'En contra')),
-        Expanded(
-          child: AnswersListWidget(answers: answers, title: ''),
+        DropdownButtonHideUnderline(
+          child: DropdownButton<String>(
+            items: items.map(buildMenuItem).toList(),
+            onChanged: (value) {
+              setState(
+                () {
+                  this.value = value;
+                  if (this.value == 'Votación a favor/en contra') {
+                    isVisible = !isVisible;
+                  } else if (this.value == 'Opción multiple') {
+                    isVisible = !isVisible;
+                  }
+                },
+              );
+            },
+            value: value,
+          ),
         ),
-
-        // Expanded(
-        //   child: ProposalListWidget(title: '', answers: answers),
-        // ),
-        Expanded(child: AddProposalAnswer(add: () {})),
-        Expanded(flex: 5, child: Container()),
+        const SizedBox(height: 24),
+        const Text('Opciones', style: TextStyle(color: Colors.grey)),
+        Visibility(
+            visible: isVisible,
+            child: Expanded(child: ProposalAnswerWidget(title: 'A favor'))),
+        Expanded(child: ProposalAnswerWidget(title: 'En contra')),
+        Expanded(flex: 4, child: Container()),
         Expanded(
           child: BigButton(
             text: 'Crear',
@@ -42,4 +60,9 @@ class _AnswersStepScreenState extends State<AnswersStepScreen> {
       ],
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(item),
+      );
 }

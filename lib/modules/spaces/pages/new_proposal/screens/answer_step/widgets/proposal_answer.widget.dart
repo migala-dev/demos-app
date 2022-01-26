@@ -2,7 +2,9 @@ import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:flutter/material.dart';
 
 class ProposalAnswerWidget extends StatefulWidget {
+  // Cambiar nombre ManifestoOptionWidget
   ProposalAnswerWidget({Key? key, this.title}) : super(key: key);
+
   late final String? title;
 
   @override
