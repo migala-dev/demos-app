@@ -1,3 +1,4 @@
+import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
 import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
@@ -20,6 +21,16 @@ class ProposalApi {
     };
 
     final httpResponse = await Api.post(endpoint, body, null);
+    final response = ProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+  Future<ProposalResponse> getProposal(String spaceId, String proposalId) async {
+    String endpoint = ProposalsPath().getProposalPath(spaceId, proposalId);
+    ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
+
+    final httpResponse = await Api.get(endpoint, throwBehavior);
     final response = ProposalResponse.fromObject(httpResponse);
 
     return response;
