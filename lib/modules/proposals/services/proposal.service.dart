@@ -1,5 +1,5 @@
 import 'package:demos_app/core/api/proposal.api.dart';
-import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
@@ -10,7 +10,7 @@ class ProposalService {
     String spaceId,
     String? title,
     String? content,
-    ProposalOptionType type,
+    ManifestoOptionType type,
     List<Map<String, dynamic>> options,
   ) async {
     final response = await ProposalApi()

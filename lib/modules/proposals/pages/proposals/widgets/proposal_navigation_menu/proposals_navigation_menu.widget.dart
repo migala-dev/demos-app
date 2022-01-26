@@ -1,8 +1,9 @@
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/enums/proposal_list_type.enum.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_views.service.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
-import 'package:demos_app/modules/proposals/proposals/enums/proposal_list_type.enum.dart';
-import 'package:demos_app/modules/proposals/proposals/services/proposal_views.service.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/shared/constants/proposal_list_type_menu_order.dart';
 

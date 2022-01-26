@@ -1,9 +1,10 @@
+import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:flutter/material.dart';
 
 class AddProposalAnswer extends StatelessWidget {
   const AddProposalAnswer({Key? key, required this.add}) : super(key: key);
 
-  final VoidCallback add;
+  final void Function(String) add;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,12 @@ class AddProposalAnswer extends StatelessWidget {
               ),
             ],
           ),
-          onPressed: () => add,
+          onPressed: () async {
+            String? title = await getOptionTitle(context);
+            if (title != null && title.isNotEmpty) {
+              add(title);
+            }
+          },
           style: ElevatedButton.styleFrom(
             primary: Colors.white,
             elevation: 2,
@@ -42,5 +48,13 @@ class AddProposalAnswer extends StatelessWidget {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
         ));
+  }
+
+  Future<String?> getOptionTitle(BuildContext context) async {
+    return await openUpdateStringFieldModal(
+      context,
+      title: 'Título de la respuesta',
+      hintText: 'Escribe el título de tu respuesta aquí.',
+    );
   }
 }

@@ -2,10 +2,12 @@ import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:flutter/material.dart';
 
 class ProposalAnswerWidget extends StatefulWidget {
-  // Cambiar nombre ManifestoOptionWidget
-  ProposalAnswerWidget({Key? key, this.title}) : super(key: key);
+  final String? title;
+  final void Function(String)? onEdit;
 
-  late final String? title;
+  // Cambiar nombre ManifestoOptionWidget
+  const ProposalAnswerWidget({Key? key, this.title, this.onEdit})
+      : super(key: key);
 
   @override
   State<ProposalAnswerWidget> createState() => _ProposalAnswerWidgetState();
@@ -36,20 +38,28 @@ class _ProposalAnswerWidgetState extends State<ProposalAnswerWidget> {
             ),
             Row(
               children: [
+                widget.onEdit != null
+                    ? SizedBox(
+                        width: 36,
+                        child: IconButton(
+                            icon: const Icon(Icons.edit),
+                            color: Colors.blue,
+                            onPressed: () async {
+                              String? title = await getProposalTitle(context);
+                              if (title != null &&
+                                  title.isNotEmpty &&
+                                  widget.onEdit != null) {
+                                widget.onEdit!(title);
+                              }
+                            }),
+                      )
+                    : Container(),
                 SizedBox(
                   width: 36,
                   child: IconButton(
                     icon: const Icon(Icons.delete),
                     color: Colors.grey,
                     onPressed: () {},
-                  ),
-                ),
-                SizedBox(
-                  width: 36,
-                  child: IconButton(
-                    icon: const Icon(Icons.edit),
-                    color: Colors.blue,
-                    onPressed: () => getProposalTitle(context),
                   ),
                 ),
               ],
@@ -67,22 +77,12 @@ class _ProposalAnswerWidgetState extends State<ProposalAnswerWidget> {
     );
   }
 
-  void getProposalTitle(BuildContext context) async {
-    String? title = await openUpdateStringFieldModal(
+  Future<String?> getProposalTitle(BuildContext context) async {
+    return await openUpdateStringFieldModal(
       context,
       title: 'Título de la respuesta',
       hintText: 'Escribe el título de tu respuesta aquí.',
       initialValue: widget.title,
-    );
-
-    setState(
-      () {
-        if (title != null) {
-          if (title.isNotEmpty) {
-            widget.title = title;
-          }
-        }
-      },
     );
   }
 }

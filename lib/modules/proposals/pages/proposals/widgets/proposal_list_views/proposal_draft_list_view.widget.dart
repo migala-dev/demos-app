@@ -1,6 +1,6 @@
+import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_draft_card.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/modules/proposals/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_cards/proposal_draft_card.widget.dart';
 
 class ProposalDraftListView extends StatelessWidget {
   final List<ProposalView> proposals;

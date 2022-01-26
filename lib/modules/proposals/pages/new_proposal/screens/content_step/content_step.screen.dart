@@ -1,9 +1,9 @@
 import 'dart:convert';
 
+import 'package:demos_app/modules/proposals/pages/new_proposal/screens/content_step/widgets/view_content.widget.dart';
+import 'package:demos_app/modules/proposals/pages/new_proposal/services/new_proposal_content.service.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
-import 'package:demos_app/modules/proposals/new_proposal/screens/content_step/widgets/view_content.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 

@@ -1,13 +1,15 @@
+import 'package:demos_app/modules/proposals/pages/new_proposal/screens/answer_step/answers_step.screen.dart';
+import 'package:demos_app/modules/proposals/pages/new_proposal/screens/content_step/content_step.screen.dart';
+import 'package:demos_app/modules/proposals/pages/new_proposal/services/new_proposal_content.service.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
-import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';
-import 'package:demos_app/modules/proposals/new_proposal/modals/open_publish_proposal_dialog.dart';
-import 'package:demos_app/modules/proposals/new_proposal/modals/open_save_proposal_draft_dialog.modal.dart';
-import 'package:demos_app/modules/proposals/new_proposal/screens/answer_step/answers_step.screen.dart';
-import 'package:demos_app/modules/proposals/new_proposal/screens/content_step/content_step.screen.dart';
+
+import 'modals/open_publish_proposal_dialog.dart';
+import 'modals/open_save_proposal_draft_dialog.modal.dart';
 
 class NewProposalScreen extends StatefulWidget {
   const NewProposalScreen({Key? key}) : super(key: key);
@@ -19,6 +21,7 @@ class NewProposalScreen extends StatefulWidget {
 enum NewProposalScreenEnum { content, answers }
 
 class _NewProposalScreenState extends State<NewProposalScreen> {
+  ManifestoOptionType optionType = ManifestoOptionType.inFavorOrOpposing;
   NewProposalScreenEnum currentStep = NewProposalScreenEnum.content;
 
   @override
@@ -72,8 +75,21 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
 
   Widget getCurrentScreen() {
     return currentStep == NewProposalScreenEnum.content
+    // title
+    // onTitleChange: (title) => setState(() => this.title = title),
+    // content
+    // onContentChange: (content) => setState(() => this.content = content),
         ? ContentStepScreen(goToNextStep: goToNextStep)
-        : AnswersStepScreen(createProposal: createProposal);
+    // options
+    // onOptions: (options) => setState(() => this.options = options),
+        : AnswersStepScreen(
+          optionType: optionType,
+          onOptionTypeChange: (optionType) {
+            setState(() {
+              this.optionType = optionType;
+            });
+          },
+          createProposal: createProposal);
   }
 
   void goToNextStep() =>
@@ -93,7 +109,7 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     final content = NewProposalContentService().content;
 
     await ProposalService().createNewProposalDraft(
-        spaceId, title, content, ProposalOptionType.inFavourOrOpposing, []);
+        spaceId, title, content, ManifestoOptionType.inFavorOrOpposing, []);
 
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
