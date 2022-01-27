@@ -3,7 +3,7 @@ import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart'
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
-import 'package:demos_app/modules/proposals/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 
 class ProposalViewsRepository extends AppRepository {
   final tbManifesto = ManifestoRepository().tbManifesto;

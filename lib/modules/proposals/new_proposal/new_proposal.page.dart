@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_event.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/proposals/new_proposal/services/new_proposal_content.service.model.dart';

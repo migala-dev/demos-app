@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_representant_alert.widget.dart';
-import 'package:demos_app/modules/proposals/proposals/proposals.page.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/proposals.page.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/space_picture_header.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_representative.widget.dart';

@@ -1,5 +1,5 @@
 
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ProposalViewListEvent extends Equatable {

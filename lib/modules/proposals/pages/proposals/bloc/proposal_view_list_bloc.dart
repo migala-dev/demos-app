@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_state.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_event.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/constants/get_proposal_view_lists.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_state.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/constants/get_proposal_view_lists.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 
 class ProposalViewListBloc
     extends Bloc<ProposalViewListEvent, ProposalViewListState> {

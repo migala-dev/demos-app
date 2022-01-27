@@ -1,9 +1,9 @@
 
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
-import 'package:demos_app/modules/proposals/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/proposals/repositories/proposal_view.repository.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_list_views/proposal_draft_list_view.widget.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/repositories/proposal_view.repository.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_list_views/proposal_draft_list_view.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 import 'package:flutter/material.dart';
 
 class InProgressProposals implements ProposalViewList {
