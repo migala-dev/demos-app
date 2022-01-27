@@ -1,14 +1,14 @@
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:flutter/material.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/enums/proposal_list_type.enum.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_views.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
-import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
-import 'package:demos_app/shared/constants/proposal_list_type_menu_order.dart';
+
+import 'constants/get_proposal_view_lists.dart';
 
 class ProposalsNavigationMenu extends StatelessWidget {
-  final ProposalListType optionSelected;
+  final ProposalViewList optionSelected;
   const ProposalsNavigationMenu({Key? key, required this.optionSelected})
       : super(key: key);
 
@@ -16,14 +16,14 @@ class ProposalsNavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: getMenuOptions(),
-      initialData: const <ProposalListType>[],
+      initialData: const <ProposalViewList>[],
       builder: (BuildContext context,
-          AsyncSnapshot<List<ProposalListType>> snapshot) {
+          AsyncSnapshot<List<ProposalViewList>> snapshot) {
         if (!snapshot.hasData) {
           return Container();
         }
-        final menuOptions = snapshot.data!;
-        if (menuOptions.isEmpty) {
+        final proposalListSections = snapshot.data!;
+        if (proposalListSections.isEmpty) {
           return Container();
         }
 
@@ -34,13 +34,13 @@ class ProposalsNavigationMenu extends StatelessWidget {
             physics: const BouncingScrollPhysics(),
             children: [
               const SizedBox(width: 15),
-              ...menuOptions
-                  .map((menuOption) => Padding(
+              ...proposalListSections
+                  .map((proposalList) => Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ProposalsNavigationOption(
-                            title: getOptionText(menuOption),
-                            selected: optionSelected == menuOption,
-                            onTap: () => changeCurrentMenuOption(menuOption)),
+                            title: proposalList.title,
+                            selected: optionSelected == proposalList,
+                            onTap: () => changeCurrentMenuOption(proposalList)),
                       ))
                   .toList()
             ],
@@ -50,36 +50,21 @@ class ProposalsNavigationMenu extends StatelessWidget {
     );
   }
 
-  Future<List<ProposalListType>> getMenuOptions() async {
-    final List<ProposalListType> menuOptions = [];
+  Future<List<ProposalViewList>> getMenuOptions() async {
+    final List<ProposalViewList> menuOptions = [];
     final String spaceId = SpaceBloc().state!.spaceId!;
-    for (final type in proposalListTypeMenuOrder) {
-      final itHasProposalsOnType =
-          await ProposalViewsService().itHasProposalsOnType(type, spaceId);
-      if (itHasProposalsOnType) {
-        menuOptions.add(type);
+    for (final proposalList in getProposalViewLists()) {
+      if (await proposalList.itHasProposals(spaceId)) {
+        menuOptions.add(proposalList);
       }
     }
 
     return menuOptions;
   }
 
-  String getOptionText(ProposalListType option) {
-    switch (option) {
-      case ProposalListType.draft:
-        return 'BORRADORES';
-      case ProposalListType.inProgress:
-        return 'EN PROCESO';
-      case ProposalListType.recent:
-        return 'RECIENTES';
-      case ProposalListType.history:
-        return 'HISTORIA';
-    }
-  }
-
-  void changeCurrentMenuOption(ProposalListType newOption) {
+  void changeCurrentMenuOption(ProposalViewList proposalViewList) {
     final String spaceId = SpaceBloc().state!.spaceId!;
     ProposalViewListBloc()
-        .add(ProposalViewListNewOptionSelected(spaceId, newOption));
+        .add(ProposalViewListNewOptionSelected(spaceId, proposalViewList));
   }
 }

@@ -14,5 +14,5 @@ class ProposalsPath {
       '${getSpaceProposalsPath(spaceId)}/draft';
 
   String getProposalPath(String spaceId, String proposalId) => 
-    '${getSpaceProposalsPath(spaceId)}/$proposalId}';
+    '${getSpaceProposalsPath(spaceId)}/$proposalId';
 }

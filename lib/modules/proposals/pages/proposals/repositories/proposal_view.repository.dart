@@ -17,9 +17,7 @@ class ProposalViewsRepository extends AppRepository {
   final colCreatedBy = ManifestoRepository().colCreatedBy;
   final colCreatedAt = ManifestoRepository().colCreatedAt;
 
-  String getFindDraftsBySpaceIdQuery(String spaceId) {
-    final proposalStatus = ProposalStatus.draft.index;
-
+  String _getFindBySpaceIdAndStatusQuery(String spaceId, ProposalStatus proposalStatus) {
     return """
       SELECT $tbManifesto.$colManifestoId,
         $colProposalId,
@@ -33,26 +31,27 @@ class ProposalViewsRepository extends AppRepository {
       INNER
         JOIN $tbProposals ON 
             $tbManifesto.$colManifestoId = $tbProposals.$colManifestoId
-      WHERE $tbProposals.$colStatus = $proposalStatus
+      WHERE $tbProposals.$colStatus = ${proposalStatus.index}
         AND $tbManifesto.$colSpaceId = '$spaceId'
     """;
   }
 
-  Future<List<ProposalView>> findDraftsBySpaceId(String spaceId) async {
+   Future<List<ProposalView>> findAllBySpaceIdAndStatus(String spaceId, ProposalStatus proposalStatus) async {
     Database? db = await this.db;
 
-    final query = getFindDraftsBySpaceIdQuery(spaceId);
+    final query = _getFindBySpaceIdAndStatusQuery(spaceId, proposalStatus);
     final result = await db!.rawQuery(query);
 
     return result.map((row) => ProposalView.fromObject(row)).toList();
   }
-
-  Future<ProposalView?> findOneDraftsBySpaceId(String spaceId) async {
+  
+  Future<ProposalView?> findOneBySpaceIdAndStatus(String spaceId, ProposalStatus proposalStatus) async {
     Database? db = await this.db;
 
-    final query = getFindDraftsBySpaceIdQuery(spaceId) + '\nLIMIT 1;';
+    final query = _getFindBySpaceIdAndStatusQuery(spaceId, proposalStatus) + '\nLIMIT 1;';
     final result = await db!.rawQuery(query);
 
     return result.isNotEmpty ? ProposalView.fromObject(result.first) : null;
   }
+
 }

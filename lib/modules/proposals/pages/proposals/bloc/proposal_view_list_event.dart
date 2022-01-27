@@ -1,4 +1,5 @@
-import 'package:demos_app/modules/proposals/pages/proposals/enums/proposal_list_type.enum.dart';
+
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ProposalViewListEvent extends Equatable {
@@ -19,10 +20,10 @@ class ProposalViewListLoaded extends ProposalViewListEvent {
 
 class ProposalViewListNewOptionSelected extends ProposalViewListEvent {
   final String spaceId;
-  final ProposalListType type;
+  final ProposalViewList proposalViewList;
 
-  const ProposalViewListNewOptionSelected(this.spaceId, this.type);
+  const ProposalViewListNewOptionSelected(this.spaceId, this.proposalViewList);
 
   @override
-  List<Object> get props => [spaceId, type];
+  List<Object> get props => [spaceId, proposalViewList];
 }
