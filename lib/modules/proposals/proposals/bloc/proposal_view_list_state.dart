@@ -1,4 +1,5 @@
-part of 'proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class ProposalViewListState extends Equatable {
   const ProposalViewListState();
@@ -12,11 +13,10 @@ class ProposalViewListLoadingInProgress extends ProposalViewListState {}
 class ProposalViewListEmpty extends ProposalViewListState {}
 
 class ProposalViewListWithData extends ProposalViewListState {
-  final List<ProposalView> proposals;
-  final ProposalListType type;
+  final ProposalViewList proposalViewList;
 
-  const ProposalViewListWithData(this.proposals, this.type);
+  const ProposalViewListWithData(this.proposalViewList);
 
   @override
-  List<Object> get props => [proposals, type];
+  List<Object> get props => [proposalViewList];
 }

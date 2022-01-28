@@ -1,11 +1,13 @@
+import 'package:demos_app/core/models/space.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demos_app/modules/proposals/proposals/widgets/proposal_list_views/proposal_draft_list_view.widget.dart';
-import 'package:demos_app/modules/proposals/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/proposals/enums/proposal_list_type.enum.dart';
 import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_state.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/no_proposals.widget.dart';
 import 'package:demos_app/modules/proposals/proposals/widgets/proposal_navigation_menu/proposals_navigation_menu.widget.dart';
+
+import 'models/proposal_view.model.dart';
 
 class ProposalsPage extends StatelessWidget {
   const ProposalsPage({Key? key}) : super(key: key);
@@ -23,33 +25,31 @@ class ProposalsPage extends StatelessWidget {
         }
 
         state as ProposalViewListWithData;
+        Space? space = SpaceBloc().state;
 
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 15),
-            ProposalsNavigationMenu(optionSelected: state.type),
+            ProposalsNavigationMenu(optionSelected: state.proposalViewList),
             const SizedBox(height: 15),
             Expanded(
-              child: getListViewByProposalListType(state.type, state.proposals),
+              child: FutureBuilder(
+                  future: state.proposalViewList.getList(space!.spaceId!),
+                  initialData: const <ProposalView>[],
+                  builder: (BuildContext context,
+                      AsyncSnapshot<List<ProposalView>> snapshot) {
+                    List<ProposalView>? proposals = snapshot.data;
+                    if (proposals != null) {
+                      return state.proposalViewList
+                          .getWidget(context, proposals);
+                    }
+                    return Container();
+                  }),
             ),
           ],
         );
       },
     );
-  }
-
-  Widget getListViewByProposalListType(
-      ProposalListType type, List<ProposalView> proposals) {
-    switch (type) {
-      case ProposalListType.draft:
-        return ProposalDraftListView(proposals: proposals);
-      case ProposalListType.inProgress:
-        return Container();
-      case ProposalListType.recent:
-        return Container();
-      case ProposalListType.history:
-        return Container();
-    }
   }
 }

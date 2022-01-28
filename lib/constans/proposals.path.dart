@@ -12,4 +12,7 @@ class ProposalsPath {
 
   String getDraftPath(String spaceId) =>
       '${getSpaceProposalsPath(spaceId)}/draft';
+
+  String getProposalPath(String spaceId, String proposalId) => 
+    '${getSpaceProposalsPath(spaceId)}/$proposalId';
 }
