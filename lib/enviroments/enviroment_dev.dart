@@ -4,7 +4,7 @@ class EnviromentDev implements Enviroment {
   final String _authServiceUrl = 'http://44.194.95.212:3000/v1';
   final String _spaceServiceUrl = 'http://44.194.95.212:3001/v1';
   final String _cacheService = 'http://44.194.95.212:3002/v1';
-  final String _proposalsService = 'http://44.194.95.212:3003/v1';
+  final String _manifestoService = 'http://44.194.95.212:3003/v1';
   final String _websocketService = 'ws://44.194.95.212:5000';
 
   @override
@@ -16,7 +16,7 @@ class EnviromentDev implements Enviroment {
   String get cacheServiceUrl => _cacheService;
 
   @override
-  String get proposalsServiceUrl => _proposalsService;
+  String get manifestoServiceUrl => _manifestoService;
 
   @override
   String get websocketServiceUrl => _websocketService;

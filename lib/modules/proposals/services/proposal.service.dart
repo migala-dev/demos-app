@@ -26,10 +26,10 @@ class ProposalService {
   }
 
   Future<void> _saveProposalResponseOnRepository(ProposalResponse response) async {
-    await ManifestoRepository().insert(response.manifesto);
+    await ManifestoRepository().insertOrUpdate(response.manifesto);
     for (final manifestoOption in response.manifestoOptions) {
-      await ManifestoOptionRepository().insert(manifestoOption);
+      await ManifestoOptionRepository().insertOrUpdate(manifestoOption);
     }
-    await ProposalRepository().insert(response.proposal);
+    await ProposalRepository().insertOrUpdate(response.proposal);
   }
 }

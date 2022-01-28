@@ -6,8 +6,8 @@ import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/modules/proposals/proposals/models/proposal_view.model.dart';
 
 class ProposalViewsRepository extends AppRepository {
-  final tbManifesto = ManifestoRepository().tbManifesto;
-  final tbProposals = ProposalRepository().tbProposals;
+  final tbManifesto = ManifestoRepository().tblManifesto;
+  final tbProposals = ProposalRepository().tblProposals;
   final colManifestoId = ManifestoRepository().colId;
   final colProposalId = ProposalRepository().colId;
   final colTitle = ManifestoRepository().colTitle;
