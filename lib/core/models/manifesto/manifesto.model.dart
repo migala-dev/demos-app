@@ -26,9 +26,7 @@ class Manifesto {
         o['manifestoId'],
         o['title'],
         o['content'],
-        ProposalOptionType.values[o['optionType'].runtimeType == int
-            ? o['optionType']
-            : int.parse(o['optionType'])],
+        ProposalOptionType.values[o['optionType']],
         o['spaceId'],
         o['createdBy'],
         o['createdAt'],
