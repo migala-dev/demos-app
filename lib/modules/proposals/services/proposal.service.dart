@@ -15,14 +15,14 @@ class ProposalService {
   ) async {
     final response = await ProposalApi()
         .createProposalDraft(spaceId, title, content, type, options);
-    _saveProposalResponseOnRepository(response);
+    await _saveProposalResponseOnRepository(response);
   }
 
   
   Future<void> getProposal(String spaceId, String proposalId) async {
     ProposalResponse response = await ProposalApi().getProposal(spaceId, proposalId);
 
-    _saveProposalResponseOnRepository(response);
+    await _saveProposalResponseOnRepository(response);
   }
 
   Future<void> _saveProposalResponseOnRepository(ProposalResponse response) async {
