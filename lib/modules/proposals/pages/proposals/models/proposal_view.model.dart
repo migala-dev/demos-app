@@ -11,6 +11,7 @@ class ProposalView {
   final String createdAt;
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
+  final int votesCount;
 
   String get createdAtFormated =>
       DateFormatterService.parseToDayMonthYearDate(createdAt);
@@ -24,6 +25,7 @@ class ProposalView {
     this.createdAt,
     this.status,
     this.progressStatus,
+    this.votesCount,
   );
 
   factory ProposalView.fromObject(dynamic o) => ProposalView(
@@ -35,5 +37,6 @@ class ProposalView {
         o['createdAt'],
         ProposalStatus.values[o['status']],
         ProposalProgressStatus.values[o['progressStatus']],
+        o['votesCount'],
       );
 }

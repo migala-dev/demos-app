@@ -1,17 +1,19 @@
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:flutter/material.dart';
 
-class ProposalDraftCard extends StatelessWidget {
+class ProposalDraftCard extends StatelessWidget implements ProposalCard {
+  @override
   final ProposalView proposal;
-  final VoidCallback onTap;
+
   const ProposalDraftCard(
-      {Key? key, required this.proposal, required this.onTap})
+      {Key? key, required this.proposal })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {},
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(20),
@@ -54,4 +56,5 @@ class ProposalDraftCard extends StatelessWidget {
       ),
     );
   }
+
 }

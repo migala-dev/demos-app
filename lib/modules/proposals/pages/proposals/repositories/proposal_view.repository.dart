@@ -1,13 +1,15 @@
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 
 class ProposalViewsRepository extends AppRepository {
-  final tbManifesto = ManifestoRepository().tblManifesto;
-  final tbProposals = ProposalRepository().tblProposals;
+  final tblManifesto = ManifestoRepository().tblManifesto;
+  final tblProposals = ProposalRepository().tblProposals;
+  final tblProposalParticipations = ProposalParticipationRepository().tblProposalParticipations;
   final colManifestoId = ManifestoRepository().colId;
   final colProposalId = ProposalRepository().colId;
   final colTitle = ManifestoRepository().colTitle;
@@ -19,20 +21,24 @@ class ProposalViewsRepository extends AppRepository {
 
   String _getFindBySpaceIdAndStatusQuery(String spaceId, ProposalStatus proposalStatus) {
     return """
-      SELECT $tbManifesto.$colManifestoId,
+      SELECT $tblManifesto.$colManifestoId,
         $colProposalId,
         $colTitle,
         $colSpaceId,
-        $tbManifesto.$colCreatedBy,
-        $tbManifesto.$colCreatedAt,
+        $tblManifesto.$colCreatedBy,
+        $tblManifesto.$colCreatedAt,
         $colStatus,
-        $colProgressStatus
-      FROM $tbManifesto
+        $colProgressStatus,
+        (
+          select count(*) from $tblProposalParticipations
+          where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId
+        ) as "votesCount"
+      FROM $tblManifesto
       INNER
-        JOIN $tbProposals ON 
-            $tbManifesto.$colManifestoId = $tbProposals.$colManifestoId
-      WHERE $tbProposals.$colStatus = ${proposalStatus.index}
-        AND $tbManifesto.$colSpaceId = '$spaceId'
+        JOIN $tblProposals ON 
+            $tblManifesto.$colManifestoId = $tblProposals.$colManifestoId
+      WHERE $tblProposals.$colStatus = ${proposalStatus.index}
+        AND $tblManifesto.$colSpaceId = '$spaceId'
     """;
   }
 
