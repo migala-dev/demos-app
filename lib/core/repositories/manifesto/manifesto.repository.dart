@@ -10,7 +10,7 @@ class ManifestoRepository extends AppRepository implements Table {
   factory ManifestoRepository() => _manifestoRepository;
   ManifestoRepository._internal();
 
-  final String tbManifesto = 'manifesto';
+  final String tblManifesto = 'manifesto';
   final String colId = 'manifestoId';
   final String colTitle = 'title';
   final String colContent = 'content';
@@ -22,7 +22,7 @@ class ManifestoRepository extends AppRepository implements Table {
   final String colUpdatedAt = 'updatedAt';
 
   @override
-  String getCreateTableQuery() => 'CREATE TABLE $tbManifesto('
+  String getCreateTableQuery() => 'CREATE TABLE $tblManifesto('
       '$colId TEXT PRIMARY KEY, '
       '$colTitle TEXT, '
       '$colContent TEXT,'
@@ -33,11 +33,21 @@ class ManifestoRepository extends AppRepository implements Table {
       '$colUpdatedBy TEXT,'
       '$colUpdatedAt TEXT)';
 
+  Future<String> insertOrUpdate(Manifesto manifesto) async {
+    Database? db = await this.db;
+    Manifesto? manifestoSaved = await findById(manifesto.manifestoId);
+    if (manifestoSaved == null) {
+      await db!.insert(tblManifesto, manifesto.toMap());
+      return manifesto.manifestoId;
+    }
+    return update(manifesto).toString();
+  }
+
   Future<String> insert(Manifesto manifesto) async {
     Database? db = await this.db;
     Manifesto? manifestoSaved = await findById(manifesto.manifestoId);
     if (manifestoSaved == null) {
-      await db!.insert(tbManifesto, manifesto.toMap());
+      await db!.insert(tblManifesto, manifesto.toMap());
       return manifesto.manifestoId;
     }
     return manifestoSaved.manifestoId;
@@ -46,7 +56,19 @@ class ManifestoRepository extends AppRepository implements Table {
   Future<Manifesto?> findById(String manifestoId) async {
     Database? db = await this.db;
     final result = await db!
-        .rawQuery("SELECT * FROM $tbManifesto WHERE $colId = '$manifestoId'");
+        .rawQuery("SELECT * FROM $tblManifesto WHERE $colId = '$manifestoId'");
     return result.isNotEmpty ? Manifesto.fromObject(result[0]) : null;
+  }
+
+  Future<int> update(Manifesto manifesto) async {
+    Database? db = await this.db;
+    final result = await db!.rawUpdate('UPDATE $tblManifesto '
+        "SET $colTitle = '${manifesto.title}'"
+        ", $colContent = '${manifesto.content}'"
+        ', $colOptionType = ${manifesto.optionType.index}'
+        ", $colUpdatedBy = '${manifesto.updatedBy}' "
+        ", $colUpdatedAt = '${manifesto.updatedAt}' "
+        "WHERE $colId = '${manifesto.manifestoId}'");
+    return result;
   }
 }

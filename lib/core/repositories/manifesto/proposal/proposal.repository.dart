@@ -9,7 +9,7 @@ class ProposalRepository extends AppRepository implements Table {
   ProposalRepository.internal();
   factory ProposalRepository() => _proposalRepository;
 
-  final String tbProposals = 'proposals';
+  final String tblProposals = 'proposals';
   final String colId = 'proposalId';
   final String colManifestoId = 'manifestoId';
   final String colStatus = 'status';
@@ -21,7 +21,7 @@ class ProposalRepository extends AppRepository implements Table {
   final String colUpdatedAt = 'updatedAt';
 
   @override
-  String getCreateTableQuery() => 'CREATE TABLE $tbProposals('
+  String getCreateTableQuery() => 'CREATE TABLE $tblProposals('
       '$colId TEXT PRIMARY KEY, '
       '$colManifestoId TEXT,'
       '$colStatus INTEGER,'
@@ -32,11 +32,21 @@ class ProposalRepository extends AppRepository implements Table {
       '$colUpdatedBy TEXT,'
       '$colUpdatedAt TEXT)';
 
+  Future<String> insertOrUpdate(Proposal proposal) async {
+    Database? db = await this.db;
+    Proposal? proposalSaved = await findById(proposal.proposalId);
+    if (proposalSaved == null) {
+      await db!.insert(tblProposals, proposal.toMap());
+      return proposal.proposalId;
+    }
+    return update(proposal).toString();
+  }
+
   Future<String> insert(Proposal proposal) async {
     Database? db = await this.db;
     Proposal? proposalSaved = await findById(proposal.proposalId);
     if (proposalSaved == null) {
-      await db!.insert(tbProposals, proposal.toMap());
+      await db!.insert(tblProposals, proposal.toMap());
       return proposal.proposalId;
     }
     return proposalSaved.proposalId;
@@ -45,7 +55,18 @@ class ProposalRepository extends AppRepository implements Table {
   Future<Proposal?> findById(String proposalId) async {
     Database? db = await this.db;
     final result = await db!
-        .rawQuery("SELECT * FROM $tbProposals WHERE $colId = '$proposalId'");
+        .rawQuery("SELECT * FROM $tblProposals WHERE $colId = '$proposalId'");
     return result.isNotEmpty ? Proposal.fromObject(result[0]) : null;
+  }
+
+  Future<int> update(Proposal proposal) async {
+    Database? db = await this.db;
+    final result = await db!.rawUpdate('UPDATE $tblProposals '
+        'SET $colStatus = ${proposal.status.index}'
+        ', $colProgressStatus = ${proposal.progressStatus.index}'
+        ", $colUpdatedBy = '${proposal.updatedBy}' "
+        ", $colUpdatedAt = '${proposal.updatedAt}' "
+        "WHERE $colId = '${proposal.proposalId}'");
+    return result;
   }
 }
