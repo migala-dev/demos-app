@@ -1,3 +1,4 @@
+import 'package:demos_app/utils/secure_sql_string.util.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
@@ -63,8 +64,8 @@ class ManifestoRepository extends AppRepository implements Table {
   Future<int> update(Manifesto manifesto) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblManifesto '
-        "SET $colTitle = '${manifesto.title}'"
-        ", $colContent = '${manifesto.content}'"
+        "SET $colTitle = '${secureSQLString(manifesto.title)}'"
+        ", $colContent = '${secureSQLString(manifesto.content)}'"
         ', $colOptionType = ${manifesto.optionType.index}'
         ", $colUpdatedBy = '${manifesto.updatedBy}' "
         ", $colUpdatedAt = '${manifesto.updatedAt}' "

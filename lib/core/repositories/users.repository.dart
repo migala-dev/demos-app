@@ -1,3 +1,4 @@
+import 'package:demos_app/utils/secure_sql_string.util.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
@@ -72,7 +73,7 @@ class UsersRepository extends AppRepository implements Table {
   Future<int> updateUser(User user) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblUsers '
-            "SET $colName = '${user.name}'" +
+            "SET $colName = '${secureSQLString(user.name)}'" +
         (user.profilePictureKey != null
             ? ", $colProfilePictureKey = '${user.profilePictureKey}'"
             : '') +
