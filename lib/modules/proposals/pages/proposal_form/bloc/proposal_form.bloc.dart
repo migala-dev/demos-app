@@ -11,13 +11,16 @@ class ProposalFormBloc extends Bloc<ProposalFormBlocEvent, ProposalFormView> {
     on<ProposalFormOnTitleChange>((event, emit) {
       String title = event.title;
       state.title = title;
+      state.change = true;
     });
     on<ProposalFormOnContentChange>((event, emit) {
       String content = event.content;
       state.content = content;
+      state.change = true;
     });
     on<ProposalFormOnOptionTypeChange>((event, emit) {
       state.optionType = event.optionType;
+      state.change = true;
     });
   }
 }

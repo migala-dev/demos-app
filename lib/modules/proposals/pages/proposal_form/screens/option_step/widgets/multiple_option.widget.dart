@@ -1,4 +1,4 @@
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/answer_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/add_manifesto_option.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/manifesto_option.widget.dart';
 import 'package:flutter/material.dart';

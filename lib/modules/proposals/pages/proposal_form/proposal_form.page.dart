@@ -1,10 +1,10 @@
+import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/modals/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/content_step.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/options_step.screen.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 
@@ -18,19 +18,20 @@ class NewProposalScreen extends StatefulWidget {
   _NewProposalScreenState createState() => _NewProposalScreenState();
 }
 
-enum NewProposalScreenEnum { content, answers }
+enum NewProposalScreenEnum { content, options }
 
 class _NewProposalScreenState extends State<NewProposalScreen> {
-  ManifestoOptionType optionType = ManifestoOptionType.inFavorOrOpposing;
-  // late List<ManifestoOptionWidget> options = List<ManifestoOptionWidget>;
   NewProposalScreenEnum currentStep = NewProposalScreenEnum.content;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        if (currentStep == NewProposalScreenEnum.content) {
-          return await handlePopInFirstStep();
+        ProposalFormView proposalFormView = ProposalFormBloc().state;
+        if (currentStep == NewProposalScreenEnum.content &&
+            proposalFormView.isNew &&
+            proposalFormView.change) {
+          return await askForCreateADraftCreation();
         }
 
         goToContent();
@@ -57,18 +58,11 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
     );
   }
 
-  Future<bool> handlePopInFirstStep() async {
-    if (NewProposalContentService().isEmpty()) {
-      return true;
-    }
-
+  Future<bool> askForCreateADraftCreation() async {
     final optionSelected =
         await openSaveProposalDraftDialog(context, onSaveDraft: saveDraft);
-    if (optionSelected == 'cancel') {
-      return false;
-    }
 
-    return true;
+    return optionSelected != 'cancel';
   }
 
   void goToContent() =>
@@ -81,23 +75,22 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
   }
 
   void goToNextStep() =>
-      setState(() => currentStep = NewProposalScreenEnum.answers);
+      setState(() => currentStep = NewProposalScreenEnum.options);
 
   void createProposal() {
     openPublishProposalDialog(context, onPublish: () {
       Navigator.pop(context);
     }, onSaveDraft: () {
+      saveDraft();
       Navigator.pop(context);
     });
   }
 
   void saveDraft() async {
     final spaceId = SpaceBloc().state!.spaceId!;
-    final title = NewProposalContentService().title;
-    final content = NewProposalContentService().content;
+    ProposalFormView proposalFormView = ProposalFormBloc().state;
 
-    await ProposalService().createNewProposalDraft(
-        spaceId, title, content, ManifestoOptionType.inFavorOrOpposing, []);
+    await ProposalService().createNewProposalDraft(spaceId, proposalFormView);
 
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
