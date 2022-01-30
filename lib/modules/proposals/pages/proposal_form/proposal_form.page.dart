@@ -1,6 +1,6 @@
-import 'package:demos_app/modules/proposals/pages/new_proposal/screens/answer_step/answers_step.screen.dart';
-import 'package:demos_app/modules/proposals/pages/new_proposal/screens/content_step/content_step.screen.dart';
-import 'package:demos_app/modules/proposals/pages/new_proposal/services/new_proposal_content.service.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/content_step.screen.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/options_step.screen.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +22,7 @@ enum NewProposalScreenEnum { content, answers }
 
 class _NewProposalScreenState extends State<NewProposalScreen> {
   ManifestoOptionType optionType = ManifestoOptionType.inFavorOrOpposing;
+  // late List<ManifestoOptionWidget> options = List<ManifestoOptionWidget>;
   NewProposalScreenEnum currentStep = NewProposalScreenEnum.content;
 
   @override
@@ -75,21 +76,8 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
 
   Widget getCurrentScreen() {
     return currentStep == NewProposalScreenEnum.content
-    // title
-    // onTitleChange: (title) => setState(() => this.title = title),
-    // content
-    // onContentChange: (content) => setState(() => this.content = content),
         ? ContentStepScreen(goToNextStep: goToNextStep)
-    // options
-    // onOptions: (options) => setState(() => this.options = options),
-        : AnswersStepScreen(
-          optionType: optionType,
-          onOptionTypeChange: (optionType) {
-            setState(() {
-              this.optionType = optionType;
-            });
-          },
-          createProposal: createProposal);
+        : OptionsStepScreen(createProposal: createProposal);
   }
 
   void goToNextStep() =>

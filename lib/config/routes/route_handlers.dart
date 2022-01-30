@@ -1,8 +1,8 @@
 import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
-import 'package:demos_app/modules/proposals/pages/new_proposal/new_proposal.page.dart';
-import 'package:demos_app/modules/proposals/pages/new_proposal/services/new_proposal_content.service.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.page.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/services/new_proposal_content.service.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
