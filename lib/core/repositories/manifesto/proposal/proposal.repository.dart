@@ -15,6 +15,7 @@ class ProposalRepository extends AppRepository implements Table {
   final String colStatus = 'status';
   final String colProgressStatus = 'progressStatus';
   final String colExpiratedAt = 'expiratedAt';
+  final String colSpaceId = 'spaceId';
   final String colCreatedBy = 'createdBy';
   final String colCreatedAt = 'createdAt';
   final String colUpdatedBy = 'updatedBy';
@@ -27,6 +28,7 @@ class ProposalRepository extends AppRepository implements Table {
       '$colStatus INTEGER,'
       '$colProgressStatus INTEGER,'
       '$colExpiratedAt TEXT,'
+      '$colSpaceId TEXT,'
       '$colCreatedBy TEXT,'
       '$colCreatedAt TEXT,'
       '$colUpdatedBy TEXT,'

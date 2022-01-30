@@ -7,6 +7,7 @@ class Proposal {
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
   final String? expiratedAt;
+  final String spaceId;
   final String createdBy;
   final String createdAt;
   final String updatedBy;
@@ -18,6 +19,7 @@ class Proposal {
       this.status,
       this.progressStatus,
       this.expiratedAt,
+      this.spaceId,
       this.createdBy,
       this.createdAt,
       this.updatedBy,
@@ -29,6 +31,7 @@ class Proposal {
         ProposalStatus.values[o['status']],
         ProposalProgressStatus.values[o['progressStatus']],
         o['expiratedAt'],
+        o['spaceId'],
         o['createdBy'],
         o['createdAt'],
         o['updatedBy'],
@@ -41,6 +44,7 @@ class Proposal {
         'status': status.index,
         'progressStatus': progressStatus.index,
         'expiratedAt': expiratedAt,
+        'spaceId': spaceId,
         'createdBy': createdBy,
         'createdAt': createdAt,
         'updatedBy': updatedBy,

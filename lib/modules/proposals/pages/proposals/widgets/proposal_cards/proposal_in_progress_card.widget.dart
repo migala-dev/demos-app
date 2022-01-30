@@ -8,7 +8,8 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   final ProposalView proposal;
   final int totalOfMembers;
 
-  const ProposalInProgressCard({Key? key, required this.proposal, this.totalOfMembers = 0})
+  const ProposalInProgressCard(
+      {Key? key, required this.proposal, this.totalOfMembers = 0})
       : super(key: key);
 
   @override
@@ -23,9 +24,23 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(proposal.title ?? 'Sin titulo',
-                  style: const TextStyle(fontSize: 20)),
-              const SizedBox(height: 10),
+              Container(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(proposal.title ?? 'Sin titulo',
+                        style: const TextStyle(fontSize: 20)),
+                    Container(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text(
+                          'Por: ${proposal.createdByName}',
+                          style: TextStyle(
+                              color: Colors.grey.shade600, fontSize: 12.0),
+                        ))
+                  ],
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -35,8 +50,8 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                       size: size,
                       color: color,
                     ),
-                    title: 'Termina el:',
-                    content: proposal.createdAtFormated,
+                    title: 'TERMINA EN:',
+                    content: '3 HORAS',
                   ),
                   ProposalCardInfo(
                     getIcon: (size, color) => Icon(
@@ -46,7 +61,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                     ),
                     title: 'Votos:',
                     content: '${proposal.votesCount}/$totalOfMembers',
-                  )
+                  ),
                 ],
               )
             ],
