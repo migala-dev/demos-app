@@ -1,8 +1,8 @@
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_bloc.dart';
-import 'package:demos_app/modules/proposals/proposals/bloc/proposal_view_list_event.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 
 class ProposalHandler extends EventHandlerMixin {

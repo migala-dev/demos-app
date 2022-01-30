@@ -1,10 +1,11 @@
-import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
+
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 
 class Manifesto {
   final String manifestoId;
   final String? title;
   final String? content;
-  final ProposalOptionType optionType;
+  final ManifestoOptionType optionType;
   final String spaceId;
   final String createdBy;
   final String createdAt;
@@ -26,7 +27,7 @@ class Manifesto {
         o['manifestoId'],
         o['title'],
         o['content'],
-        ProposalOptionType.values[o['optionType']],
+        ManifestoOptionType.values[o['optionType']],
         o['spaceId'],
         o['createdBy'],
         o['createdAt'],

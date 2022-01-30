@@ -1,1 +1,0 @@
-enum ProposalOptionType { inFavourOrOpposing, multipleOptions }

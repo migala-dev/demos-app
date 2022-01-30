@@ -1,7 +1,7 @@
 import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
-import 'package:demos_app/core/enums/proposal/proposal_option_type.enum.dart';
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
 
 class ProposalApi {
@@ -9,7 +9,7 @@ class ProposalApi {
     String spaceId,
     String? title,
     String? content,
-    ProposalOptionType type,
+    ManifestoOptionType type,
     List<Map<String, dynamic>> options,
   ) async {
     final String endpoint = ProposalsPath().getDraftPath(spaceId);
