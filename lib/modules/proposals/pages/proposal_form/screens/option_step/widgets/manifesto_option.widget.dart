@@ -50,7 +50,7 @@ class _ManifestoOptionWidgetState extends State<ManifestoOptionWidget> {
                             icon: const Icon(Icons.edit),
                             color: Colors.blue,
                             onPressed: () async {
-                              String? title = await getProposalTitle(context);
+                              String? title = await getOptionTitle(context);
                               if (title != null &&
                                   title.isNotEmpty &&
                                   widget.onEdit != null) {
@@ -84,7 +84,7 @@ class _ManifestoOptionWidgetState extends State<ManifestoOptionWidget> {
     );
   }
 
-  Future<String?> getProposalTitle(BuildContext context) async {
+  Future<String?> getOptionTitle(BuildContext context) async {
     return await openUpdateStringFieldModal(
       context,
       title: 'Título de la respuesta',
