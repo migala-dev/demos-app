@@ -1,14 +1,15 @@
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:flutter/material.dart';
 
-class AddProposalAnswer extends StatelessWidget {
-  const AddProposalAnswer({Key? key, required this.add}) : super(key: key);
+class AddManifestoOption extends StatelessWidget {
+  const AddManifestoOption({Key? key, required this.add}) : super(key: key);
 
   final void Function(String) add;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+        height: 72,
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: ElevatedButton(
           child: Row(

@@ -1,6 +1,6 @@
-import 'package:demos_app/modules/proposals/pages/new_proposal/screens/answer_step/models/manifesto_option_view.model.dart';
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/add_proposal_answer.widget.dart';
-import 'package:demos_app/modules/spaces/pages/new_proposal/screens/answer_step/widgets/proposal_answer.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/add_manifesto_option.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/manifesto_option.widget.dart';
 import 'package:flutter/material.dart';
 
 class MultipleOptionWidget extends StatefulWidget {
@@ -18,7 +18,7 @@ class _MultipleOptionWidgetState extends State<MultipleOptionWidget> {
     return Column(
       children: [
         ...options
-            .map((option) => ProposalAnswerWidget(
+            .map((option) => ManifestoOptionWidget(
                   title: option.title,
                   onEdit: (title) {
                     setState(() {
@@ -26,16 +26,21 @@ class _MultipleOptionWidgetState extends State<MultipleOptionWidget> {
                       //onOptionsChange(options);
                     });
                   },
+                  onRemove: () {
+                    setState(() {
+                      options = options
+                          .where((element) => element != option)
+                          .toList();
+                    });
+                  },
                 ))
             .toList(),
-        AddProposalAnswer(add: (title) {
+        AddManifestoOption(add: (title) {
           setState(() {
             options.add(ManifestoOptionView(title: title));
           });
         }),
-        // TODO: ADD REMOVE_OPTION
       ],
     );
-    ;
   }
 }
