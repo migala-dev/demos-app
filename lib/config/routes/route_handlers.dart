@@ -86,9 +86,9 @@ var spaceInvitationHandler = Handler(
   return const SpaceInvitationScreen();
 });
 
-var newProposalHandler = Handler(
+var proposalFormHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return const NewProposalScreen();
+  return const ProposalFormScreen();
 });
 
 var editProposalContentHandler = Handler(

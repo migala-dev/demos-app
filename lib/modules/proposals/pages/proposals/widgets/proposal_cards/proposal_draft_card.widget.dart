@@ -1,3 +1,7 @@
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/modals/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
@@ -12,7 +16,16 @@ class ProposalDraftCard extends StatelessWidget implements ProposalCard {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        ProposalFormView proposalFormView = ProposalFormView(
+          title: proposal.title ?? '',
+          content: proposal.content ?? '',
+          isNew: false,
+          optionType: proposal.optionType,
+        );
+        ProposalFormBloc().add(ProposalFormSetProposalFormView(proposalFormView));
+        Navigator.pushNamed(context, Routes.proposalForm);
+      },
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(20),

@@ -11,31 +11,33 @@ import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'modals/open_publish_proposal_dialog.dart';
 import 'modals/open_save_proposal_draft_dialog.modal.dart';
 
-class NewProposalScreen extends StatefulWidget {
-  const NewProposalScreen({Key? key}) : super(key: key);
+class ProposalFormScreen extends StatefulWidget {
+  const ProposalFormScreen({Key? key}) : super(key: key);
 
   @override
-  _NewProposalScreenState createState() => _NewProposalScreenState();
+  _ProposalFormScreenState createState() => _ProposalFormScreenState();
 }
 
-enum NewProposalScreenEnum { content, options }
+enum ProposalFormStepEnum { content, options }
 
-class _NewProposalScreenState extends State<NewProposalScreen> {
-  NewProposalScreenEnum currentStep = NewProposalScreenEnum.content;
+class _ProposalFormScreenState extends State<ProposalFormScreen> {
+  ProposalFormStepEnum currentStep = ProposalFormStepEnum.content;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         ProposalFormView proposalFormView = ProposalFormBloc().state;
-        if (currentStep == NewProposalScreenEnum.content &&
-            proposalFormView.isNew &&
-            proposalFormView.change) {
-          return await askForCreateADraftCreation();
+        switch (currentStep) {
+          case ProposalFormStepEnum.content:
+            if (proposalFormView.isNew && proposalFormView.change) {
+              return await askForCreateADraftCreation();
+            }
+            return true;
+          case ProposalFormStepEnum.options:
+            goToContent();
+            return false;
         }
-
-        goToContent();
-        return false;
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -66,16 +68,16 @@ class _NewProposalScreenState extends State<NewProposalScreen> {
   }
 
   void goToContent() =>
-      setState(() => currentStep = NewProposalScreenEnum.content);
+      setState(() => currentStep = ProposalFormStepEnum.content);
 
   Widget getCurrentScreen() {
-    return currentStep == NewProposalScreenEnum.content
+    return currentStep == ProposalFormStepEnum.content
         ? ContentStepScreen(goToNextStep: goToNextStep)
         : OptionsStepScreen(createProposal: createProposal);
   }
 
   void goToNextStep() =>
-      setState(() => currentStep = NewProposalScreenEnum.options);
+      setState(() => currentStep = ProposalFormStepEnum.options);
 
   void createProposal() {
     openPublishProposalDialog(context, onPublish: () {

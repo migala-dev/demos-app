@@ -1,4 +1,5 @@
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/modals/proposal_form_view.model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ProposalFormBlocEvent extends Equatable {
@@ -6,6 +7,12 @@ abstract class ProposalFormBlocEvent extends Equatable {
 
   @override
   List<Object?> get props => [];
+}
+
+class ProposalFormSetProposalFormView extends ProposalFormBlocEvent {
+  final ProposalFormView proposalFormView;
+
+  const ProposalFormSetProposalFormView(this.proposalFormView);
 }
 
 class ProposalFormOnTitleChange extends ProposalFormBlocEvent {
@@ -25,3 +32,4 @@ class ProposalFormOnOptionTypeChange extends ProposalFormBlocEvent {
 
   const ProposalFormOnOptionTypeChange(this.optionType);
 }
+

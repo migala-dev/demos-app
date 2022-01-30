@@ -18,6 +18,8 @@ class ProposalViewsRepository extends AppRepository {
   final colManifestoId = ManifestoRepository().colId;
   final colProposalId = ProposalRepository().colId;
   final colTitle = ManifestoRepository().colTitle;
+  final colContent = ManifestoRepository().colContent;
+  final colOptionType = ManifestoRepository().colOptionType;
   final colSpaceId = ManifestoRepository().colSpaceId;
   final colStatus = ProposalRepository().colStatus;
   final colProgressStatus = ProposalRepository().colProgressStatus;
@@ -30,6 +32,8 @@ class ProposalViewsRepository extends AppRepository {
       SELECT $tblManifesto.$colManifestoId,
         $colProposalId,
         $colTitle,
+        $colContent,
+        $colOptionType,
         $tblProposals.$colCreatedBy,
         $tblProposals.$colCreatedAt,
         $tblProposals.$colSpaceId,

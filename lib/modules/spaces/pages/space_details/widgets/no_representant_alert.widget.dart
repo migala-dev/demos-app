@@ -4,13 +4,13 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:flutter/material.dart';
 
 class NoRepresentantAlert extends StatefulWidget {
-  final Space? space;
 
-  const NoRepresentantAlert({Key? key, required this.space}) : super(key: key);
+  const NoRepresentantAlert({Key? key }) : super(key: key);
 
   @override
   State<NoRepresentantAlert> createState() => _NoRepresentantAlertState();
@@ -47,9 +47,10 @@ class _NoRepresentantAlertState extends State<NoRepresentantAlert> {
   }
 
   Future<void> init() async {
-    if (widget.space != null) {
+    Space? space = SpaceBloc().state; 
+    if (space != null) {
       final List<Member> representatives =
-          await MemberService().getRepresentatives(widget.space!.spaceId!);
+          await MemberService().getRepresentatives(space.spaceId!);
 
       if (representatives.isEmpty) {
         setState(() {
