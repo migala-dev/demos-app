@@ -1,3 +1,4 @@
+import 'package:demos_app/utils/secure_sql_string.util.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
@@ -62,12 +63,12 @@ class SpacesRepository extends AppRepository implements Table {
   Future<int> updateSpace(Space space) async {
     Database? db = await this.db;
     var result = await db!.rawUpdate('UPDATE $tblSpaces '
-            "SET $colName = '${space.name}'" +
+            "SET $colName = '${secureSQLString(space.name)}'" +
         (space.pictureKey != null
             ? ", $colPictureKey = '${space.pictureKey}' "
             : '') +
         (space.description != null
-            ? ", $colDescription = '${space.description}' "
+            ? ", $colDescription = '${secureSQLString(space.description)}' "
             : '') +
         ", $colApprovalPercentage = '${space.approvalPercentage}' " +
         ", $colParticipationPercentage = '${space.participationPercentage}' " +

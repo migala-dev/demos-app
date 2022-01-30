@@ -1,3 +1,4 @@
+
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 
 class Manifesto {
@@ -26,9 +27,7 @@ class Manifesto {
         o['manifestoId'],
         o['title'],
         o['content'],
-        ManifestoOptionType.values[o['optionType'].runtimeType == int
-            ? o['optionType']
-            : int.parse(o['optionType'])],
+        ManifestoOptionType.values[o['optionType']],
         o['spaceId'],
         o['createdBy'],
         o['createdAt'],

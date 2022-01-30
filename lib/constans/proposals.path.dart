@@ -4,7 +4,7 @@ import 'package:demos_app/enviroments/get_enviroment.dart';
 class ProposalsPath {
   String getProposalsPath() {
     final Enviroment enviroment = getEnviroment();
-    return '${enviroment.proposalsServiceUrl}/proposals';
+    return '${enviroment.manifestoServiceUrl}/proposals';
   }
 
   String getSpaceProposalsPath(String spaceId) =>

@@ -1,3 +1,4 @@
+import 'package:demos_app/utils/secure_sql_string.util.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/interfaces/table.interface.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
@@ -122,7 +123,7 @@ class MembersRepository extends AppRepository implements Table {
     final result = await db!.rawUpdate('UPDATE $tblMembers '
         "SET $colInvitationStatus = '${member.invitationStatus?.index}'"
         ", $colRole = '${getSpaceRoleString(member.role)}' "
-        ", $colName = '${member.name ?? ''}' "
+        ", $colName = '${secureSQLString(member.name)}' "
         ', $colDeleted = ${member.deleted ? 1 : 0} '
         ", $colUpdatedBy = '${member.updatedBy}' "
         "WHERE $colId = '${member.memberId}'");

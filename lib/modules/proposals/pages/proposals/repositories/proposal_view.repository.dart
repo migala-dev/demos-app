@@ -6,8 +6,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 
 class ProposalViewsRepository extends AppRepository {
-  final tbManifesto = ManifestoRepository().tbManifesto;
-  final tbProposals = ProposalRepository().tbProposals;
+  final tbManifesto = ManifestoRepository().tblManifesto;
+  final tbProposals = ProposalRepository().tblProposals;
   final colManifestoId = ManifestoRepository().colId;
   final colProposalId = ProposalRepository().colId;
   final colTitle = ManifestoRepository().colTitle;
