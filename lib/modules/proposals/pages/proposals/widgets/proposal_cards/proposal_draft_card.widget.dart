@@ -1,17 +1,31 @@
+import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/modals/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
 import 'package:flutter/material.dart';
 
-class ProposalDraftCard extends StatelessWidget {
+class ProposalDraftCard extends StatelessWidget implements ProposalCard {
+  @override
   final ProposalView proposal;
-  final VoidCallback onTap;
-  const ProposalDraftCard(
-      {Key? key, required this.proposal, required this.onTap})
-      : super(key: key);
+
+  const ProposalDraftCard({Key? key, required this.proposal}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        ProposalFormView proposalFormView = ProposalFormView(
+          title: proposal.title ?? '',
+          content: proposal.content ?? '',
+          isNew: false,
+          optionType: proposal.optionType,
+        );
+        ProposalFormBloc().add(ProposalFormSetProposalFormView(proposalFormView));
+        Navigator.pushNamed(context, Routes.proposalForm);
+      },
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(20),
@@ -23,31 +37,15 @@ class ProposalDraftCard extends StatelessWidget {
               Text(proposal.title ?? 'Sin titulo',
                   style: const TextStyle(fontSize: 20)),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  const Icon(
-                    Icons.calendar_today,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'CREADO EL:',
-                        style: TextStyle(
-                            fontSize: 15, color: Colors.grey.shade600),
-                      ),
-                      Text(
-                        proposal.createdAtFormated,
-                        style:
-                            const TextStyle(fontSize: 15, color: Colors.grey),
-                      )
-                    ],
-                  )
-                ],
-              )
+              ProposalCardInfo(
+                getIcon: (size, color) => Icon(
+                  Icons.calendar_today,
+                  size: size,
+                  color: color,
+                ),
+                title: 'CREADO EL:',
+                content: proposal.createdAtFormated,
+              ),
             ],
           ),
         ),

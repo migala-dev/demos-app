@@ -22,9 +22,10 @@ class Routes {
   static const String memberProfile = '/spaces/member-profile';
 
   // Proposals
-  static const String newProposal = '/new-proposal';
+  static const String proposalForm = '/proposal-form';
   static const String editProposalContent =
       '/new-proposal/edit-proposal-content';
+  static const String proposalDetails ='/proposal-details';
 
   // Settings
   static const String settings = '/settings/general';
@@ -56,9 +57,10 @@ class Routes {
     router.define(memberProfile, handler: memberProfileHandler);
 
     // Proposals
-    router.define(newProposal, handler: newProposalHandler);
+    router.define(proposalForm, handler: proposalFormHandler);
     router.define(editProposalContent, handler: editProposalContentHandler);
-
+    router.define(proposalDetails, handler: proposalDetailsHandler);
+    
     // Settings
     router.define(settings, handler: generalSettingsHandler);
     router.define(configuration, handler: generalConfigurationHandler);

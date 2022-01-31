@@ -1,7 +1,7 @@
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 
 class MemberViewService {

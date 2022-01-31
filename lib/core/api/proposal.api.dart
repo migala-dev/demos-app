@@ -26,6 +26,27 @@ class ProposalApi {
     return response;
   }
 
+  Future<ProposalResponse> createAndPublishProposal(
+    String spaceId,
+    String? title,
+    String? content,
+    ManifestoOptionType type,
+    List<Map<String, dynamic>> options,
+  ) async {
+    final String endpoint = ProposalsPath().getPublishPath(spaceId);
+    final Map<String, dynamic> body = {
+      'title': title,
+      'content': content,
+      'optionType': type.index,
+      'options': options
+    };
+
+    final httpResponse = await Api.post(endpoint, body, null);
+    final response = ProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Future<ProposalResponse> getProposal(String spaceId, String proposalId) async {
     String endpoint = ProposalsPath().getProposalPath(spaceId, proposalId);
     ThrowBehavior throwBehavior = ThrowBehavior(showError: false);

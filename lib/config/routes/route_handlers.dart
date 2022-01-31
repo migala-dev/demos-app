@@ -1,10 +1,15 @@
 import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/proposal_details.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
@@ -17,7 +22,7 @@ import 'package:demos_app/modules/spaces/pages/space_details/screens/space_perce
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/space_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/spaces_details.page.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/space_invitation/space_invitation.screen.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/spaces.page.dart';
 import 'package:demos_app/modules/spaces/screens/general_configuration.screen.dart';
 import 'package:demos_app/modules/spaces/screens/general_settings.screen.dart';
@@ -86,9 +91,9 @@ var spaceInvitationHandler = Handler(
   return const SpaceInvitationScreen();
 });
 
-var newProposalHandler = Handler(
+var proposalFormHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return const NewProposalScreen();
+  return const ProposalFormScreen();
 });
 
 var editProposalContentHandler = Handler(
@@ -97,6 +102,16 @@ var editProposalContentHandler = Handler(
     content: '',
   );
 });
+
+var proposalDetailsHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  ProposalView proposalView = context!.settings!.arguments as ProposalView;
+
+  ProposalDetailsBloc().add(SetProposalViewEvent(proposalView));
+
+  return const ProposalDetailsPage();
+});
+
 
 var generalSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

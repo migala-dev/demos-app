@@ -26,10 +26,11 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
   @override
   void initState() {
     String content = ProposalFormBloc().state.content;
-    controller = QuillController(
-        document: Document.fromJson(jsonDecode(content)),
-        selection: const TextSelection.collapsed(offset: 0));
-
+    if (content.isNotEmpty) {
+      controller = QuillController(
+          document: Document.fromJson(jsonDecode(content)),
+          selection: const TextSelection.collapsed(offset: 0));
+    }
     super.initState();
   }
 

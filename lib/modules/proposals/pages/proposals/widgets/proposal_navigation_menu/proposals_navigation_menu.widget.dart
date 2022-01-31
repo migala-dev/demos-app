@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/proposals_navigation_option.widget.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 
 import 'constants/get_proposal_view_lists.dart';
 
@@ -53,7 +53,7 @@ class ProposalsNavigationMenu extends StatelessWidget {
   Future<List<ProposalViewList>> getMenuOptions() async {
     final List<ProposalViewList> menuOptions = [];
     final String spaceId = SpaceBloc().state!.spaceId!;
-    for (final proposalList in getProposalViewLists()) {
+    for (final proposalList in await getProposalViewLists()) {
       if (await proposalList.itHasProposals(spaceId)) {
         menuOptions.add(proposalList);
       }

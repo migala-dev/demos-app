@@ -8,6 +8,9 @@ class ProposalFormBloc extends Bloc<ProposalFormBlocEvent, ProposalFormView> {
   factory ProposalFormBloc() => _proposalFormBloc;
 
   ProposalFormBloc._internal() : super(ProposalFormView.empty()) {
+    on<ProposalFormSetProposalFormView>((event, emit) {
+      emit(event.proposalFormView);
+    });
     on<ProposalFormOnTitleChange>((event, emit) {
       String title = event.title;
       state.title = title;

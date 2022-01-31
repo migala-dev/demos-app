@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/widgets/setting_items.widget.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:demos_app/widgets/tiles/information_tile.widget.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';

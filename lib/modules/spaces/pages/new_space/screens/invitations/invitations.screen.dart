@@ -3,7 +3,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/mod
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/services/contacts.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_contact_list.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_search_field.widget.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
