@@ -8,7 +8,7 @@ class EditContentScreen extends StatelessWidget {
   late final QuillController controller;
 
   EditContentScreen({Key? key, required this.content}) : super(key: key) {
-    if (content != null) {
+    if (content != null && content!.isNotEmpty) {
       controller = QuillController(
           document: Document.fromJson(jsonDecode(content!)),
           selection: const TextSelection.collapsed(offset: 0));

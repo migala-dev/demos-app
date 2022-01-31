@@ -1,10 +1,13 @@
 import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/proposal_details.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
@@ -102,6 +105,10 @@ var editProposalContentHandler = Handler(
 
 var proposalDetailsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  ProposalView proposalView = context!.settings!.arguments as ProposalView;
+
+  ProposalDetailsBloc().add(SetProposalViewEvent(proposalView));
+
   return const ProposalDetailsPage();
 });
 

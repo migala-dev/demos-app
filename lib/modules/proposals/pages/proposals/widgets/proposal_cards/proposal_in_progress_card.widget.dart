@@ -1,3 +1,4 @@
+import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
@@ -16,7 +17,11 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, Routes.proposalDetails),
+      onTap: () =>
+          Application.router.navigateTo(context, Routes.proposalDetails,
+              routeSettings: RouteSettings(
+                arguments: proposal,
+              )),
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(20),
@@ -31,7 +36,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(proposal.title ?? 'Sin titulo',
-                        style: const TextStyle(fontSize: 20)),
+                        style: const TextStyle(fontSize: 20), overflow: TextOverflow.ellipsis),
                     Container(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(

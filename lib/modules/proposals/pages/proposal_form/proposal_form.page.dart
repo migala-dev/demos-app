@@ -80,9 +80,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
       setState(() => currentStep = ProposalFormStepEnum.options);
 
   void createProposal() {
-    openPublishProposalDialog(context, onPublish: () {
-      Navigator.pop(context);
-    }, onSaveDraft: () {
+    openPublishProposalDialog(context, onPublish: publish, onSaveDraft: () {
       saveDraft();
       Navigator.pop(context);
     });
@@ -95,6 +93,16 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     await ProposalService().createNewProposalDraft(spaceId, proposalFormView);
 
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+  }
+
+  void publish() async {
+    String spaceId = SpaceBloc().state!.spaceId!;
+    ProposalFormView proposalFormView = ProposalFormBloc().state;
+
+    await ProposalService().createAndPublishProposal(spaceId, proposalFormView);
+
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    Navigator.pop(context);
   }
 
   Column getAppBarTitle() {

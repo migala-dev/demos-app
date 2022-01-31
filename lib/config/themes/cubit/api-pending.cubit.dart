@@ -33,7 +33,7 @@ class ApiPendingCubit extends Cubit<bool> {
     DateTime now = DateTime.now();
     if (timestampList.isEmpty && state == true) {
       emit(false);
-    } else if (timestampList.where((t) => now.difference(t.timestamp).inSeconds > 2).isNotEmpty && state == false) {
+    } else if (timestampList.where((t) => now.difference(t.timestamp).inSeconds > 1).isNotEmpty && state == false) {
       emit(true);
     }
   }

@@ -15,6 +15,15 @@ class ProposalService {
     await _saveProposalResponseOnRepository(response);
   }
 
+  Future<void> createAndPublishProposal(
+    String spaceId,
+    ProposalFormView proposalFormView
+  ) async {
+    final response = await ProposalApi()
+        .createAndPublishProposal(spaceId, proposalFormView.title, proposalFormView.content, proposalFormView.optionType, []);
+    await _saveProposalResponseOnRepository(response);
+  }
+
   Future<void> getProposal(String spaceId, String proposalId) async {
     ProposalResponse response = await ProposalApi().getProposal(spaceId, proposalId);
 
