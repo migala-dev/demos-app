@@ -8,11 +8,11 @@ import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class OptionsStepScreen extends StatefulWidget {
-  final VoidCallback createProposal;
+  final VoidCallback confirmPublishProposal;
 
   const OptionsStepScreen({
     Key? key,
-    required this.createProposal,
+    required this.confirmPublishProposal,
   }) : super(key: key);
 
   @override
@@ -70,7 +70,7 @@ class _OptionsStepScreenState extends State<OptionsStepScreen> {
                 : Container()),
         BigButton(
           text: 'Crear',
-          onPressed: () => widget.createProposal(),
+          onPressed: () => widget.confirmPublishProposal(),
         )
       ],
     );

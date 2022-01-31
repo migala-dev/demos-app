@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/modals/proposal_form_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/widgets/view_content.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -1,24 +1,15 @@
 import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
-import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 
 class ProposalApi {
-  Future<ProposalResponse> createProposalDraft(
-    String spaceId,
-    String? title,
-    String? content,
-    ManifestoOptionType type,
-    List<Map<String, dynamic>> options,
-  ) async {
-    final String endpoint = ProposalsPath().getDraftPath(spaceId);
-    final Map<String, dynamic> body = {
-      'title': title,
-      'content': content,
-      'optionType': type.index,
-      'options': options
-    };
+  Future<ProposalResponse> createProposalDraft(String spaceId, ProposalFormView proposalFormView) async {
+    final String endpoint =
+        ProposalsPath().getDraftPath(spaceId);
+    final Map<String, dynamic> body =  _getBodyFromProposalFormView(proposalFormView);
+
 
     final httpResponse = await Api.post(endpoint, body, null);
     final response = ProposalResponse.fromObject(httpResponse);
@@ -26,20 +17,37 @@ class ProposalApi {
     return response;
   }
 
-  Future<ProposalResponse> createAndPublishProposal(
+  Future<ProposalResponse> updateProposalDraft(String spaceId,
+      String proposalId, ProposalFormView proposalFormView) async {
+    final String endpoint =
+        ProposalsPath().getProposalDraftPath(spaceId, proposalId);
+    final Map<String, dynamic> body =  _getBodyFromProposalFormView(proposalFormView);
+
+    final httpResponse = await Api.put(endpoint, body, null);
+    final response = ProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+  Future<ProposalResponse> publishProposalDraft(
     String spaceId,
-    String? title,
-    String? content,
-    ManifestoOptionType type,
-    List<Map<String, dynamic>> options,
-  ) async {
-    final String endpoint = ProposalsPath().getPublishPath(spaceId);
-    final Map<String, dynamic> body = {
-      'title': title,
-      'content': content,
-      'optionType': type.index,
-      'options': options
-    };
+      String proposalId, ProposalFormView proposalFormView) async {
+    final String endpoint =
+        ProposalsPath().getPublishDraftPath(spaceId, proposalId);
+    final Map<String, dynamic> body =  _getBodyFromProposalFormView(proposalFormView);
+
+
+    final httpResponse = await Api.put(endpoint, body, null);
+    final response = ProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+  Future<ProposalResponse> createAndPublishProposal(String spaceId, ProposalFormView proposalFormView) async {
+    final String endpoint =
+        ProposalsPath().getPublishPath(spaceId);
+    final Map<String, dynamic> body =  _getBodyFromProposalFormView(proposalFormView);
+
 
     final httpResponse = await Api.post(endpoint, body, null);
     final response = ProposalResponse.fromObject(httpResponse);
@@ -47,7 +55,8 @@ class ProposalApi {
     return response;
   }
 
-  Future<ProposalResponse> getProposal(String spaceId, String proposalId) async {
+  Future<ProposalResponse> getProposal(
+      String spaceId, String proposalId) async {
     String endpoint = ProposalsPath().getProposalPath(spaceId, proposalId);
     ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
 
@@ -55,5 +64,15 @@ class ProposalApi {
     final response = ProposalResponse.fromObject(httpResponse);
 
     return response;
+  }
+
+  Map<String, dynamic> _getBodyFromProposalFormView(
+      ProposalFormView proposalFormView) {
+    return {
+      'title': proposalFormView.title,
+      'content': proposalFormView.content,
+      'optionType': proposalFormView.optionType.index,
+      'options': []
+    };
   }
 }
