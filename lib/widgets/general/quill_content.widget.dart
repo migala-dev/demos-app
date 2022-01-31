@@ -26,7 +26,7 @@ class _QuillContentState extends State<QuillContent> {
           document: Document.fromJson(jsonDecode(widget.content!)),
           selection: const TextSelection.collapsed(offset: 0));
       return ViewContent(controller: controller);
-    } on FormatException catch (e) {
+    } on FormatException {
       return Container();
     }
   }

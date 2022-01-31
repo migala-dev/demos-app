@@ -17,7 +17,7 @@ class ProposalViewListBloc
   void _onListLoaded(ProposalViewListLoaded event, Emitter<ProposalViewListState> emit) async {
       emit(ProposalViewListLoadingInProgress());
 
-      for (ProposalViewList proposalListView in getProposalViewLists()) {
+      for (ProposalViewList proposalListView in await getProposalViewLists()) {
         if (await proposalListView.itHasProposals(event.spaceId)) {
           emit(ProposalViewListWithData(proposalListView));
           return;
