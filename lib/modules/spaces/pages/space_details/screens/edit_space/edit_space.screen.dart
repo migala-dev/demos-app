@@ -4,7 +4,7 @@ import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/edit_space/widgets/space_field.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:demos_app/widgets/pages/image_editor.page.dart';

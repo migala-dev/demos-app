@@ -6,7 +6,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_l
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 
 import 'modals/open_publish_proposal_dialog.dart';
 import 'modals/open_save_proposal_draft_dialog.modal.dart';

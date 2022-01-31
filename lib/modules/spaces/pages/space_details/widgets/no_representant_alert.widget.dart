@@ -4,7 +4,7 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:flutter/material.dart';
 

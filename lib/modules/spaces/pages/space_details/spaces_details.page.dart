@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/space_picture_header.widget.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/config/routes/routes.dart';
 
 class SpaceDetailsScreen extends StatelessWidget {

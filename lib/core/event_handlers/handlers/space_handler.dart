@@ -4,7 +4,8 @@ import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/services/general_spaces.service.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 
 class SpaceHandler extends EventHandlerMixin {
   static final _spaceHandler = SpaceHandler._internal();

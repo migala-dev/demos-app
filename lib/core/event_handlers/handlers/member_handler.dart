@@ -7,7 +7,7 @@ import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/services/space.bloc.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/shared/services/new_invitation_dialog.service.dart';
 

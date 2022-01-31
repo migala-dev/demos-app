@@ -1,3 +1,4 @@
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
@@ -15,7 +16,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {},
+      onTap: () => Navigator.pushNamed(context, Routes.proposalDetails),
       child: Material(
         elevation: 2,
         borderRadius: BorderRadius.circular(20),

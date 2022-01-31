@@ -1,20 +1,7 @@
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-abstract class SpaceEvent {
-  String spaceId;
-
-  SpaceEvent(this.spaceId);
-}
-
-class SetSpaceEvent extends SpaceEvent {
-  SetSpaceEvent(String spaceId) : super(spaceId);
-}
-
-class UpdateSpaceEvent extends SpaceEvent {
-  UpdateSpaceEvent(String spaceId) : super(spaceId);
-}
 
 class SpaceBloc extends Bloc<SpaceEvent, Space?> {
   static final SpaceBloc _spaceBloc = SpaceBloc._internal();
