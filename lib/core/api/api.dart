@@ -44,6 +44,17 @@ class Api {
     return response!.body != '' ?jsonDecode(response.body) : null;
   }
 
+  static Future<dynamic> put(String endpoint, Object? body, ThrowBehavior? throwBehavior) async {
+    Map<String, String> headers =
+        body != null ? _getHeadersWithApplicationJSON() : _getDefaultHeaders();
+    String bodyFormatted = body != null ? json.encoder.convert(body) : '';
+
+    Future<http.Response> call =
+        http.put(Uri.parse(endpoint), headers: headers, body: bodyFormatted);
+    var response = await _handleErrors(call, throwBehavior);
+    return response!.body != '' ?jsonDecode(response.body) : null;
+  }
+
   static Future<dynamic> patch(String endpoint, Object? body, ThrowBehavior? throwBehavior) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
         headers: _getHeadersWithApplicationJSON(),

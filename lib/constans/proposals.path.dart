@@ -13,10 +13,15 @@ class ProposalsPath {
   String getDraftPath(String spaceId) =>
       '${getSpaceProposalsPath(spaceId)}/draft';
 
+  String getProposalDraftPath(String spaceId, String proposalId) =>
+      '${getSpaceProposalsPath(spaceId)}/draft/$proposalId';
+
+  String getPublishDraftPath(String spaceId, String proposalId) =>
+      '${getProposalDraftPath(spaceId, proposalId)}/publish';
 
   String getPublishPath(String spaceId) =>
       '${getSpaceProposalsPath(spaceId)}/publish';
 
-  String getProposalPath(String spaceId, String proposalId) => 
-    '${getSpaceProposalsPath(spaceId)}/$proposalId';
+  String getProposalPath(String spaceId, String proposalId) =>
+      '${getSpaceProposalsPath(spaceId)}/$proposalId';
 }
