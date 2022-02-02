@@ -36,7 +36,7 @@ AlertDialog _showAndroidAlertDialog(
     BuildContext context, String title, List<DialogOption> options) {
   return AlertDialog(
     content: SizedBox(
-      height: 50 + options.length * 38,
+      height: 50 + options.length * 45,
       child: Column(
         children: [
           Text(

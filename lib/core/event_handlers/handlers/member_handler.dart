@@ -5,9 +5,13 @@ import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
+import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
+import 'package:demos_app/modules/spaces/bloc/current_member/current_member.event.dart';
+import 'package:demos_app/modules/spaces/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
+import 'package:demos_app/modules/spaces/repositories/member_view.repository.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/shared/services/new_invitation_dialog.service.dart';
 
@@ -58,6 +62,13 @@ class UpdateMemberEvent implements EventHandler {
 
       if (currerntSpaceId == spaceId) {
         spaceMembersBloc.add(SpaceMemberUpdated(memberId));
+
+        MemberView? currentMember = CurrentMemberBloc().state;
+        if (currentMember != null && currentMember.memberId! == memberId) {
+          MemberView? member =
+              await MemberViewsRepository().findByMemberId(memberId);
+          CurrentMemberBloc().add(SetCurrentMemberEvent(member));
+        }
       }
     } catch (err) {
       if (err != UserIsNotMemberError()) {

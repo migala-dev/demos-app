@@ -1,3 +1,4 @@
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/services/contacts.service.dart';
@@ -5,11 +6,10 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/wid
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_search_field.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
-import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
+import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
-import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
 class InvitationsScreen extends StatefulWidget {
@@ -93,8 +93,8 @@ class _InvitationsScreenState extends State<InvitationsScreen>
         ),
       ),
       Container(
-        child: SafeWidgetValidator(
-            validators: [IsCurrentUserAdminWidgetValidator()],
+        child: SafeWidgetMemberValidator(
+              roles: const [SpaceRole.admin],
             child: BigButton(
               text: 'Invitar',
               onPressed: sendInvitations,

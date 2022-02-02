@@ -1,5 +1,5 @@
 import 'package:demos_app/core/api/space.api.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
@@ -37,19 +37,5 @@ class GeneralSpaceService {
     await SpacesRepository().updateSpace(response.space);
 
     return response.space;
-  }
-
-  Future<bool> isUserAdmin(String userId, String spaceId) async {
-    Member? member =
-        await MembersRepository().findByUserIdAndSpaceIdAndInvitationStatusAccepted(userId, spaceId);
-
-    return member != null ? member.role == SpaceRole.admin : false;
-  }
-
-  Future<bool> isUserRepresentative(String userId, String spaceId) async {
-    Member? member =
-        await MembersRepository().findByUserIdAndSpaceIdAndInvitationStatusAccepted(userId, spaceId);
-
-    return member != null ? member.role == SpaceRole.representative : false;
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member.view.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 
 class MemberTile extends StatelessWidget {

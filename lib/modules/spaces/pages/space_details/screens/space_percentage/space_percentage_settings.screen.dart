@@ -1,4 +1,6 @@
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/space_percentage.widget.dart';
+import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,6 @@ import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
-import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 
 class SpacePercentageSettingsScreen extends StatefulWidget {
   const SpacePercentageSettingsScreen({Key? key}) : super(key: key);
@@ -73,8 +74,8 @@ class _SpacePercentageSettingsScreenState
                     ' para aprobar una de las opciones de una propuesta.',
                 validators: validators),
             const Spacer(),
-            SafeWidgetValidator(
-              validators: [IsCurrentUserAdminWidgetValidator()],
+            SafeWidgetMemberValidator(
+              roles: const [SpaceRole.admin],
               child: BigButton(
                 text: 'Guardar',
                 onPressed: () => openConfirmationDialog(context,

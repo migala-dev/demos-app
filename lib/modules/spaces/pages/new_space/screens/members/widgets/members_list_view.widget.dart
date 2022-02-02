@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_tile.widget.dart';
 
 class MembersListView extends StatelessWidget {

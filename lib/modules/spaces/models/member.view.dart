@@ -1,5 +1,5 @@
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
@@ -67,7 +67,7 @@ class MemberView {
 
   MemberView(
       {required this.userId,
-      required this.participationCount,
+      this.participationCount = 0,
       required this.role,
       required this.memberCreatedAt,
       this.memberName,
@@ -78,4 +78,17 @@ class MemberView {
       this.userName,
       this.phoneNumber,
       this.invitationExpiredAt});
+
+  factory MemberView.fromObject(dynamic o) => MemberView(
+      userId: o['userId'],
+      role: getSpaceRoleFromString(o['role']),
+      memberCreatedAt: o['memberCreatedAt'],
+      memberName: o['memberName'],
+      invitationStatus: InvitationStatus.values[o['invitationStatus']],
+      profilePictureKey: o['profilePictureKey'],
+      memberId: o['memberId'],
+      spaceId: o['spaceId'],
+      userName: o['userName'],
+      phoneNumber: o['phoneNumber'],
+      invitationExpiredAt: o['invitationExpiredAt']);
 }

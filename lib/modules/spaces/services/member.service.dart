@@ -2,7 +2,7 @@ import 'package:demos_app/core/api/member.api.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/errors/invalid_invitation_status.error.dart';
 import 'package:demos_app/core/models/errors/invitation_expired.error.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';

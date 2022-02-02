@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 
 class SelectRoleModal extends StatelessWidget {
   const SelectRoleModal(
