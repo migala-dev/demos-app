@@ -1,6 +1,6 @@
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/no_representant_alert.widget.dart';
-import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
-import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
+import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:flutter/material.dart';
 
 class NoProposals extends StatelessWidget {
@@ -18,9 +18,9 @@ class NoProposals extends StatelessWidget {
         Container(
           margin: const EdgeInsets.only(top: 20.0),
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: SafeWidgetValidator(
-              validators: [IsCurrentUserAdminWidgetValidator()],
-              child: const Padding(
+          child: const SafeWidgetMemberValidator(
+              roles: [SpaceRole.admin],
+              child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 20),
                   child: NoRepresentantAlert())),
         )

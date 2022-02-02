@@ -3,7 +3,32 @@ import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interfac
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SafeWidgetValidator extends StatefulWidget {
+class ConnectionWidgetValidator extends StatelessWidget {
+  final Widget child;
+  const ConnectionWidgetValidator({Key? key, required this.child})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ConnectionStatusBloc, ConnectionStatusState>(
+      builder: (context, connectionState) {
+        if (isValidConnection(connectionState)) {
+          return child;
+        }
+        return const SizedBox(
+          height: 0,
+          width: 0,
+        );
+      },
+    );
+  }
+
+  bool isValidConnection(ConnectionStatusState connectionState) {
+    return connectionState == ConnectionStatusState.connected;
+  }
+}
+
+class SafeWidgetValidator extends StatelessWidget {
   final List<WidgetValidator>? validators;
   final Widget child;
   final bool safeInternetConnectionMode;
@@ -16,33 +41,17 @@ class SafeWidgetValidator extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<SafeWidgetValidator> createState() => _SafeWidgetValidatorState();
-}
-
-class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
-  bool isValid = false;
-
-  @override
-  void initState() {
-    super.initState();
-    runValidations();
-  }
-
-  void runValidations() async {
-    bool isValid = await validate();
-    if (mounted) {
-      setState(() {
-        this.isValid = isValid;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ConnectionStatusBloc, ConnectionStatusState>(
-      builder: (context, connectionState) {
-        if (isValid && isValidConnection(connectionState)) {
-          return widget.child;
+    return FutureBuilder<bool>(
+      future: validate(),
+      builder: (context, snapshot) {
+        bool isValid = snapshot.data != null && snapshot.data!;
+        if (isValid) {
+          return safeInternetConnectionMode
+              ? ConnectionWidgetValidator(
+                  child: child,
+                )
+              : child;
         }
         return const SizedBox(
           height: 0,
@@ -53,18 +62,13 @@ class _SafeWidgetValidatorState extends State<SafeWidgetValidator> {
   }
 
   Future<bool> validate() async {
-    if (widget.validators == null) {
+    if (validators == null) {
       return true;
     } else {
-      List<bool> validatosResult = await Future.wait(
-          widget.validators!.map((v) => v.canActivate()).toList());
+      List<bool> validatosResult =
+          await Future.wait(validators!.map((v) => v.canActivate()).toList());
 
       return validatosResult.every((r) => r);
     }
-  }
-
-  bool isValidConnection(ConnectionStatusState connectionState) {
-    return !widget.safeInternetConnectionMode ||
-        connectionState == ConnectionStatusState.connected;
   }
 }

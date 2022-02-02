@@ -1,7 +1,7 @@
 import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
 import 'package:demos_app/constans/member.path.dart';
 import 'package:demos_app/core/api/api.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/member_response.model.dart';

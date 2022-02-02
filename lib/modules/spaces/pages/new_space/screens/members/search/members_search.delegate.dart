@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/member_view.service.dart';
 
 class MembersSearchDelegate extends SearchDelegate {

@@ -1,5 +1,5 @@
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
-import 'package:demos_app/core/enums/space-role.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 
 class Member {
   String? _memberId;
