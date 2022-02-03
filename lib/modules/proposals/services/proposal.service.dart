@@ -49,4 +49,6 @@ class ProposalService {
     }
     await ProposalRepository().insertOrUpdate(response.proposal);
   }
+
+  Future<void> deleteProposalDraft(String proposalId) async {}
 }
