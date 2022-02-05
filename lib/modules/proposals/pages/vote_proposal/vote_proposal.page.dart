@@ -1,3 +1,4 @@
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/shared/models/option.model.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/buttons/right_close_button.widget.dart';
@@ -48,8 +49,12 @@ class _VoteProposalPageState extends State<VoteProposalPage> {
                 SafeWidgetValidator(
                     child: BigButton(
                   text: 'Votar',
-                  onPressed: optionSelected!.accept,
                   disabled: optionSelected == null,
+                  onPressed: () {
+                    if (optionSelected != null) {
+                      optionSelected!.accept();
+                    }
+                  },
                 ))
               ],
             ))
@@ -67,5 +72,5 @@ class _VoteProposalPageState extends State<VoteProposalPage> {
     ];
   }
 
-  void goToNuleVoteScreen() {}
+  void goToNuleVoteScreen() => Navigator.pushNamed(context, Routes.nuloVote);
 }

@@ -9,7 +9,11 @@ class LeftBackButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        IconButton(onPressed: onPressed, icon: const Icon(Icons.arrow_back))
+        IconButton(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            constraints: const BoxConstraints(),
+            onPressed: onPressed,
+            icon: const Icon(Icons.arrow_back))
       ],
     );
   }
