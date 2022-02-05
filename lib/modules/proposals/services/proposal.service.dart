@@ -41,14 +41,24 @@ class ProposalService {
     await _saveProposalResponseOnRepository(response);
   }
 
-  Future<void> _saveProposalResponseOnRepository(
-      ProposalResponse response) async {
-    await ManifestoRepository().insertOrUpdate(response.manifesto);
-    for (final manifestoOption in response.manifestoOptions) {
-      await ManifestoOptionRepository().insertOrUpdate(manifestoOption);
-    }
-    await ProposalRepository().insertOrUpdate(response.proposal);
+  Future<void> cancelProposal(String spaceId, String proposalId) async {
+    final response = await ProposalApi().cancelProposal(spaceId, proposalId);
+
+    await _saveProposalResponseOnRepository(response);
   }
 
-  Future<void> deleteProposal(String proposalId) async {}
+  Future<void> _saveProposalResponseOnRepository(
+      ProposalResponse response) async {
+    if (response.manifesto != null) {
+      await ManifestoRepository().insertOrUpdate(response.manifesto!);
+    }
+    if (response.manifestoOptions != null) {
+      for (final manifestoOption in response.manifestoOptions!) {
+        await ManifestoOptionRepository().insertOrUpdate(manifestoOption);
+      }
+    }
+    if (response.proposal != null) {
+      await ProposalRepository().insertOrUpdate(response.proposal!);
+    }
+  }
 }

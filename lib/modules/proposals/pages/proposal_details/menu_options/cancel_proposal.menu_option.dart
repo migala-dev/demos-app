@@ -1,18 +1,20 @@
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
 import 'package:flutter/material.dart';
 
-class DeleteProposalMenuOption implements MenuOption {
+class CancelProposalMenuOption implements MenuOption {
   @override
-  String name = 'Eliminar';
+  String name = 'Cancelar';
   @override
   IconData icon = Icons.delete;
 
   @override
   void onTap(BuildContext context) async {
     final proposalId = ProposalDetailsBloc().state!.proposalId;
-    await ProposalService().deleteProposal(proposalId);
+    final spaceId = SpaceBloc().state!.spaceId!;
+    await ProposalService().cancelProposal(spaceId, proposalId);
     Navigator.pop(context);
   }
 }
