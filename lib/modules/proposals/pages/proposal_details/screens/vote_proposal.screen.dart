@@ -8,14 +8,14 @@ import 'package:demos_app/widgets/titles/entity_title.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
-class VoteProposalPage extends StatefulWidget {
-  const VoteProposalPage({Key? key}) : super(key: key);
+class VoteProposalScreen extends StatefulWidget {
+  const VoteProposalScreen({Key? key}) : super(key: key);
 
   @override
-  State<VoteProposalPage> createState() => _VoteProposalPageState();
+  State<VoteProposalScreen> createState() => _VoteProposalScreenState();
 }
 
-class _VoteProposalPageState extends State<VoteProposalPage> {
+class _VoteProposalScreenState extends State<VoteProposalScreen> {
   Option? optionSelected;
 
   @override

@@ -9,7 +9,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_l
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/screens/nulo_vote.screen.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_details/screens/vote_proposal.page.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/screens/vote_proposal.screen.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
@@ -143,7 +143,7 @@ var memberProfileHandler =
 
 var voteProposalHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  return const VoteProposalPage();
+  return const VoteProposalScreen();
 });
 
 var nuloVoteHandler =
