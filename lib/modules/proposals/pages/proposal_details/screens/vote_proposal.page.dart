@@ -1,4 +1,5 @@
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/shared/models/option.model.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/buttons/right_close_button.widget.dart';
@@ -30,7 +31,7 @@ class _VoteProposalPageState extends State<VoteProposalPage> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const EntityTitle(name: 'Propuesta #1', type: 'Propuesta'),
+                EntityTitle(name: getProposalName(), type: 'Propuesta'),
                 const Spacer(),
                 const Text('Opción'),
                 Expanded(
@@ -71,6 +72,8 @@ class _VoteProposalPageState extends State<VoteProposalPage> {
       Option('Nulo', goToNuleVoteScreen)
     ];
   }
+
+  String getProposalName() => ProposalDetailsBloc().state!.title!;
 
   void goToNuleVoteScreen() => Navigator.pushNamed(context, Routes.nuloVote);
 }
