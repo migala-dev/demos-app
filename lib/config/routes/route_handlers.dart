@@ -8,6 +8,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.pa
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/vote_proposal/vote_proposal.page.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
@@ -112,7 +113,6 @@ var proposalDetailsHandler = Handler(
   return const ProposalDetailsPage();
 });
 
-
 var generalSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return const GeneralSettingsScreen();
@@ -138,4 +138,9 @@ var memberProfileHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   final memberView = context!.settings!.arguments as MemberView;
   return MemberProfileScreen(memberView);
+});
+
+var voteProposalHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  return const VoteProposalPage();
 });

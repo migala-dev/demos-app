@@ -17,11 +17,13 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        padding: const EdgeInsets.only(top: 15),
+        physics: const BouncingScrollPhysics(),
         itemCount: widget.options.length,
         itemBuilder: (BuildContext context, int position) {
-          Option option = widget.options[position];
-          bool isSelected = optionSelected?.label == option.label;
-          Color backgroundColor =
+          final Option option = widget.options[position];
+          final bool isSelected = optionSelected?.label == option.label;
+          final Color backgroundColor =
               isSelected ? Colors.blue.shade100 : Colors.white;
           return Container(
               margin: const EdgeInsets.only(bottom: 12.0),
