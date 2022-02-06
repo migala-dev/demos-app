@@ -1,11 +1,16 @@
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:flutter/material.dart';
 
-class AddManifestoOption extends StatelessWidget {
+class AddManifestoOption extends StatefulWidget {
   const AddManifestoOption({Key? key, required this.add}) : super(key: key);
 
   final void Function(String) add;
 
+  @override
+  State<AddManifestoOption> createState() => _AddManifestoOptionState();
+}
+
+class _AddManifestoOptionState extends State<AddManifestoOption> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,7 +44,7 @@ class AddManifestoOption extends StatelessWidget {
           onPressed: () async {
             String? title = await getOptionTitle(context);
             if (title != null && title.isNotEmpty) {
-              add(title);
+              widget.add(title);
             }
           },
           style: ElevatedButton.styleFrom(

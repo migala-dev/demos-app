@@ -7,7 +7,8 @@ class ProposalFormBloc extends Bloc<ProposalFormBlocEvent, ProposalFormView> {
       ProposalFormBloc._internal();
   factory ProposalFormBloc() => _proposalFormBloc;
 
-  ProposalFormBloc._internal() : super(ProposalFormView.empty()) {
+  ProposalFormBloc._internal()
+      : super(ProposalFormView.empty(manifestoOptions: [])) {
     on<ProposalFormSetProposalFormView>((event, emit) {
       emit(event.proposalFormView);
     });
@@ -23,6 +24,10 @@ class ProposalFormBloc extends Bloc<ProposalFormBlocEvent, ProposalFormView> {
     });
     on<ProposalFormOnOptionTypeChange>((event, emit) {
       state.optionType = event.optionType;
+      state.change = true;
+    });
+    on<ProposalFormOnManifestoOptionsChange>((event, emit) {
+      state.manifestoOptions = event.manifestoOptions;
       state.change = true;
     });
   }
