@@ -62,9 +62,10 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                 return <Widget>[
                   SliverAppBar(
                     actions: [
-                      SafeWidgetMemberValidator(
-                          roles: const [SpaceRole.representative],
-                          child: PopupProposalDetailsMenuOptions())
+                      SafeWidgetMemberValidator(roles: const [
+                        SpaceRole.representative,
+                        SpaceRole.admin
+                      ], child: PopupProposalDetailsMenuOptions())
                     ],
                     backgroundColor: const Color(0xFFEFB355),
                     expandedHeight: MediaQuery.of(context).size.height * 0.3,

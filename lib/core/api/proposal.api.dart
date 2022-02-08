@@ -1,6 +1,7 @@
 import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
+import 'package:demos_app/core/models/responses/cancel_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 
@@ -67,14 +68,14 @@ class ProposalApi {
     return response;
   }
 
-  Future<ProposalResponse> cancelProposal(
+  Future<CancelProposalResponse> cancelProposal(
       String spaceId, String proposalId) async {
     final String endpoint =
         ProposalsPath().getCancelProposalPath(spaceId, proposalId);
 
     final httpResponse = await Api.put(endpoint, null, null);
 
-    final response = ProposalResponse.fromObject(httpResponse);
+    final response = CancelProposalResponse.fromObject(httpResponse);
 
     return response;
   }
