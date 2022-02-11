@@ -14,7 +14,7 @@ class CancelProposalMenuOption implements MenuOption {
   @override
   void onTap(BuildContext context) async {
     await openConfirmationDialog(context,
-        content: '¿Estas de seguro que desea cancelar esta propuesta?',
+        content: '¿Estas seguro que desea cancelar esta propuesta?',
         accept: () => cancelProposal(context));
   }
 
