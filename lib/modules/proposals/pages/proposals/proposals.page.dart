@@ -20,8 +20,8 @@ class ProposalsPage extends StatelessWidget {
   const ProposalsPage({Key? key}) : super(key: key);
 
   void goToNewProposal(BuildContext context) {
-    ProposalFormBloc().add(ProposalFormSetProposalFormView(
-        ProposalFormView.empty(manifestoOptions: [])));
+    ProposalFormBloc()
+        .add(ProposalFormSetProposalFormView(ProposalFormView.empty()));
     Navigator.pushNamed(context, Routes.proposalForm);
   }
 
@@ -39,11 +39,12 @@ class ProposalsPage extends StatelessWidget {
             state is ProposalViewListWithData ? state.proposalViewList : null;
         return Scaffold(
           floatingActionButton: SafeWidgetMemberValidator(
-              roles: const [SpaceRole.representative],
-              child: FloatingActionButton(
-                child: const Icon(Icons.how_to_vote),
-                onPressed: () => goToNewProposal(context),
-              )),
+            roles: const [SpaceRole.representative],
+            child: FloatingActionButton(
+              child: const Icon(Icons.how_to_vote),
+              onPressed: () => goToNewProposal(context),
+            ),
+          ),
           body: state is ProposalViewListEmpty
               ? Center(child: NoProposals())
               : Padding(
