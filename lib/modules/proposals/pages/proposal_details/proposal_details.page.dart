@@ -1,6 +1,9 @@
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/widgets/general/quill_content.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,6 +61,12 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
               headerSliverBuilder: (BuildContext context, bool isScroll) {
                 return <Widget>[
                   SliverAppBar(
+                    actions: [
+                      SafeWidgetMemberValidator(roles: const [
+                        SpaceRole.representative,
+                        SpaceRole.admin
+                      ], child: PopupProposalDetailsMenuOptions())
+                    ],
                     backgroundColor: const Color(0xFFEFB355),
                     expandedHeight: MediaQuery.of(context).size.height * 0.3,
                     pinned: true,
