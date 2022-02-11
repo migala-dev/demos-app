@@ -1,11 +1,13 @@
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/dropdown_manifesto_option.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/manifesto_option.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/multiple_option.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsStepScreen extends StatefulWidget {
   final VoidCallback confirmPublishProposal;
@@ -21,7 +23,6 @@ class OptionsStepScreen extends StatefulWidget {
 
 class _OptionsStepScreenState extends State<OptionsStepScreen> {
   List<DropdownManifestoItem> items = [];
-  DropdownManifestoItem? optionTypeSelected;
 
   @override
   void initState() {
@@ -38,41 +39,40 @@ class _OptionsStepScreenState extends State<OptionsStepScreen> {
         getWidget: getMultipleOptionsWidget,
       )
     ];
-    optionTypeSelected = items.firstWhere(
-        (element) => element.optionType == ProposalFormBloc().state.optionType);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Votaciones de: ', style: TextStyle(color: Colors.grey)),
-        DropdownButtonHideUnderline(
-          child: DropdownButton<DropdownManifestoItem>(
-            items: items.map(buildMenuItem).toList(),
-            isExpanded: true,
-            onChanged: (value) {
-              setState(() {
-                optionTypeSelected = value;
-                ProposalFormBloc()
-                    .add(ProposalFormOnOptionTypeChange(value!.optionType));
-              });
-            },
-            value: optionTypeSelected,
-          ),
-        ),
-        const SizedBox(height: 24),
-        const Text('Opciones', style: TextStyle(color: Colors.grey)),
-        Expanded(
-            child: optionTypeSelected != null
-                ? optionTypeSelected!.getWidget()
-                : Container()),
-        BigButton(
-          text: 'Crear',
-          onPressed: () => widget.confirmPublishProposal(),
-        )
-      ],
+    return BlocBuilder<ProposalFormBloc, ProposalFormView>(
+      bloc: ProposalFormBloc(),
+      builder: (context, proposalFormView) {
+        DropdownManifestoItem optionTypeSelected = items.firstWhere(
+            (element) => element.optionType == proposalFormView.optionType);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Votaciones de: ', style: TextStyle(color: Colors.grey)),
+            DropdownButtonHideUnderline(
+              child: DropdownButton<DropdownManifestoItem>(
+                items: items.map(buildMenuItem).toList(),
+                isExpanded: true,
+                onChanged: (value) {
+                  ProposalFormBloc()
+                      .add(ProposalFormOnOptionTypeChange(value!.optionType));
+                },
+                value: optionTypeSelected,
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text('Opciones', style: TextStyle(color: Colors.grey)),
+            Expanded(child: optionTypeSelected.getWidget()),
+            BigButton(
+              text: 'Crear',
+              onPressed: () => widget.confirmPublishProposal(),
+            )
+          ],
+        );
+      },
     );
   }
 
