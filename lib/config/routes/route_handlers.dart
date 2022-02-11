@@ -8,6 +8,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.pa
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
@@ -88,7 +89,10 @@ var invitationsSpaceHandler = Handler(
 
 var spaceInvitationHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return const SpaceInvitationScreen();
+  final InvitationView invitationView =
+      ModalRoute.of(context!)?.settings.arguments as InvitationView;
+
+  return SpaceInvitationScreen(invitationView: invitationView);
 });
 
 var proposalFormHandler = Handler(
@@ -111,7 +115,6 @@ var proposalDetailsHandler = Handler(
 
   return const ProposalDetailsPage();
 });
-
 
 var generalSettingsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

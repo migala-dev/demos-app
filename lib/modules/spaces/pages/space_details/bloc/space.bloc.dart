@@ -35,7 +35,9 @@ class SpaceBloc extends Bloc<SpaceEvent, Space?> {
     
     User? user = CurrentUserBloc().state;
     MemberView? memberView = await MemberViewsRepository().findByUserIdAndSpaceId(user!.userId!, spaceId);
-    CurrentMemberBloc().add(SetCurrentMemberEvent(memberView));
+    if (memberView != null) {
+      CurrentMemberBloc().add(SetCurrentMemberEvent(memberView));
+    }
 
     emit(space);
   }

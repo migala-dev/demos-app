@@ -1,11 +1,9 @@
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
-import 'package:demos_app/core/enums/invitation-status.enum.dart';
-import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/repositories/spaces.repository.dart';
-import 'package:demos_app/core/repositories/members.repository.dart';
+import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/repositories/invitation_view.repository.dart';
+import 'package:demos_app/modules/spaces/repositories/space_view.repository.dart';
 
 class SpaceService {
   static final SpaceService _spaceService = SpaceService._internal();
@@ -16,38 +14,27 @@ class SpaceService {
     return _spaceService;
   }
 
-  Future<List<SpaceView>> getSpaces() {
-    return _getSpacesByInvitationStatus(InvitationStatus.accepted);
-  }
-
-  Future<List<SpaceView>> getInvitations() {
-    return _getSpacesByInvitationStatus(InvitationStatus.received);
-  }
-
-  Future<List<SpaceView>> _getSpacesByInvitationStatus(
-      InvitationStatus invitationStatus) async {
+  Future<List<SpaceView>> getSpaces() async {
     User? currentUser = CurrentUserBloc().state;
-    List<SpaceView> spacesView = [];
-    List<Member> myMemberships = await MembersRepository()
-        .findByInvitationStatusAndUserId(
-            invitationStatus, currentUser!.userId!);
 
-    for (Member member in myMemberships) {
-      Space? space = await SpacesRepository().findById(member.spaceId!);
-      List<Member> members = await MembersRepository()
-          .findBySpaceIdAndInvitationStatus(
-              space!.spaceId, InvitationStatus.accepted);
-      SpaceView spaceView = SpaceView(
-          spaceId: space.spaceId ?? '',
-          name: space.name ?? '',
-          pictureKey: space.pictureKey,
-          membersCount: members.length,
-          invitationCreatedAt: member.createdAt,
-          invitationExpiredAt: member.expiredAt,
-          invitedBy: member.createdBy);
-      spacesView.add(spaceView);
+    if (currentUser != null) {
+      List<SpaceView> spaces =
+          await SpaceViewsRepository().getSpacesByUserId(currentUser.userId!);
+      return spaces;
     }
 
-    return spacesView;
+    return [];
+  }
+
+  Future<List<InvitationView>> getInvitations() async {
+    User? currentUser = CurrentUserBloc().state;
+
+    if (currentUser != null) {
+      List<InvitationView> invitations = await InvitationViewsRepository()
+          .getInvitationsByUserId(currentUser.userId!);
+      return invitations;
+    }
+
+    return [];
   }
 }

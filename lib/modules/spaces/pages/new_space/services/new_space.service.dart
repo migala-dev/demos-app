@@ -18,8 +18,8 @@ class NewSpaceService {
   }
 
   Future<void> handleSpaceInvitation(SpaceResponse response) async {
-    addSpaceEntitiesFromResponse(response);
-    _saveUser(response.invitedBy);
+    await addSpaceEntitiesFromResponse(response);
+    await _saveUser(response.invitedBy);
   }
 
   Future<void> addSpaceEntitiesFromResponse(SpaceResponse response) async {

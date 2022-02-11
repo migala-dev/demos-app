@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/empty_spaces.screen.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/loading_spaces.screen.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/spaces_list.screen.dart';

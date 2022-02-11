@@ -8,7 +8,7 @@ import 'package:demos_app/app_initializer.dart';
 import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/bloc/connection/connection_status_bloc.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/config/themes/cubit/theme_cubit.dart';
 import 'package:demos_app/config/themes/cubit/api-pending.cubit.dart';
