@@ -1,6 +1,6 @@
 import 'package:demos_app/core/api/member.api.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/errors/invalid_invitation_status.error.dart';

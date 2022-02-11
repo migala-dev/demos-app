@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -11,7 +12,7 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 
 class SpaceListScreen extends StatelessWidget {
   final List<SpaceView> spaces;
-  final List<SpaceView> invitations;
+  final List<InvitationView> invitations;
 
   const SpaceListScreen(
       {Key? key, required this.spaces, required this.invitations})
@@ -53,7 +54,7 @@ class SpaceListScreen extends StatelessWidget {
   }
 
   Widget getSpaceList(BuildContext context) {
-    return SpaceListWidget(
+    return SpaceListWidget<SpaceView>(
       spaces: spaces,
       getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
       onSpaceTab: (spaceView) async {
@@ -63,13 +64,13 @@ class SpaceListScreen extends StatelessWidget {
   }
 
   Widget getInvitationList(BuildContext context) {
-    return SpaceListWidget(
+    return SpaceListWidget<InvitationView>(
       spaces: invitations,
-      getSubtitle: (spaceView) =>
-          'Fecha de expiración: ${DateFormatterService.parseToStandardDate(spaceView.invitationExpiredAt!)}',
-      onSpaceTab: (spaceView) {
+      getSubtitle: (invitationView) =>
+          'Fecha de expiración: ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
+      onSpaceTab: (invitationView) {
         Navigator.pushNamed(context, Routes.spaceInvitation,
-            arguments: spaceView);
+            arguments: invitationView);
       },
     );
   }

@@ -1,11 +1,7 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/models/errors/invalid_invitation_status.error.dart';
 import 'package:demos_app/core/models/errors/invitation_expired.error.dart';
-import 'package:demos_app/core/models/space.model.dart';
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/repositories/spaces.repository.dart';
-import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/shared/models/option.model.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
@@ -20,7 +16,9 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 import 'package:flutter/material.dart';
 
 class SpaceInvitationScreen extends StatefulWidget {
-  const SpaceInvitationScreen({Key? key}) : super(key: key);
+  final InvitationView invitationView;
+
+  const SpaceInvitationScreen({Key? key, required this.invitationView}) : super(key: key);
 
   @override
   State<SpaceInvitationScreen> createState() => _SpaceInvitationScreenState();
@@ -29,19 +27,9 @@ class SpaceInvitationScreen extends StatefulWidget {
 class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
     with LoadingStateHandler {
   Option? optionSelected;
-  Space? space;
-  User? invitedBy;
-  SpaceView? spaceView;
 
   @override
   Widget build(BuildContext context) {
-    final SpaceView spaceView =
-        ModalRoute.of(context)?.settings.arguments as SpaceView;
-
-    setStateView(spaceView);
-    getSpace();
-    getInvitedBy();
-
     return Scaffold(
         body: Container(
       padding: const EdgeInsets.only(
@@ -67,10 +55,10 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      space?.pictureKey != null
+                      widget.invitationView.pictureKey != null
                           ? SpacePicture(
                               width: 150,
-                              pictureKey: space?.pictureKey,
+                              pictureKey: widget.invitationView.pictureKey,
                             )
                           : Container(),
                       SizedBox(
@@ -119,39 +107,13 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
     ));
   }
 
-  Future<void> getSpace() async {
-    if (space == null) {
-      Space? space = await SpacesRepository().findById(spaceView!.spaceId);
-      setState(() {
-        this.space = space;
-      });
-    }
-  }
-
-  Future<void> getInvitedBy() async {
-    if (invitedBy == null) {
-      User? invitedBy = await UsersRepository().findById(spaceView!.invitedBy!);
-      setState(() {
-        this.invitedBy = invitedBy;
-      });
-    }
-  }
-
-  void setStateView(SpaceView spaceView) {
-    if (this.spaceView == null) {
-      setState(() {
-        this.spaceView = spaceView;
-      });
-    }
-  }
-
   Widget getSpaceNameWidget() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('Espacio'),
         Text(
-          space?.name ?? '',
+          widget.invitationView.name,
           style: const TextStyle(fontSize: 40),
         )
       ],
@@ -159,12 +121,9 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
   }
 
   Widget getInvitedByWidget() {
-    if (invitedBy == null) {
-      return Container();
-    }
-    String userName = invitedBy!.name.isEmpty
-        ? PhoneFormatterService.format(invitedBy!.phoneNumber)
-        : invitedBy!.name;
+    String userName = widget.invitationView.invitedBy.name.isEmpty
+        ? PhoneFormatterService.format(widget.invitationView.invitedBy.phoneNumber)
+        : widget.invitationView.invitedBy.name;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -172,7 +131,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
           padding: const EdgeInsets.only(right: 8),
           child: ProfilePicture(
             width: 84,
-            imageKey: invitedBy!.profilePictureKey,
+            imageKey: widget.invitationView.invitedBy.profilePictureKey,
           ),
         ),
         Column(
@@ -203,13 +162,13 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
   void accept() {
     wrapLoadingTransaction(() async {
       try {
-        await MemberService().acceptInvitation(spaceView!.spaceId);
+        await MemberService().acceptInvitation(widget.invitationView.spaceId);
 
         reloadSpaceList();
         Navigator.pop(context);
         Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
-            arguments: spaceView);
-        await goToSpaceDetails(context, spaceView!);
+            arguments: widget.invitationView);
+        await goToSpaceDetails(context, widget.invitationView);
       } catch (err) {
         if (err == InvitationExpiredError() || err == InvalidInvitationStatusError()) {
           reloadSpaceList();
@@ -223,7 +182,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
   void reject() async {
     wrapLoadingTransaction(() async {
-      await MemberService().rejectInvitation(spaceView!.spaceId);
+      await MemberService().rejectInvitation(widget.invitationView.spaceId);
 
       reloadSpaceList();
 

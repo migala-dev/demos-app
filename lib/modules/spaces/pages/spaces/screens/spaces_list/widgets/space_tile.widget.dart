@@ -2,10 +2,10 @@ import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
 
-class SpaceTile extends StatelessWidget {
-  final String Function(SpaceView) getSubtitle;
+class SpaceTile<T extends SpaceView> extends StatelessWidget {
+  final String Function(T) getSubtitle;
   final VoidCallback onSpaceTab;
-  final SpaceView spaceView;
+  final T spaceView;
 
   const SpaceTile(
       {Key? key,

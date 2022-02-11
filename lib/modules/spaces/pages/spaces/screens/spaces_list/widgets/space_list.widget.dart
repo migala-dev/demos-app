@@ -2,10 +2,10 @@ import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widgets/space_tile.widget.dart';
 import 'package:flutter/material.dart';
 
-class SpaceListWidget extends StatelessWidget {
-  final String Function(SpaceView) getSubtitle;
-  final void Function(SpaceView) onSpaceTab;
-  final List<SpaceView> spaces;
+class SpaceListWidget<T extends SpaceView> extends StatelessWidget {
+  final String Function(T) getSubtitle;
+  final void Function(T) onSpaceTab;
+  final List<T> spaces;
   const SpaceListWidget(
       {Key? key,
       required this.spaces,
@@ -20,8 +20,8 @@ class SpaceListWidget extends StatelessWidget {
       shrinkWrap: true,
       itemCount: spaces.length,
       itemBuilder: (context, index) {
-        SpaceView spaceView = spaces[index];
-        return SpaceTile(
+        T spaceView = spaces[index];
+        return SpaceTile<T>(
             spaceView: spaceView,
             getSubtitle: getSubtitle,
             onSpaceTab: () {
