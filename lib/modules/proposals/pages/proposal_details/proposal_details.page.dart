@@ -51,6 +51,13 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+
+    _controller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProposalDetailsBloc, ProposalView?>(
         bloc: ProposalDetailsBloc(),
