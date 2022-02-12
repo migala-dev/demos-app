@@ -1,6 +1,8 @@
 import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/proposal_comments.page.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/screens/proposal_subcomment.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/proposal_details.page.dart';
@@ -141,4 +143,14 @@ var memberProfileHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   final memberView = context!.settings!.arguments as MemberView;
   return MemberProfileScreen(memberView);
+});
+
+var proposalCommentsHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  return const ProposalCommentsPage();
+});
+
+var proposalSubCommentHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  return const ProposalSubCommentScreen();
 });
