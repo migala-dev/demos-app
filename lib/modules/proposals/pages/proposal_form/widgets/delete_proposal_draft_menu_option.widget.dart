@@ -1,4 +1,6 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
@@ -24,5 +26,6 @@ class DeleteProposalDraftMenuOption implements MenuOption {
     final proposalId = ProposalFormBloc().state.proposalId!;
     final spaceId = SpaceBloc().state!.spaceId!;
     await ProposalService().deleteProposalDraft(spaceId, proposalId);
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
 }
