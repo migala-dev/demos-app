@@ -58,7 +58,7 @@ class UpdateMemberEvent implements EventHandler {
     String memberId = dataEvent.data!['memberId'];
     try {
       final spaceMembersBloc = SpaceMembersBloc();
-      final currerntSpaceId = SpaceBloc().state?.spaceId;
+      final currerntSpaceId = SpaceBloc().state.spaceId;
       await MemberService().getMember(spaceId, memberId);
 
       if (currerntSpaceId == spaceId) {
@@ -88,7 +88,7 @@ class InvitationCanceledEvent implements EventHandler {
     String memberId = dataEvent.data!['memberId'];
     String spaceId = dataEvent.data!['spaceId'];
     final spaceMembersBloc = SpaceMembersBloc();
-    final currerntSpaceId = SpaceBloc().state?.spaceId;
+    final currerntSpaceId = SpaceBloc().state.spaceId;
 
     await MemberService().cancelInvitation(memberId);
 

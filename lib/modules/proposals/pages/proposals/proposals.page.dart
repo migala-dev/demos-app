@@ -1,10 +1,10 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
-import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class ProposalsPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        Space? space = SpaceBloc().state;
+        SpaceView space = SpaceBloc().state;
         ProposalViewList? proposalViewList =
             state is ProposalViewListWithData ? state.proposalViewList : null;
         return Scaffold(
@@ -57,7 +57,7 @@ class ProposalsPage extends StatelessWidget {
                         const SizedBox(height: 15),
                         Expanded(
                           child: FutureBuilder(
-                              future: proposalViewList.getList(space!.spaceId!),
+                              future: proposalViewList.getList(space.spaceId!),
                               initialData: const <ProposalView>[],
                               builder: (BuildContext context,
                                   AsyncSnapshot<List<ProposalView>> snapshot) {

@@ -1,7 +1,7 @@
 import 'package:demos_app/modules/proposals/pages/proposals/proposals.page.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/widgets/space_picture_header.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -14,10 +14,10 @@ class SpaceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SpaceBloc, Space?>(
+    return BlocBuilder<SpaceBloc, SpaceView>(
         bloc: SpaceBloc(),
         builder: (context, space) {
-          if (space == null) {
+          if (space.spaceId == null) {
             return const Center(child: CircularProgressIndicator());
           }
           return Scaffold(
@@ -27,7 +27,7 @@ class SpaceDetailsScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         SpacePictureHeader(pictureKey: space.pictureKey),
-                        Text(space.name ?? '')
+                        Text(space.name)
                       ],
                     ),
                     onTap: () => goToSpaceSettings(context),

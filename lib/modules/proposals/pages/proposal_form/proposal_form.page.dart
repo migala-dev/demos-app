@@ -79,7 +79,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
   }
 
   void publish() async {
-    String spaceId = SpaceBloc().state!.spaceId!;
+    String spaceId = SpaceBloc().state.spaceId!;
     ProposalFormView proposalFormView = ProposalFormBloc().state;
 
     if (proposalFormView.proposalId == null) {
@@ -141,7 +141,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
       setState(() => currentStep = ProposalFormStepEnum.content);
 
   void saveDraft() async {
-    final spaceId = SpaceBloc().state!.spaceId!;
+    final spaceId = SpaceBloc().state.spaceId!;
     ProposalFormView proposalFormView = ProposalFormBloc().state;
 
     if (proposalFormView.proposalId == null) {

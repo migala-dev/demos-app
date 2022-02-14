@@ -9,3 +9,12 @@ Future<void> goToSpaceDetails(BuildContext context, SpaceView spaceView) async {
         arguments: spaceView,
       ));
 }
+
+
+Future<void> goToSpaceDetailsBySpaceId(BuildContext context, String spaceId) async {
+  Application.router.navigateTo(context, Routes.spacesDetails,
+      routeSettings: RouteSettings(
+        arguments: spaceId,
+      ));
+}
+

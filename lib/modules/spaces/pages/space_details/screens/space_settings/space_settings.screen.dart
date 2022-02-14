@@ -1,8 +1,9 @@
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
+import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/widgets/setting_items.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
@@ -29,8 +30,8 @@ class SpaceSettingsScreen extends StatelessWidget {
     openConfirmationDialog(context,
         content: '¿Estás seguro que deseas dejar este espacio?',
         accept: () async { 
-          Space? space = SpaceBloc().state;
-          await MemberService().leaveSpace(space!.spaceId!);
+          SpaceView space = SpaceBloc().state;
+          await MemberService().leaveSpace(space.spaceId!);
           goToSpaces(context);
         });
   }
@@ -43,17 +44,14 @@ class SpaceSettingsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          BlocBuilder<SpaceBloc, Space?>(
+          BlocBuilder<SpaceBloc, SpaceView>(
               bloc: SpaceBloc(),
               builder: (context, space) {
-                if (space == null) {
-                  return Container();
-                }
                 return InformationTile(
                   picture:
                       SpacePicture(width: 64, pictureKey: space.pictureKey),
-                  name: space.name ?? '',
-                  subtitle: 'Creado el ${space.createdAtFormatted}',
+                  name: space.name,
+                  subtitle: 'Creado el ${DateFormatterService.parseToStandardDate(space.createdAt)}',
                   onTap: () => goToEditSpace(context),
                 );
               }),
