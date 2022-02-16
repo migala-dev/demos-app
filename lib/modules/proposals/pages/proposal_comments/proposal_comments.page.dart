@@ -8,20 +8,32 @@ import 'package:flutter/material.dart';
 final fakeComments = <MemberCommentView>[
   MemberCommentView(
       commendId: '1',
-      userId: 'bbe6b0a4-5988-4717-8e4c-f8d7f7b2d515',
-      memberId: '123',
-      name: 'Gendo Ikari',
+      memberId: 'bbe6b0a4-5988-4717-8e4c-f8d7f7b2d515',
+      profilePictureKey:
+          'avatars/bc0e5b62-117d-45c4-af07-51818ccd3e0b.8846.jpg',
+      memberName: 'Gendo Ikari',
       date: '2022-2-15T02:54:29.907Z',
       votesInFavor: 5,
       votesInOpposing: 2,
       content: 'Estoy a favor porque ...'),
   MemberCommentView(
       commendId: '1',
-      userId: 'bbe6b0a4-5988-4717-8e4c-f8d7f7b2d515',
-      memberId: '123',
-      name: 'Gendo Ikari',
+      memberId: 'bbe6b0a4-5988-4717-8e4c-f8d7f7b2d515',
+      profilePictureKey:
+          'avatars/bc0e5b62-117d-45c4-af07-51818ccd3e0b.8846.jpg',
+      memberName: 'Gendo Ikari',
       date: '2022-2-15T02:54:29.907Z',
-      votesInFavor: 5,
+      votesInFavor: 2,
+      votesInOpposing: 0,
+      content: 'Bla bla bla...'),
+  MemberCommentView(
+      commendId: '1',
+      memberId: 'bbe6b0a4-5988-4717-8e4c-f8d7f7b2d515',
+      profilePictureKey:
+          'avatars/bc0e5b62-117d-45c4-af07-51818ccd3e0b.8846.jpg',
+      memberName: 'Gendo Ikari',
+      date: '2022-2-15T02:54:29.907Z',
+      votesInFavor: 0,
       votesInOpposing: 2,
       content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis lacinia est. Morbi elementum pellentesque lectus, eget hendrerit metus lacinia at. Sed sit amet sem blandit, tempor neque pellentesque, ultricies neque. Sed facilisis placerat velit, sit amet cursus lectus posuere luctus. Maecenas vitae efficitur justo. Aenean turpis quam, interdum nec convallis quis, laoreet hendrerit sapien. Nam fringilla ut elit vitae maximus. Donec ac risus in libero lacinia mattis. Maecenas feugiat diam non mauris venenatis consectetur. Nulla ac mi venenatis, sodales lacus ut, elementum nisi.')
@@ -46,11 +58,12 @@ class ProposalCommentsPage extends StatelessWidget {
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: fakeComments.length,
-                itemBuilder: (context, index) =>
-                    MemberComment(comment: fakeComments[index]),
+                itemBuilder: (context, index) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: MemberComment(comment: fakeComments[index]),
+                ),
               )),
         ),
-        const Spacer(),
         const Divider(),
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
