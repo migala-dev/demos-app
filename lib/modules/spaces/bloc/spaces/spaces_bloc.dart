@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';

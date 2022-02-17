@@ -38,39 +38,43 @@ class ProposalsPage extends StatelessWidget {
         ProposalViewList? proposalViewList =
             state is ProposalViewListWithData ? state.proposalViewList : null;
         return Scaffold(
-            floatingActionButton: SafeWidgetMemberValidator(
-                roles: const [SpaceRole.representative],
-                child: FloatingActionButton(
-                  child: const Icon(Icons.how_to_vote),
-                  onPressed: () => goToNewProposal(context),
-                )),
-            body: state is ProposalViewListEmpty
-                ? Center(child: NoProposals())
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 15),
-                        ProposalsNavigationMenu(
-                            optionSelected: proposalViewList!),
-                        const SizedBox(height: 15),
-                        Expanded(
-                          child: FutureBuilder(
-                              future: proposalViewList.getList(space!.spaceId!),
-                              initialData: const <ProposalView>[],
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<List<ProposalView>> snapshot) {
-                                List<ProposalView>? proposals = snapshot.data;
-                                if (proposals != null) {
-                                  return proposalViewList.getWidget(
-                                      context, proposals);
-                                }
-                                return Container();
-                              }),
+          floatingActionButton: SafeWidgetMemberValidator(
+            roles: const [SpaceRole.representative],
+            child: FloatingActionButton(
+              child: const Icon(Icons.how_to_vote),
+              onPressed: () => goToNewProposal(context),
+            ),
+          ),
+          body: state is ProposalViewListEmpty
+              ? Center(child: NoProposals())
+              : Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 15),
+                      ProposalsNavigationMenu(
+                          optionSelected: proposalViewList!),
+                      const SizedBox(height: 15),
+                      Expanded(
+                        child: FutureBuilder(
+                          future: proposalViewList.getList(space!.spaceId!),
+                          initialData: const <ProposalView>[],
+                          builder: (BuildContext context,
+                              AsyncSnapshot<List<ProposalView>> snapshot) {
+                            List<ProposalView>? proposals = snapshot.data;
+                            if (proposals != null) {
+                              return proposalViewList.getWidget(
+                                  context, proposals);
+                            }
+                            return Container();
+                          },
                         ),
-                      ],
-                    )));
+                      ),
+                    ],
+                  ),
+                ),
+        );
       },
     );
   }
