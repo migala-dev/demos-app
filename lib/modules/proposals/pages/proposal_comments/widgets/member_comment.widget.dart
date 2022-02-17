@@ -20,8 +20,8 @@ class MemberComment extends StatelessWidget {
               percentage: 0.9,
             ),
             CommentVotesCount(
-                votesInFavor: comment.votesInFavor,
-                votesInOpposing: comment.votesInOpposing)
+                votesInFavor: comment.upVotesCount,
+                votesInOpposing: comment.downVotesCount)
           ],
         ),
       ),
@@ -37,7 +37,7 @@ class MemberComment extends StatelessWidget {
                     '${comment.memberName} ',
                     overflow: TextOverflow.clip,
                   ),
-                  Text(comment.dateFormatted,
+                  Text(comment.createdAtFormatted,
                       overflow: TextOverflow.clip,
                       style: const TextStyle(color: Colors.grey, fontSize: 12))
                 ],

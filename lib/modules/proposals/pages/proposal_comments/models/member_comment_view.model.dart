@@ -1,25 +1,28 @@
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class MemberCommentView {
+  // CommentView
   final String commendId;
-  final String memberId;
+  final String memberId; // Cambiar por memberView
   final String profilePictureKey;
-  final String date;
+  final String createdAt;
   final String memberName;
-  final int votesInFavor;
-  final int votesInOpposing;
+  final int upVotesCount;
+  final int downVotesCount;
   final String content;
 
-  String get dateFormatted =>
-      DateFormatterService.parseToDayMonthYearHourDate(date);
+  // List<MemberCommentView> subcomments; // Usar el id padre
+
+  String get createdAtFormatted =>
+      DateFormatterService.parseToDayMonthYearHourDate(createdAt);
 
   MemberCommentView(
       {required this.commendId,
       required this.memberId,
       required this.profilePictureKey,
       required this.memberName,
-      required this.date,
-      required this.votesInFavor,
-      required this.votesInOpposing,
+      required this.createdAt,
+      required this.upVotesCount,
+      required this.downVotesCount,
       required this.content});
 }

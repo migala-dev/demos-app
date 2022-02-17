@@ -12,9 +12,9 @@ final fakeComments = <MemberCommentView>[
       profilePictureKey:
           'avatars/bc0e5b62-117d-45c4-af07-51818ccd3e0b.8846.jpg',
       memberName: 'Gendo Ikari',
-      date: '2022-2-15T02:54:29.907Z',
-      votesInFavor: 5,
-      votesInOpposing: 2,
+      createdAt: '2022-2-15T02:54:29.907Z',
+      upVotesCount: 5,
+      downVotesCount: 2,
       content: 'Estoy a favor porque ...'),
   MemberCommentView(
       commendId: '1',
@@ -22,9 +22,9 @@ final fakeComments = <MemberCommentView>[
       profilePictureKey:
           'avatars/bc0e5b62-117d-45c4-af07-51818ccd3e0b.8846.jpg',
       memberName: 'Gendo Ikari',
-      date: '2022-2-15T02:54:29.907Z',
-      votesInFavor: 2,
-      votesInOpposing: 0,
+      createdAt: '2022-2-15T02:54:29.907Z',
+      upVotesCount: 2,
+      downVotesCount: 0,
       content: 'Bla bla bla...'),
   MemberCommentView(
       commendId: '1',
@@ -32,9 +32,9 @@ final fakeComments = <MemberCommentView>[
       profilePictureKey:
           'avatars/bc0e5b62-117d-45c4-af07-51818ccd3e0b.8846.jpg',
       memberName: 'Gendo Ikari',
-      date: '2022-2-15T02:54:29.907Z',
-      votesInFavor: 0,
-      votesInOpposing: 2,
+      createdAt: '2022-2-15T02:54:29.907Z',
+      upVotesCount: 0,
+      downVotesCount: 2,
       content:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras quis lacinia est. Morbi elementum pellentesque lectus, eget hendrerit metus lacinia at. Sed sit amet sem blandit, tempor neque pellentesque, ultricies neque. Sed facilisis placerat velit, sit amet cursus lectus posuere luctus. Maecenas vitae efficitur justo. Aenean turpis quam, interdum nec convallis quis, laoreet hendrerit sapien. Nam fringilla ut elit vitae maximus. Donec ac risus in libero lacinia mattis. Maecenas feugiat diam non mauris venenatis consectetur. Nulla ac mi venenatis, sodales lacus ut, elementum nisi.')
 ];
