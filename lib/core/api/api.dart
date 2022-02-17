@@ -69,7 +69,8 @@ class Api {
       headers: _getHeadersWithApplicationJSON(),
     );
     var response = await _handleErrors(call, throwBehavior);
-    return response;
+    
+    return response!.body != '' ?jsonDecode(response.body) : null;
   }
 
   static Future<dynamic> upload(String endpoint, File imageFile, ThrowBehavior? throwBehavior) async {
