@@ -162,7 +162,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
   void accept() {
     wrapLoadingTransaction(() async {
       try {
-        await MemberService().acceptInvitation(widget.invitationView.spaceId);
+        await MemberService().acceptInvitation(widget.invitationView.spaceId!);
 
         reloadSpaceList();
         Navigator.pop(context);
@@ -182,7 +182,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
   void reject() async {
     wrapLoadingTransaction(() async {
-      await MemberService().rejectInvitation(widget.invitationView.spaceId);
+      await MemberService().rejectInvitation(widget.invitationView.spaceId!);
 
       reloadSpaceList();
 

@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:demos_app/core/models/space.model.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/edit_space/widgets/space_field.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
@@ -23,7 +22,7 @@ class EditSpaceScreen extends StatefulWidget {
 class _EditSpaceScreenState extends State<EditSpaceScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SpaceBloc, Space?>(
+    return BlocBuilder<SpaceBloc, SpaceView>(
       bloc: SpaceBloc(),
       builder: (context, space) {
         return Scaffold(
@@ -39,7 +38,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
                   children: [
                     SpacePicture(
                       width: 164,
-                      pictureKey: space!.pictureKey,
+                      pictureKey: space.pictureKey,
                     ),
                     SafeWidgetValidator(
                       validators: [IsCurrentUserAdminWidgetValidator()],
@@ -60,13 +59,13 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
               ),
               SpaceField(
                 title: 'Nombre',
-                subtitle: space.name ?? '',
+                subtitle: space.name,
                 icon: Icons.business,
                 onEdit: () => updateSpaceName(space),
               ),
               SpaceField(
                 title: 'Descripción',
-                subtitle: space.description ?? '',
+                subtitle: space.description ?? 'Sin descripcion',
                 icon: Icons.info_outline,
                 onEdit: () => updateSpaceDescription(space),
               )
@@ -77,53 +76,47 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
     );
   }
 
-  void onPictureEditPress(Space? space) async {
+  void onPictureEditPress(SpaceView space) async {
     File? imageFile = await Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => const ImageEditorPage(),
         ));
     if (imageFile != null) {
-      NewSpaceService().uploadPicture(space!.spaceId!, imageFile);
+      NewSpaceService().uploadPicture(space.spaceId!, imageFile);
     }
   }
 
-  void updateSpaceName(Space? space) async {
-    String? newSpaceName = await openUpdateStringFieldModal(
+  void updateSpaceName(SpaceView space) async {
+    String? newName = await openUpdateStringFieldModal(
       context,
       title: 'Nombre del espacio',
       hintText: 'Introduce un nuevo nombre',
-      initialValue: space!.name,
+      initialValue: space.name,
     );
-    if (newSpaceName != null &&
-        newSpaceName.isNotEmpty &&
-        newSpaceName != space.name) {
-      setState(() {
-        space.name = newSpaceName;
-        SpaceDetailsService().updateSpace(space);
-      });
+    if (newName != null &&
+        newName.isNotEmpty &&
+        newName != space.name) {
+      SpaceDetailsService().updateName(space.spaceId!, newName);
     }
   }
 
-  void updateSpaceDescription(Space? space) async {
-    String? newSpaceDescription = await openUpdateStringFieldModal(
+  void updateSpaceDescription(SpaceView space) async {
+    String? newDescription = await openUpdateStringFieldModal(
       context,
       title: 'Descripción del espacio',
       hintText: 'Introduce una nueva descripción',
-      initialValue: space!.description,
+      initialValue: space.description,
       validator: (String? value) {
         if (value != null && value.length > 120) {
           return 'La descripción no puede tener más de 120 caracteres';
         }
       },
     );
-    if (newSpaceDescription != null &&
-        newSpaceDescription.isNotEmpty &&
-        newSpaceDescription != space.description) {
-      setState(() {
-        space.description = newSpaceDescription;
-        SpaceDetailsService().updateSpace(space);
-      });
+    if (newDescription != null &&
+        newDescription.isNotEmpty &&
+        newDescription != space.description) {
+      SpaceDetailsService().updateDescription(space.spaceId!, newDescription);
     }
   }
 }

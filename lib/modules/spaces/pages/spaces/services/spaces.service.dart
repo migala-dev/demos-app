@@ -19,7 +19,7 @@ class SpaceService {
 
     if (currentUser != null) {
       List<SpaceView> spaces =
-          await SpaceViewsRepository().getSpacesByUserId(currentUser.userId!);
+          await SpaceViewsRepository().findByUserId(currentUser.userId!);
       return spaces;
     }
 

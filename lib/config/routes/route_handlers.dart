@@ -54,10 +54,16 @@ var spacesHandler = Handler(
 // Handler de los detalles del espacio
 var spaceDetailsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  final spaceView = context!.settings!.arguments as SpaceView;
-
-  SpaceBloc().add(SetSpaceEvent(spaceView.spaceId));
-  ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId));
+  Object? spaceArgument = context!.settings!.arguments;
+  if (spaceArgument is String) {
+    String spaceId = spaceArgument;
+    SpaceBloc().add(SetSpaceIdEvent(spaceId));
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+  } else {
+    SpaceView spaceView = spaceArgument as SpaceView;
+    SpaceBloc().add(SetSpaceViewEvent(spaceView));
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId!));
+  }
 
   return const SpaceDetailsScreen();
 });

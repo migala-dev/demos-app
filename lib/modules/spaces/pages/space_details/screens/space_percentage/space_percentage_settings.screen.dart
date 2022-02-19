@@ -1,10 +1,10 @@
 import 'package:demos_app/core/enums/space_role.enum.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/space_percentage.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
 import 'package:flutter/material.dart';
-import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/services/space_details.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
@@ -29,8 +29,8 @@ class _SpacePercentageSettingsScreenState
   @override
   void initState() {
     super.initState();
-    Space? space = SpaceBloc().state;
-    approvalPercentage = space!.approvalPercentage;
+    SpaceView space = SpaceBloc().state;
+    approvalPercentage = space.approvalPercentage;
     participationPercentage = space.participationPercentage;
   }
 
@@ -91,11 +91,9 @@ class _SpacePercentageSettingsScreenState
 
   void save() {
     wrapLoadingTransaction(() async {
-      Space? space = SpaceBloc().state;
-      space!.approvalPercentage = approvalPercentage;
-      space.participationPercentage = participationPercentage;
+      SpaceView space = SpaceBloc().state;
 
-      await SpaceDetailsService().updateSpace(space);
+      await SpaceDetailsService().updatePercentages(space.spaceId!, participationPercentage, approvalPercentage);
       Navigator.pop(context);
     });
   }
