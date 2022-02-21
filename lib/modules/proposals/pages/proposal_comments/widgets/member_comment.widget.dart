@@ -1,5 +1,6 @@
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/replies_count_button.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
 
@@ -9,47 +10,56 @@ class MemberComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Expanded(
-        flex: 1,
-        child: Column(
-          children: [
-            ProfilePicture(
-              imageKey: comment.member.profilePictureKey,
-              width: 55,
-              percentage: 0.9,
-            ),
-            CommentVotesCount(
-                votesInFavor: comment.upVotesCount,
-                votesInOpposing: comment.downVotesCount)
-          ],
-        ),
-      ),
-      Expanded(
-          flex: 3,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 18),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    '${comment.member.displayName} ',
-                    overflow: TextOverflow.clip,
-                  ),
-                  Text(comment.createdAtFormatted,
-                      overflow: TextOverflow.clip,
-                      style: const TextStyle(color: Colors.grey, fontSize: 12))
-                ],
+              ProfilePicture(
+                imageKey: comment.member.profilePictureKey,
+                width: 40,
+                percentage: 0.9,
               ),
-              Text(comment.content,
-                  style: TextStyle(color: Colors.grey.shade700))
+              const SizedBox(width: 10),
+              Text(
+                '${comment.member.displayName} ',
+                overflow: TextOverflow.clip,
+              ),
+              Text(comment.createdAtFormatted,
+                  overflow: TextOverflow.clip,
+                  style: const TextStyle(color: Colors.grey, fontSize: 12))
             ],
-          )),
-      Expanded(
-          flex: 1,
-          child:
-              IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert))),
-    ]);
+          ),
+          const SizedBox(height: 15),
+          Text(comment.content, style: TextStyle(color: Colors.grey.shade700)),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              comment.repliesCount > 0
+                  ? RepliesCountButton(
+                      onTap: () {}, repliesCount: comment.repliesCount)
+                  : Container(),
+              const SizedBox(width: 5),
+              CommentVotesCount(
+                  votesInFavor: comment.upVotesCount,
+                  votesInOpposing: comment.downVotesCount),
+              const SizedBox(width: 10),
+              const Icon(
+                Icons.reply_outlined,
+                color: Colors.grey,
+              ),
+              const SizedBox(width: 2),
+              const Text('Responder'),
+              IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert, color: Colors.grey))
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
