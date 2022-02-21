@@ -23,6 +23,7 @@ class MemberComment extends StatelessWidget {
     return Padding(
       padding: padding,
       child: ExpansionWidget(
+        initiallyExpanded: comment.repliesCount <= 3,
         titleBuilder:
             (animationValue, easeInValue, isExpanded, toggleFunction) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
