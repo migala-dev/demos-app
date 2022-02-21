@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 
 class MemberComment extends StatelessWidget {
   final CommentView comment;
-  final bool isSubcomment;
+  final bool enableReplies;
   final EdgeInsetsGeometry padding;
   const MemberComment(
       {Key? key,
       required this.comment,
-      this.isSubcomment = false,
+      this.enableReplies = false,
       this.padding = const EdgeInsets.symmetric(horizontal: 18)})
       : super(key: key);
 
@@ -56,13 +56,13 @@ class MemberComment extends StatelessWidget {
                     votesInFavor: comment.upVotesCount,
                     votesInOpposing: comment.downVotesCount),
                 const SizedBox(width: 10),
-                comment.repliesCount > 0 && !isSubcomment
+                comment.repliesCount > 0 && !enableReplies
                     ? RepliesCountButton(
                         onTap: toggleFunction,
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                !isSubcomment ? ReplyButton(onTap: () {}) : Container(),
+                !enableReplies ? ReplyButton(onTap: () {}) : Container(),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert, color: Colors.grey))
@@ -70,7 +70,7 @@ class MemberComment extends StatelessWidget {
             )
           ],
         ),
-        content: isSubcomment ? Container() : const SubCommentsListView(),
+        content: enableReplies ? Container() : const SubCommentsListView(),
       ),
     );
   }

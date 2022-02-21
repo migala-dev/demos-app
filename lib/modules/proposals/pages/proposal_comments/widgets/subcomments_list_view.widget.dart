@@ -68,7 +68,7 @@ class SubCommentsListView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: MemberComment(
                   comment: fakeComments[index],
-                  isSubcomment: true,
+                  enableReplies: true,
                   padding: const EdgeInsets.only(left: 10)),
             ),
           ),
