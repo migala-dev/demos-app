@@ -1,10 +1,10 @@
-import 'package:demos_app/modules/proposals/pages/proposal_comments/models/member_comment_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
 
 class MemberComment extends StatelessWidget {
-  final MemberCommentView comment;
+  final CommentView comment;
   const MemberComment({Key? key, required this.comment}) : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class MemberComment extends StatelessWidget {
         child: Column(
           children: [
             ProfilePicture(
-              imageKey: comment.profilePictureKey,
+              imageKey: comment.member.profilePictureKey,
               width: 55,
               percentage: 0.9,
             ),
@@ -34,7 +34,7 @@ class MemberComment extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    '${comment.memberName} ',
+                    '${comment.member.displayName} ',
                     overflow: TextOverflow.clip,
                   ),
                   Text(comment.createdAtFormatted,

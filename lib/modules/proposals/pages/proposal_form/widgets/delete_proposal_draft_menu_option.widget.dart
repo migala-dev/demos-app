@@ -24,7 +24,7 @@ class DeleteProposalDraftMenuOption implements MenuOption {
 
   void deleteProposalDraft() async {
     final proposalId = ProposalFormBloc().state.proposalId!;
-    final spaceId = SpaceBloc().state!.spaceId!;
+    final spaceId = SpaceBloc().state.spaceId!;
     await ProposalService().deleteProposalDraft(spaceId, proposalId);
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
