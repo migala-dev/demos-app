@@ -1,6 +1,3 @@
-import 'package:demos_app/modules/spaces/models/space_view.model.dart';
-import 'package:demos_app/shared/services/date_formatter.service.dart';
-
 class Space {
   String? _spaceId;
   String? _pictureKey;
@@ -16,8 +13,6 @@ class Space {
   String? get pictureKey => _pictureKey;
   String? get createdAt => _createdAt;
   String? get updatedAt => _updatedAt;
-  String get createdAtFormatted =>
-      DateFormatterService.parseToStandardDate(_createdAt ?? '');
 
   Space();
 
@@ -45,10 +40,5 @@ class Space {
     _ownerId = o['ownerId'];
     _createdAt = o['createdAt'];
     _updatedAt = o['updatedAt'];
-  }
-
-  SpaceView toSpapceView() {
-    return SpaceView(
-        spaceId: spaceId ?? '', name: name ?? '', pictureKey: pictureKey);
   }
 }

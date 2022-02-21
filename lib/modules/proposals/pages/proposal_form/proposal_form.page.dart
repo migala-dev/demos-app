@@ -2,6 +2,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_fo
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/content_step.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/options_step.screen.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/widgets/popup_proposal_form_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
@@ -27,7 +28,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
       onWillPop: onWillPop,
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(title: getAppBarTitle()),
+        appBar: AppBar(title: getAppBarTitle(), actions: getAppBarActions()),
         body: LayoutBuilder(
           builder: (context, constraints) => SingleChildScrollView(
             child: ConstrainedBox(
@@ -44,6 +45,13 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
         ),
       ),
     );
+  }
+
+  List<Widget>? getAppBarActions() {
+    final isNewDraft = ProposalFormBloc().state.isNew;
+    if (!isNewDraft) {
+      return [PopupProposalFormMenuOptions()];
+    }
   }
 
   Column getAppBarTitle() {
@@ -79,7 +87,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
   }
 
   void publish() async {
-    String spaceId = SpaceBloc().state!.spaceId!;
+    String spaceId = SpaceBloc().state.spaceId!;
     ProposalFormView proposalFormView = ProposalFormBloc().state;
 
     if (proposalFormView.proposalId == null) {
@@ -141,7 +149,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
       setState(() => currentStep = ProposalFormStepEnum.content);
 
   void saveDraft() async {
-    final spaceId = SpaceBloc().state!.spaceId!;
+    final spaceId = SpaceBloc().state.spaceId!;
     ProposalFormView proposalFormView = ProposalFormBloc().state;
 
     if (proposalFormView.proposalId == null) {

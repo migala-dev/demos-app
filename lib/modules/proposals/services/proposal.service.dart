@@ -1,5 +1,5 @@
 import 'package:demos_app/core/api/proposal.api.dart';
-import 'package:demos_app/core/models/responses/cancel_proposal_response.model.dart';
+import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
@@ -45,7 +45,14 @@ class ProposalService {
   Future<void> cancelProposal(String spaceId, String proposalId) async {
     final response = await ProposalApi().cancelProposal(spaceId, proposalId);
 
-    await _saveCancelProposalOnRepository(response);
+    await _saveUpdateProposalResponseOnRepository(response);
+  }
+
+  Future<void> deleteProposalDraft(String spaceId, String proposalId) async {
+    final response =
+        await ProposalApi().deleteProposalDraft(spaceId, proposalId);
+
+    await _saveUpdateProposalResponseOnRepository(response);
   }
 
   Future<void> _saveProposalResponseOnRepository(
@@ -57,8 +64,8 @@ class ProposalService {
     await ProposalRepository().insertOrUpdate(response.proposal);
   }
 
-  Future<void> _saveCancelProposalOnRepository(
-      CancelProposalResponse response) async {
+  Future<void> _saveUpdateProposalResponseOnRepository(
+      UpdateProposalResponse response) async {
     await ProposalRepository().insertOrUpdate(response.proposal);
   }
 }

@@ -3,7 +3,10 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   @override
@@ -36,7 +39,8 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(proposal.title ?? 'Sin titulo',
-                        style: const TextStyle(fontSize: 20), overflow: TextOverflow.ellipsis),
+                        style: const TextStyle(fontSize: 20),
+                        overflow: TextOverflow.ellipsis),
                     Container(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
@@ -59,14 +63,19 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                     title: 'TERMINA EN:',
                     content: '3 HORAS',
                   ),
-                  ProposalCardInfo(
-                    getIcon: (size, color) => Icon(
-                      Icons.how_to_vote,
-                      size: size,
-                      color: color,
-                    ),
-                    title: 'Votos:',
-                    content: '${proposal.votesCount}/$totalOfMembers',
+                  BlocBuilder<SpaceBloc, SpaceView>(
+                    bloc: SpaceBloc(),
+                    builder: (context, spaceView) {
+                      return ProposalCardInfo(
+                          getIcon: (size, color) => Icon(
+                                Icons.how_to_vote,
+                                size: size,
+                                color: color,
+                              ),
+                          title: 'Votos:',
+                          content:
+                              '${proposal.votesCount}/${spaceView.membersCount}');
+                    },
                   ),
                 ],
               )

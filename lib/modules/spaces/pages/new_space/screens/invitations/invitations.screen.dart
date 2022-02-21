@@ -1,5 +1,5 @@
 import 'package:demos_app/core/enums/space_role.enum.dart';
-import 'package:demos_app/core/models/space.model.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/services/contacts.service.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/widgets/invitation_contact_list.widget.dart';
@@ -134,9 +134,9 @@ class _InvitationsScreenState extends State<InvitationsScreen>
 
   void sendInvitations() {
     wrapLoadingTransaction(() async {
-      Space? currentSpace = SpaceBloc().state;
+      SpaceView currentSpace = SpaceBloc().state;
       await MemberService()
-          .sendInvitations(currentSpace!.spaceId!, contactsSelected);
+          .sendInvitations(currentSpace.spaceId!, contactsSelected);
       ToastUtil.showSuccess('Invitaciones enviadas con exito!!!');
       Navigator.pop(context);
     });

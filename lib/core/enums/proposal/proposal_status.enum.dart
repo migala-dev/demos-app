@@ -1,1 +1,1 @@
-enum ProposalStatus { draft, open, closed, cancelled }
+enum ProposalStatus { draft, open, closed, cancelled, deleted }

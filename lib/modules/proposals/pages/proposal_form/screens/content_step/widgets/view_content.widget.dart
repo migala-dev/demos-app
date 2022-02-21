@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/widgets/controller.dart';
-import 'package:flutter_quill/widgets/editor.dart';
+import 'package:flutter_quill/flutter_quill.dart' as quill;
 
 class ViewContent extends StatelessWidget {
   const ViewContent({
@@ -8,7 +7,7 @@ class ViewContent extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
-  final QuillController controller;
+  final quill.QuillController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +19,7 @@ class ViewContent extends StatelessWidget {
   }
 
   Widget getViewContent() {
-    return QuillEditor(
+    return quill.QuillEditor(
       controller: controller,
       scrollController: ScrollController(),
       scrollable: true,

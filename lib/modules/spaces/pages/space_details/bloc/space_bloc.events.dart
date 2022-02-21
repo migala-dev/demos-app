@@ -1,13 +1,24 @@
-abstract class SpaceEvent {
-  String spaceId;
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 
-  SpaceEvent(this.spaceId);
+abstract class SpaceEvent {
+
+  SpaceEvent();
 }
 
-class SetSpaceEvent extends SpaceEvent {
-  SetSpaceEvent(String spaceId) : super(spaceId);
+class SetSpaceIdEvent extends SpaceEvent {
+  final String spaceId;
+
+  SetSpaceIdEvent(this.spaceId) : super();
 }
 
 class UpdateSpaceEvent extends SpaceEvent {
-  UpdateSpaceEvent(String spaceId) : super(spaceId);
+  final String spaceId;
+
+  UpdateSpaceEvent(this.spaceId) : super();
+}
+
+class SetSpaceViewEvent extends SpaceEvent {
+  final SpaceView spaceView;
+
+  SetSpaceViewEvent(this.spaceView) : super();
 }
