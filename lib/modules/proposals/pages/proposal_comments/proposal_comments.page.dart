@@ -1,9 +1,8 @@
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_comments/repositories/comment_view.repository.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment.widget.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +11,6 @@ class ProposalCommentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String proposalId = ProposalDetailsBloc().state!.proposalId;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Comentarios'),
@@ -26,7 +23,7 @@ class ProposalCommentsPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: FutureBuilder(
-              future: CommentViewRepository().findByProposalId(proposalId),
+              future: CommentViewService().getComments(),
               initialData: const <CommentView>[],
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 final comments = snapshot.data;
