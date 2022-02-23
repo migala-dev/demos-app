@@ -18,6 +18,8 @@ Future<String?>? openConfirmationDialog(BuildContext context,
           showIOSAlertDialog(context, content, accept),
     );
   }
+
+  return null;
 }
 
 AlertDialog showAndroidAlertDialog(

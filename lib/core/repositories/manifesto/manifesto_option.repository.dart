@@ -54,6 +54,13 @@ class ManifestoOptionRepository extends AppRepository implements Table {
     return result.isNotEmpty ? ManifestoOption.fromObject(result[0]) : null;
   }
 
+  Future<List<ManifestoOption>> findByManifestoId(String manifestoId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblManifestoOptions WHERE $colManifestoId = '$manifestoId'");
+    return result.map((row) => ManifestoOption.fromObject(row)).toList();
+  }
+
   Future<int> update(ManifestoOption manifestoOption) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblManifestoOptions '
@@ -62,6 +69,24 @@ class ManifestoOptionRepository extends AppRepository implements Table {
         ", $colUpdatedBy = '${manifestoOption.updatedBy}' "
         ", $colUpdatedAt = '${manifestoOption.updatedAt}' "
         "WHERE $colId = '${manifestoOption.manifestoOptionId}'");
+    return result;
+  }
+
+  Future<void> removeAllMissingOptions(List<ManifestoOption> currentManifestoOptions, String manifestoId) async {
+    List<ManifestoOption> manifestoOptions = await findByManifestoId(manifestoId);
+
+    for(ManifestoOption option in manifestoOptions) {
+      if (currentManifestoOptions.every((o) => o.manifestoOptionId != option.manifestoOptionId)) {
+        await delete(option.manifestoOptionId);
+      }
+    }
+  }
+
+  Future<int> delete(String manifestoOptionId) async {
+    int result;
+    Database? db = await this.db;
+    result =
+        await db!.rawDelete("DELETE FROM $tblManifestoOptions where $colId = '$manifestoOptionId'");
     return result;
   }
 }

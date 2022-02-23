@@ -52,7 +52,7 @@ class ProposalsNavigationMenu extends StatelessWidget {
 
   Future<List<ProposalViewList>> getMenuOptions() async {
     final List<ProposalViewList> menuOptions = [];
-    final String spaceId = SpaceBloc().state!.spaceId!;
+    final String spaceId = SpaceBloc().state.spaceId!;
     for (final proposalList in await getProposalViewLists()) {
       if (await proposalList.itHasProposals(spaceId)) {
         menuOptions.add(proposalList);
@@ -63,7 +63,7 @@ class ProposalsNavigationMenu extends StatelessWidget {
   }
 
   void changeCurrentMenuOption(ProposalViewList proposalViewList) {
-    final String spaceId = SpaceBloc().state!.spaceId!;
+    final String spaceId = SpaceBloc().state.spaceId!;
     ProposalViewListBloc()
         .add(ProposalViewListNewOptionSelected(spaceId, proposalViewList));
   }

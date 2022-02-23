@@ -90,22 +90,6 @@ class MembersRepository extends AppRepository implements Table {
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 
-  Future<List<Member>> findBySpaceIdAndInvitationStatus(
-      String? spaceId, InvitationStatus invitationStatus) async {
-    Database? db = await this.db;
-    final result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colSpaceId = '$spaceId' AND $colInvitationStatus = ${invitationStatus.index} AND $colDeleted = 0");
-    return result.map((row) => Member.fromObject(row)).toList();
-  }
-
-  Future<List<Member>> findByInvitationStatusAndUserId(
-      InvitationStatus invitationStatus, String userId) async {
-    Database? db = await this.db;
-    final result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colInvitationStatus = ${invitationStatus.index} AND $colUserId = '$userId' AND $colDeleted = 0");
-    return result.map((row) => Member.fromObject(row)).toList();
-  }
-
   Future<List<Member>> findMembersAndInvitationsBySpaceId(
       String? spaceId) async {
     Database? db = await this.db;
@@ -146,18 +130,6 @@ class MembersRepository extends AppRepository implements Table {
 
     final result = await db!.rawQuery(
         "SELECT * FROM $tblMembers WHERE $colRole = '$admin' AND $colSpaceId = '$spaceId' AND $colDeleted = 0");
-
-    return result.map((row) => Member.fromObject(row)).toList();
-  }
-
-  Future<List<Member>> findInvitedMembersBySpaceId(String spaceId) async {
-    Database? db = await this.db;
-    final String aceptedStatus = '${InvitationStatus.accepted.index},'
-        '${InvitationStatus.sended.index},'
-        '${InvitationStatus.received.index}';
-
-    final result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colInvitationStatus IN($aceptedStatus) AND $colSpaceId = '$spaceId'");
 
     return result.map((row) => Member.fromObject(row)).toList();
   }

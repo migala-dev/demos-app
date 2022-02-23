@@ -10,6 +10,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_l
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/screens/nulo_vote.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/screens/vote_proposal.screen.dart';
+import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
@@ -55,10 +56,16 @@ var spacesHandler = Handler(
 // Handler de los detalles del espacio
 var spaceDetailsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  final spaceView = context!.settings!.arguments as SpaceView;
-
-  SpaceBloc().add(SetSpaceEvent(spaceView.spaceId));
-  ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId));
+  Object? spaceArgument = context!.settings!.arguments;
+  if (spaceArgument is String) {
+    String spaceId = spaceArgument;
+    SpaceBloc().add(SetSpaceIdEvent(spaceId));
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+  } else {
+    SpaceView spaceView = spaceArgument as SpaceView;
+    SpaceBloc().add(SetSpaceViewEvent(spaceView));
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId!));
+  }
 
   return const SpaceDetailsScreen();
 });
@@ -90,7 +97,10 @@ var invitationsSpaceHandler = Handler(
 
 var spaceInvitationHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  return const SpaceInvitationScreen();
+  final InvitationView invitationView =
+      ModalRoute.of(context!)?.settings.arguments as InvitationView;
+
+  return SpaceInvitationScreen(invitationView: invitationView);
 });
 
 var proposalFormHandler = Handler(

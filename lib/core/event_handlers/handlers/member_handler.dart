@@ -1,5 +1,4 @@
 import 'package:demos_app/core/api/space.api.dart';
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
@@ -7,6 +6,7 @@ import 'package:demos_app/core/models/errors/user_is_not_member.error.dart';
 import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.event.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/modules/spaces/models/member.view.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
@@ -42,7 +42,8 @@ class SpaceInvitationEvent implements EventHandler {
     SpaceResponse response = await SpaceApi().getSpace(spaceId);
 
     await NewSpaceService().handleSpaceInvitation(response);
-    NewInvitationDialogService().open(response.space, response.member);
+
+    NewInvitationDialogService().open(response.member);
     SpacesBloc().add(LoadSpacesEvent());
   }
 }
@@ -57,7 +58,7 @@ class UpdateMemberEvent implements EventHandler {
     String memberId = dataEvent.data!['memberId'];
     try {
       final spaceMembersBloc = SpaceMembersBloc();
-      final currerntSpaceId = SpaceBloc().state?.spaceId;
+      final currerntSpaceId = SpaceBloc().state.spaceId;
       await MemberService().getMember(spaceId, memberId);
 
       if (currerntSpaceId == spaceId) {
@@ -87,7 +88,7 @@ class InvitationCanceledEvent implements EventHandler {
     String memberId = dataEvent.data!['memberId'];
     String spaceId = dataEvent.data!['spaceId'];
     final spaceMembersBloc = SpaceMembersBloc();
-    final currerntSpaceId = SpaceBloc().state?.spaceId;
+    final currerntSpaceId = SpaceBloc().state.spaceId;
 
     await MemberService().cancelInvitation(memberId);
 

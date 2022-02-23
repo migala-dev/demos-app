@@ -40,7 +40,7 @@ class MemberViewsRepository extends AppRepository {
             $tblUsers.$colUserId = $tblMembers.$colUserId
   ''';
 
-  Future<MemberView> findByUserIdAndSpaceId(
+  Future<MemberView?> findByUserIdAndSpaceId(
       String userId, String spaceId) async {
     Database? db = await this.db;
 
@@ -51,10 +51,11 @@ class MemberViewsRepository extends AppRepository {
         AND $tblMembers.$colSpaceId = '$spaceId'
         AND $tblMembers.$colDeleted = 0
         AND $tblMembers.$colInvitationStatus = ${InvitationStatus.accepted.index}
+        LIMIT 1
     """;
     final result = await db!.rawQuery(query);
 
-    return result.map((row) => MemberView.fromObject(row)).toList().first;
+    return result.isEmpty ? null : MemberView.fromObject(result.first);
   }
   Future<MemberView> findByMemberId(
       String memberId) async {

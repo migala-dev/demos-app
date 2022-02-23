@@ -1,5 +1,6 @@
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
@@ -10,7 +11,9 @@ import 'package:demos_app/core/repositories/app_repository.dart';
 class ProposalViewsRepository extends AppRepository {
   final tblManifesto = ManifestoRepository().tblManifesto;
   final tblProposals = ProposalRepository().tblProposals;
-  final tblProposalParticipations = ProposalParticipationRepository().tblProposalParticipations;
+  final tblProposalParticipations =
+      ProposalParticipationRepository().tblProposalParticipations;
+  final tblManifestoOptions = ManifestoOptionRepository().tblManifestoOptions;
   final tblUsers = UsersRepository().tblUsers;
   final colUserId = UsersRepository().colId;
   final colUserName = UsersRepository().colName;
@@ -26,8 +29,10 @@ class ProposalViewsRepository extends AppRepository {
   final colCreatedBy = ProposalRepository().colCreatedBy;
   final colUpdatedBy = ProposalRepository().colUpdatedBy;
   final colCreatedAt = ProposalRepository().colCreatedAt;
+  final colManifestoOptionId = ManifestoOptionRepository().colId;
 
-  String _getFindBySpaceIdAndStatusQuery(String spaceId, ProposalStatus proposalStatus) {
+  String _getFindBySpaceIdAndStatusQuery(
+      String spaceId, ProposalStatus proposalStatus) {
     return """
       SELECT $tblManifesto.$colManifestoId,
         $colProposalId,
@@ -57,26 +62,43 @@ class ProposalViewsRepository extends AppRepository {
     """;
   }
 
-   Future<List<ProposalView>> findAllBySpaceIdAndStatus(String spaceId, ProposalStatus proposalStatus) async {
+  String _getManifestoOptionsQuery(String manifestoId) => 
+  """
+    SELECT 
+      $colManifestoOptionId,
+      $colTitle
+    FROM $tblManifestoOptions
+    WHERE $colManifestoId = '$manifestoId'
+  """;
+
+  Future<List<ProposalView>> findAllBySpaceIdAndStatus(
+      String spaceId, ProposalStatus proposalStatus) async {
     Database? db = await this.db;
 
     final query = _getFindBySpaceIdAndStatusQuery(spaceId, proposalStatus);
     final result = await db!.rawQuery(query);
 
-    return result.map((row) => ProposalView.fromObject(row)).toList();
+    List<Map<String, Object?>> resultWithManifestoOptions =
+        result.map((r) => {...r}).toList();
+    for (Map<String, Object?> row in resultWithManifestoOptions) {
+      final String manifestoOptionsQuery = _getManifestoOptionsQuery(row['manifestoId'].toString());
+      final manifestoOptionsResult = await db.rawQuery(manifestoOptionsQuery);
+
+      row['manifestoOptions'] = manifestoOptionsResult;
+    }
+
+    return resultWithManifestoOptions.map((row) => ProposalView.fromObject(row)).toList();
   }
 
-  Future<int> getCountBySpaceIdAndStatus(String spaceId, ProposalStatus proposalStatus) async {
+  Future<int> getCountBySpaceIdAndStatus(
+      String spaceId, ProposalStatus proposalStatus) async {
     Database? db = await this.db;
 
-    final result = await db!.rawQuery(
-      """
+    final result = await db!.rawQuery("""
        select count(*) as count from $tblProposals
           where $colSpaceId = '$spaceId' AND $colStatus = ${proposalStatus.index}
-      """
-    );
+      """);
 
     return result.isNotEmpty ? int.parse(result.first['count'].toString()) : 0;
   }
-
 }

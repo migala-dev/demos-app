@@ -1,4 +1,4 @@
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 
 bool areSpacesEmpty(SpacesState state) =>

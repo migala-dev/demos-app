@@ -1,6 +1,6 @@
-import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 
@@ -8,8 +8,8 @@ class MemberViewService {
   Future<List<MemberView>> getMemberViews() async {
     final List<MemberView> memberViews = [];
 
-    final Space? currentSpace = SpaceBloc().state;
-    final String? spaceId = currentSpace!.spaceId;
+    final SpaceView currentSpace = SpaceBloc().state;
+    final String? spaceId = currentSpace.spaceId;
 
     final members = await MemberService().getSpaceMembers(spaceId!);
     for (final member in members) {

@@ -1,4 +1,4 @@
-import 'package:demos_app/core/bloc/spaces/spaces_bloc.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';

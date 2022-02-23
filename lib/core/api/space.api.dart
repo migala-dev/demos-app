@@ -39,15 +39,46 @@ class SpaceApi {
     return response;
   }
 
-  Future<void> updateSpace(Space space) async {
-    String endpoint = SpacePath().getSpacePath(space.spaceId!);
+  Future<Space> updateSpaceName(String spaceId, String name) async {
+    String endpoint = SpacePath().getSpacePath(spaceId);
     Object params = {
-      'name': space.name,
-      'description': space.description,
-      'participationPercentage': space.participationPercentage.toString(),
-      'approvalPercentage': space.approvalPercentage.toString()
+      'name': name,
     };
-    await Api.post(endpoint, params, null);
+
+    final httpResponse = await Api.post(endpoint, params, null);
+
+    Space spaceUpdated = Space.fromObject(httpResponse);
+
+    return spaceUpdated;
+  }
+
+  Future<Space> updateSpaceDescription(
+      String spaceId, String description) async {
+    String endpoint = SpacePath().getSpacePath(spaceId);
+    Object params = {
+      'description': description,
+    };
+
+    final httpResponse = await Api.post(endpoint, params, null);
+
+    Space spaceUpdated = Space.fromObject(httpResponse);
+
+    return spaceUpdated;
+  }
+
+  Future<Space> updateSpacePercentages(String spaceId,
+      int participationPercentage, int approvalPercentage) async {
+    String endpoint = SpacePath().getSpacePath(spaceId);
+    Object params = {
+      'participationPercentage': participationPercentage.toString(),
+      'approvalPercentage': approvalPercentage.toString()
+    };
+
+    final httpResponse = await Api.post(endpoint, params, null);
+
+    Space spaceUpdated = Space.fromObject(httpResponse);
+
+    return spaceUpdated;
   }
 
   Future<Space?> uploadPicture(String spaceId, File file) async {
