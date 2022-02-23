@@ -23,6 +23,8 @@ class ProposalView {
   String get createdAtFormated =>
       DateFormatterService.parseToDayMonthYearDate(createdAt);
 
+  int get numberOfComments => 2;
+
   ProposalView(
     this.manifestoId,
     this.proposalId,

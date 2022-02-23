@@ -25,7 +25,8 @@ class Routes {
   static const String proposalForm = '/proposal-form';
   static const String editProposalContent =
       '/new-proposal/edit-proposal-content';
-  static const String proposalDetails ='/proposal-details';
+  static const String proposalDetails = '/proposal-details';
+  static const String proposalComments = '/proposal-comment';
 
   // Settings
   static const String settings = '/settings/general';
@@ -60,7 +61,8 @@ class Routes {
     router.define(proposalForm, handler: proposalFormHandler);
     router.define(editProposalContent, handler: editProposalContentHandler);
     router.define(proposalDetails, handler: proposalDetailsHandler);
-    
+    router.define(proposalComments, handler: proposalCommentsHandler);
+
     // Settings
     router.define(settings, handler: generalSettingsHandler);
     router.define(configuration, handler: generalConfigurationHandler);
