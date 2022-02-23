@@ -2,21 +2,21 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comme
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/replies_count_button.widget.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/subcomments_list_view.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/replies_list_view.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 
 class MemberComment extends StatelessWidget {
   final CommentView comment;
-  final bool enableReplies;
   final EdgeInsetsGeometry padding;
-  const MemberComment(
-      {Key? key,
-      required this.comment,
-      this.enableReplies = false,
-      this.padding = const EdgeInsets.symmetric(horizontal: 18)})
-      : super(key: key);
+  final bool enableReplies;
+  const MemberComment({
+    Key? key,
+    required this.comment,
+    this.enableReplies = false,
+    this.padding = const EdgeInsets.symmetric(horizontal: 18),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +56,13 @@ class MemberComment extends StatelessWidget {
                     votesInFavor: comment.upVotesCount,
                     votesInOpposing: comment.downVotesCount),
                 const SizedBox(width: 10),
-                comment.repliesCount > 0 && !enableReplies
+                comment.repliesCount > 0 && enableReplies
                     ? RepliesCountButton(
                         onTap: toggleFunction,
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                !enableReplies ? ReplyButton(onTap: () {}) : Container(),
+                enableReplies ? ReplyButton(onTap: () {}) : Container(),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert, color: Colors.grey))
@@ -70,7 +70,9 @@ class MemberComment extends StatelessWidget {
             )
           ],
         ),
-        content: enableReplies ? Container() : const SubCommentsListView(),
+        content: enableReplies && comment.replies != null
+            ? RepliesListView(replies: comment.replies!)
+            : Container(),
       ),
     );
   }

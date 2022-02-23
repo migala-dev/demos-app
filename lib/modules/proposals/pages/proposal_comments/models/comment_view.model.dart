@@ -8,10 +8,13 @@ class CommentView {
   final int upVotesCount;
   final int downVotesCount;
   final String content;
-  final int repliesCount;
+
+  final List<CommentView>? replies;
 
   String get createdAtFormatted =>
       DateFormatterService.parseToDayMonthYearHourDate(createdAt);
+
+  int get repliesCount => replies == null ? 0 : replies!.length;
 
   CommentView(
       {required this.commendId,
@@ -20,5 +23,5 @@ class CommentView {
       required this.upVotesCount,
       required this.downVotesCount,
       required this.content,
-      required this.repliesCount});
+      this.replies});
 }
