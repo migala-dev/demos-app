@@ -23,7 +23,7 @@ class ProposalDraftCard extends StatelessWidget implements ProposalCard {
           content: proposal.content ?? '',
           isNew: false,
           optionType: proposal.optionType,
-          manifestoOptions: [],
+          manifestoOptions: proposal.manifestoOptions,
         );
         ProposalFormBloc()
             .add(ProposalFormSetProposalFormView(proposalFormView));

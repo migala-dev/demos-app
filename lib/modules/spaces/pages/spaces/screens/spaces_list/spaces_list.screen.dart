@@ -100,5 +100,6 @@ class SpaceListScreen extends StatelessWidget {
         ],
       );
     }
+    return null;
   }
 }

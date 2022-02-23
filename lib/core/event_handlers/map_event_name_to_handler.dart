@@ -7,4 +7,5 @@ EventHandler? mapEventNameToHandler(
       return handler;
     }
   }
+  return null;
 }

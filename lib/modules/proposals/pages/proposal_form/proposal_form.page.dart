@@ -52,6 +52,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     if (!isNewDraft) {
       return [PopupProposalFormMenuOptions()];
     }
+    return null;
   }
 
   Column getAppBarTitle() {
