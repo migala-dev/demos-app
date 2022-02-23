@@ -18,6 +18,8 @@ Future<String?>? openAlertDialog(BuildContext context,
           _showIOSAlertDialog(context, content, title),
     );
   }
+
+  return null;
 }
 
 AlertDialog _showAndroidAlertDialog(

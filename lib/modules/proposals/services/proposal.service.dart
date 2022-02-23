@@ -61,6 +61,8 @@ class ProposalService {
     for (final manifestoOption in response.manifestoOptions) {
       await ManifestoOptionRepository().insertOrUpdate(manifestoOption);
     }
+    await ManifestoOptionRepository().removeAllMissingOptions(
+        response.manifestoOptions, response.manifesto.manifestoId);
     await ProposalRepository().insertOrUpdate(response.proposal);
   }
 

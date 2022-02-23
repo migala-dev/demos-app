@@ -111,6 +111,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
         if (value != null && value.length > 120) {
           return 'La descripción no puede tener más de 120 caracteres';
         }
+        return null;
       },
     );
     if (newDescription != null &&

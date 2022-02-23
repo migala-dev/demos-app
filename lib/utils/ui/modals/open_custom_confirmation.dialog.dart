@@ -30,6 +30,8 @@ Future<DialogOption?> openCustomConfirmDialog(
           _showIOSAlertDialog(context, title, [...options, dialogCancelOption]),
     );
   }
+
+  return null;
 }
 
 AlertDialog _showAndroidAlertDialog(

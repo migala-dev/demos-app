@@ -98,7 +98,10 @@ class ProposalApi {
       'title': proposalFormView.title,
       'content': proposalFormView.content,
       'optionType': proposalFormView.optionType.index,
-      'options': []
+      'options': proposalFormView.manifestoOptions.map((o) => {
+        'title': o.title,
+        'manifestoOptionId': o.manifestoOptionId
+      }).toList()
     };
   }
 }
