@@ -19,7 +19,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/inv
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/member_profile.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/members.screen.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/edit_space/edit_space.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_percentage/space_percentage_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/space_settings.screen.dart';
@@ -153,7 +153,8 @@ var memberProfileHandler =
 
 var voteProposalHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  return const VoteProposalScreen();
+  ProposalView proposalView = context!.settings!.arguments as ProposalView;
+  return VoteProposalScreen(proposal: proposalView);
 });
 
 var nuloVoteHandler =

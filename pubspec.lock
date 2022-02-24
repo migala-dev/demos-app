@@ -156,7 +156,7 @@ packages:
     source: hosted
     version: "0.3.2"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -953,7 +953,7 @@ packages:
     source: hosted
     version: "2.0.2"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       url: "https://pub.dartlang.org"

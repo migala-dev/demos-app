@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/modals/select_role_modal.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/member_profile_popup_menu_button.widget.dart';
 import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';

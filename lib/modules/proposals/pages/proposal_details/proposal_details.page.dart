@@ -1,3 +1,4 @@
+import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
@@ -143,7 +144,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                           const SizedBox(height: 15),
                           SafeWidgetValidator(
                             child: BigOutlinedButton(
-                                text: 'Votar', onPressed: goToVoteProposal),
+                                text: 'Votar', onPressed: () => goToVoteProposal(proposalView)),
                           )
                         ],
                       )),
@@ -169,7 +170,10 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
     );
   }
 
-  void goToVoteProposal() {
-    Navigator.pushNamed(context, Routes.voteProposal);
+  void goToVoteProposal(ProposalView proposalView) {
+    Application.router.navigateTo(context, Routes.voteProposal,
+        routeSettings: RouteSettings(
+          arguments: proposalView,
+        ));
   }
 }

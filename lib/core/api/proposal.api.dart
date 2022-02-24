@@ -3,6 +3,7 @@ import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
 import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
+import 'package:demos_app/core/models/responses/vote_proposal_response.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 
 class ProposalApi {
@@ -92,16 +93,48 @@ class ProposalApi {
     return response;
   }
 
+  Future<VoteProposalResponse> voteInFavorProposal(
+      String spaceId, String proposalId, String userHash, bool inFavor) async {
+    final String endpoint =
+        ProposalsPath().getVoteProposalPath(spaceId, proposalId);
+    final Map<String, dynamic> body = {
+      'userHash': userHash,
+      'inFavor': inFavor
+    };
+
+    final httpResponse = await Api.put(endpoint, body, null);
+
+    final response = VoteProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+  Future<VoteProposalResponse> voteManifestoOptionProposal(
+      String spaceId, String proposalId, String userHash, String manifestoOptionId) async {
+    final String endpoint =
+        ProposalsPath().getVoteProposalPath(spaceId, proposalId);
+    final Map<String, dynamic> body = {
+      'userHash': userHash,
+      'manifestoOptionId': manifestoOptionId
+    };
+
+    final httpResponse = await Api.put(endpoint, body, null);
+
+    final response = VoteProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Map<String, dynamic> _getBodyFromProposalFormView(
       ProposalFormView proposalFormView) {
     return {
       'title': proposalFormView.title,
       'content': proposalFormView.content,
       'optionType': proposalFormView.optionType.index,
-      'options': proposalFormView.manifestoOptions.map((o) => {
-        'title': o.title,
-        'manifestoOptionId': o.manifestoOptionId
-      }).toList()
+      'options': proposalFormView.manifestoOptions
+          .map((o) =>
+              {'title': o.title, 'manifestoOptionId': o.manifestoOptionId})
+          .toList()
     };
   }
 }

@@ -7,7 +7,7 @@ import 'package:demos_app/core/models/responses/space_response.model.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.event.dart';
 import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
