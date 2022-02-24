@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 class DateFormatterService {
   static String parseToStandardDate(String date) {
     try {
-      DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-      DateTime inputDate = dateFormat.parse(date);
+      final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+      final DateTime inputDate = dateFormat.parse(date);
 
       initializeDateFormatting('es');
-      var outputFormat = DateFormat('dd/MMMM/yyyy', 'es');
+      final outputFormat = DateFormat('dd/MMMM/yyyy', 'es');
       return outputFormat.format(inputDate);
     } catch (e) {
       return date;
@@ -17,10 +17,22 @@ class DateFormatterService {
 
   static String parseToDayMonthYearDate(String date) {
     try {
-      DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-      DateTime inputDate = dateFormat.parse(date);
+      final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+      final DateTime inputDate = dateFormat.parse(date);
 
-      var outputFormat = DateFormat('dd/MM/yyyy');
+      final outputFormat = DateFormat('dd/MM/yyyy');
+      return outputFormat.format(inputDate);
+    } catch (e) {
+      return date;
+    }
+  }
+
+  static String parseToDayMonthYearHourDate(String date) {
+    try {
+      final dateFormat = DateFormat('yyyy-MM-ddThh:mm');
+      final inputDate = dateFormat.parse(date);
+
+      final outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
       return outputFormat.format(inputDate);
     } catch (e) {
       return date;
