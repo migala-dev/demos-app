@@ -151,20 +151,31 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                               leading: const Icon(Icons.person, size: 40),
                             ),
                             ListTile(
-                              title: const Text(
-                                'OPCIONES\n',
-                                style:
-                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              title: const Padding(
+                                padding: EdgeInsets.only(bottom: 8),
+                                child: Text(
+                                  'OPCIONES',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 14),
+                                ),
                               ),
-                              subtitle: proposalView.optionType ==
-                                      ManifestoOptionType.inFavorOrOpposing
-                                  ? const Text('  · A Favor\n  · En contra')
-                                  : Text(
-                                      proposalView.manifestoOptions
-                                          .map((e) => e.title)
-                                          .toString(),
-                                    ),
-                            )
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: proposalView.optionType ==
+                                        ManifestoOptionType.inFavorOrOpposing
+                                    ? const Text('  • A Favor\n  • En contra')
+                                    : Text(
+                                        proposalView.manifestoOptions
+                                            .map((e) => '• ${e.title}\n')
+                                            .join('')
+                                            .toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
