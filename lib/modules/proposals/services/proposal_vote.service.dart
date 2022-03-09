@@ -26,4 +26,15 @@ class ProposalVoteService {
     await ProposalParticipationRepository()
         .insert(response.proposalParticipation);
   }
+
+  Future<void> voteNull(String spaceId, String proposalId, String nullVoteComment) async {
+     String userHash = await generateUserHash(proposalId);
+
+    VoteProposalResponse response = await ProposalApi()
+        .voteNullProposal(
+            spaceId, proposalId, userHash, nullVoteComment);
+
+    await ProposalParticipationRepository()
+        .insert(response.proposalParticipation);
+  }
 }

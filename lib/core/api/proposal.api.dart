@@ -125,6 +125,22 @@ class ProposalApi {
     return response;
   }
 
+  Future<VoteProposalResponse> voteNullProposal(
+      String spaceId, String proposalId, String userHash, String? nullVoteComment) async {
+    final String endpoint =
+        ProposalsPath().getVoteProposalPath(spaceId, proposalId);
+    final Map<String, dynamic> body = {
+      'userHash': userHash,
+      'nullVoteComment': nullVoteComment
+    };
+
+    final httpResponse = await Api.put(endpoint, body, null);
+
+    final response = VoteProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Map<String, dynamic> _getBodyFromProposalFormView(
       ProposalFormView proposalFormView) {
     return {

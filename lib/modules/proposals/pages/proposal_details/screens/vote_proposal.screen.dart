@@ -1,3 +1,4 @@
+import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
@@ -10,6 +11,7 @@ import 'package:demos_app/widgets/buttons/right_close_button.widget.dart';
 import 'package:demos_app/widgets/general/select_options.widget.dart';
 import 'package:demos_app/widgets/titles/entity_title.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 class VoteProposalScreen extends StatefulWidget {
@@ -101,7 +103,10 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
 
   List<Option> getManifestoOptions() {
     List<ManifestoOptionView> options = widget.proposal.manifestoOptions;
-    return options.map<Option>((o) => Option(o.title, () => {})).toList();
+    return options.map<Option>((o) => Option(o.title, 
+      () => 
+      _vote(() async => await ProposalVoteService().voteManifestoOption(spaceId, proposalId, o.manifestoOptionId!))
+    )).toList();
   }
 
   String getProposalName() => ProposalDetailsBloc().state!.title!;
@@ -112,5 +117,14 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
     Navigator.pop(context);
   }
 
-  void goToNuleVoteScreen() => Navigator.pushNamed(context, Routes.nuloVote);
+  void goToNuleVoteScreen() {
+     Application.router.navigateTo(
+        context,
+        Routes.nuloVote,
+        transition: TransitionType.inFromRight,
+        routeSettings: RouteSettings(
+          arguments: widget.proposal,
+        )
+      );
+  }
 }

@@ -114,12 +114,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Contenido ',
-                                style: TextStyle(color: Colors.grey)),
-                            QuillContent(content: proposalView.content),
-                            const SizedBox(
-                              height: 16,
-                            ),
+                            getContent(proposalView.content),
                             ListTile(
                               title: const Text(
                                 'Autor',
@@ -235,6 +230,23 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
       title,
       maxLines: 5,
       overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget getContent(String? content) {
+    if (content == null || content.isEmpty) {
+      return Container();
+    }
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Contenido ', style: TextStyle(color: Colors.grey)),
+        QuillContent(content: content),
+        const SizedBox(
+          height: 16,
+        ),
+      ],
     );
   }
 

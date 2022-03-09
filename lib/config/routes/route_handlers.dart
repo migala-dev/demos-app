@@ -9,7 +9,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.pa
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_details/screens/nulo_vote.screen.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/screens/null_vote.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/screens/vote_proposal.screen.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -160,7 +160,8 @@ var voteProposalHandler =
 
 var nuloVoteHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  return const NuloVoteScreen();
+  ProposalView proposalView = context!.settings!.arguments as ProposalView;
+  return NullVoteScreen(proposal: proposalView);
 });
 
 var proposalCommentsHandler =
