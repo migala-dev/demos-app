@@ -1,14 +1,16 @@
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
+import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
-import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/commets_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/widgets/general/quill_content.widget.dart';
+import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +117,67 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             const Text('Contenido ',
                                 style: TextStyle(color: Colors.grey)),
                             QuillContent(content: proposalView.content),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Autor',
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              ),
+                              subtitle: Text(
+                                proposalView.createdByName,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                              leading: ProfilePicture(
+                                  imageKey:
+                                      proposalView.createdByProfilePictureKey,
+                                  width: 100),
+                            ),
+                            ListTile(
+                              title: const Text(
+                                'Tipo de votación',
+                                style:
+                                    TextStyle(color: Colors.grey, fontSize: 14),
+                              ),
+                              subtitle: Text(
+                                proposalView.optionType ==
+                                        ManifestoOptionType.inFavorOrOpposing
+                                    ? 'A favor/En contra'
+                                    : 'Opción multiple',
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                              ),
+                              leading: const Icon(Icons.person, size: 40),
+                            ),
+                            ListTile(
+                              title: const Padding(
+                                padding: EdgeInsets.only(bottom: 8),
+                                child: Text(
+                                  'OPCIONES',
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 14),
+                                ),
+                              ),
+                              subtitle: Padding(
+                                padding: const EdgeInsets.only(left: 8),
+                                child: proposalView.optionType ==
+                                        ManifestoOptionType.inFavorOrOpposing
+                                    ? const Text('  • A Favor\n  • En contra')
+                                    : Text(
+                                        proposalView.manifestoOptions
+                                            .map((e) => '• ${e.title}\n')
+                                            .join('')
+                                            .toString(),
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                              ),
+                            ),
                             SafeWidgetValidator(
                               child: BigOutlinedButton(
                                   text: 'Votar',
