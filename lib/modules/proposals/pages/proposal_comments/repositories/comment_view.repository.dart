@@ -1,6 +1,6 @@
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 
 class CommentViewRepository {
   Future<List<CommentView>> findByProposalId(String proposalId) async {

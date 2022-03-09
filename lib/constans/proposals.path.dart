@@ -27,4 +27,7 @@ class ProposalsPath {
 
   String getCancelProposalPath(String spaceId, String proposalId) =>
       '${getProposalPath(spaceId, proposalId)}/cancel';
+
+  String getVoteProposalPath(String spaceId, String proposalId) =>
+      '${getProposalPath(spaceId, proposalId)}/vote';
 }

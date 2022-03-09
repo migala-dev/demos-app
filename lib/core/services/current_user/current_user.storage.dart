@@ -1,5 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import 'current_user_private_key.dart';
+
 class CurrentUserStorage {
   final String _currentUserIdKey = 'current-user-id-key';
   final _storage = const FlutterSecureStorage();
@@ -8,8 +10,9 @@ class CurrentUserStorage {
   CurrentUserStorage._internal();
   factory CurrentUserStorage() => _currentUserStorage;
 
-  Future<void> setCurrentUserId(String? userId) async {
-    await _storage.write(key: _currentUserIdKey, value: userId.toString());
+  Future<void> setCurrentUserId(String userId) async {
+    await _storage.write(key: _currentUserIdKey, value: userId);
+    await UserPrivateKey(userId).generatePrivateKey();
   }
 
   Future<String?> getCurrentUserId() async {

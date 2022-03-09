@@ -2,7 +2,7 @@ import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class MemberViewsRepository extends AppRepository {

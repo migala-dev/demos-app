@@ -1,4 +1,4 @@
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class CommentView {

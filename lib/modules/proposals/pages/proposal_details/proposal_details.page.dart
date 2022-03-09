@@ -3,6 +3,7 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/commets_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
@@ -10,6 +11,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_car
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/widgets/general/quill_content.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -112,12 +114,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Contenido ',
-                                style: TextStyle(color: Colors.grey)),
-                            QuillContent(content: proposalView.content),
-                            const SizedBox(
-                              height: 16,
-                            ),
+                            getContent(proposalView.content),
                             ListTile(
                               title: const Text(
                                 'Autor',
@@ -176,6 +173,12 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                       ),
                               ),
                             ),
+                            SafeWidgetValidator(
+                              child: BigOutlinedButton(
+                                  text: 'Votar',
+                                  onPressed: () =>
+                                      goToVoteProposal(context, proposalView)),
+                            )
                           ],
                         ),
                       ),
@@ -228,6 +231,30 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
       maxLines: 5,
       overflow: TextOverflow.ellipsis,
     );
+  }
+
+  Widget getContent(String? content) {
+    if (content == null || content.isEmpty) {
+      return Container();
+    }
+    
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Contenido ', style: TextStyle(color: Colors.grey)),
+        QuillContent(content: content),
+        const SizedBox(
+          height: 16,
+        ),
+      ],
+    );
+  }
+
+  void goToVoteProposal(BuildContext context, ProposalView proposalView) {
+    Application.router.navigateTo(context, Routes.voteProposal,
+        routeSettings: RouteSettings(
+          arguments: proposalView,
+        ));
   }
 
   void goToProposalComments(BuildContext context) =>

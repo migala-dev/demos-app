@@ -2,7 +2,7 @@ import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.event.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
 import 'package:demos_app/modules/spaces/repositories/member_view.repository.dart';

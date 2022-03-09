@@ -53,6 +53,8 @@ dependencies:
   package_info: ^2.0.2
   loading_overlay: ^0.3.0
   flutter_quill: ^4.0.1
+  uuid: 3.0.5
+  crypto: ^3.0.1
   expansion_widget: ^0.0.3
 
 dev_dependencies:

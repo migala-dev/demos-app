@@ -9,6 +9,8 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.pa
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/screens/null_vote.screen.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/screens/vote_proposal.screen.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
@@ -18,7 +20,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/inv
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/member_profile.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/members.screen.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/edit_space/edit_space.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_percentage/space_percentage_settings.screen.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/screens/space_settings/space_settings.screen.dart';
@@ -148,6 +150,18 @@ var memberProfileHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   final memberView = context!.settings!.arguments as MemberView;
   return MemberProfileScreen(memberView);
+});
+
+var voteProposalHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  ProposalView proposalView = context!.settings!.arguments as ProposalView;
+  return VoteProposalScreen(proposal: proposalView);
+});
+
+var nullVoteHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  ProposalView proposalView = context!.settings!.arguments as ProposalView;
+  return NullVoteScreen(proposal: proposalView);
 });
 
 var proposalCommentsHandler =
