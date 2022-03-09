@@ -27,7 +27,7 @@ class Routes {
       '/new-proposal/edit-proposal-content';
   static const String proposalDetails = '/proposal-details';
   static const String voteProposal = '/vote-proposal';
-  static const String nuloVote = '/nulo-vote';
+  static const String nullVote = '/null-vote';
   static const String proposalComments = '/proposal-comment';
 
   // Settings
@@ -64,7 +64,7 @@ class Routes {
     router.define(editProposalContent, handler: editProposalContentHandler);
     router.define(proposalDetails, handler: proposalDetailsHandler);
     router.define(voteProposal, handler: voteProposalHandler);
-    router.define(nuloVote, handler: nuloVoteHandler);
+    router.define(nullVote, handler: nullVoteHandler);
     router.define(proposalComments, handler: proposalCommentsHandler);
 
     // Settings

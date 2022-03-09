@@ -46,7 +46,7 @@ class _NullVoteScreenState extends State<NullVoteScreen> {
                 SafeWidgetValidator(
                     child: BigButton(
                   text: 'Confirmar',
-                  onPressed: () => confirmNuloVote(context),
+                  onPressed: () => vote(context),
                 ))
               ],
             ))
@@ -56,7 +56,7 @@ class _NullVoteScreenState extends State<NullVoteScreen> {
     );
   }
 
-  void confirmNuloVote(BuildContext context) async {
+  void vote(BuildContext context) async {
     await ProposalVoteService().voteNull(widget.proposal.spaceId, widget.proposal.proposalId, reasons);
     Navigator.pop(context);
     Navigator.pop(context);

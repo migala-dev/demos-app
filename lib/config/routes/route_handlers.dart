@@ -158,7 +158,7 @@ var voteProposalHandler =
   return VoteProposalScreen(proposal: proposalView);
 });
 
-var nuloVoteHandler =
+var nullVoteHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   ProposalView proposalView = context!.settings!.arguments as ProposalView;
   return NullVoteScreen(proposal: proposalView);

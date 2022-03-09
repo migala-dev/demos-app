@@ -89,7 +89,7 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
     } else {
       options = getManifestoOptions();
     }
-    return [...options, Option('Nulo', goToNuleVoteScreen)];
+    return [...options, Option('Nulo', goToNullVoteScreen)];
   }
 
   List<Option> getInFavorOrOpposingOptions() {
@@ -117,10 +117,10 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
     Navigator.pop(context);
   }
 
-  void goToNuleVoteScreen() {
+  void goToNullVoteScreen() {
      Application.router.navigateTo(
         context,
-        Routes.nuloVote,
+        Routes.nullVote,
         transition: TransitionType.inFromRight,
         routeSettings: RouteSettings(
           arguments: widget.proposal,
