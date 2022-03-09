@@ -1,6 +1,6 @@
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
 
 class IsCurrentUserAdminWidgetValidator implements WidgetValidator {

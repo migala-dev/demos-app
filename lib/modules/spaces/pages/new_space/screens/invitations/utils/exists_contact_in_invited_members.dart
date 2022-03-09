@@ -1,5 +1,5 @@
 import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:demos_app/modules/spaces/models/member.view.dart';
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 
 Future<bool> isContactAlreadyOnTheSpace(
     Contact contact, List<MemberView> members) async {
