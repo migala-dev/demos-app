@@ -1,6 +1,7 @@
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
@@ -198,11 +199,13 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
   SliverAppBar getSliverAppBar(
       BuildContext context, ProposalView proposalView) {
     return SliverAppBar(
-      actions: [
-        SafeWidgetMemberValidator(
-            roles: const [SpaceRole.representative, SpaceRole.admin],
-            child: PopupProposalDetailsMenuOptions())
-      ],
+      actions: proposalView.status == ProposalStatus.open
+          ? [
+              SafeWidgetMemberValidator(
+                  roles: const [SpaceRole.representative, SpaceRole.admin],
+                  child: PopupProposalDetailsMenuOptions())
+            ]
+          : null,
       backgroundColor: const Color(0xFFEFB355),
       expandedHeight: MediaQuery.of(context).size.height * 0.3,
       pinned: true,
@@ -237,7 +240,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
     if (content == null || content.isEmpty) {
       return Container();
     }
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
