@@ -55,6 +55,14 @@ class ProposalService {
     await _saveUpdateProposalResponseOnRepository(response);
   }
 
+  Future<void> updateProposal(String spaceId, String proposalId,
+      ProposalFormView proposalFormView) async {
+    final response = await ProposalApi()
+        .updateProposal(spaceId, proposalId, proposalFormView);
+
+    await _saveProposalResponseOnRepository(response);
+  }
+
   Future<void> _saveProposalResponseOnRepository(
       ProposalResponse response) async {
     await ManifestoRepository().insertOrUpdate(response.manifesto);

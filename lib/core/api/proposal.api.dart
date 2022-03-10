@@ -93,6 +93,19 @@ class ProposalApi {
     return response;
   }
 
+  Future<ProposalResponse> updateProposal(String spaceId, String proposalId,
+      ProposalFormView proposalFormView) async {
+    final String endpoint =
+        ProposalsPath().getProposalPath(spaceId, proposalId);
+    final Map<String, dynamic> body =
+        _getBodyFromProposalFormView(proposalFormView);
+
+    final httpResponse = await Api.put(endpoint, body, null);
+    final response = ProposalResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Future<VoteProposalResponse> voteInFavorProposal(
       String spaceId, String proposalId, String userHash, bool inFavor) async {
     final String endpoint =
@@ -109,8 +122,8 @@ class ProposalApi {
     return response;
   }
 
-  Future<VoteProposalResponse> voteManifestoOptionProposal(
-      String spaceId, String proposalId, String userHash, String manifestoOptionId) async {
+  Future<VoteProposalResponse> voteManifestoOptionProposal(String spaceId,
+      String proposalId, String userHash, String manifestoOptionId) async {
     final String endpoint =
         ProposalsPath().getVoteProposalPath(spaceId, proposalId);
     final Map<String, dynamic> body = {
@@ -125,8 +138,8 @@ class ProposalApi {
     return response;
   }
 
-  Future<VoteProposalResponse> voteNullProposal(
-      String spaceId, String proposalId, String userHash, String? nullVoteComment) async {
+  Future<VoteProposalResponse> voteNullProposal(String spaceId,
+      String proposalId, String userHash, String? nullVoteComment) async {
     final String endpoint =
         ProposalsPath().getVoteProposalPath(spaceId, proposalId);
     final Map<String, dynamic> body = {
