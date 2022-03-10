@@ -19,10 +19,11 @@ class EditProposalMenuOption implements MenuOption {
   void goToEditProposal(BuildContext context) {
     final proposal = ProposalDetailsBloc().state!;
     final proposalFormView = ProposalFormView(
+        proposalId: proposal.proposalId,
         title: proposal.title ?? '',
         content: proposal.content ?? '',
         optionType: proposal.optionType,
-        type: ProposalFormType.proposal,
+        type: ProposalFormType.proposalInProgress,
         manifestoOptions: proposal.manifestoOptions);
 
     ProposalFormBloc().add(ProposalFormSetProposalFormView(proposalFormView));

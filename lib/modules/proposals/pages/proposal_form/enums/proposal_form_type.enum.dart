@@ -1,1 +1,1 @@
-enum ProposalFormType { newProposal, draft, proposal }
+enum ProposalFormType { newProposal, draft, proposalInProgress }
