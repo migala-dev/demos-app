@@ -32,7 +32,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
                 title: Text(proposalFormEditor.editProposalTitle),
-                actions: proposalFormEditor.getAppBarActions()),
+                actions: proposalFormEditor.getEditorActions()),
             body: LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 child: ConstrainedBox(

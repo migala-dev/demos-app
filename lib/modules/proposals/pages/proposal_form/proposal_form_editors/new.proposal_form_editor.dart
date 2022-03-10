@@ -17,7 +17,7 @@ class NewProposalFormEditor implements ProposalFormEditor {
   String publishButtonLabel = 'Publicar';
 
   @override
-  List<Widget>? getAppBarActions() {
+  List<Widget>? getEditorActions() {
     return null;
   }
 

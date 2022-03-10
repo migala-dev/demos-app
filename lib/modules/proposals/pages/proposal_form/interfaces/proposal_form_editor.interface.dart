@@ -6,5 +6,5 @@ abstract class ProposalFormEditor {
 
   Future<bool> openOnWillPopDialog(BuildContext context);
   void openPublishDialog(BuildContext context);
-  List<Widget>? getAppBarActions();
+  List<Widget>? getEditorActions();
 }

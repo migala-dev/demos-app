@@ -17,7 +17,7 @@ class InProgressProposalFormEditor implements ProposalFormEditor {
   String publishButtonLabel = 'Actualizar';
 
   @override
-  List<Widget>? getAppBarActions() {
+  List<Widget>? getEditorActions() {
     return null;
   }
 
