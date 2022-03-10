@@ -2,7 +2,6 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_fo
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_editor.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/utils/pubish_proposal.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/widgets/popup_proposal_form_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
@@ -19,7 +18,7 @@ class NewProposalFormEditor implements ProposalFormEditor {
 
   @override
   List<Widget>? getAppBarActions() {
-    return [PopupProposalFormMenuOptions()];
+    return null;
   }
 
   @override
