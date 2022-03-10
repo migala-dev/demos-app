@@ -11,10 +11,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsStepScreen extends StatefulWidget {
   final VoidCallback confirmPublishProposal;
+  final String publishButtonLabel;
 
   const OptionsStepScreen({
     Key? key,
     required this.confirmPublishProposal,
+    required this.publishButtonLabel,
   }) : super(key: key);
 
   @override
@@ -67,7 +69,7 @@ class _OptionsStepScreenState extends State<OptionsStepScreen> {
             const Text('Opciones', style: TextStyle(color: Colors.grey)),
             Expanded(child: optionTypeSelected.getWidget()),
             BigButton(
-              text: 'Crear',
+              text: widget.publishButtonLabel,
               onPressed: () => widget.confirmPublishProposal(),
             )
           ],

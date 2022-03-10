@@ -2,6 +2,7 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/enums/proposal_form_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class EditProposalMenuOption implements MenuOption {
         title: proposal.title ?? '',
         content: proposal.content ?? '',
         optionType: proposal.optionType,
-        isNew: false,
+        type: ProposalFormType.proposal,
         manifestoOptions: proposal.manifestoOptions);
 
     ProposalFormBloc().add(ProposalFormSetProposalFormView(proposalFormView));
