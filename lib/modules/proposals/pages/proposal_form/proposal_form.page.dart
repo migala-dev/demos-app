@@ -24,15 +24,15 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     return BlocBuilder<ProposalFormBloc, ProposalFormView>(
       bloc: ProposalFormBloc(),
       builder: (context, state) {
-        final proposalSaver = getProposalFormEditorFromType(state.type);
+        final proposalFormEditor = getProposalFormEditorFromType(state.type);
 
         return WillPopScope(
-          onWillPop: () => onWillPop(proposalSaver),
+          onWillPop: () => onWillPop(proposalFormEditor),
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
-                title: Text(proposalSaver.editProposalTitle),
-                actions: proposalSaver.getAppBarActions()),
+                title: Text(proposalFormEditor.editProposalTitle),
+                actions: proposalFormEditor.getAppBarActions()),
             body: LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
                 child: ConstrainedBox(
@@ -41,7 +41,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
                     child: Container(
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 12.0),
-                      child: getCurrentScreen(proposalSaver),
+                      child: getCurrentScreen(proposalFormEditor),
                     ),
                   ),
                 ),
@@ -53,13 +53,13 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     );
   }
 
-  Widget getCurrentScreen(ProposalFormEditor proposalSaver) {
+  Widget getCurrentScreen(ProposalFormEditor proposalFormEditor) {
     return currentStep == ProposalFormStepEnum.content
         ? ContentStepScreen(goToNextStep: goToNextStep)
         : OptionsStepScreen(
             confirmPublishProposal: () =>
-                proposalSaver.openPublishDialog(context),
-            publishButtonLabel: proposalSaver.publishButtonLabel,
+                proposalFormEditor.openPublishDialog(context),
+            publishButtonLabel: proposalFormEditor.publishButtonLabel,
           );
   }
 
@@ -69,12 +69,12 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
   void goToContent() =>
       setState(() => currentStep = ProposalFormStepEnum.content);
 
-  Future<bool> onWillPop(ProposalFormEditor proposalSaver) async {
+  Future<bool> onWillPop(ProposalFormEditor proposalFormEditor) async {
     ProposalFormView proposalFormView = ProposalFormBloc().state;
     switch (currentStep) {
       case ProposalFormStepEnum.content:
         if (proposalFormView.change) {
-          return await proposalSaver.openOnWillPopDialog(context);
+          return await proposalFormEditor.openOnWillPopDialog(context);
         }
         return true;
       case ProposalFormStepEnum.options:
