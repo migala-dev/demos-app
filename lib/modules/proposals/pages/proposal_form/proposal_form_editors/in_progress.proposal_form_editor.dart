@@ -1,6 +1,9 @@
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_editor.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
@@ -50,8 +53,14 @@ class InProgressProposalFormEditor implements ProposalFormEditor {
   void updateProposal() async {
     final spaceId = SpaceBloc().state.spaceId!;
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
+    final proposalId = proposalFormView.proposalId!;
 
-    await ProposalService().updateProposal(
-        spaceId, proposalFormView.proposalId!, proposalFormView);
+    await ProposalService()
+        .updateProposal(spaceId, proposalId, proposalFormView);
+
+    final proposalUpdated =
+        await ProposalViewServie().getProposalViewByProposalId(proposalId);
+
+    ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
   }
 }
