@@ -1,5 +1,5 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_editor.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form_editors/get_proposal_form_editor.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/content_step.screen.dart';
@@ -31,7 +31,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: AppBar(
-                title: Text(proposalFormEditor.editProposalTitle),
+                title: Text(proposalFormEditor.formTitle),
                 actions: proposalFormEditor.getEditorActions()),
             body: LayoutBuilder(
               builder: (context, constraints) => SingleChildScrollView(
@@ -53,13 +53,13 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     );
   }
 
-  Widget getCurrentScreen(ProposalFormEditor proposalFormEditor) {
+  Widget getCurrentScreen(ProposalFormConfig proposalFormEditor) {
     return currentStep == ProposalFormStepEnum.content
         ? ContentStepScreen(goToNextStep: goToNextStep)
         : OptionsStepScreen(
             confirmPublishProposal: () =>
                 proposalFormEditor.openPublishDialog(context),
-            publishButtonLabel: proposalFormEditor.publishButtonLabel,
+            publishButtonLabel: proposalFormEditor.primaryButtonLabel,
           );
   }
 
@@ -69,7 +69,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
   void goToContent() =>
       setState(() => currentStep = ProposalFormStepEnum.content);
 
-  Future<bool> onWillPop(ProposalFormEditor proposalFormEditor) async {
+  Future<bool> onWillPop(ProposalFormConfig proposalFormEditor) async {
     ProposalFormView proposalFormView = ProposalFormBloc().state;
     switch (currentStep) {
       case ProposalFormStepEnum.content:

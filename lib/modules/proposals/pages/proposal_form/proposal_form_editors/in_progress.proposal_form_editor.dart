@@ -1,7 +1,7 @@
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_editor.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
@@ -9,12 +9,12 @@ import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dar
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
 import 'package:flutter/material.dart';
 
-class InProgressProposalFormEditor implements ProposalFormEditor {
+class InProgressProposalFormEditor implements ProposalFormConfig {
   @override
-  String editProposalTitle = 'Editar propuesta';
+  String formTitle = 'Editar propuesta';
 
   @override
-  String publishButtonLabel = 'Actualizar';
+  String primaryButtonLabel = 'Actualizar';
 
   @override
   List<Widget>? getEditorActions() {

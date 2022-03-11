@@ -11,8 +11,6 @@ class ProposalFormView {
   List<ManifestoOptionView> manifestoOptions;
   final ProposalFormType type;
 
-  bool get isNew => proposalId == null;
-
   ProposalFormView(
       {required this.title,
       required this.content,

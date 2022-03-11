@@ -1,5 +1,5 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_editor.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/utils/pubish_proposal.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/widgets/popup_proposal_draft_form_menu_options.widget.dart';
@@ -10,12 +10,12 @@ import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dar
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
 import 'package:flutter/material.dart';
 
-class DraftProposalFormEditor implements ProposalFormEditor {
+class DraftProposalFormEditor implements ProposalFormConfig {
   @override
-  String editProposalTitle = 'Editar borrador';
+  String formTitle = 'Editar borrador';
 
   @override
-  String publishButtonLabel = 'Publicar';
+  String primaryButtonLabel = 'Publicar';
 
   @override
   List<Widget>? getEditorActions() {
