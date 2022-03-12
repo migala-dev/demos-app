@@ -38,7 +38,7 @@ AlertDialog _showAndroidAlertDialog(
     BuildContext context, String title, List<DialogOption> options) {
   return AlertDialog(
     content: SizedBox(
-      height: 50 + options.length * 45,
+      height: 54 + options.length * 45,
       child: Column(
         children: [
           Text(
@@ -68,7 +68,8 @@ AlertDialog _showAndroidAlertDialog(
                       child: Text(
                         option.label,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(color: Colors.blue, fontSize: 14.0),
+                        style:
+                            const TextStyle(color: Colors.blue, fontSize: 14.0),
                       )),
                   onTap: () {
                     option.onPressed();
