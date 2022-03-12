@@ -30,6 +30,7 @@ class ProposalViewsRepository extends AppRepository {
   final colUpdatedBy = ProposalRepository().colUpdatedBy;
   final colCreatedAt = ProposalRepository().colCreatedAt;
   final colManifestoOptionId = ManifestoOptionRepository().colId;
+  final colParticipated = ProposalParticipationRepository().colParticipated;
 
   String _getSelectInnerJoinQuery() => '''
     SELECT $tblManifesto.$colManifestoId,
@@ -44,10 +45,12 @@ class ProposalViewsRepository extends AppRepository {
             $colProgressStatus,
             $colUserName as "createdByName",
             $colUserProfilePictureKey as "createdByProfilePictureKey",
-            (
-              select count(*) from $tblProposalParticipations
+            (select count(*) from $tblProposalParticipations
+              where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId AND $colParticipated = 1
+            ) as "votesCount",
+            (select count(*) from $tblProposalParticipations
               where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId
-            ) as "votesCount"
+            ) as "votesTotal"
           FROM $tblManifesto
           INNER
             JOIN $tblProposals ON 

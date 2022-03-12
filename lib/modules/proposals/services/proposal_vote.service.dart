@@ -12,7 +12,7 @@ class ProposalVoteService {
         .voteInFavorProposal(spaceId, proposalId, userHash, inFavor);
 
     await ProposalParticipationRepository()
-        .insert(response.proposalParticipation);
+        .update(response.proposalParticipation);
   }
 
   Future<void> voteManifestoOption(
@@ -24,7 +24,7 @@ class ProposalVoteService {
             spaceId, proposalId, userHash, manifestoOptionId);
 
     await ProposalParticipationRepository()
-        .insert(response.proposalParticipation);
+        .update(response.proposalParticipation);
   }
 
   Future<void> voteNull(String spaceId, String proposalId, String nullVoteComment) async {
@@ -35,6 +35,6 @@ class ProposalVoteService {
             spaceId, proposalId, userHash, nullVoteComment);
 
     await ProposalParticipationRepository()
-        .insert(response.proposalParticipation);
+        .update(response.proposalParticipation);
   }
 }

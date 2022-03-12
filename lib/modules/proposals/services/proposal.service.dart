@@ -1,9 +1,11 @@
 import 'package:demos_app/core/api/proposal.api.dart';
+import 'package:demos_app/core/models/responses/proposal_participation_response.model.dart';
 import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 
 class ProposalService {
@@ -42,6 +44,14 @@ class ProposalService {
     await _saveProposalResponseOnRepository(response);
   }
 
+  Future<void> getProposalParticipation(String spaceId, String participationId) async {
+    ProposalParticipationResponse response =
+        await ProposalApi().getProposalParticipation(spaceId, participationId);
+
+    await ProposalParticipationRepository().insertOrUpdate(response.proposalParticipation);
+
+  }
+
   Future<void> cancelProposal(String spaceId, String proposalId) async {
     final response = await ProposalApi().cancelProposal(spaceId, proposalId);
 
@@ -72,6 +82,10 @@ class ProposalService {
     await ManifestoOptionRepository().removeAllMissingOptions(
         response.manifestoOptions, response.manifesto.manifestoId);
     await ProposalRepository().insertOrUpdate(response.proposal);
+
+    for (final participation in response.participations) {
+      await ProposalParticipationRepository().insert(participation);
+    }
   }
 
   Future<void> _saveUpdateProposalResponseOnRepository(

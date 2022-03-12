@@ -16,6 +16,7 @@ class ProposalView {
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
   final int votesCount;
+  final int votesTotal;
   final String createdByName;
   final String createdByProfilePictureKey;
   final List<ManifestoOptionView> manifestoOptions;
@@ -37,6 +38,7 @@ class ProposalView {
     this.status,
     this.progressStatus,
     this.votesCount,
+    this.votesTotal,
     this.createdByName,
     this.createdByProfilePictureKey,
     this.manifestoOptions
@@ -54,6 +56,7 @@ class ProposalView {
         ProposalStatus.values[o['status']],
         ProposalProgressStatus.values[o['progressStatus']],
         o['votesCount'],
+        o['votesTotal'],
         o['createdByName'],
         o['createdByProfilePictureKey'],
         o['manifestoOptions'].map<ManifestoOptionView>((option) => ManifestoOptionView.fromObject(option)).toList()

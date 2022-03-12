@@ -3,6 +3,8 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/services/proposal_vote.service.dart';
 import 'package:demos_app/shared/models/option.model.dart';
@@ -113,6 +115,7 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
 
   Future<void> _vote(Future<void> Function()vote) async {
     await vote();
+    ProposalViewListBloc().add(ProposalViewListLoaded(widget.proposal.spaceId));
     Navigator.pop(context);
     Navigator.pop(context);
   }

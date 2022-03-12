@@ -13,7 +13,7 @@ class ProposalHandler extends EventHandlerMixin {
   @override
   String get key => 'proposals';
   @override
-  final List<EventHandler> eventHandlers = [ProposalPublishedEvent()];
+  final List<EventHandler> eventHandlers = [ProposalPublishedEvent(), ProposalVoteEvent()];
 }
 
 class ProposalPublishedEvent implements EventHandler {
@@ -26,6 +26,21 @@ class ProposalPublishedEvent implements EventHandler {
     String proposalId = dataEvent.data!['proposalId'];
 
     await ProposalService().getProposal(spaceId, proposalId);
+
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+  }
+}
+
+class ProposalVoteEvent implements EventHandler {
+  @override
+  String key = 'voted';
+
+  @override
+  Future<void> handleEvent(Cache dataEvent) async {
+    String spaceId = dataEvent.data!['spaceId'];
+    String proposalParticipationId = dataEvent.data!['proposalParticipationId'];
+
+    await ProposalService().getProposalParticipation(spaceId, proposalParticipationId);
 
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
