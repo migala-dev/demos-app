@@ -58,10 +58,8 @@ class ProposalApi {
     return response;
   }
 
-  Future<ProposalResponse> getProposal(
-      String spaceId, String proposalId) async {
-    final String endpoint =
-        ProposalsPath().getProposalPath(spaceId, proposalId);
+  Future<ProposalResponse> getProposal(String spaceId, String proposalId) async {
+    final String endpoint = ProposalsPath().getProposalPath(spaceId, proposalId);
     final ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
 
     final httpResponse = await Api.get(endpoint, throwBehavior);

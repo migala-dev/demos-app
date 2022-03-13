@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/widgets/view_content.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/content_step/widgets/view_content.widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 

@@ -1,7 +1,6 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/utils/pubish_proposal.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
@@ -16,10 +15,15 @@ class NewProposalFormConfig implements ProposalFormConfig {
   @override
   String primaryButtonLabel = 'Publicar';
 
+
   @override
-  List<Widget>? getEditorActions() {
-    return null;
-  }
+  String saveDraftLabel = 'Guardar Borrador';
+
+  @override
+  bool showSaveDraftButton = true;
+
+  @override
+  bool showRemoveButton = false;
 
   @override
   Future<bool> openOnWillPopDialog(BuildContext context) async {
@@ -37,28 +41,7 @@ class NewProposalFormConfig implements ProposalFormConfig {
   }
 
   @override
-  void openPublishDialog(BuildContext context) {
-    const String title = '¿Quieres publicar la propuesta?';
-    final List<DialogOption> options = [
-      DialogOption(
-          label: 'Publicar',
-          onPressed: () {
-            publishProposal();
-            Navigator.pop(context);
-          },
-          isPrimary: true),
-      DialogOption(
-          label: 'Guardar como borrador',
-          onPressed: () {
-            saveDraft();
-            Navigator.pop(context);
-          })
-    ];
-
-    openCustomConfirmDialog(context, title, options);
-  }
-
-  void saveDraft() async {
+  Future<void> saveDraft() async {
     final spaceId = SpaceBloc().state.spaceId!;
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
 
@@ -66,4 +49,16 @@ class NewProposalFormConfig implements ProposalFormConfig {
 
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
+
+  @override
+  Future<void> remove(BuildContext context) async {}
+
+  @override
+  Future<void> primaryAction() async {
+    final String spaceId = SpaceBloc().state.spaceId!;
+    final ProposalFormView proposalFormView = ProposalFormBloc().state;
+
+    await ProposalService().createAndPublishProposal(spaceId, proposalFormView);
+  }
+
 }

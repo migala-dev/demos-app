@@ -1,9 +1,9 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/add_manifesto_option.widget.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/manifesto_option.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/widgets/add_manifesto_option.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/widgets/manifesto_option.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

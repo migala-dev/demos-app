@@ -3,24 +3,22 @@ import 'dart:convert';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/widgets/view_content.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/content_step/widgets/view_content.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart' hide Text;
-import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 
-class ContentStepScreen extends StatefulWidget {
-  final VoidCallback goToNextStep;
+class ContentForm extends StatefulWidget {
 
-  const ContentStepScreen({Key? key, required this.goToNextStep})
+  const ContentForm({Key? key })
       : super(key: key);
 
   @override
-  _ContentStepScreenState createState() => _ContentStepScreenState();
+  _ContentFormState createState() => _ContentFormState();
 }
 
-class _ContentStepScreenState extends State<ContentStepScreen> {
+class _ContentFormState extends State<ContentForm> {
   QuillController controller = QuillController.basic();
 
   @override
@@ -39,22 +37,12 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
     return BlocBuilder<ProposalFormBloc, ProposalFormView>(
       bloc: ProposalFormBloc(),
       builder: (context, proposalFormView) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+        return Column(
+          children: [
               getTitleField(proposalFormView.title),
               const SizedBox(height: 16),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: getContentField(proposalFormView.content),
-                ),
-              ),
-              BigButton(
-                  text: 'Continuar', onPressed: () => widget.goToNextStep())
-            ],
-          ),
+              getContentField(proposalFormView.content)
+          ],
         );
       },
     );
@@ -94,6 +82,7 @@ class _ContentStepScreenState extends State<ContentStepScreen> {
   }
 
   void openContentEditor(String content) async {
+  
     String? contentUpdated = await Navigator.push(
         context,
         MaterialPageRoute(

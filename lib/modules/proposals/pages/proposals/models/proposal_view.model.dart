@@ -1,7 +1,7 @@
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_progress_status.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/manifesto_option_view.model.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class ProposalView {
