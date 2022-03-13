@@ -53,6 +53,16 @@ class ProposalParticipationRepository extends AppRepository implements Table {
         : null;
   }
 
+  Future<ProposalParticipation?> findByMemberIdAndProposalId(
+      String memberId, String proposalId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblProposalParticipations WHERE $colMemberId = '$memberId' AND $colProposalId = '$proposalId'");
+    return result.isNotEmpty
+        ? ProposalParticipation.fromObject(result[0])
+        : null;
+  }
+
   Future<int> update(ProposalParticipation participation) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate(

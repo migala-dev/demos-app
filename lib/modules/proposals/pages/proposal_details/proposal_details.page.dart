@@ -4,6 +4,7 @@ import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/validators/can_vote.widget_validator.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/commets_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
@@ -177,6 +178,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                               height: 16,
                             ),
                             SafeWidgetValidator(
+                              validators: [CanVoteWidgetValidator()],
                               child: BigOutlinedButton(
                                   text: 'Votar',
                                   onPressed: () =>
