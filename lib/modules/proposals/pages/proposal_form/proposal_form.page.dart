@@ -1,7 +1,7 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form_editors/get_proposal_form_editor.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form_config/get_proposal_form_config.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/content_step/content_step.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/options_step.screen.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +24,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     return BlocBuilder<ProposalFormBloc, ProposalFormView>(
       bloc: ProposalFormBloc(),
       builder: (context, state) {
-        final proposalFormEditor = getProposalFormEditorFromType(state.type);
+        final proposalFormEditor = getProposalFormConfigFromType(state.type);
 
         return WillPopScope(
           onWillPop: () => onWillPop(proposalFormEditor),
