@@ -90,18 +90,6 @@ class MembersRepository extends AppRepository implements Table {
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 
-  Future<List<Member>> findMembersAndInvitationsBySpaceId(
-      String? spaceId) async {
-    Database? db = await this.db;
-    final String validStatus = '${InvitationStatus.accepted.index}, '
-        '${InvitationStatus.sended.index}, '
-        '${InvitationStatus.received.index}';
-    final result = await db!.rawQuery('SELECT * FROM $tblMembers '
-        "WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 "
-        'AND $colInvitationStatus IN($validStatus)');
-    return result.map((row) => Member.fromObject(row)).toList();
-  }
-
   Future<int> update(Member member) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblMembers '

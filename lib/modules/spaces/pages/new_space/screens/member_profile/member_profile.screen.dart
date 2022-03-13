@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/participation_counts.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/modals/select_role_modal.dart';
@@ -69,13 +70,11 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
                   ],
                 ),
                 ProfileField(
-                  placeholderPrefix: 'Sin ',
-                  title: 'Telefono',
+                  title: 'Teléfono',
                   icon: Icons.phone,
                   value: widget.member.phoneNumberFormatted,
                 ),
                 ProfileField(
-                  placeholderPrefix: 'Sin ',
                   title: 'Rol',
                   icon: Icons.manage_accounts,
                   value: getSpaceRoleName(widget.member.role),
@@ -84,6 +83,12 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
                   editableButtonValidators: [
                     IsCurrentUserAdminWidgetValidator()
                   ],
+                ),
+                ProfileField(
+                  title: 'Propuestas',
+                  icon: Icons.how_to_vote,
+                  child: ParticipationCounts(created: widget.member.proposalCreatedCount, votes: widget.member.proposalVotedCount),
+                  onEdit: isLoading ? null : openUpdateRoleModel,
                 ),
                 widget.member.isInvited
                     ? ProfileField(

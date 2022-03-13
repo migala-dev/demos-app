@@ -4,6 +4,7 @@ import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/validators/can_vote.widget_validator.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/commets_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
@@ -67,7 +68,6 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
     return BlocBuilder<ProposalDetailsBloc, ProposalView?>(
         bloc: ProposalDetailsBloc(),
         builder: (context, proposalView) {
-          int totalOfMembers = 0;
           if (proposalView == null) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -101,7 +101,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             ),
                             title: 'Votos:',
                             content:
-                                '${proposalView.votesCount}/$totalOfMembers',
+                                '${proposalView.votesCount}/${proposalView.votesTotal}',
                           )
                         ]),
                   ),
@@ -146,23 +146,22 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                 style: const TextStyle(
                                     color: Colors.black, fontSize: 16),
                               ),
-                              leading: const Icon(Icons.person, size: 40),
+                              leading: const Icon(Icons.list, size: 40),
                             ),
-                            ListTile(
-                              title: const Padding(
-                                padding: EdgeInsets.only(bottom: 8),
-                                child: Text(
-                                  'OPCIONES',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 14),
-                                ),
-                              ),
-                              subtitle: Padding(
-                                padding: const EdgeInsets.only(left: 8),
-                                child: proposalView.optionType ==
-                                        ManifestoOptionType.inFavorOrOpposing
-                                    ? const Text('  • A Favor\n  • En contra')
-                                    : Text(
+                            proposalView.optionType ==
+                                    ManifestoOptionType.multipleOptions
+                                ? ListTile(
+                                    title: const Padding(
+                                      padding: EdgeInsets.only(bottom: 8),
+                                      child: Text(
+                                        'OPCIONES',
+                                        style: TextStyle(
+                                            color: Colors.grey, fontSize: 14),
+                                      ),
+                                    ),
+                                    subtitle: Padding(
+                                      padding: const EdgeInsets.only(left: 8),
+                                      child: Text(
                                         proposalView.manifestoOptions
                                             .map((e) => '• ${e.title}\n')
                                             .join('')
@@ -172,9 +171,14 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                           fontSize: 16,
                                         ),
                                       ),
-                              ),
+                                    ),
+                                  )
+                                : Container(),
+                            const SizedBox(
+                              height: 16,
                             ),
                             SafeWidgetValidator(
+                              validators: [CanVoteWidgetValidator()],
                               child: BigOutlinedButton(
                                   text: 'Votar',
                                   onPressed: () =>

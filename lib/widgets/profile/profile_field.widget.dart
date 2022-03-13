@@ -5,6 +5,7 @@ import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interfac
 class ProfileField extends StatelessWidget {
   final String title;
   final String? value;
+  final Widget? child;
   final IconData icon;
   final bool editable;
   final VoidCallback? onEdit;
@@ -19,7 +20,8 @@ class ProfileField extends StatelessWidget {
       this.editable = false,
       this.placeholderPrefix = 'Introduce tu',
       this.onEdit,
-      this.editableButtonValidators})
+      this.editableButtonValidators,
+      this.child})
       : super(key: key);
 
   @override
@@ -48,7 +50,11 @@ class ProfileField extends StatelessWidget {
         title,
         style: const TextStyle(color: Colors.grey, fontSize: 14),
       ),
-      subtitle: hasValue() ? getValueLabel() : getWithoutValueLabel(),
+      subtitle: child == null
+          ? hasValue()
+              ? getValueLabel()
+              : getWithoutValueLabel()
+          : child!,
     );
   }
 

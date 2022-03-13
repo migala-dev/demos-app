@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class VotesText extends StatelessWidget {
-  const VotesText({Key? key, this.created = 0, this.votes = 0})
+class ParticipationCounts extends StatelessWidget {
+  const ParticipationCounts({Key? key, this.created = 0, this.votes = 0})
       : super(key: key);
 
   final int created;

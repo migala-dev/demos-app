@@ -25,6 +25,9 @@ class ProposalsPath {
   String getProposalPath(String spaceId, String proposalId) =>
       '${getSpaceProposalsPath(spaceId)}/$proposalId';
 
+  String getProposalParticipationPath(String spaceId, String participationId) =>
+      '${getSpaceProposalsPath(spaceId)}/participation/$participationId';
+
   String getCancelProposalPath(String spaceId, String proposalId) =>
       '${getProposalPath(spaceId, proposalId)}/cancel';
 
