@@ -12,7 +12,8 @@ class MemberView {
   final String? userName;
   final String? phoneNumber;
   final String? profilePictureKey;
-  final int participationCount;
+  final int proposalVotedCount;
+  final int proposalCreatedCount;
   final InvitationStatus? invitationStatus;
   final String? memberCreatedAt;
   String? invitationExpiredAt;
@@ -67,7 +68,8 @@ class MemberView {
 
   MemberView(
       {required this.userId,
-      this.participationCount = 0,
+      this.proposalCreatedCount = 0,
+      this.proposalVotedCount = 0,
       required this.role,
       required this.memberCreatedAt,
       this.memberName,
@@ -83,6 +85,8 @@ class MemberView {
       userId: o['userId'],
       role: getSpaceRoleFromString(o['role']),
       memberCreatedAt: o['memberCreatedAt'],
+      proposalCreatedCount: o['proposalCreatedCount'],
+      proposalVotedCount: o['proposalVotedCount'],
       memberName: o['memberName'],
       invitationStatus: InvitationStatus.values[o['invitationStatus']],
       profilePictureKey: o['profilePictureKey'],
