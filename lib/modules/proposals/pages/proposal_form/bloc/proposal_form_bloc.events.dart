@@ -1,6 +1,6 @@
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/manifesto_option_view.model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ProposalFormBlocEvent extends Equatable {

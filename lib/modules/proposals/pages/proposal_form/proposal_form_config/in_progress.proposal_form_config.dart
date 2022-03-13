@@ -17,9 +17,13 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
   String primaryButtonLabel = 'Actualizar';
 
   @override
-  List<Widget>? getEditorActions() {
-    return null;
-  }
+  String saveDraftLabel = '';
+
+  @override
+  bool showSaveDraftButton = false;
+  
+  @override
+  bool showRemoveButton = true;
 
   @override
   Future<bool> openOnWillPopDialog(BuildContext context) async {
@@ -35,22 +39,19 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
   }
 
   @override
-  void openPublishDialog(BuildContext context) {
-    const String title = '¿Estás seguro que deseas actualizar?';
-    final List<DialogOption> options = [
-      DialogOption(
-          label: 'Actualizar',
-          onPressed: () {
-            updateProposal();
-            Navigator.pop(context);
-          },
-          isPrimary: true)
-    ];
+  Future<void> saveDraft() async {}
 
-    openCustomConfirmDialog(context, title, options);
+  @override
+  Future<void> remove(BuildContext context) async {
+    final ProposalFormView proposalFormView = ProposalFormBloc().state;
+    final spaceId = SpaceBloc().state.spaceId!;
+    await ProposalService().cancelProposal(spaceId, proposalFormView.proposalId!);
+    Navigator.pop(context);
+    Navigator.pop(context);
   }
 
-  void updateProposal() async {
+  @override
+  Future<void> primaryAction() async {
     final spaceId = SpaceBloc().state.spaceId!;
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
     final proposalId = proposalFormView.proposalId!;

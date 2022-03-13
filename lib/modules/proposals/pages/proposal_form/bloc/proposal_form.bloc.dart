@@ -1,6 +1,6 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/manifesto_option_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/manifesto_option_view.model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProposalFormBloc extends Bloc<ProposalFormBlocEvent, ProposalFormView> {

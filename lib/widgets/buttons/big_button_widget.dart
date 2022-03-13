@@ -5,20 +5,25 @@ class BigButton extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isLoading;
   final bool disabled;
+  final Color? backgroundColor;
+  final Color? textColor;
 
   const BigButton(
       {Key? key,
       required this.text,
       required this.onPressed,
       this.isLoading = false,
-      this.disabled = false})
+      this.disabled = false,
+      this.backgroundColor,
+      this.textColor
+       })
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
         constraints:
-            const BoxConstraints.tightFor(width: double.infinity, height: 60),
+            const BoxConstraints.tightFor(width: double.infinity, height: 52),
         child: isLoading ? getLoadingButton() : getMainButton(context));
   }
 
@@ -31,8 +36,8 @@ class BigButton extends StatelessWidget {
   }
 
   Widget getMainButton(BuildContext context) {
-    Color primaryColor = Theme.of(context).primaryColor;
-    Color backgroundColor = disabled ? Colors.grey : primaryColor;
+    Color color = backgroundColor ?? Theme.of(context).primaryColor;
+    Color finalBackgroundColor = disabled ? Colors.grey : color;
 
     return ElevatedButton(
         onPressed: () {
@@ -41,10 +46,10 @@ class BigButton extends StatelessWidget {
           }
         },
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(backgroundColor)),
+            backgroundColor: MaterialStateProperty.all(finalBackgroundColor)),
         child: Text(
           text.toUpperCase(),
-          style: const TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 16, color: textColor),
         ));
   }
 }

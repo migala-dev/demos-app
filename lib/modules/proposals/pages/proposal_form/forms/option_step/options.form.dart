@@ -2,28 +2,23 @@ import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/models/dropdown_manifesto_option.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/manifesto_option.widget.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/option_step/widgets/multiple_option.widget.dart';
-import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/dropdown_manifesto_option.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/widgets/manifesto_option.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/widgets/multiple_option.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class OptionsStepScreen extends StatefulWidget {
-  final VoidCallback confirmPublishProposal;
-  final String publishButtonLabel;
+class OptionsForm extends StatefulWidget {
 
-  const OptionsStepScreen({
+  const OptionsForm({
     Key? key,
-    required this.confirmPublishProposal,
-    required this.publishButtonLabel,
   }) : super(key: key);
 
   @override
-  _OptionsStepScreenState createState() => _OptionsStepScreenState();
+  _OptionsFormState createState() => _OptionsFormState();
 }
 
-class _OptionsStepScreenState extends State<OptionsStepScreen> {
+class _OptionsFormState extends State<OptionsForm> {
   List<DropdownManifestoItem> items = [];
 
   @override
@@ -67,11 +62,7 @@ class _OptionsStepScreenState extends State<OptionsStepScreen> {
             ),
             const SizedBox(height: 24),
             const Text('Opciones', style: TextStyle(color: Colors.grey)),
-            Expanded(child: optionTypeSelected.getWidget()),
-            BigButton(
-              text: widget.publishButtonLabel,
-              onPressed: () => widget.confirmPublishProposal(),
-            )
+            optionTypeSelected.getWidget()
           ],
         );
       },
