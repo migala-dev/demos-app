@@ -16,7 +16,7 @@ class ManifestoCommentRepository extends AppRepository implements Table {
       '$colId TEXT PRIMARY KEY, '
       '$colContent TEXT,'
       '$colManifestoCommentParentId TEXT,'
-      '$colDeleted INTEGER,'
+      '$colDeleted BOOLEAN,'
       '$colCreatedAt TEXT,'
       '$colCreatedByMember TEXT,'
       '$colUpdatedBy TEXT)';

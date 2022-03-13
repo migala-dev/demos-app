@@ -13,7 +13,7 @@ class ManifestoCommentVoteRepository extends AppRepository implements Table {
   String getCreateTableQuery() => 'CREATE TABLE $tblManifestoCommentVote('
       '$colId TEXT PRIMARY KEY, '
       '$colUserId TEXT, '
-      '$colUpvote INTEGER,'
+      '$colUpvote BOOLEAN,'
       '$colCreatedAt TEXT,'
       '$colUpdatedAt TEXT)';
 }
