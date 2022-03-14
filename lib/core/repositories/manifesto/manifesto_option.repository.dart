@@ -20,16 +20,16 @@ class ManifestoOptionRepository extends AppRepository implements Table {
       '$colId TEXT PRIMARY KEY, '
       '$colTitle TEXT,'
       '$colManifestoId TEXT,'
-      '$colDeleted INTEGER,'
+      '$colDeleted BOOLEAN,'
       '$colCreatedBy TEXT,'
       '$colCreatedAt TEXT,'
       '$colUpdatedBy TEXT,'
       '$colUpdatedAt TEXT)';
 
-
   Future<String> insertOrUpdate(ManifestoOption manifestoOption) async {
     Database? db = await this.db;
-    ManifestoOption? manifestoOptionSaved = await findById(manifestoOption.manifestoOptionId);
+    ManifestoOption? manifestoOptionSaved =
+        await findById(manifestoOption.manifestoOptionId);
     if (manifestoOptionSaved == null) {
       await db!.insert(tblManifestoOptions, manifestoOption.toMap());
       return manifestoOption.manifestoOptionId;
@@ -39,7 +39,8 @@ class ManifestoOptionRepository extends AppRepository implements Table {
 
   Future<String> insert(ManifestoOption manifestoOption) async {
     Database? db = await this.db;
-    ManifestoOption? manifestoOptionSaved = await findById(manifestoOption.manifestoOptionId);
+    ManifestoOption? manifestoOptionSaved =
+        await findById(manifestoOption.manifestoOptionId);
     if (manifestoOptionSaved == null) {
       await db!.insert(tblManifestoOptions, manifestoOption.toMap());
       return manifestoOption.manifestoOptionId;
@@ -72,11 +73,14 @@ class ManifestoOptionRepository extends AppRepository implements Table {
     return result;
   }
 
-  Future<void> removeAllMissingOptions(List<ManifestoOption> currentManifestoOptions, String manifestoId) async {
-    List<ManifestoOption> manifestoOptions = await findByManifestoId(manifestoId);
+  Future<void> removeAllMissingOptions(
+      List<ManifestoOption> currentManifestoOptions, String manifestoId) async {
+    List<ManifestoOption> manifestoOptions =
+        await findByManifestoId(manifestoId);
 
-    for(ManifestoOption option in manifestoOptions) {
-      if (currentManifestoOptions.every((o) => o.manifestoOptionId != option.manifestoOptionId)) {
+    for (ManifestoOption option in manifestoOptions) {
+      if (currentManifestoOptions
+          .every((o) => o.manifestoOptionId != option.manifestoOptionId)) {
         await delete(option.manifestoOptionId);
       }
     }
@@ -85,8 +89,8 @@ class ManifestoOptionRepository extends AppRepository implements Table {
   Future<int> delete(String manifestoOptionId) async {
     int result;
     Database? db = await this.db;
-    result =
-        await db!.rawDelete("DELETE FROM $tblManifestoOptions where $colId = '$manifestoOptionId'");
+    result = await db!.rawDelete(
+        "DELETE FROM $tblManifestoOptions where $colId = '$manifestoOptionId'");
     return result;
   }
 }

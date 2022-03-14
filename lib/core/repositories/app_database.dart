@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:demos_app/core/repositories/manifesto/comment/manifesto_comment.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/comment/manifesto_comment_vote.repository.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -25,7 +27,9 @@ class AppDatabase {
     CacheRepository(),
     MembersRepository(),
     SpacesRepository(),
-    UsersRepository()
+    UsersRepository(),
+    ManifestoCommentRepository(),
+    ManifestoCommentVoteRepository()
   ];
 
   static Database? _db;
