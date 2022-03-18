@@ -18,6 +18,8 @@
 */
 
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
@@ -41,6 +43,9 @@ class CancelProposalMenuOption implements MenuOption {
     final proposalId = ProposalDetailsBloc().state!.proposalId;
     final spaceId = SpaceBloc().state.spaceId!;
     await ProposalService().cancelProposal(spaceId, proposalId);
+    
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    
     Navigator.pop(context);
   }
 }

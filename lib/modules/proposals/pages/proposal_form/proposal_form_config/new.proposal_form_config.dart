@@ -78,6 +78,8 @@ class NewProposalFormConfig implements ProposalFormConfig {
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
 
     await ProposalService().createAndPublishProposal(spaceId, proposalFormView);
+
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
 
 }

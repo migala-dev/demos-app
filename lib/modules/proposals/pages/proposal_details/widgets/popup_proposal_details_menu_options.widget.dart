@@ -25,8 +25,8 @@ import 'package:flutter/material.dart';
 
 class PopupProposalDetailsMenuOptions extends StatelessWidget {
   final List<MenuOption> menuOptions = [
+    EditProposalMenuOption(),
     CancelProposalMenuOption(),
-    EditProposalMenuOption()
   ];
 
   PopupProposalDetailsMenuOptions({Key? key}) : super(key: key);

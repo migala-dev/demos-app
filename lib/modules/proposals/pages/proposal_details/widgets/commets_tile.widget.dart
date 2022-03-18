@@ -33,12 +33,12 @@ class CommentsTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: double.infinity,
-        height: 40,
+        height: 60,
         decoration: const BoxDecoration(
             border: Border(
                 top: BorderSide(
           color: Colors.grey,
-          width: 0.5,
+          width: 0.8,
         ))),
         child: Center(
             child: Text(

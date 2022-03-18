@@ -22,11 +22,15 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../utils/ui/modals/open_confirmation_dialog.dart';
+import '../../proposals/bloc/proposal_view_list_event.dart';
 
 class InProgressProposalFormConfig implements ProposalFormConfig {
   @override
@@ -62,12 +66,22 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
 
   @override
   Future<void> remove(BuildContext context) async {
+     await openConfirmationDialog(context,
+        content: '¿Estás seguro de que desea cancelar esta propuesta?',
+        accept: () => _removeProposal(context));
+  }
+
+ Future<void> _removeProposal(BuildContext context) async {
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
     final spaceId = SpaceBloc().state.spaceId!;
     await ProposalService().cancelProposal(spaceId, proposalFormView.proposalId!);
+
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    
     Navigator.pop(context);
     Navigator.pop(context);
   }
+  
 
   @override
   Future<void> primaryAction() async {
@@ -80,6 +94,8 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
 
     final proposalUpdated =
         await ProposalViewServie().getProposalViewByProposalId(proposalId);
+
+    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
 
     ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
   }
