@@ -58,18 +58,16 @@ class ProposalViewListBloc
 
   void _onListUpdated(ProposalViewListUpdated event,
       Emitter<ProposalViewListState> emit) async {
-    final prevState = state;
-    emit(ProposalViewListLoadingInProgress());
+    if (state is ProposalViewListWithData) {
+      final prevState = state as ProposalViewListWithData;
+      emit(ProposalViewListLoadingInProgress());
 
-    if (prevState is ProposalViewListWithData) {
       final proposalListView = prevState.proposalViewList;
       final itHasProposals =
           await proposalListView.itHasProposals(event.spaceId);
       if (itHasProposals) {
         emit(ProposalViewListWithData(proposalListView));
       }
-    } else {
-      emit(prevState);
     }
   }
 }
