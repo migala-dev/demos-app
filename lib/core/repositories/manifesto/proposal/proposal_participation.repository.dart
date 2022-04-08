@@ -28,6 +28,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
   final String colUserId = 'userId';
   final String colProposalId = 'proposalId';
   final String colMemberId = 'memberId';
+  final String colSpaceId = 'spaceId';
   final String colParticipated = 'participated';
 
   @override
@@ -36,6 +37,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
       '$colUserId TEXT, '
       '$colProposalId TEXT, '
       '$colMemberId TEXT, '
+      '$colSpaceId TEXT, '
       '$colParticipated BOOLEAN)';
 
   Future<String> insert(ProposalParticipation proposalParticipation) async {

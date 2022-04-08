@@ -22,16 +22,18 @@ class ProposalParticipation {
   final String userId;
   final String proposalId;
   final String memberId;
+  final String spaceId;
   final bool participated;
 
   ProposalParticipation(
-      this.proposalParticipationId, this.userId, this.proposalId, this.memberId, this.participated);
+      this.proposalParticipationId, this.userId, this.proposalId, this.memberId, this.spaceId, this.participated);
 
   factory ProposalParticipation.fromObject(dynamic o) => ProposalParticipation(
         o['proposalParticipationId'],
         o['userId'],
         o['proposalId'],
         o['memberId'],
+        o['spaceId'],
         o['participated'].runtimeType == int ?  o['participated'] != 0 : o['participated'],
       );
 
@@ -40,6 +42,7 @@ class ProposalParticipation {
         'userId': userId,
         'proposalId': proposalId,
         'memberId': memberId,
+        'spaceId': spaceId,
         'participated': participated
       };
 }
