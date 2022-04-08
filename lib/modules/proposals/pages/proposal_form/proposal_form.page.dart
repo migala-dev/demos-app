@@ -17,13 +17,13 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form_config/get_proposal_form_config.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/content_step/content.form.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/options.form.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/utils/is_valid_number_of_options.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,26 +66,6 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
                                 OptionsForm()
                               ],
                             )),
-                            Container(
-                              margin: const EdgeInsets.symmetric(vertical: 15),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  isTitleEmpty()
-                                      ? const Text(
-                                          '* El título es requerido',
-                                          style: TextStyle(color: Colors.red),
-                                        )
-                                      : Container(),
-                                  isValidNumberOfOptions()
-                                      ? Container()
-                                      : const Text(
-                                          '* El número de opciones tiene que estar entre 2 y 20',
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                ],
-                              ),
-                            ),
                             getFormButtons(formConfig)
                           ],
                         )),
@@ -151,19 +131,10 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     );
   }
 
-  bool isTitleEmpty() => ProposalFormBloc().state.title.isEmpty;
-
-  bool isValidNumberOfOptions() {
-    final ProposalFormView proposalFormView = ProposalFormBloc().state;
-
-    return proposalFormView.optionType == ManifestoOptionType.inFavorOrOpposing
-        ? true
-        : proposalFormView.manifestoOptions.length >= 2 &&
-            proposalFormView.manifestoOptions.length <= 20;
-  }
-
   bool isPrimaryButtonEnabled() {
-    if (isTitleEmpty() || !isValidNumberOfOptions()) {
+    final bool isTitleEmpty = ProposalFormBloc().state.title.isEmpty;
+
+    if (isTitleEmpty || !isValidNumberOfOptions()) {
       return false;
     }
 
