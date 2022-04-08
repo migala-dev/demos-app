@@ -34,7 +34,6 @@ class NewProposalFormConfig implements ProposalFormConfig {
   @override
   String primaryButtonLabel = 'Publicar';
 
-
   @override
   String saveDraftLabel = 'Guardar Borrador';
 
