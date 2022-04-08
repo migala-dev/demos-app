@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
@@ -65,6 +66,26 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
                                 OptionsForm()
                               ],
                             )),
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 15),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  isTitleEmpty()
+                                      ? const Text(
+                                          '* El título es requerido',
+                                          style: TextStyle(color: Colors.red),
+                                        )
+                                      : Container(),
+                                  isValidNumberOfOptions()
+                                      ? Container()
+                                      : const Text(
+                                          '* El número de opciones tiene que estar entre 2 y 20',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                ],
+                              ),
+                            ),
                             getFormButtons(formConfig)
                           ],
                         )),
@@ -89,36 +110,63 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
   Widget getFormButtons(ProposalFormConfig formConfig) {
     return Column(
       children: [
-        BigButton(text: formConfig.primaryButtonLabel, onPressed: () async {
-          await formConfig.primaryAction();
-          Navigator.pop(context);
-        }),
+        BigButton(
+            text: formConfig.primaryButtonLabel,
+            onPressed: () async {
+              await formConfig.primaryAction();
+              Navigator.pop(context);
+            },
+            disabled: !isPrimaryButtonEnabled()),
         const SizedBox(height: 8),
         Row(
           children: [
-            formConfig.showSaveDraftButton ?
-            Expanded(
-              child: BigButton(
-                  backgroundColor: Colors.white,
-                  textColor: Colors.blue,
-                  text: formConfig.saveDraftLabel,
-                  onPressed: () async {
-                    await formConfig.saveDraft();
-                    Navigator.pop(context);
-                  }),
-            ): Container(),
-            formConfig.showSaveDraftButton ? const SizedBox(width: 8) : Container(),
-            formConfig.showRemoveButton ? Expanded(
-                child: BigButton(
-                    backgroundColor: Colors.white,
-                    textColor: Colors.red.shade500,
-                    text: 'Eliminar',
-                    onPressed:  () {
-                    formConfig.remove(context);
-                  })) : Container(),
+            formConfig.showSaveDraftButton
+                ? Expanded(
+                    child: BigButton(
+                        backgroundColor: Colors.white,
+                        textColor: Colors.blue,
+                        text: formConfig.saveDraftLabel,
+                        onPressed: () async {
+                          await formConfig.saveDraft();
+                          Navigator.pop(context);
+                        }),
+                  )
+                : Container(),
+            formConfig.showSaveDraftButton
+                ? const SizedBox(width: 8)
+                : Container(),
+            formConfig.showRemoveButton
+                ? Expanded(
+                    child: BigButton(
+                        backgroundColor: Colors.white,
+                        textColor: Colors.red.shade500,
+                        text: 'Eliminar',
+                        onPressed: () {
+                          formConfig.remove(context);
+                        }))
+                : Container(),
           ],
         )
       ],
     );
+  }
+
+  bool isTitleEmpty() => ProposalFormBloc().state.title.isEmpty;
+
+  bool isValidNumberOfOptions() {
+    final ProposalFormView proposalFormView = ProposalFormBloc().state;
+
+    return proposalFormView.optionType == ManifestoOptionType.inFavorOrOpposing
+        ? true
+        : proposalFormView.manifestoOptions.length >= 2 &&
+            proposalFormView.manifestoOptions.length <= 20;
+  }
+
+  bool isPrimaryButtonEnabled() {
+    if (isTitleEmpty() || !isValidNumberOfOptions()) {
+      return false;
+    }
+
+    return true;
   }
 }

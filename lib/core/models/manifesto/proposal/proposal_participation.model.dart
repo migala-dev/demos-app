@@ -22,7 +22,7 @@ class ProposalParticipation {
   final String userId;
   final String proposalId;
   final String memberId;
-  final String spaceId;
+  final String? spaceId;
   final bool participated;
 
   ProposalParticipation(
