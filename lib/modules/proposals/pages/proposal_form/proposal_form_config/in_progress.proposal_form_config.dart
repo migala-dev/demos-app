@@ -44,7 +44,7 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
 
   @override
   bool showSaveDraftButton = false;
-  
+
   @override
   bool showRemoveButton = true;
 
@@ -66,22 +66,22 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
 
   @override
   Future<void> remove(BuildContext context) async {
-     await openConfirmationDialog(context,
+    await openConfirmationDialog(context,
         content: '¿Estás seguro de que desea cancelar esta propuesta?',
         accept: () => _removeProposal(context));
   }
 
- Future<void> _removeProposal(BuildContext context) async {
+  Future<void> _removeProposal(BuildContext context) async {
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
     final spaceId = SpaceBloc().state.spaceId!;
-    await ProposalService().cancelProposal(spaceId, proposalFormView.proposalId!);
+    await ProposalService()
+        .cancelProposal(spaceId, proposalFormView.proposalId!);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
-    
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
+
     Navigator.pop(context);
     Navigator.pop(context);
   }
-  
 
   @override
   Future<void> primaryAction() async {
@@ -95,7 +95,7 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
     final proposalUpdated =
         await ProposalViewServie().getProposalViewByProposalId(proposalId);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
 
     ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
   }

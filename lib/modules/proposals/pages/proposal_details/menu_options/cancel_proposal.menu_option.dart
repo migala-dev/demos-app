@@ -43,9 +43,9 @@ class CancelProposalMenuOption implements MenuOption {
     final proposalId = ProposalDetailsBloc().state!.proposalId;
     final spaceId = SpaceBloc().state.spaceId!;
     await ProposalService().cancelProposal(spaceId, proposalId);
-    
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
-    
+
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
+
     Navigator.pop(context);
   }
 }

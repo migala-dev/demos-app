@@ -34,7 +34,6 @@ class NewProposalFormConfig implements ProposalFormConfig {
   @override
   String primaryButtonLabel = 'Publicar';
 
-
   @override
   String saveDraftLabel = 'Guardar Borrador';
 
@@ -66,7 +65,7 @@ class NewProposalFormConfig implements ProposalFormConfig {
 
     await ProposalService().createNewProposalDraft(spaceId, proposalFormView);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
   }
 
   @override
@@ -79,7 +78,6 @@ class NewProposalFormConfig implements ProposalFormConfig {
 
     await ProposalService().createAndPublishProposal(spaceId, proposalFormView);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
   }
-
 }
