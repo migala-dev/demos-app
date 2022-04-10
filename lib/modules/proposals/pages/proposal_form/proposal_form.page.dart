@@ -96,7 +96,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
               await formConfig.primaryAction();
               Navigator.pop(context);
             },
-            disabled: !isPrimaryButtonEnabled()),
+            disabled: isPrimaryButtonDisabled()),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -131,13 +131,9 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
     );
   }
 
-  bool isPrimaryButtonEnabled() {
+  bool isPrimaryButtonDisabled() {
     final bool isTitleEmpty = ProposalFormBloc().state.title.isEmpty;
 
-    if (isTitleEmpty || !isValidNumberOfOptions()) {
-      return false;
-    }
-
-    return true;
+    return isTitleEmpty || !isValidNumberOfOptions();
   }
 }

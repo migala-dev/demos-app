@@ -24,8 +24,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_
 bool isValidNumberOfOptions() {
   final ProposalFormView proposalFormView = ProposalFormBloc().state;
 
-  return proposalFormView.optionType == ManifestoOptionType.inFavorOrOpposing
-      ? true
-      : proposalFormView.manifestoOptions.length >= 2 &&
-          proposalFormView.manifestoOptions.length <= 20;
+  return proposalFormView.optionType == ManifestoOptionType.inFavorOrOpposing ||
+      (proposalFormView.manifestoOptions.length >= 2 &&
+          proposalFormView.manifestoOptions.length <= 20);
 }
