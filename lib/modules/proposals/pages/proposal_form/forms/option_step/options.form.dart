@@ -87,7 +87,7 @@ class _OptionsFormState extends State<OptionsForm> {
                 : Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
                     child: Text(
-                      '* El número de opciones tiene que estar entre 2 y 20',
+                      '* La propuesta tiene que tener entre 2 a 20 opciones',
                       style: TextStyle(color: Colors.red.shade600),
                     ),
                   ),
