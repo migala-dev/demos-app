@@ -66,7 +66,7 @@ class DraftProposalFormConfig implements ProposalFormConfig {
     await ProposalService().updateProposalDraft(
         spaceId, proposalFormView.proposalId!, proposalFormView);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
   }
 
   @override
@@ -74,14 +74,13 @@ class DraftProposalFormConfig implements ProposalFormConfig {
     await openConfirmationDialog(context,
         content: '¿Estás seguro de que desea eliminar este borrador?',
         accept: () => deleteProposalDraft(context));
-
   }
 
   void deleteProposalDraft(BuildContext context) async {
     final proposalId = ProposalFormBloc().state.proposalId!;
     final spaceId = SpaceBloc().state.spaceId!;
     await ProposalService().deleteProposalDraft(spaceId, proposalId);
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
 
     Navigator.pop(context);
   }
@@ -91,6 +90,7 @@ class DraftProposalFormConfig implements ProposalFormConfig {
     final String spaceId = SpaceBloc().state.spaceId!;
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
 
-    await ProposalService().publishProposalDraft(spaceId, proposalFormView.proposalId!, proposalFormView);
+    await ProposalService().publishProposalDraft(
+        spaceId, proposalFormView.proposalId!, proposalFormView);
   }
 }

@@ -115,38 +115,43 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
 
   List<Option> getInFavorOrOpposingOptions() {
     return [
-      Option('A favor',
-          () => _vote(() async => await ProposalVoteService().voteInFavor(spaceId, proposalId, true))),
-      Option('En contra',
-          () => _vote(() async => await ProposalVoteService().voteInFavor(spaceId, proposalId, true))),
+      Option(
+          'A favor',
+          () => _vote(() async => await ProposalVoteService()
+              .voteInFavor(spaceId, proposalId, true))),
+      Option(
+          'En contra',
+          () => _vote(() async => await ProposalVoteService()
+              .voteInFavor(spaceId, proposalId, true))),
     ];
   }
 
   List<Option> getManifestoOptions() {
     List<ManifestoOptionView> options = widget.proposal.manifestoOptions;
-    return options.map<Option>((o) => Option(o.title, 
-      () => 
-      _vote(() async => await ProposalVoteService().voteManifestoOption(spaceId, proposalId, o.manifestoOptionId!))
-    )).toList();
+    return options
+        .map<Option>((o) => Option(
+            o.title,
+            () => _vote(() async => await ProposalVoteService()
+                .voteManifestoOption(
+                    spaceId, proposalId, o.manifestoOptionId!))))
+        .toList();
   }
 
   String getProposalName() => ProposalDetailsBloc().state!.title!;
 
-  Future<void> _vote(Future<void> Function()vote) async {
+  Future<void> _vote(Future<void> Function() vote) async {
     await vote();
-    ProposalViewListBloc().add(ProposalViewListLoaded(widget.proposal.spaceId));
+    ProposalViewListBloc()
+        .add(ProposalViewListUpdated(widget.proposal.spaceId));
     Navigator.pop(context);
     Navigator.pop(context);
   }
 
   void goToNullVoteScreen() {
-     Application.router.navigateTo(
-        context,
-        Routes.nullVote,
+    Application.router.navigateTo(context, Routes.nullVote,
         transition: TransitionType.inFromRight,
         routeSettings: RouteSettings(
           arguments: widget.proposal,
-        )
-      );
+        ));
   }
 }
