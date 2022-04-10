@@ -36,6 +36,6 @@ class ProposalParticipationService {
         await ProposalParticipationRepository()
             .findByUserIdAndProposalId(userId, proposalId);
 
-    return participation == null ? false : participation.participated;
+    return participation != null && participation.participated;
   }
 }
