@@ -23,6 +23,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
 import 'package:flutter/material.dart';
+import '../../../../../../widgets/general/countdown_timer.widget.dart';
 
 class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   @override
@@ -77,7 +78,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                       color: color,
                     ),
                     title: 'TERMINA EN:',
-                    content: '3 HORAS',
+                    child: CountdownTimer(dateTime: proposal.expiredAt),
                   ),
                   ProposalCardInfo(
                       getIcon: (size, color) => Icon(

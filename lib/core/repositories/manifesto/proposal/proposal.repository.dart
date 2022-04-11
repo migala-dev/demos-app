@@ -33,7 +33,7 @@ class ProposalRepository extends AppRepository implements Table {
   final String colManifestoId = 'manifestoId';
   final String colStatus = 'status';
   final String colProgressStatus = 'progressStatus';
-  final String colExpiratedAt = 'expiratedAt';
+  final String colExpiredAt = 'expiredAt';
   final String colSpaceId = 'spaceId';
   final String colCreatedBy = 'createdBy';
   final String colCreatedAt = 'createdAt';
@@ -46,7 +46,7 @@ class ProposalRepository extends AppRepository implements Table {
       '$colManifestoId TEXT,'
       '$colStatus INTEGER,'
       '$colProgressStatus INTEGER,'
-      '$colExpiratedAt TEXT,'
+      '$colExpiredAt TEXT,'
       '$colSpaceId TEXT,'
       '$colCreatedBy TEXT,'
       '$colCreatedAt TEXT,'
@@ -85,6 +85,7 @@ class ProposalRepository extends AppRepository implements Table {
     final result = await db!.rawUpdate('UPDATE $tblProposals '
         'SET $colStatus = ${proposal.status.index}'
         ', $colProgressStatus = ${proposal.progressStatus.index}'
+        ", $colExpiredAt = '${proposal.expiredAt}'"
         ", $colUpdatedBy = '${proposal.updatedBy}' "
         ", $colUpdatedAt = '${proposal.updatedAt}' "
         "WHERE $colId = '${proposal.proposalId}'");

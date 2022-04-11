@@ -24,6 +24,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form_co
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/content_step/content.form.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/options.form.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,7 +66,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
                                 OptionsForm()
                               ],
                             )),
-                            getFormButtons(formConfig)
+                            SafeWidgetValidator(child: getFormButtons(formConfig))
                           ],
                         )),
                   ),

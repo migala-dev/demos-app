@@ -23,12 +23,14 @@ class ProposalCardInfo extends StatelessWidget {
   final Icon Function(double size, MaterialColor color) getIcon;
   final String title;
   final String content;
+  final Widget? child;
 
   const ProposalCardInfo(
       {Key? key,
       required this.getIcon,
       required this.title,
-      required this.content})
+      this.content = '',
+      this.child})
       : super(key: key);
 
   @override
@@ -46,7 +48,7 @@ class ProposalCardInfo extends StatelessWidget {
               title.toUpperCase(),
               style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
             ),
-            Text(
+            child != null ? child! : Text(
               content,
               style: const TextStyle(fontSize: 16,),
             )

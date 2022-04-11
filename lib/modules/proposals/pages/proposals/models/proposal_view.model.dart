@@ -32,6 +32,7 @@ class ProposalView {
   final String spaceId;
   final String createdBy;
   final String createdAt;
+  final DateTime? expiredAt;
   final ProposalStatus status;
   final ProposalProgressStatus progressStatus;
   final int votesCount;
@@ -54,6 +55,7 @@ class ProposalView {
     this.spaceId,
     this.createdBy,
     this.createdAt,
+    this.expiredAt,
     this.status,
     this.progressStatus,
     this.votesCount,
@@ -72,6 +74,7 @@ class ProposalView {
         o['spaceId'],
         o['createdBy'],
         o['createdAt'],
+        o['expiredAt'] != null ? DateTime.parse(o['expiredAt']) : null,
         ProposalStatus.values[o['status']],
         ProposalProgressStatus.values[o['progressStatus']],
         o['votesCount'],
