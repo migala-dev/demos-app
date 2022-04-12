@@ -24,7 +24,8 @@ class ManifestoComment {
   final bool deleted;
   final String createdAt;
   final String createdByMember;
-  final String updatedBy;
+  final String updatedAt;
+  final String manifestoId;
 
   ManifestoComment(
       this.manifestoCommentId,
@@ -33,17 +34,18 @@ class ManifestoComment {
       this.deleted,
       this.createdAt,
       this.createdByMember,
-      this.updatedBy);
+      this.updatedAt,
+      this.manifestoId);
 
   factory ManifestoComment.fromObject(dynamic o) => ManifestoComment(
-        o['manifestoCommentId'],
-        o['content'],
-        o['manifestoCommentParentId'],
-        o['deleted'] == 1 ? true : false,
-        o['createdAt'],
-        o['createdByMember'],
-        o['updatedBy'],
-      );
+      o['manifestoCommentId'],
+      o['content'],
+      o['manifestoCommentParentId'],
+      o['deleted'] == 1 ? true : false,
+      o['createdAt'],
+      o['createdByMember'],
+      o['updatedAt'],
+      o['manifestoId']);
 
   Map<String, dynamic> toMap() => {
         'manifestoCommentId': manifestoCommentId,
@@ -52,6 +54,7 @@ class ManifestoComment {
         'deleted': deleted ? 1 : 0,
         'createdAt': createdAt,
         'createdByMember': createdByMember,
-        'updatedBy': updatedBy,
+        'updatedAt': updatedAt,
+        'manifestoId': manifestoId
       };
 }

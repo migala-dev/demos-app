@@ -28,7 +28,8 @@ class ManifestoCommentRepository extends AppRepository implements Table {
   final String colDeleted = 'deleted';
   final String colCreatedAt = 'createdAt';
   final String colCreatedByMember = 'createdByMember';
-  final String colUpdatedBy = 'updatedBy';
+  final String colUpdatedAt = 'updatedAt';
+  final String colManifestoId = 'manifestoId';
 
   @override
   String getCreateTableQuery() => 'CREATE TABLE $tblManifestoComment('
@@ -38,5 +39,6 @@ class ManifestoCommentRepository extends AppRepository implements Table {
       '$colDeleted BOOLEAN,'
       '$colCreatedAt TEXT,'
       '$colCreatedByMember TEXT,'
-      '$colUpdatedBy TEXT)';
+      '$colUpdatedAt TEXT,'
+      '$colManifestoId TEXT)';
 }
