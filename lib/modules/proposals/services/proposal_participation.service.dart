@@ -21,10 +21,21 @@ import 'package:demos_app/core/models/manifesto/proposal/proposal_participation.
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
 
 class ProposalParticipationService {
-  Future<ProposalParticipation?> findProposalParticipationByMemberId(String memberId, String proposalId) async {
-
-    ProposalParticipation? participation = await ProposalParticipationRepository().findByMemberIdAndProposalId(memberId, proposalId);
+  Future<ProposalParticipation?> findProposalParticipationByMemberId(
+      String memberId, String proposalId) async {
+    final ProposalParticipation? participation =
+        await ProposalParticipationRepository()
+            .findByMemberIdAndProposalId(memberId, proposalId);
 
     return participation;
+  }
+
+  Future<bool> didUserParticipatedInProposal(
+      String userId, String proposalId) async {
+    final ProposalParticipation? participation =
+        await ProposalParticipationRepository()
+            .findByUserIdAndProposalId(userId, proposalId);
+
+    return participation != null && participation.participated;
   }
 }
