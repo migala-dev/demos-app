@@ -67,7 +67,17 @@ class ProposalViewListBloc
           await proposalListView.itHasProposals(event.spaceId);
       if (itHasProposals) {
         emit(ProposalViewListWithData(proposalListView));
+        return;
       }
     }
+
+    for (ProposalViewList proposalListView in await getProposalViewLists()) {
+      if (await proposalListView.itHasProposals(event.spaceId)) {
+        emit(ProposalViewListWithData(proposalListView));
+        return;
+      }
+    }
+
+    emit(ProposalViewListEmpty());
   }
 }
