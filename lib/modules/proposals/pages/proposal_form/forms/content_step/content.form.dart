@@ -29,9 +29,7 @@ import 'package:flutter_quill/flutter_quill.dart' hide Text;
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 
 class ContentForm extends StatefulWidget {
-
-  const ContentForm({Key? key })
-      : super(key: key);
+  const ContentForm({Key? key}) : super(key: key);
 
   @override
   _ContentFormState createState() => _ContentFormState();
@@ -58,9 +56,9 @@ class _ContentFormState extends State<ContentForm> {
       builder: (context, proposalFormView) {
         return Column(
           children: [
-              getTitleField(proposalFormView.title),
-              const SizedBox(height: 16),
-              getContentField(proposalFormView.content)
+            getTitleField(proposalFormView.title),
+            const SizedBox(height: 16),
+            getContentField(proposalFormView.content)
           ],
         );
       },
@@ -69,7 +67,9 @@ class _ContentFormState extends State<ContentForm> {
 
   Widget getTitleField(String title) {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Título de la propuesta'),
+      decoration: InputDecoration(
+          labelText: 'Título de la propuesta',
+          errorText: title.isEmpty ? 'El título es requerido' : null),
       initialValue: title,
       textCapitalization: TextCapitalization.words,
       onChanged: (title) {
@@ -101,7 +101,6 @@ class _ContentFormState extends State<ContentForm> {
   }
 
   void openContentEditor(String content) async {
-  
     String? contentUpdated = await Navigator.push(
         context,
         MaterialPageRoute(

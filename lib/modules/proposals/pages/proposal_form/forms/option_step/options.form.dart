@@ -24,11 +24,11 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/dropdown_manifesto_option.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/widgets/manifesto_option.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/widgets/multiple_option.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/utils/is_valid_number_of_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OptionsForm extends StatefulWidget {
-
   const OptionsForm({
     Key? key,
   }) : super(key: key);
@@ -81,7 +81,16 @@ class _OptionsFormState extends State<OptionsForm> {
             ),
             const SizedBox(height: 24),
             const Text('Opciones', style: TextStyle(color: Colors.grey)),
-            optionTypeSelected.getWidget()
+            optionTypeSelected.getWidget(),
+            isValidNumberOfOptions()
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    child: Text(
+                      '* La propuesta tiene que tener entre 2 a 20 opciones',
+                      style: TextStyle(color: Colors.red.shade600),
+                    ),
+                  ),
           ],
         );
       },
