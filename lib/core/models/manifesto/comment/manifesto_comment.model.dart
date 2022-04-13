@@ -20,7 +20,7 @@
 class ManifestoComment {
   final String manifestoCommentId;
   final String content;
-  final String manifestoCommentParentId;
+  final String? manifestoCommentParentId;
   final bool deleted;
   final String createdAt;
   final String createdByMember;
