@@ -20,6 +20,7 @@
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comments_empy_alert.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/input_comment.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment.widget.dart';
 import 'package:fluro/fluro.dart';
@@ -63,7 +64,12 @@ class ProposalCommentsPage extends StatelessWidget {
             );
           }
 
-          return Container();
+          return Column(
+            children: const [
+              Expanded(child: CommentsEmptyAlert()),
+              InputComment()
+            ],
+          );
         },
       ),
     );

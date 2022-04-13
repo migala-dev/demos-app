@@ -40,6 +40,11 @@ class CommentViewListBloc
 
     final commentViews = await CommentViewService().getComments();
 
+    if (commentViews.isEmpty) {
+      emit(CommentViewListEmpty());
+      return;
+    }
+
     emit(CommentViewListWithData(commentViews));
   }
 
