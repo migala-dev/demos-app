@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
+import 'package:demos_app/core/repositories/manifesto/comment/manifesto_comment.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
@@ -34,6 +35,7 @@ class ProposalViewsRepository extends AppRepository {
       ProposalParticipationRepository().tblProposalParticipations;
   final tblManifestoOptions = ManifestoOptionRepository().tblManifestoOptions;
   final tblUsers = UsersRepository().tblUsers;
+  final tblManifestoComment = ManifestoCommentRepository().tblManifestoComment;
   final colUserId = UsersRepository().colId;
   final colUserName = UsersRepository().colName;
   final colUserProfilePictureKey = UsersRepository().colProfilePictureKey;
@@ -71,7 +73,10 @@ class ProposalViewsRepository extends AppRepository {
             ) as "votesCount",
             (select count(*) from $tblProposalParticipations
               where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId
-            ) as "votesTotal"
+            ) as "votesTotal",
+            (select count(*) from $tblManifestoComment
+              where $tblManifestoComment.$colManifestoId = $tblManifesto.$colManifestoId
+            ) as "numberOfComments"
           FROM $tblManifesto
           INNER
             JOIN $tblProposals ON 
