@@ -22,11 +22,11 @@ class ProposalParticipation {
   final String userId;
   final String proposalId;
   final String memberId;
-  final String spaceId;
+  final String? spaceId;
   final bool participated;
 
-  ProposalParticipation(
-      this.proposalParticipationId, this.userId, this.proposalId, this.memberId, this.spaceId, this.participated);
+  ProposalParticipation(this.proposalParticipationId, this.userId,
+      this.proposalId, this.memberId, this.spaceId, this.participated);
 
   factory ProposalParticipation.fromObject(dynamic o) => ProposalParticipation(
         o['proposalParticipationId'],
@@ -34,7 +34,9 @@ class ProposalParticipation {
         o['proposalId'],
         o['memberId'],
         o['spaceId'],
-        o['participated'].runtimeType == int ?  o['participated'] != 0 : o['participated'],
+        o['participated'].runtimeType == int
+            ? o['participated'] != 0
+            : o['participated'],
       );
 
   Map<String, dynamic> toMap() => {

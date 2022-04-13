@@ -28,7 +28,6 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_o
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/commets_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/widgets/general/countdown_timer.widget.dart';
