@@ -91,6 +91,11 @@ class ProposalViewsRepository extends AppRepository {
     WHERE $colProposalId = '$proposalId'
   ''';
 
+  String _getFindByManifestoIdQuery(String manifestoId) => '''
+    ${_getSelectInnerJoinQuery()}
+    WHERE $tblManifesto.$colManifestoId = '$manifestoId'
+  ''';
+
   String _getFindBySpaceIdAndStatusQuery(
       String spaceId, ProposalStatus proposalStatus) {
     return """
@@ -128,6 +133,17 @@ class ProposalViewsRepository extends AppRepository {
   Future<ProposalView?> findByProposalId(String proposalId) async {
     Database? db = await this.db;
     final result = await db!.rawQuery(_getFindByProposalIdQuery(proposalId));
+    List<Map<String, Object?>> resultWithManifestoOptions =
+        await _getResultWithManifestoOptions(result);
+
+    return resultWithManifestoOptions.isNotEmpty
+        ? ProposalView.fromObject(resultWithManifestoOptions[0])
+        : null;
+  }
+
+  Future<ProposalView?> findByManifestoId(String manifestoId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(_getFindByManifestoIdQuery(manifestoId));
     List<Map<String, Object?>> resultWithManifestoOptions =
         await _getResultWithManifestoOptions(result);
 

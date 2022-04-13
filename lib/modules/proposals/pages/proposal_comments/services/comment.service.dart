@@ -33,6 +33,15 @@ class CommentService {
     return response.comment;
   }
 
+  Future<ManifestoComment> getComment(
+      String spaceId, String manifestoCommentId) async {
+    final response = await CommentApi().getComment(spaceId, manifestoCommentId);
+
+    await _saveCommentResponseOnRepository(response);
+
+    return response.comment;
+  }
+
   Future<void> _saveCommentResponseOnRepository(
       CommentResponse commentResponse) async {
     await ManifestoCommentRepository().insertOrUpdate(commentResponse.comment);

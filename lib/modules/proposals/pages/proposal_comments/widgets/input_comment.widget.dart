@@ -21,6 +21,8 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/utils/hide_keyboard.util.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +88,10 @@ class _InputCommentState extends State<InputComment> {
 
     final commentView =
         await CommentViewService().getCommentById(comment.manifestoCommentId);
+    final proposalUpdated = await ProposalViewServie()
+        .getProposalViewByManifestoId(comment.manifestoId);
 
     CommentViewListBloc().add(CommentViewListUserCommented(commentView!));
+    ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
   }
 }

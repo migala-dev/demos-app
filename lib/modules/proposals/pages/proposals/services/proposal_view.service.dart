@@ -24,4 +24,8 @@ class ProposalViewServie {
   Future<ProposalView?> getProposalViewByProposalId(String proposalId) async {
     return await ProposalViewsRepository().findByProposalId(proposalId);
   }
+
+  Future<ProposalView?> getProposalViewByManifestoId(String manifestoId) async {
+    return await ProposalViewsRepository().findByManifestoId(manifestoId);
+  }
 }
