@@ -23,7 +23,9 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form_config/get_proposal_form_config.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/content_step/content.form.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/options.form.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/utils/is_valid_number_of_options.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,7 +69,8 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
                                 OptionsForm()
                               ],
                             )),
-                            getFormButtons(formConfig)
+                            SafeWidgetValidator(
+                                child: getFormButtons(formConfig))
                           ],
                         )),
                   ),
@@ -129,5 +132,11 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
         )
       ],
     );
+  }
+
+  bool isPrimaryButtonDisabled() {
+    final bool isTitleEmpty = ProposalFormBloc().state.title.isEmpty;
+
+    return isTitleEmpty || !isValidNumberOfOptions();
   }
 }

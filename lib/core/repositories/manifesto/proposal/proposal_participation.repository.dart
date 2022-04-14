@@ -28,6 +28,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
   final String colUserId = 'userId';
   final String colProposalId = 'proposalId';
   final String colMemberId = 'memberId';
+  final String colSpaceId = 'spaceId';
   final String colParticipated = 'participated';
 
   @override
@@ -36,6 +37,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
       '$colUserId TEXT, '
       '$colProposalId TEXT, '
       '$colMemberId TEXT, '
+      '$colSpaceId TEXT, '
       '$colParticipated BOOLEAN)';
 
   Future<String> insert(ProposalParticipation proposalParticipation) async {
@@ -50,7 +52,8 @@ class ProposalParticipationRepository extends AppRepository implements Table {
     return proposalParticipation.proposalParticipationId;
   }
 
-  Future<String> insertOrUpdate(ProposalParticipation proposalParticipation) async {
+  Future<String> insertOrUpdate(
+      ProposalParticipation proposalParticipation) async {
     Database? db = await this.db;
     ProposalParticipation? proposalParticipationSaved =
         await findById(proposalParticipation.proposalParticipationId);
@@ -82,10 +85,19 @@ class ProposalParticipationRepository extends AppRepository implements Table {
         : null;
   }
 
+  Future<ProposalParticipation?> findByUserIdAndProposalId(
+      String userId, String proposalId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblProposalParticipations WHERE $colUserId = '$userId' AND $colProposalId = '$proposalId'");
+    return result.isNotEmpty
+        ? ProposalParticipation.fromObject(result[0])
+        : null;
+  }
+
   Future<int> update(ProposalParticipation participation) async {
     Database? db = await this.db;
-    final result = await db!.rawUpdate(
-      """
+    final result = await db!.rawUpdate("""
         UPDATE $tblProposalParticipations
         SET $colParticipated = ${participation.participated ? 1 : 0} 
         WHERE $colId = '${participation.proposalParticipationId}'

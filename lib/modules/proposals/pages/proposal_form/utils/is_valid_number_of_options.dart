@@ -17,6 +17,14 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-abstract class Table {
-  String getCreateTableQuery();
+import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
+
+bool isValidNumberOfOptions() {
+  final ProposalFormView proposalFormView = ProposalFormBloc().state;
+
+  return proposalFormView.optionType == ManifestoOptionType.inFavorOrOpposing ||
+      (proposalFormView.manifestoOptions.length >= 2 &&
+          proposalFormView.manifestoOptions.length <= 20);
 }

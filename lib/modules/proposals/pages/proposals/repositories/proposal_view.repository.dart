@@ -48,6 +48,7 @@ class ProposalViewsRepository extends AppRepository {
   final colCreatedBy = ProposalRepository().colCreatedBy;
   final colUpdatedBy = ProposalRepository().colUpdatedBy;
   final colCreatedAt = ProposalRepository().colCreatedAt;
+  final colExpiredAt = ProposalRepository().colExpiredAt;
   final colManifestoOptionId = ManifestoOptionRepository().colId;
   final colParticipated = ProposalParticipationRepository().colParticipated;
 
@@ -64,6 +65,7 @@ class ProposalViewsRepository extends AppRepository {
             $colProgressStatus,
             $colUserName as "createdByName",
             $colUserProfilePictureKey as "createdByProfilePictureKey",
+            $colExpiredAt,
             (select count(*) from $tblProposalParticipations
               where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId AND $colParticipated = 1
             ) as "votesCount",

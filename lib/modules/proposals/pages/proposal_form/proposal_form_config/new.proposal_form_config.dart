@@ -65,7 +65,7 @@ class NewProposalFormConfig implements ProposalFormConfig {
 
     await ProposalService().createNewProposalDraft(spaceId, proposalFormView);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
   }
 
   @override

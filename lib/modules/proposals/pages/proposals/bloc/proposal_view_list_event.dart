@@ -45,3 +45,12 @@ class ProposalViewListNewOptionSelected extends ProposalViewListEvent {
   @override
   List<Object> get props => [spaceId, proposalViewList];
 }
+
+class ProposalViewListUpdated extends ProposalViewListEvent {
+  final String spaceId;
+
+  const ProposalViewListUpdated(this.spaceId);
+
+  @override
+  List<Object> get props => [spaceId];
+}

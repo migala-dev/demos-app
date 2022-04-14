@@ -25,28 +25,59 @@ import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_nav
 
 class ProposalViewListBloc
     extends Bloc<ProposalViewListEvent, ProposalViewListState> {
-  static final ProposalViewListBloc _proposalsBloc = ProposalViewListBloc._internal();
+  static final ProposalViewListBloc _proposalsBloc =
+      ProposalViewListBloc._internal();
   factory ProposalViewListBloc() => _proposalsBloc;
 
-  ProposalViewListBloc._internal(): super(ProposalViewListLoadingInProgress()) {
+  ProposalViewListBloc._internal()
+      : super(ProposalViewListLoadingInProgress()) {
     on<ProposalViewListLoaded>((event, emit) => _onListLoaded(event, emit));
-    on<ProposalViewListNewOptionSelected>((event, emit) => _onListSelectedLoaded(event, emit));
+    on<ProposalViewListNewOptionSelected>(
+        (event, emit) => _onListSelectedLoaded(event, emit));
+    on<ProposalViewListUpdated>((event, emit) => _onListUpdated(event, emit));
   }
 
-  void _onListLoaded(ProposalViewListLoaded event, Emitter<ProposalViewListState> emit) async {
+  void _onListLoaded(
+      ProposalViewListLoaded event, Emitter<ProposalViewListState> emit) async {
+    emit(ProposalViewListLoadingInProgress());
+
+    for (ProposalViewList proposalListView in await getProposalViewLists()) {
+      if (await proposalListView.itHasProposals(event.spaceId)) {
+        emit(ProposalViewListWithData(proposalListView));
+        return;
+      }
+    }
+
+    emit(ProposalViewListEmpty());
+  }
+
+  void _onListSelectedLoaded(ProposalViewListNewOptionSelected event,
+      Emitter<ProposalViewListState> emit) {
+    emit(ProposalViewListWithData(event.proposalViewList));
+  }
+
+  void _onListUpdated(ProposalViewListUpdated event,
+      Emitter<ProposalViewListState> emit) async {
+    if (state is ProposalViewListWithData) {
+      final prevState = state as ProposalViewListWithData;
       emit(ProposalViewListLoadingInProgress());
 
-      for (ProposalViewList proposalListView in await getProposalViewLists()) {
-        if (await proposalListView.itHasProposals(event.spaceId)) {
-          emit(ProposalViewListWithData(proposalListView));
-          return;
-        }
+      final proposalListView = prevState.proposalViewList;
+      final itHasProposals =
+          await proposalListView.itHasProposals(event.spaceId);
+      if (itHasProposals) {
+        emit(ProposalViewListWithData(proposalListView));
+        return;
       }
+    }
 
-      emit(ProposalViewListEmpty());
-  }
+    for (ProposalViewList proposalListView in await getProposalViewLists()) {
+      if (await proposalListView.itHasProposals(event.spaceId)) {
+        emit(ProposalViewListWithData(proposalListView));
+        return;
+      }
+    }
 
-  void _onListSelectedLoaded(ProposalViewListNewOptionSelected event, Emitter<ProposalViewListState> emit) {
-      emit(ProposalViewListWithData(event.proposalViewList));
+    emit(ProposalViewListEmpty());
   }
 }
