@@ -25,6 +25,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/proposal_details.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.page.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/confirm_proposal.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
@@ -73,7 +74,6 @@ var spacesHandler = Handler(
   return const SpacesScreen();
 });
 
-// Handler de los detalles del espacio
 var spaceDetailsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   Object? spaceArgument = context!.settings!.arguments;
@@ -186,4 +186,9 @@ var nullVoteHandler =
 var proposalCommentsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   return const ProposalCommentsPage();
+});
+
+var confirmProposalHandler =
+    Handler(handlerFunc: (BuildContext? context, Object params) {
+  return const ConfirmProposalScreen();
 });

@@ -32,8 +32,7 @@ class NewProposalFormConfig implements ProposalFormConfig {
   String formTitle = 'Nueva Propuesta';
 
   @override
-  String primaryButtonLabel = 'Publicar';
-
+  String primaryButtonLabel = 'Confirmar';
 
   @override
   String saveDraftLabel = 'Guardar Borrador';
@@ -74,12 +73,11 @@ class NewProposalFormConfig implements ProposalFormConfig {
 
   @override
   Future<void> primaryAction() async {
-    final String spaceId = SpaceBloc().state.spaceId!;
-    final ProposalFormView proposalFormView = ProposalFormBloc().state;
+    // final String spaceId = SpaceBloc().state.spaceId!;
+    // final ProposalFormView proposalFormView = ProposalFormBloc().state;
 
-    await ProposalService().createAndPublishProposal(spaceId, proposalFormView);
+    // await ProposalService().createAndPublishProposal(spaceId, proposalFormView);
 
-    ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+    // ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   }
-
 }

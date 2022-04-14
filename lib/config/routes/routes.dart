@@ -48,6 +48,7 @@ class Routes {
   static const String voteProposal = '/vote-proposal';
   static const String nullVote = '/null-vote';
   static const String proposalComments = '/proposal-comment';
+  static const String confirmProposal = '/confirm-proposal';
 
   // Settings
   static const String settings = '/settings/general';
@@ -85,6 +86,7 @@ class Routes {
     router.define(voteProposal, handler: voteProposalHandler);
     router.define(nullVote, handler: nullVoteHandler);
     router.define(proposalComments, handler: proposalCommentsHandler);
+    router.define(confirmProposal, handler: confirmProposalHandler);
 
     // Settings
     router.define(settings, handler: generalSettingsHandler);

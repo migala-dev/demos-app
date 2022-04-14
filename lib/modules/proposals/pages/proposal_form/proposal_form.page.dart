@@ -27,6 +27,8 @@ import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../config/routes/routes.dart';
+
 class ProposalFormScreen extends StatefulWidget {
   const ProposalFormScreen({Key? key}) : super(key: key);
 
@@ -89,33 +91,40 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
   Widget getFormButtons(ProposalFormConfig formConfig) {
     return Column(
       children: [
-        BigButton(text: formConfig.primaryButtonLabel, onPressed: () async {
-          await formConfig.primaryAction();
-          Navigator.pop(context);
-        }),
+        BigButton(
+            text: formConfig.primaryButtonLabel,
+            onPressed: () async {
+              await formConfig.primaryAction();
+              Navigator.pushNamed(context, Routes.confirmProposal);
+            }),
         const SizedBox(height: 8),
         Row(
           children: [
-            formConfig.showSaveDraftButton ?
-            Expanded(
-              child: BigButton(
-                  backgroundColor: Colors.white,
-                  textColor: Colors.blue,
-                  text: formConfig.saveDraftLabel,
-                  onPressed: () async {
-                    await formConfig.saveDraft();
-                    Navigator.pop(context);
-                  }),
-            ): Container(),
-            formConfig.showSaveDraftButton ? const SizedBox(width: 8) : Container(),
-            formConfig.showRemoveButton ? Expanded(
-                child: BigButton(
-                    backgroundColor: Colors.white,
-                    textColor: Colors.red.shade500,
-                    text: 'Eliminar',
-                    onPressed:  () {
-                    formConfig.remove(context);
-                  })) : Container(),
+            formConfig.showSaveDraftButton
+                ? Expanded(
+                    child: BigButton(
+                        backgroundColor: Colors.white,
+                        textColor: Colors.blue,
+                        text: formConfig.saveDraftLabel,
+                        onPressed: () async {
+                          await formConfig.saveDraft();
+                          Navigator.pop(context);
+                        }),
+                  )
+                : Container(),
+            formConfig.showSaveDraftButton
+                ? const SizedBox(width: 8)
+                : Container(),
+            formConfig.showRemoveButton
+                ? Expanded(
+                    child: BigButton(
+                        backgroundColor: Colors.white,
+                        textColor: Colors.red.shade500,
+                        text: 'Eliminar',
+                        onPressed: () {
+                          formConfig.remove(context);
+                        }))
+                : Container(),
           ],
         )
       ],
