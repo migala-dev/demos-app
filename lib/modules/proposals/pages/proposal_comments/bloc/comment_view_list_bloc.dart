@@ -32,6 +32,7 @@ class CommentViewListBloc
   CommentViewListBloc._internal() : super(CommentViewListLoadingInProgress()) {
     on<CommentViewListLoaded>(_onListLoaded);
     on<CommentViewListUserCommented>(_onCurrentUserCommeted);
+    on<CommentViewListEmpited>(_onEmpited);
   }
 
   void _onListLoaded(
@@ -57,5 +58,10 @@ class CommentViewListBloc
     }
 
     emit(CommentViewListWithData([event.comment]));
+  }
+
+  void _onEmpited(
+      CommentViewListEmpited event, Emitter<CommentViewListState> emit) {
+    emit(CommentViewListEmpty());
   }
 }

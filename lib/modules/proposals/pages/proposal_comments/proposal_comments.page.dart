@@ -23,12 +23,55 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comments_empy_alert.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/input_comment.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment.widget.dart';
+import 'package:demos_app/widgets/buttons/chip_button.widget.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ProposalCommentsPage extends StatelessWidget {
+class ProposalCommentsPage extends StatefulWidget {
   const ProposalCommentsPage({Key? key}) : super(key: key);
+
+  @override
+  State<ProposalCommentsPage> createState() => _ProposalCommentsPageState();
+}
+
+class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
+  final ScrollController _commentListController = ScrollController();
+  final double newCommentScrollOffset = 130;
+
+  bool showNewCommentChip = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _commentListController
+        .addListener(_handleCommentListControllerPositionEvent);
+  }
+
+  @override
+  void dispose() {
+    _commentListController.dispose();
+    super.dispose();
+  }
+
+  void _handleCommentListControllerPositionEvent() {
+    final outOfRange = _commentListController.position.outOfRange;
+    if (outOfRange) {
+      hideNewCommentChip();
+    }
+  }
+
+  void _handleNewCommentEvent(
+      BuildContext context, CommentViewListState state) {
+    if (_commentListController.hasClients && state is CommentViewListWithData) {
+      final outOfRange = _commentListController.position.outOfRange;
+      final controllerHasLength =
+          _commentListController.position.maxScrollExtent > 0;
+      if (!outOfRange && controllerHasLength) {
+        showInScreenNewCommentChip();
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +82,43 @@ class ProposalCommentsPage extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back)),
       ),
-      body: BlocBuilder<CommentViewListBloc, CommentViewListState>(
+      body: BlocConsumer<CommentViewListBloc, CommentViewListState>(
         bloc: CommentViewListBloc(),
+        listener: _handleNewCommentEvent,
         builder: (context, state) {
+          if (state is CommentViewListLoadingInProgress) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           if (state is CommentViewListWithData) {
             final comments = state.commentViews;
 
             return Column(
               children: [
                 Flexible(
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: comments.length,
-                    itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: MemberComment(
-                          comment: comments[index], enableReplies: true),
-                    ),
+                  child: Stack(
+                    alignment: AlignmentDirectional.center,
+                    children: [
+                      ListView.builder(
+                        controller: _commentListController,
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: comments.length,
+                        itemBuilder: (context, index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: MemberComment(
+                              comment: comments[index], enableReplies: true),
+                        ),
+                      ),
+                      showNewCommentChip
+                          ? Positioned(
+                              bottom: 5,
+                              child: ChipButton(
+                                text: 'Nuevo Comentario ',
+                                onDeleted: hideNewCommentChip,
+                                onTap: goToOutOfRangeOfList,
+                              ))
+                          : Container()
+                    ],
                   ),
                 ),
                 const Divider(),
@@ -80,4 +143,21 @@ class ProposalCommentsPage extends StatelessWidget {
         Routes.proposalDetails,
         transition: TransitionType.inFromTop,
       );
+
+  void goToOutOfRangeOfList() {
+    hideNewCommentChip();
+    final scrollOffset = _commentListController.position.maxScrollExtent +
+        newCommentScrollOffset;
+
+    _commentListController.animateTo(scrollOffset,
+        curve: Curves.linear, duration: const Duration(milliseconds: 500));
+  }
+
+  void hideNewCommentChip() => setState(() {
+        showNewCommentChip = false;
+      });
+
+  void showInScreenNewCommentChip() => setState(() {
+        showNewCommentChip = true;
+      });
 }

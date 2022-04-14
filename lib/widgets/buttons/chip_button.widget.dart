@@ -17,21 +17,34 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-part of 'comment_view_list_bloc.dart';
+import 'package:flutter/material.dart';
 
-abstract class CommentViewListEvent extends Equatable {
-  const CommentViewListEvent();
+class ChipButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final Color contentColor;
+
+  final void Function()? onDeleted;
+  final void Function()? onTap;
+
+  const ChipButton({
+    Key? key,
+    required this.text,
+    this.backgroundColor = Colors.blue,
+    this.contentColor = Colors.white,
+    this.onDeleted,
+    this.onTap,
+  }) : super(key: key);
 
   @override
-  List<Object> get props => [];
+  Widget build(BuildContext context) {
+    return Chip(
+        backgroundColor: backgroundColor,
+        deleteIconColor: contentColor,
+        onDeleted: onDeleted,
+        label: GestureDetector(
+          onTap: onTap,
+          child: Text(text, style: TextStyle(color: contentColor)),
+        ));
+  }
 }
-
-class CommentViewListLoaded extends CommentViewListEvent {}
-
-class CommentViewListUserCommented extends CommentViewListEvent {
-  final CommentView comment;
-
-  const CommentViewListUserCommented(this.comment);
-}
-
-class CommentViewListEmpited extends CommentViewListEvent {}

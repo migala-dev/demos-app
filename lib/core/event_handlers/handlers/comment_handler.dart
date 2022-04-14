@@ -26,7 +26,6 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/services/com
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
-import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 
 class CommentHandler extends EventHandlerMixin {
   @override
@@ -48,8 +47,8 @@ class CommentPublishedHandler implements EventHandler {
     final comment =
         await CommentService().getComment(spaceId, manifestoCommentId);
 
-    final currerntSpaceId = SpaceBloc().state.spaceId;
-    if (spaceId == currerntSpaceId) {
+    final currentManifestoId = ProposalDetailsBloc().state?.manifestoId;
+    if (currentManifestoId == comment.manifestoId) {
       final commentView =
           await CommentViewService().getCommentById(comment.manifestoCommentId);
       CommentViewListBloc().add(CommentViewListUserCommented(commentView!));

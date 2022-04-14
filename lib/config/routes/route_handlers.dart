@@ -140,6 +140,7 @@ var proposalDetailsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   ProposalView proposalView = context!.settings!.arguments as ProposalView;
 
+  CommentViewListBloc().add(CommentViewListEmpited());
   ProposalDetailsBloc().add(SetProposalViewEvent(proposalView));
 
   return const ProposalDetailsPage();
