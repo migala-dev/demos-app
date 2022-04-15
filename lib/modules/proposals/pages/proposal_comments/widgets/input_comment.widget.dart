@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
@@ -26,6 +27,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_vi
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/utils/hide_keyboard.util.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class InputComment extends StatefulWidget {
   const InputComment({Key? key}) : super(key: key);
@@ -59,27 +61,46 @@ class _InputCommentState extends State<InputComment> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
-          Column(
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Respondiendo a Erik Ivanov',
-                      style: TextStyle(color: Colors.grey)),
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.close))
-                ],
-              ),
-              const SizedBox(height: 5),
-              const Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: Text(
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(height: 5)
-            ],
+          BlocBuilder<CommentReplyCubit, CommentReplyState>(
+            bloc: CommentReplyCubit(),
+            builder: (context, state) {
+              if (state.isReplying) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5),
+                            child: Text(
+                                'Respondiendo a ${state.commentAuthorName}',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(color: Colors.grey)),
+                          ),
+                        ),
+                        IconButton(
+                            onPressed: CommentReplyCubit().cancelReply,
+                            icon: const Icon(Icons.close))
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Text(
+                        state.commentContent,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    const SizedBox(height: 5)
+                  ],
+                );
+              }
+
+              return Container();
+            },
           ),
           Row(
             children: [

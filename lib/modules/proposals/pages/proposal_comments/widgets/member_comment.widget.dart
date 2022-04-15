@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
@@ -81,7 +82,7 @@ class MemberComment extends StatelessWidget {
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                enableReplies ? ReplyButton(onTap: () {}) : Container(),
+                enableReplies ? ReplyButton(onTap: setReply) : Container(),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert, color: Colors.grey))
@@ -94,5 +95,10 @@ class MemberComment extends StatelessWidget {
             : Container(),
       ),
     );
+  }
+
+  void setReply() {
+    CommentReplyCubit()
+        .setReply(comment.member.currentMemberName, comment.content);
   }
 }
