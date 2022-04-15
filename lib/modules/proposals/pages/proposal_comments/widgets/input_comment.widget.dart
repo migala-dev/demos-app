@@ -57,17 +57,44 @@ class _InputCommentState extends State<InputComment> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Row(
+      child: Column(
         children: [
-          Flexible(
-            child: TextField(
-              controller: _contentController,
-              decoration: const InputDecoration.collapsed(hintText: 'MENSAJE'),
-            ),
+          Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Respondiendo a Erik Ivanov',
+                      style: TextStyle(color: Colors.grey)),
+                  IconButton(onPressed: () {}, icon: const Icon(Icons.close))
+                ],
+              ),
+              const SizedBox(height: 5),
+              const Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              const SizedBox(height: 5)
+            ],
           ),
-          IconButton(
-              onPressed: isSendButtonEnabled ? addComment : null,
-              icon: const Icon(Icons.send))
+          Row(
+            children: [
+              Flexible(
+                child: TextField(
+                  controller: _contentController,
+                  decoration:
+                      const InputDecoration.collapsed(hintText: 'MENSAJE'),
+                ),
+              ),
+              IconButton(
+                  onPressed: isSendButtonEnabled ? addComment : null,
+                  icon: const Icon(Icons.send))
+            ],
+          ),
         ],
       ),
     );
