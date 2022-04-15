@@ -21,6 +21,7 @@ import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
@@ -49,14 +50,31 @@ class CommentPublishedHandler implements EventHandler {
 
     final currentManifestoId = ProposalDetailsBloc().state?.manifestoId;
     if (currentManifestoId == comment.manifestoId) {
+      final isCommentReply = comment.manifestoCommentParentId != null;
       final commentView =
           await CommentViewService().getCommentById(comment.manifestoCommentId);
-      CommentViewListBloc().add(CommentViewListUserCommented(commentView!));
 
-      final proposalUpdated = await ProposalViewServie()
-          .getProposalViewByManifestoId(comment.manifestoId);
-
-      ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
+      if (isCommentReply) {
+        handleCommentReply(commentView!, comment.manifestoCommentParentId!);
+      } else {
+        await handleComment(commentView!, comment.manifestoCommentId);
+      }
     }
+  }
+
+  Future<void> handleComment(
+      CommentView commentView, String manifestoId) async {
+    CommentViewListBloc().add(CommentViewListUserCommented(commentView));
+
+    final proposalUpdated =
+        await ProposalViewServie().getProposalViewByManifestoId(manifestoId);
+
+    ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
+  }
+
+  void handleCommentReply(
+      CommentView commentView, String manifestoCommentParentId) {
+    CommentViewListBloc()
+        .add(CommentViewListUserReplied(commentView, manifestoCommentParentId));
   }
 }
