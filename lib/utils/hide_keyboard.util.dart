@@ -17,15 +17,6 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/repositories/proposal_view.repository.dart';
+import 'package:flutter/material.dart';
 
-class ProposalViewServie {
-  Future<ProposalView?> getProposalViewByProposalId(String proposalId) async {
-    return await ProposalViewsRepository().findByProposalId(proposalId);
-  }
-
-  Future<ProposalView?> getProposalViewByManifestoId(String manifestoId) async {
-    return await ProposalViewsRepository().findByManifestoId(manifestoId);
-  }
-}
+void hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();

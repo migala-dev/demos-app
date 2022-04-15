@@ -17,24 +17,21 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_comments/repositories/comment_view.repository.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
+part of 'comment_view_list_bloc.dart';
 
-class CommentViewService {
-  Future<List<CommentView>> getComments() async {
-    final String manifestoId = ProposalDetailsBloc().state!.manifestoId;
+abstract class CommentViewListEvent extends Equatable {
+  const CommentViewListEvent();
 
-    final comments =
-        await CommentViewRepository().findByManifestoId(manifestoId);
-
-    return comments;
-  }
-
-  Future<CommentView?> getCommentById(String manifesoCommentId) async {
-    final comment = await CommentViewRepository()
-        .findByManifestoCommentId(manifesoCommentId);
-
-    return comment;
-  }
+  @override
+  List<Object> get props => [];
 }
+
+class CommentViewListLoaded extends CommentViewListEvent {}
+
+class CommentViewListUserCommented extends CommentViewListEvent {
+  final CommentView comment;
+
+  const CommentViewListUserCommented(this.comment);
+}
+
+class CommentViewListEmpited extends CommentViewListEvent {}

@@ -17,15 +17,34 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/repositories/proposal_view.repository.dart';
+import 'package:flutter/material.dart';
 
-class ProposalViewServie {
-  Future<ProposalView?> getProposalViewByProposalId(String proposalId) async {
-    return await ProposalViewsRepository().findByProposalId(proposalId);
-  }
+class ChipButton extends StatelessWidget {
+  final String text;
+  final Color backgroundColor;
+  final Color contentColor;
 
-  Future<ProposalView?> getProposalViewByManifestoId(String manifestoId) async {
-    return await ProposalViewsRepository().findByManifestoId(manifestoId);
+  final void Function()? onDeleted;
+  final void Function()? onTap;
+
+  const ChipButton({
+    Key? key,
+    required this.text,
+    this.backgroundColor = Colors.blue,
+    this.contentColor = Colors.white,
+    this.onDeleted,
+    this.onTap,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Chip(
+        backgroundColor: backgroundColor,
+        deleteIconColor: contentColor,
+        onDeleted: onDeleted,
+        label: GestureDetector(
+          onTap: onTap,
+          child: Text(text, style: TextStyle(color: contentColor)),
+        ));
   }
 }
