@@ -76,7 +76,7 @@ class _InputCommentState extends State<InputComment> {
                           child: Padding(
                             padding: const EdgeInsets.only(right: 5),
                             child: Text(
-                                'Respondiendo a ${state.commentAuthorName}',
+                                'Respondiendo a ${state.commentReplied!.member.currentMemberName}',
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(color: Colors.grey)),
                           ),
@@ -90,7 +90,7 @@ class _InputCommentState extends State<InputComment> {
                     Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: Text(
-                        state.commentContent,
+                        state.commentReplied!.content,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

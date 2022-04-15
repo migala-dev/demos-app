@@ -20,7 +20,7 @@
 import 'package:flutter/material.dart';
 
 class ReplyButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   const ReplyButton({Key? key, required this.onTap}) : super(key: key);
 
   @override

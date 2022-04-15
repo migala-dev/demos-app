@@ -21,14 +21,12 @@ part of 'comment_reply_cubit.dart';
 
 class CommentReplyState extends Equatable {
   final bool isReplying;
-  final String commentAuthorName;
-  final String commentContent;
+  final CommentView? commentReplied;
 
-  const CommentReplyState(
-      this.isReplying, this.commentAuthorName, this.commentContent);
+  const CommentReplyState(this.isReplying, this.commentReplied);
 
-  factory CommentReplyState.empy() => const CommentReplyState(false, '', '');
+  factory CommentReplyState.empy() => const CommentReplyState(false, null);
 
   @override
-  List<Object> get props => [isReplying, commentAuthorName, commentContent];
+  List<Object> get props => [isReplying];
 }

@@ -18,6 +18,7 @@
 */
 
 import 'package:bloc/bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:equatable/equatable.dart';
 
 part 'comment_reply_state.dart';
@@ -31,7 +32,7 @@ class CommentReplyCubit extends Cubit<CommentReplyState> {
     emit(CommentReplyState.empy());
   }
 
-  void setReply(String commentAuthorName, String commentContent) {
-    emit(CommentReplyState(true, commentAuthorName, commentContent));
+  void setReply(CommentView comment) {
+    emit(CommentReplyState(true, comment));
   }
 }

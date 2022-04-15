@@ -17,7 +17,6 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
@@ -31,11 +30,15 @@ class MemberComment extends StatelessWidget {
   final CommentView comment;
   final EdgeInsetsGeometry padding;
   final bool enableReplies;
+
+  final void Function()? onReplied;
+
   const MemberComment({
     Key? key,
     required this.comment,
     this.enableReplies = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 18),
+    this.onReplied,
   }) : super(key: key);
 
   @override
@@ -82,7 +85,7 @@ class MemberComment extends StatelessWidget {
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                enableReplies ? ReplyButton(onTap: setReply) : Container(),
+                enableReplies ? ReplyButton(onTap: onReplied) : Container(),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert, color: Colors.grey))
@@ -95,10 +98,5 @@ class MemberComment extends StatelessWidget {
             : Container(),
       ),
     );
-  }
-
-  void setReply() {
-    CommentReplyCubit()
-        .setReply(comment.member.currentMemberName, comment.content);
   }
 }
