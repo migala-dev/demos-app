@@ -60,6 +60,7 @@ class ProposalService {
     ProposalResponse response =
         await ProposalApi().getProposal(spaceId, proposalId);
 
+    await ProposalParticipationRepository().removeByProposalId(proposalId);
     await _saveProposalResponseOnRepository(response);
   }
 
@@ -89,6 +90,7 @@ class ProposalService {
     final response = await ProposalApi()
         .updateProposal(spaceId, proposalId, proposalFormView);
 
+    await ProposalParticipationRepository().removeByProposalId(proposalId);
     await _saveProposalResponseOnRepository(response);
   }
 

@@ -105,4 +105,9 @@ class ProposalParticipationRepository extends AppRepository implements Table {
 
     return result;
   }
+
+  Future<void> removeByProposalId(String proposalId) async {
+    Database? db = await this.db;
+    await db!.rawDelete("DELETE FROM $tblProposalParticipations where $colProposalId = '$proposalId'");
+  }
 }
