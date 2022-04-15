@@ -122,14 +122,20 @@ class _InputCommentState extends State<InputComment> {
   }
 
   void addComment() async {
+    final isReplying = CommentReplyCubit().state.isReplying;
+    if (isReplying) {
+      addNewCommentReply();
+    } else {
+      addNewComment();
+    }
+  }
+
+  void addNewComment() async {
     final content = _contentController.text;
     final spaceId = SpaceBloc().state.spaceId!;
     final manifestoId = ProposalDetailsBloc().state!.manifestoId;
 
-    setState(() {
-      _contentController.clear();
-      hideKeyboard();
-    });
+    clearKeyboardInput();
 
     final comment =
         await CommentService().createComment(content, spaceId, manifestoId);
@@ -142,4 +148,29 @@ class _InputCommentState extends State<InputComment> {
     CommentViewListBloc().add(CommentViewListUserCommented(commentView!));
     ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
   }
+
+  void addNewCommentReply() async {
+    final content = _contentController.text;
+    final spaceId = SpaceBloc().state.spaceId!;
+    final manifestoId = ProposalDetailsBloc().state!.manifestoId;
+    final manifestoCommentParentId =
+        CommentReplyCubit().state.commentReplied!.manifestoCommentId;
+
+    clearKeyboardInput();
+    CommentReplyCubit().cancelReply();
+
+    final comment = await CommentService().sendCommentReply(
+        content, spaceId, manifestoId, manifestoCommentParentId);
+
+    final commentView =
+        await CommentViewService().getCommentById(comment.manifestoCommentId);
+
+    CommentViewListBloc().add(
+        CommentViewListUserReplied(commentView!, manifestoCommentParentId));
+  }
+
+  void clearKeyboardInput() => setState(() {
+        _contentController.clear();
+        hideKeyboard();
+      });
 }

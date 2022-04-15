@@ -69,7 +69,7 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
       final outOfRange = _commentListController.position.outOfRange;
       final controllerHasLength =
           _commentListController.position.maxScrollExtent > 0;
-      if (!outOfRange && controllerHasLength) {
+      if (!outOfRange && controllerHasLength && !state.lastUpdateIsReply) {
         showInScreenNewCommentChip();
       }
     }

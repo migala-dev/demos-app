@@ -34,6 +34,18 @@ class CommentApi {
     return response;
   }
 
+  Future<CommentResponse> sendCommentReply(String content, String spaceId,
+      String manifestoId, String manifestoCommentParentId) async {
+    final String endpoint = CommentsPath().getReplyManifestoCommentPath(
+        spaceId, manifestoId, manifestoCommentParentId);
+    final body = _getBodyFromContent(content);
+
+    final httpResponse = await Api.post(endpoint, body, null);
+    final response = CommentResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Future<CommentResponse> getComment(
       String spaceId, String manifestoCommentId) async {
     final String endpoint =

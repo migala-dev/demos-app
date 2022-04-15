@@ -100,7 +100,7 @@ class CommentViewRepository extends AppRepository {
         commentResult.first, replies, member!);
   }
 
-  Future<List<CommentView>?> findRepliesByManifestoCommentId(
+  Future<List<CommentView>> findRepliesByManifestoCommentId(
       String manifestoCommentId) async {
     final Database? db = await this.db;
 
@@ -121,6 +121,6 @@ class CommentViewRepository extends AppRepository {
       return replies;
     }
 
-    return null;
+    return [];
   }
 }
