@@ -45,6 +45,14 @@ class CommentPublishedHandler implements EventHandler {
     final String spaceId = dataEvent.data!['spaceId'];
     final String manifestoCommentId = dataEvent.data!['manifestoCommentId'];
 
+    final bool isCommentAlreadyExists =
+        await CommentService().getCommentFromLocalDb(manifestoCommentId) !=
+            null;
+
+    if (isCommentAlreadyExists) {
+      return;
+    }
+
     final comment =
         await CommentService().getComment(spaceId, manifestoCommentId);
 

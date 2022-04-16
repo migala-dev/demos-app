@@ -52,6 +52,11 @@ class CommentService {
     return response.comment;
   }
 
+  Future<ManifestoComment?> getCommentFromLocalDb(
+      String manifestoCommentId) async {
+    return ManifestoCommentRepository().findById(manifestoCommentId);
+  }
+
   Future<void> _saveCommentResponseOnRepository(
       CommentResponse commentResponse) async {
     await ManifestoCommentRepository().insertOrUpdate(commentResponse.comment);
