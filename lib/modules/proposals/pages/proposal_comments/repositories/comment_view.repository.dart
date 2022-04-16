@@ -64,7 +64,8 @@ class CommentViewRepository extends AppRepository {
 
   String _getManifestoCommentsIdsByManifestoId(String manifestoId) => '''
     SELECT $colManifestoCommentId FROM $tblManifestoComment
-      WHERE $colManifestoId = '$manifestoId'
+      WHERE $colManifestoId = '$manifestoId' AND 
+        ($colManifestoCommentParentId is null OR $colManifestoCommentParentId = '') 
   ''';
 
   Future<List<CommentView>> findByManifestoId(String manifestoId) async {

@@ -53,6 +53,8 @@ class ProposalViewsRepository extends AppRepository {
   final colExpiredAt = ProposalRepository().colExpiredAt;
   final colManifestoOptionId = ManifestoOptionRepository().colId;
   final colParticipated = ProposalParticipationRepository().colParticipated;
+  final colManifestoCommentParentId =
+      ManifestoCommentRepository().colManifestoCommentParentId;
 
   String _getSelectInnerJoinQuery() => '''
     SELECT $tblManifesto.$colManifestoId,
@@ -75,7 +77,9 @@ class ProposalViewsRepository extends AppRepository {
               where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId
             ) as "votesTotal",
             (select count(*) from $tblManifestoComment
-              where $tblManifestoComment.$colManifestoId = $tblManifesto.$colManifestoId
+              where 
+                $tblManifestoComment.$colManifestoId = $tblManifesto.$colManifestoId AND 
+                $tblManifestoComment.$colManifestoCommentParentId is null
             ) as "numberOfComments"
           FROM $tblManifesto
           INNER
