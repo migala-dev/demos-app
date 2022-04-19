@@ -20,25 +20,25 @@
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/repositories/proposal_view.repository.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_in_progress_card.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_history_card.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_list_views/proposal_view_list.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 import 'package:flutter/material.dart';
 
-class InProgressProposals implements ProposalViewList {
-  static final InProgressProposals _draftProposals =
-      InProgressProposals._internal();
+class HistoryProposals implements ProposalViewList {
+  static final HistoryProposals _hisotryProposals =
+      HistoryProposals._internal();
 
-  InProgressProposals._internal();
+  HistoryProposals._internal();
 
-  factory InProgressProposals() => _draftProposals;
+  factory HistoryProposals() => _hisotryProposals;
 
   @override
-  String title = 'EN PROGRESO';
+  String title = 'HISTORIAL';
 
   @override
   Future<List<ProposalView>> getList(String spaceId) async {
-    ProposalStatus status = ProposalStatus.open;
+    ProposalStatus status = ProposalStatus.closed;
     return await ProposalViewsRepository()
         .findAllBySpaceIdAndStatus(spaceId, status);
   }
@@ -48,7 +48,7 @@ class InProgressProposals implements ProposalViewList {
     return ProposalViewListWidget(
       proposals: proposals,
       getProposalCard: (proposal) {
-        return ProposalInProgressCard(proposal: proposal);
+        return ProposalHistoryCard(proposal: proposal);
       },
     );
   }
@@ -56,7 +56,7 @@ class InProgressProposals implements ProposalViewList {
   @override
   Future<bool> itHasProposals(String spaceId) async {
     int proposalsCount = await ProposalViewsRepository()
-        .getCountBySpaceIdAndStatus(spaceId, [ProposalStatus.open]);
+        .getCountBySpaceIdAndStatus(spaceId, [ProposalStatus.closed, ProposalStatus.cancelled]);
 
     return proposalsCount > 0;
   }

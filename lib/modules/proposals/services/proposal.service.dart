@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/core/api/proposal.api.dart';
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/models/responses/proposal_participation_response.model.dart';
 import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
@@ -60,7 +61,9 @@ class ProposalService {
     ProposalResponse response =
         await ProposalApi().getProposal(spaceId, proposalId);
 
-    await ProposalParticipationRepository().removeByProposalId(proposalId);
+    if (response.proposal.status == ProposalStatus.open) {
+      await ProposalParticipationRepository().removeByProposalId(proposalId);
+    }
     await _saveProposalResponseOnRepository(response);
   }
 

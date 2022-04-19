@@ -168,12 +168,14 @@ class ProposalViewsRepository extends AppRepository {
   }
 
   Future<int> getCountBySpaceIdAndStatus(
-      String spaceId, ProposalStatus proposalStatus) async {
+      String spaceId, List<ProposalStatus> proposalStatusses) async {
     Database? db = await this.db;
+    final String validStatus = proposalStatusses.map((s) => s.index.toString()).join(',');
+
 
     final result = await db!.rawQuery("""
        select count(*) as count from $tblProposals
-          where $colSpaceId = '$spaceId' AND $colStatus = ${proposalStatus.index}
+          where $colSpaceId = '$spaceId' AND $colStatus IN($validStatus)
       """);
 
     return result.isNotEmpty ? int.parse(result.first['count'].toString()) : 0;
