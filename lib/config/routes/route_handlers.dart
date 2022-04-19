@@ -21,6 +21,7 @@ import 'package:demos_app/modules/auth/screens/initial_profile.dart';
 import 'package:demos_app/modules/auth/screens/login.dart';
 import 'package:demos_app/modules/auth/screens/verify_phone.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/proposal_comments.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
@@ -140,6 +141,7 @@ var proposalDetailsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   ProposalView proposalView = context!.settings!.arguments as ProposalView;
 
+  CommentReplyCubit().cancelReply();
   CommentViewListBloc().add(CommentViewListEmpited());
   ProposalDetailsBloc().add(SetProposalViewEvent(proposalView));
 

@@ -64,7 +64,8 @@ class CommentViewRepository extends AppRepository {
 
   String _getManifestoCommentsIdsByManifestoId(String manifestoId) => '''
     SELECT $colManifestoCommentId FROM $tblManifestoComment
-      WHERE $colManifestoId = '$manifestoId'
+      WHERE $colManifestoId = '$manifestoId' AND 
+        ($colManifestoCommentParentId is null OR $colManifestoCommentParentId = '') 
   ''';
 
   Future<List<CommentView>> findByManifestoId(String manifestoId) async {
@@ -100,7 +101,7 @@ class CommentViewRepository extends AppRepository {
         commentResult.first, replies, member!);
   }
 
-  Future<List<CommentView>?> findRepliesByManifestoCommentId(
+  Future<List<CommentView>> findRepliesByManifestoCommentId(
       String manifestoCommentId) async {
     final Database? db = await this.db;
 
@@ -121,6 +122,6 @@ class CommentViewRepository extends AppRepository {
       return replies;
     }
 
-    return null;
+    return [];
   }
 }
