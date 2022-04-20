@@ -26,6 +26,7 @@ import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart'
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_vote.repository.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 
 class ProposalService {
@@ -109,6 +110,9 @@ class ProposalService {
 
     for (final participation in response.participations) {
       await ProposalParticipationRepository().insert(participation);
+    }
+    for (final vote in response.votes) {
+      await ProposalVoteRepository().insert(vote);
     }
   }
 

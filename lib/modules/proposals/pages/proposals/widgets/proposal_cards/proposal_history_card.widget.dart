@@ -61,7 +61,7 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
                     Container(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
-                          'Por: ${proposal.createdByName} ${proposal.participations.length.toString()}',
+                          'Por: ${proposal.createdByName}',
                           style: TextStyle(
                               color: Colors.grey.shade600, fontSize: 12.0),
                         ))
@@ -78,16 +78,8 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
                       color: color,
                     ),
                     title: 'CERRADO EL:',
-                    content: DateFormatterService.parseDateToStandardDateFormat(proposal.expiredAt!),
+                    content: DateFormatterService.parseDateToStandardDateFormatWithHour(proposal.expiredAt!),
                   ),
-                  ProposalCardInfo(
-                      getIcon: (size, color) => Icon(
-                            Icons.directions_walk,
-                            size: size,
-                            color: color,
-                          ),
-                      title: 'ESTATUS:',
-                      content: 'En Progresso')
                 ],
               ),
             ],

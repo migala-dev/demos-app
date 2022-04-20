@@ -41,6 +41,12 @@ class DateFormatterService {
       return outputFormat.format(date);
   }
 
+    static String parseDateToStandardDateFormatWithHour(DateTime date) {
+      initializeDateFormatting('es');
+      final outputFormat = DateFormat('dd/MMMM/yyyy hh:mm a', 'es');
+      return outputFormat.format(date);
+  }
+
   static String parseToDayMonthYearDate(String date) {
     try {
       final DateFormat dateFormat = DateFormat('yyyy-MM-dd');

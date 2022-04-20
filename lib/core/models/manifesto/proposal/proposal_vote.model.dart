@@ -21,17 +21,22 @@ class ProposalVote {
   final String proposalVoteId;
   final String proposalId;
   final String userHash;
-  final String manifestoOptionId;
+  final String? manifestoOptionId;
+  final bool? inFavor;
+  final String? nullVoteComment;
   final String createdAt;
   final String updatedAt;
   ProposalVote(this.proposalVoteId, this.proposalId, this.userHash,
-      this.manifestoOptionId, this.createdAt, this.updatedAt);
+      this.manifestoOptionId, this.inFavor, this.nullVoteComment,
+      this.createdAt, this.updatedAt);
 
   factory ProposalVote.fromObject(dynamic o) => ProposalVote(
         o['proposalVoteId'],
         o['proposalId'],
         o['userHash'],
         o['manifestoOptionId'],
+        o['inFavor'].runtimeType == int ? o['inFavor'] == 1 : o['inFavor'],
+        o['nullVoteComment'],
         o['createdAt'],
         o['updatedAt'],
       );
@@ -41,6 +46,8 @@ class ProposalVote {
         'proposalId': proposalId,
         'userHash': userHash,
         'manifestoOptionId': manifestoOptionId,
+        'inFavor': inFavor != null && inFavor! ? 1 : 0,
+        'nullVoteComment': nullVoteComment,
         'createdAt': createdAt,
         'updatedAt': updatedAt,
       };

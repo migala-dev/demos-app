@@ -18,8 +18,10 @@
 */
 
 import 'package:demos_app/core/api/proposal.api.dart';
+import 'package:demos_app/core/models/manifesto/proposal/proposal_vote.model.dart';
 import 'package:demos_app/core/models/responses/vote_proposal_response.model.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_vote.repository.dart';
 import 'package:demos_app/utils/generate_user_hash.util.dart';
 
 class ProposalVoteService {
@@ -55,5 +57,9 @@ class ProposalVoteService {
 
     await ProposalParticipationRepository()
         .update(response.proposalParticipation);
+  }
+
+  Future<List<ProposalVote>> getVotesByProposalId(String proposalId) {
+    return ProposalVoteRepository().getVotesByProposalId(proposalId);
   }
 }
