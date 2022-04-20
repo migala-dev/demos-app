@@ -20,6 +20,8 @@
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comments_empy_alert.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/input_comment.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment.widget.dart';
@@ -67,7 +69,7 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
       final outOfRange = _commentListController.position.outOfRange;
       final controllerHasLength =
           _commentListController.position.maxScrollExtent > 0;
-      if (!outOfRange && controllerHasLength) {
+      if (!outOfRange && controllerHasLength && !state.lastUpdateIsReply) {
         showInScreenNewCommentChip();
       }
     }
@@ -106,7 +108,10 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: MemberComment(
-                              comment: comments[index], enableReplies: true),
+                            comment: comments[index],
+                            enableReplies: true,
+                            onReplied: () => setReply(comments[index]),
+                          ),
                         ),
                       ),
                       showNewCommentChip
@@ -160,4 +165,8 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
   void showInScreenNewCommentChip() => setState(() {
         showNewCommentChip = true;
       });
+
+  void setReply(CommentView commentReplied) {
+    CommentReplyCubit().setReply(commentReplied);
+  }
 }

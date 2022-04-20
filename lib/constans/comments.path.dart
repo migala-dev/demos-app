@@ -11,4 +11,8 @@ class CommentsPath {
 
   String getManifestoCommentPath(String spaceId, String manifestoId) =>
       '${getSpaceCommentPath(spaceId)}/$manifestoId';
+
+  String getReplyManifestoCommentPath(String spaceId, String manifestoId,
+          String manifestoCommentParentId) =>
+      '${getSpaceCommentPath(spaceId)}/$manifestoId/$manifestoCommentParentId';
 }

@@ -34,4 +34,11 @@ class CommentViewListUserCommented extends CommentViewListEvent {
   const CommentViewListUserCommented(this.comment);
 }
 
+class CommentViewListUserReplied extends CommentViewListEvent {
+  final CommentView comment;
+  final String manifestoCommentParentId;
+
+  const CommentViewListUserReplied(this.comment, this.manifestoCommentParentId);
+}
+
 class CommentViewListEmpited extends CommentViewListEvent {}

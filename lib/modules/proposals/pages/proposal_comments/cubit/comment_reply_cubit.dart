@@ -17,26 +17,22 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
+import 'package:equatable/equatable.dart';
 
-class ReplyButton extends StatelessWidget {
-  final VoidCallback? onTap;
-  const ReplyButton({Key? key, required this.onTap}) : super(key: key);
+part 'comment_reply_state.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Row(
-        children: const [
-          Icon(
-            Icons.reply_outlined,
-            color: Colors.grey,
-          ),
-          SizedBox(width: 2),
-          Text('Responder'),
-        ],
-      ),
-    );
+class CommentReplyCubit extends Cubit<CommentReplyState> {
+  static final _commentReplyCubit = CommentReplyCubit._internal();
+  CommentReplyCubit._internal() : super(CommentReplyState.empy());
+  factory CommentReplyCubit() => _commentReplyCubit;
+
+  void cancelReply() {
+    emit(CommentReplyState.empy());
+  }
+
+  void setReply(CommentView comment) {
+    emit(CommentReplyState(true, comment));
   }
 }

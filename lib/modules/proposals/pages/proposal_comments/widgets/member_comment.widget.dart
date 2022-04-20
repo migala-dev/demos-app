@@ -30,11 +30,15 @@ class MemberComment extends StatelessWidget {
   final CommentView comment;
   final EdgeInsetsGeometry padding;
   final bool enableReplies;
+
+  final void Function()? onReplied;
+
   const MemberComment({
     Key? key,
     required this.comment,
     this.enableReplies = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 18),
+    this.onReplied,
   }) : super(key: key);
 
   @override
@@ -81,7 +85,7 @@ class MemberComment extends StatelessWidget {
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                enableReplies ? ReplyButton(onTap: () {}) : Container(),
+                enableReplies ? ReplyButton(onTap: onReplied) : Container(),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert, color: Colors.grey))

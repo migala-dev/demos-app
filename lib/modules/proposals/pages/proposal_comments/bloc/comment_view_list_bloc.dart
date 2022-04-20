@@ -31,7 +31,8 @@ class CommentViewListBloc
   factory CommentViewListBloc() => _commentViewListBloc;
   CommentViewListBloc._internal() : super(CommentViewListLoadingInProgress()) {
     on<CommentViewListLoaded>(_onListLoaded);
-    on<CommentViewListUserCommented>(_onCurrentUserCommeted);
+    on<CommentViewListUserCommented>(_onUserCommeted);
+    on<CommentViewListUserReplied>(_onUserReplied);
     on<CommentViewListEmpited>(_onEmpited);
   }
 
@@ -49,7 +50,7 @@ class CommentViewListBloc
     emit(CommentViewListWithData(commentViews));
   }
 
-  void _onCurrentUserCommeted(CommentViewListUserCommented event,
+  void _onUserCommeted(CommentViewListUserCommented event,
       Emitter<CommentViewListState> emit) async {
     if (state is CommentViewListWithData) {
       emit(CommentViewListWithData(
@@ -58,6 +59,25 @@ class CommentViewListBloc
     }
 
     emit(CommentViewListWithData([event.comment]));
+  }
+
+  void _onUserReplied(CommentViewListUserReplied event,
+      Emitter<CommentViewListState> emit) async {
+    if (state is CommentViewListWithData) {
+      final List<CommentView> commentViews =
+          List.from((state as CommentViewListWithData).commentViews);
+
+      emit(CommentViewListLoadingInProgress());
+
+      final CommentView? commentReplied = commentViews
+          .where((comment) =>
+              comment.manifestoCommentId == event.manifestoCommentParentId)
+          .first;
+
+      commentReplied?.replies!.add(event.comment);
+
+      emit(CommentViewListWithData(commentViews, lastUpdateIsReply: true));
+    }
   }
 
   void _onEmpited(
