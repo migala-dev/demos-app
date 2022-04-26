@@ -101,7 +101,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                       return Column(children: const [
                         SizedBox(height: 15),
                         Text('* Aún no has votado en esta propuesta',
-                            style: TextStyle(color: Colors.grey))
+                            style: TextStyle(color: Colors.redAccent))
                       ]);
                     }
                   }

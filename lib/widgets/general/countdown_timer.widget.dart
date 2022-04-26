@@ -14,27 +14,25 @@ class CountdownTimer extends StatefulWidget {
 class _CountdownTimerState extends State<CountdownTimer> {
   Timer? countdownTimer;
   Duration? difference;
-  String countText = '';
 
   @override
   void initState() {
-    countText = getTimeRemaingDescription();
+    difference = widget.dateTime!.difference(DateTime.now());
     if (widget.dateTime != null) {
       countdownTimer =
-          Timer.periodic(const Duration(seconds: 60), (_) => setCountDown());
+          Timer.periodic(const Duration(seconds: 30), (_) => setCountDown());
     }
     super.initState();
   }
 
   void setCountDown() {
     setState(() {
-      countText = getTimeRemaingDescription();
+      difference = widget.dateTime!.difference(DateTime.now());
     });
   }
 
   String getTimeRemaingDescription() {
     if (widget.dateTime != null) {
-      difference = widget.dateTime!.difference(DateTime.now());
       if (difference!.inMinutes > 0) {
         String differenceInHours = difference!.inHours.toString();
         String differenceInMinutes = (difference!.inMinutes % 60).toString();
@@ -52,6 +50,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
+    String countText = getTimeRemaingDescription();
     return Text(countText,
         style: const TextStyle(
           fontSize: 16,
