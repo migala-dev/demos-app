@@ -14,7 +14,7 @@ class MultipleOptionsResultCounter extends ResultCounterHelper
 
   @override
   Widget getCounterWidget(ProposalView proposal, List<ProposalVote> votes) {
-    String? winnerOptionId = getWinnerOptionId(votes);
+    final String? winnerOptionId = getWinnerOptionId(votes);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -34,13 +34,13 @@ class MultipleOptionsResultCounter extends ResultCounterHelper
 
   @override
   int getTotalOfVotesRequired(ProposalView proposal) {
-    SpaceView space = SpaceBloc().state;
-    int porcentage = space.participationPercentage;
+    final SpaceView space = SpaceBloc().state;
+    final int porcentage = space.participationPercentage;
     return calculateRequiredVotes(proposal.votesTotal, porcentage);
   }
 
   String? getWinnerOptionId(List<ProposalVote> votes) {
-    Map<String, int> votesCounter = {};
+    final Map<String, int> votesCounter = {};
     votes.where((o) => o.manifestoOptionId != null).forEach((o) {
       votesCounter[o.manifestoOptionId!] =
           votesCounter[o.manifestoOptionId!] == null
@@ -48,7 +48,7 @@ class MultipleOptionsResultCounter extends ResultCounterHelper
               : votesCounter[o.manifestoOptionId!]! + 1;
     });
 
-    List<MapEntry<String, int>> votesCounterList = votesCounter.entries.map<MapEntry<String, int>>((e) => e).toList();
+    final List<MapEntry<String, int>> votesCounterList = votesCounter.entries.map<MapEntry<String, int>>((e) => e).toList();
     
     votesCounterList.sort((a, b) => a.value.compareTo(b.value));
 

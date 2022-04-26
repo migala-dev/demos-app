@@ -11,29 +11,23 @@ List<ResultCounter> counters = [
   MultipleOptionsResultCounter()
 ];
 
-class ProposalResult extends StatefulWidget {
+class ProposalResult extends StatelessWidget {
   final ProposalView proposal;
+  int get totalParticipation => proposal.votesTotal;
+  ResultCounter get counter => counters.where((c) => c.optionType == proposal.optionType).first;
 
   const ProposalResult({Key? key, required this.proposal}) : super(key: key);
-
-  @override
-  State<ProposalResult> createState() => _ProposalResultState();
-}
-
-class _ProposalResultState extends State<ProposalResult> {
-  int get totalParticipation => widget.proposal.votesTotal;
-  ResultCounter get counter => counters.where((c) => c.optionType == widget.proposal.optionType).first;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: ProposalVoteService()
-            .getVotesByProposalId(widget.proposal.proposalId),
+            .getVotesByProposalId(proposal.proposalId),
         initialData: const <ProposalVote>[],
         builder:
             (BuildContext context, AsyncSnapshot<List<ProposalVote>> snapshot) {
           List<ProposalVote> votes = snapshot.data!;
-          int requiredVotesCount = counter.getTotalOfVotesRequired(widget.proposal);
+          int requiredVotesCount = counter.getTotalOfVotesRequired(proposal);
           bool showInsufficientVotes = votes.length < requiredVotesCount;
           List<ProposalVote> nullComments = votes.where((o) => o.nullVoteComment != null).toList();
           bool showNullVotes = nullComments.isNotEmpty;
@@ -57,7 +51,7 @@ class _ProposalResultState extends State<ProposalResult> {
                       : Container(),
                 ],
               ),
-              counter.getCounterWidget(widget.proposal, votes),
+              counter.getCounterWidget(proposal, votes),
               Container(
                 padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
                 child: Text(

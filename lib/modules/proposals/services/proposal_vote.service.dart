@@ -27,9 +27,9 @@ import 'package:demos_app/utils/generate_user_hash.util.dart';
 class ProposalVoteService {
   Future<void> voteInFavor(
       String spaceId, String proposalId, bool inFavor) async {
-    String userHash = await generateUserHash(proposalId);
+    final String userHash = await generateUserHash(proposalId);
 
-    VoteProposalResponse response = await ProposalApi()
+    final VoteProposalResponse response = await ProposalApi()
         .voteInFavorProposal(spaceId, proposalId, userHash, inFavor);
 
     await ProposalParticipationRepository()
@@ -38,9 +38,9 @@ class ProposalVoteService {
 
   Future<void> voteManifestoOption(
       String spaceId, String proposalId, String manifestoOptionId) async {
-    String userHash = await generateUserHash(proposalId);
+    final String userHash = await generateUserHash(proposalId);
 
-    VoteProposalResponse response = await ProposalApi()
+    final VoteProposalResponse response = await ProposalApi()
         .voteManifestoOptionProposal(
             spaceId, proposalId, userHash, manifestoOptionId);
 
@@ -49,9 +49,9 @@ class ProposalVoteService {
   }
 
   Future<void> voteNull(String spaceId, String proposalId, String nullVoteComment) async {
-     String userHash = await generateUserHash(proposalId);
+     final String userHash = await generateUserHash(proposalId);
 
-    VoteProposalResponse response = await ProposalApi()
+    final VoteProposalResponse response = await ProposalApi()
         .voteNullProposal(
             spaceId, proposalId, userHash, nullVoteComment);
 

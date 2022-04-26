@@ -14,9 +14,9 @@ class InFavorResultCounter extends ResultCounterHelper
 
   @override
   Widget getCounterWidget(ProposalView proposal, List<ProposalVote> votes) {
-    bool areSuffientVotes = votes.length >= getTotalOfVotesRequired(proposal);
-    int inFavorVotesCount = votes.where((v) => v.inFavor!).length;
-    int opposingVotesCount = votes.where((v) => !v.inFavor!).length;
+    final bool areSuffientVotes = votes.length >= getTotalOfVotesRequired(proposal);
+    final int inFavorVotesCount = votes.where((v) => v.inFavor!).length;
+    final int opposingVotesCount = votes.where((v) => !v.inFavor!).length;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -40,8 +40,8 @@ class InFavorResultCounter extends ResultCounterHelper
 
   @override
   int getTotalOfVotesRequired(ProposalView proposal) {
-    SpaceView space = SpaceBloc().state;
-    int porcentage = space.approvalPercentage;
+    final SpaceView space = SpaceBloc().state;
+    final int porcentage = space.approvalPercentage;
     return calculateRequiredVotes(proposal.votesTotal, porcentage);
   }
 }

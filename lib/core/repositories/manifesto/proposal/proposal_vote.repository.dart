@@ -45,8 +45,8 @@ class ProposalVoteRepository extends AppRepository implements Table {
       '$colUpdatedAt TEXT)';
 
   Future<String> insert(ProposalVote vote) async {
-    Database? db = await this.db;
-    ProposalVote? voteSaved = await findById(vote.proposalVoteId);
+    final Database? db = await this.db;
+    final ProposalVote? voteSaved = await findById(vote.proposalVoteId);
     if (voteSaved == null) {
       await db!.insert(tbProposalVotes, vote.toMap());
       return vote.proposalVoteId;
@@ -55,14 +55,14 @@ class ProposalVoteRepository extends AppRepository implements Table {
   }
 
   Future<ProposalVote?> findById(String voteId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!
         .rawQuery("SELECT * FROM $tbProposalVotes WHERE $colId = '$voteId'");
     return result.isNotEmpty ? ProposalVote.fromObject(result[0]) : null;
   }
 
   Future<List<ProposalVote>> getVotesByProposalId(String proposalId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawQuery(
         "SELECT * FROM $tbProposalVotes WHERE $colProposalId = '$proposalId'");
 
