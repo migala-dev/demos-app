@@ -1,9 +1,15 @@
-import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
-import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/models/manifesto/proposal/proposal_vote.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/result_counter/in_favor.result_counter.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/result_counter/multiple_options.result_counter.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/result_counter/result_counter.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/services/proposal_vote.service.dart';
 import 'package:flutter/material.dart';
+
+List<ResultCounter> counters = [
+  InFavorResultCounter(),
+  MultipleOptionsResultCounter()
+];
 
 class ProposalResult extends StatefulWidget {
   final ProposalView proposal;
@@ -15,6 +21,9 @@ class ProposalResult extends StatefulWidget {
 }
 
 class _ProposalResultState extends State<ProposalResult> {
+  int get totalParticipation => widget.proposal.votesTotal;
+  ResultCounter get counter => counters.where((c) => c.optionType == widget.proposal.optionType).first;
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -23,33 +32,66 @@ class _ProposalResultState extends State<ProposalResult> {
         initialData: const <ProposalVote>[],
         builder:
             (BuildContext context, AsyncSnapshot<List<ProposalVote>> snapshot) {
-          List<ProposalVote>? votes = snapshot.data;
+          List<ProposalVote> votes = snapshot.data!;
+          int requiredVotesCount = counter.getTotalOfVotesRequired(widget.proposal);
+          bool showInsufficientVotes = votes.length < requiredVotesCount;
+          List<ProposalVote> nullComments = votes.where((o) => o.nullVoteComment != null).toList();
+          bool showNullVotes = nullComments.isNotEmpty;
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('RESULTADOS', style: TextStyle(color: Colors.grey)),
-              widget.proposal.optionType ==
-                      ManifestoOptionType.inFavorOrOpposing
-                  ? getInFavorResult(votes!)
+              Row(
+                children: [
+                  const Expanded(
+                      child: Text('RESULTADOS',
+                          style: TextStyle(color: Colors.grey))),
+                  showInsufficientVotes
+                      ? Expanded(
+                          child: Text(
+                          'Votos Insuficientes'.toUpperCase(),
+                          textAlign: TextAlign.right,
+                          style: const TextStyle(color: Colors.red),
+                        ))
+                      : Container(),
+                ],
+              ),
+              counter.getCounterWidget(widget.proposal, votes),
+              Container(
+                padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                child: Text(
+                  'Votos recibidos: ${votes.length.toString()}, esperados: ${totalParticipation.toString()}, requeridos: ${requiredVotesCount.toString()}.',
+                  style: const TextStyle(color: Colors.grey),
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              showNullVotes
+                  ? ListTile(
+                      title: const Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'Votos Nulos',
+                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Text(
+                          nullComments
+                              .map((o) => '• ${o.nullVoteComment}\n')
+                              .join('')
+                              .toString(),
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    )
                   : Container(),
             ],
           );
         });
-  }
-
-  Widget getInFavorResult(List<ProposalVote> votes) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('A Favor: ${votes.where((v) => v.inFavor!).length}',
-            style: const TextStyle(color: Colors.black)),
-        Text('En contra: ${votes.where((v) => !v.inFavor!).length}',
-            style: const TextStyle(color: Colors.black)),
-        const Text('Resultado: Votos Insuficientes',
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-      ],
-    );
   }
 }
