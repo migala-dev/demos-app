@@ -42,7 +42,7 @@ class ManifestoOption {
         o['manifestoOptionId'],
         o['title'],
         o['manifestoId'],
-        o['deleted'] == 1 ? true : false,
+        o['deleted'] == 1,
         o['createdBy'],
         o['createdAt'],
         o['updatedBy'],

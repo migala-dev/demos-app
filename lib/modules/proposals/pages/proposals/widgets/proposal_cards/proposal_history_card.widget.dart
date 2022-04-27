@@ -22,15 +22,14 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
-import 'package:demos_app/modules/proposals/services/proposal_participation.service.dart';
-import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
+import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:flutter/material.dart';
-import '../../../../../../widgets/general/countdown_timer.widget.dart';
 
-class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
+class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
   @override
   final ProposalView proposal;
-  const ProposalInProgressCard(
+
+  const ProposalHistoryCard(
       {Key? key, required this.proposal })
       : super(key: key);
 
@@ -58,6 +57,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                     Text(proposal.title ?? 'Sin titulo',
                         style: const TextStyle(fontSize: 20),
                         overflow: TextOverflow.ellipsis),
+
                     Container(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
@@ -77,48 +77,15 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                       size: size,
                       color: color,
                     ),
-                    title: 'TERMINA EN:',
-                    child: CountdownTimer(dateTime: proposal.expiredAt),
+                    title: 'CERRADO EL:',
+                    content: DateFormatterService.parseDateToStandardDateFormatWithHour(proposal.expiredAt!),
                   ),
-                  ProposalCardInfo(
-                      getIcon: (size, color) => Icon(
-                            Icons.how_to_vote,
-                            size: size,
-                            color: color,
-                          ),
-                      title: 'Votos:',
-                      content: '${proposal.votesCount}/${proposal.votesTotal}')
                 ],
-              ),
-              FutureBuilder(
-                future: didCurrentUserParticipatedInProposal(),
-                builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                  if (snapshot.hasData) {
-                    final bool didCurrentMemberParticipatedInProposal =
-                        snapshot.data!;
-
-                    if (!didCurrentMemberParticipatedInProposal) {
-                      return Column(children: const [
-                        SizedBox(height: 15),
-                        Text('* Aún no has votado en esta propuesta',
-                            style: TextStyle(color: Colors.grey))
-                      ]);
-                    }
-                  }
-                  return Container();
-                },
               ),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Future<bool> didCurrentUserParticipatedInProposal() async {
-    final String currentUserId = CurrentMemberBloc().state!.userId;
-
-    return ProposalParticipationService()
-        .didUserParticipatedInProposal(currentUserId, proposal.proposalId);
   }
 }

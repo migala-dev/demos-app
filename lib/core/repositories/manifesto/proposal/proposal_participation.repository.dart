@@ -41,8 +41,8 @@ class ProposalParticipationRepository extends AppRepository implements Table {
       '$colParticipated BOOLEAN)';
 
   Future<String> insert(ProposalParticipation proposalParticipation) async {
-    Database? db = await this.db;
-    ProposalParticipation? proposalParticipationSaved =
+    final Database? db = await this.db;
+    final ProposalParticipation? proposalParticipationSaved =
         await findById(proposalParticipation.proposalParticipationId);
     if (proposalParticipationSaved == null) {
       await db!
@@ -54,8 +54,8 @@ class ProposalParticipationRepository extends AppRepository implements Table {
 
   Future<String> insertOrUpdate(
       ProposalParticipation proposalParticipation) async {
-    Database? db = await this.db;
-    ProposalParticipation? proposalParticipationSaved =
+    final Database? db = await this.db;
+    final ProposalParticipation? proposalParticipationSaved =
         await findById(proposalParticipation.proposalParticipationId);
     if (proposalParticipationSaved == null) {
       await db!
@@ -67,7 +67,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
 
   Future<ProposalParticipation?> findById(
       String proposalParticipationId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawQuery(
         "SELECT * FROM $tblProposalParticipations WHERE $colId = '$proposalParticipationId'");
     return result.isNotEmpty
@@ -77,7 +77,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
 
   Future<ProposalParticipation?> findByMemberIdAndProposalId(
       String memberId, String proposalId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawQuery(
         "SELECT * FROM $tblProposalParticipations WHERE $colMemberId = '$memberId' AND $colProposalId = '$proposalId'");
     return result.isNotEmpty
@@ -87,7 +87,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
 
   Future<ProposalParticipation?> findByUserIdAndProposalId(
       String userId, String proposalId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawQuery(
         "SELECT * FROM $tblProposalParticipations WHERE $colUserId = '$userId' AND $colProposalId = '$proposalId'");
     return result.isNotEmpty
@@ -96,7 +96,7 @@ class ProposalParticipationRepository extends AppRepository implements Table {
   }
 
   Future<int> update(ProposalParticipation participation) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawUpdate("""
         UPDATE $tblProposalParticipations
         SET $colParticipated = ${participation.participated ? 1 : 0} 
@@ -104,5 +104,10 @@ class ProposalParticipationRepository extends AppRepository implements Table {
       """);
 
     return result;
+  }
+
+  Future<void> removeByProposalId(String proposalId) async {
+    final Database? db = await this.db;
+    await db!.rawDelete("DELETE FROM $tblProposalParticipations where $colProposalId = '$proposalId'");
   }
 }
