@@ -19,6 +19,7 @@
 
 import 'package:demos_app/core/api/cache.api.dart';
 import 'package:demos_app/core/event_handlers/handlers/comment_handler.dart';
+import 'package:demos_app/core/event_handlers/handlers/comment_vote_handler.dart';
 import 'package:demos_app/core/event_handlers/handlers/proposals_handler.dart';
 import 'package:demos_app/core/event_handlers/handlers/space_handler.dart';
 import 'package:demos_app/core/event_handlers/handlers/member_handler.dart';
@@ -34,7 +35,8 @@ class CacheService {
     MemberHandler(),
     SpaceHandler(),
     ProposalHandler(),
-    CommentHandler()
+    CommentHandler(),
+    CommentVoteHandler()
   ];
   bool isPendingCache = false;
   bool isRequestInProgress = false;

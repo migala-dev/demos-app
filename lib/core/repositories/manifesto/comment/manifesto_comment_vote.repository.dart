@@ -49,12 +49,22 @@ class ManifestoCommentVoteRepository extends AppRepository implements Table {
         : null;
   }
 
+  Future<ManifestoCommentVote?> findByManifestoCommentIdAndUserId(
+      String manifestoCommentId, String userId) async {
+    final Database? db = await this.db;
+    final result = await db!.rawQuery('SELECT * FROM $tblManifestoCommentVote '
+        "WHERE $colManifestoCommentId = '$manifestoCommentId' AND $colUserId = '$userId'");
+    return result.isNotEmpty
+        ? ManifestoCommentVote.fromObject(result[0])
+        : null;
+  }
+
   Future<int> update(ManifestoCommentVote commentVote) async {
     final Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblManifestoCommentVote '
         "SET $colManifestoCommentId = '${commentVote.manifestoCommentId}'"
         ", $colUserId = '${commentVote.userId}'"
-        ", $colUpvote = '${commentVote.upvote}'"
+        ", $colUpvote = '${commentVote.upvote ? 1 : 0}'"
         ", $colCreatedAt = '${commentVote.createdAt}'"
         ", $colUpdatedAt = '${commentVote.updatedAt}' "
         "WHERE $colId = '${commentVote.manifestoCommentVoteId}'");
