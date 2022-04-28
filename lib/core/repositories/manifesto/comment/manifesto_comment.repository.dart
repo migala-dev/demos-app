@@ -45,14 +45,14 @@ class ManifestoCommentRepository extends AppRepository implements Table {
       '$colManifestoId TEXT)';
 
   Future<ManifestoComment?> findById(String manifestoCommentId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawQuery(
         "SELECT * FROM $tblManifestoComment WHERE $colId = '$manifestoCommentId'");
     return result.isNotEmpty ? ManifestoComment.fromObject(result[0]) : null;
   }
 
   Future<int> update(ManifestoComment comment) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblManifestoComment '
         "SET $colContent = '${comment.content}'"
         ", $colManifestoCommentParentId = '${comment.manifestoCommentParentId}'"
@@ -66,8 +66,8 @@ class ManifestoCommentRepository extends AppRepository implements Table {
   }
 
   Future<String> insertOrUpdate(ManifestoComment comment) async {
-    Database? db = await this.db;
-    ManifestoComment? proposalSaved =
+    final Database? db = await this.db;
+    final ManifestoComment? proposalSaved =
         await findById(comment.manifestoCommentId);
     if (proposalSaved == null) {
       await db!.insert(tblManifestoComment, comment.toMap());
