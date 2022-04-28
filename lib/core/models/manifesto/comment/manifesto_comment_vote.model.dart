@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/utils/parsers/parse_object_to_boolean.dart';
+
 class ManifestoCommentVote {
   final String manifestoCommentVoteId;
   final String manifestoCommentId;
@@ -38,7 +40,7 @@ class ManifestoCommentVote {
         o['manifestoCommentVoteId'],
         o['manifestoCommentId'],
         o['userId'],
-        o['upvote'] == 1 ? true : false,
+        parseObjectToBoolean(o['upvote']),
         o['createdAt'],
         o['updatedAt'],
       );

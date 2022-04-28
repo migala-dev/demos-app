@@ -60,8 +60,8 @@ class CommentVoteApi {
 
   Future<CommentVoteResponse> voteComment(
       String spaceId, String manifestoCommentId, bool upvote) async {
-    final String endpoint = CommentVotesPath()
-        .getSpaceManifestoCommentPath(spaceId, manifestoCommentId);
+    final String endpoint =
+        CommentVotesPath().getVotePath(spaceId, manifestoCommentId);
 
     final body = _getBodyFromUpvote(upvote);
 

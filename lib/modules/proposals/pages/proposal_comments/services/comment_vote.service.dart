@@ -64,6 +64,20 @@ class CommentVoteService {
     return response.commentVote;
   }
 
+  Future<void> deleteCommentVoteFromLocalDb(
+      String manifestoCommentVoteId) async {
+    await ManifestoCommentVoteRepository().delete(manifestoCommentVoteId);
+  }
+
+  Future<ManifestoCommentVote?>
+      getCommentVoteFromLocalDbByManifestoCommentIdAndUserId(
+          String manifestoCommentId, String userId) async {
+    final commentVote = await ManifestoCommentVoteRepository()
+        .findByManifestoCommentIdAndUserId(manifestoCommentId, userId);
+
+    return commentVote;
+  }
+
   Future<void> _saveCommentVoteResponseOnRepository(
       CommentVoteResponse commentVoteResponse) async {
     await ManifestoCommentVoteRepository()
