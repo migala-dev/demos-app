@@ -20,6 +20,8 @@
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
 import 'package:demos_app/core/models/cache.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_vote.service.dart';
 
 class CommentVoteHandler extends EventHandlerMixin {
@@ -40,14 +42,7 @@ class CommentVotePublishedHandler extends EventHandler {
 
   @override
   Future<void> handleEvent(Cache dataEvent) async {
-    final String spaceId = dataEvent.data!['spaceId'];
-    final String manifestoCommentVoteId =
-        dataEvent.data!['manifestoCommentVoteId'];
-
-    final commentVote = await CommentVoteService()
-        .getCommentVote(spaceId, manifestoCommentVoteId);
-
-    // TODO: handle bloc event
+    await _handleCommentVoteUpdate(dataEvent);
   }
 }
 
@@ -57,14 +52,7 @@ class CommentVoteUpdatedHandler extends EventHandler {
 
   @override
   Future<void> handleEvent(Cache dataEvent) async {
-    final String spaceId = dataEvent.data!['spaceId'];
-    final String manifestoCommentVoteId =
-        dataEvent.data!['manifestoCommentVoteId'];
-
-    final commentVote = await CommentVoteService()
-        .getCommentVote(spaceId, manifestoCommentVoteId);
-
-    // TODO: handle bloc event
+    await _handleCommentVoteUpdate(dataEvent);
   }
 }
 
@@ -80,4 +68,18 @@ class CommentVoteDeletedHandler extends EventHandler {
     await CommentVoteService()
         .deleteCommentVoteFromLocalDb(manifestoCommentVoteId);
   }
+}
+
+Future<void> _handleCommentVoteUpdate(Cache dataEvent) async {
+  final String spaceId = dataEvent.data!['spaceId'];
+  final String manifestoCommentVoteId =
+      dataEvent.data!['manifestoCommentVoteId'];
+
+  final commentVote = await CommentVoteService()
+      .getCommentVote(spaceId, manifestoCommentVoteId);
+
+  final commentView =
+      await CommentViewService().getCommentById(commentVote.manifestoCommentId);
+
+  CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
 }

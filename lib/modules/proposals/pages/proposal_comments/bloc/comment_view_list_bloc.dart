@@ -34,6 +34,7 @@ class CommentViewListBloc
     on<CommentViewListUserCommented>(_onUserCommeted);
     on<CommentViewListUserReplied>(_onUserReplied);
     on<CommentViewListEmpited>(_onEmpited);
+    on<CommentViewListUserVotedInComment>(_onUserVotedInComment);
   }
 
   void _onListLoaded(
@@ -77,6 +78,26 @@ class CommentViewListBloc
       commentReplied?.replies!.add(event.comment);
 
       emit(CommentViewListWithData(commentViews, lastUpdateIsReply: true));
+    }
+  }
+
+  void _onUserVotedInComment(CommentViewListUserVotedInComment event,
+      Emitter<CommentViewListState> emit) async {
+    if (state is CommentViewListWithData) {
+      final List<CommentView> commentViews =
+          List.from((state as CommentViewListWithData).commentViews);
+      final isSubComment = event.comment.replies == null;
+
+      emit(CommentViewListLoadingInProgress());
+
+      if (isSubComment) {
+      } else {
+        commentViews[commentViews.indexWhere((comment) =>
+            comment.manifestoCommentId ==
+            event.comment.manifestoCommentId)] = event.comment;
+      }
+
+      emit(CommentViewListWithData(commentViews));
     }
   }
 

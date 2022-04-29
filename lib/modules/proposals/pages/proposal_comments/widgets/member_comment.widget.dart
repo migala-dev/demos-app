@@ -19,7 +19,9 @@
 
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/models/manifesto/comment/manifesto_comment_vote.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_vote.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
@@ -120,10 +122,10 @@ class MemberComment extends StatelessWidget {
       return;
     }
 
-    await CommentVoteService()
+    final commentVote = await CommentVoteService()
         .voteComment(spaceId!, manifestoCommentId, upvote);
 
-    // TODO: handle bloc event
+    await _updateCommentView(commentVote.manifestoCommentId);
   }
 
   Future<void> updateVote(String spaceId, bool upvote,
@@ -132,12 +134,19 @@ class MemberComment extends StatelessWidget {
     if (canUpdateVote) {
       await CommentVoteService().updateCommentVote(
           spaceId, currentUserCommentVote.manifestoCommentVoteId, upvote);
+      await _updateCommentView(currentUserCommentVote.manifestoCommentId);
       return;
     }
 
     await CommentVoteService().deleteCommentVote(
         spaceId, currentUserCommentVote.manifestoCommentVoteId);
+    await _updateCommentView(currentUserCommentVote.manifestoCommentId);
+  }
 
-    // TODO: handle bloc event
+  Future<void> _updateCommentView(String manifestoCommentId) async {
+    final commentView =
+        await CommentViewService().getCommentById(manifestoCommentId);
+
+    CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
   }
 }
