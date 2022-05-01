@@ -107,7 +107,7 @@ class CommentViewRepository extends AppRepository {
         : null;
 
     final comment =
-        CommentView.fromObjectAndMemberView(result, replies, member!, votes);
+        CommentView.fromObjectAndParams(result, replies, member!, votes);
 
     return comment;
   }

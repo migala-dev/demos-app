@@ -49,11 +49,8 @@ class CommentView {
     this.replies,
   );
 
-  factory CommentView.fromObjectAndMemberView(
-          dynamic o,
-          List<CommentView>? replies,
-          MemberView member,
-          List<ManifestoCommentVote> votes) =>
+  factory CommentView.fromObjectAndParams(dynamic o, List<CommentView>? replies,
+          MemberView member, List<ManifestoCommentVote> votes) =>
       CommentView(
         o['manifestoCommentId'],
         o['createdAt'],
