@@ -62,6 +62,11 @@ class CommentViewRepository extends AppRepository {
       WHERE $colManifestoCommentParentId = '$manifestoCommentId'
   ''';
 
+  String _getRepliesIdsQuery(String manifestoCommentId) => '''
+    SELECT $colManifestoCommentId FROM $tblManifestoComment
+    WHERE $colManifestoCommentParentId = '$manifestoCommentId'
+  ''';
+
   String _getManifestoCommentsIdsByManifestoId(String manifestoId) => '''
     SELECT $colManifestoCommentId FROM $tblManifestoComment
       WHERE $colManifestoId = '$manifestoId' AND 
@@ -104,24 +109,17 @@ class CommentViewRepository extends AppRepository {
   Future<List<CommentView>> findRepliesByManifestoCommentId(
       String manifestoCommentId) async {
     final Database? db = await this.db;
+    final List<CommentView> comments = [];
 
-    final repliesQuery =
-        _getRepliesByManifestoCommentIdQuery(manifestoCommentId);
+    final repliesIdsQuery = _getRepliesIdsQuery(manifestoCommentId);
+    final commentIdsResult = await db!.rawQuery(repliesIdsQuery);
 
-    final repliesResult = await db!.rawQuery(repliesQuery);
-    if (repliesResult.isNotEmpty) {
-      final List<CommentView> replies = [];
-      for (final reply in repliesResult) {
-        final memberId = '${reply['createdByMember']}';
-        final member =
-            await MemberViewService().getMemberViewByMemberId(memberId);
-
-        replies.add(CommentView.fromObjectAndMemberView(reply, null, member!));
-      }
-
-      return replies;
+    for (final commentResult in commentIdsResult) {
+      final manifestoCommentId = '${commentResult['manifestoCommentId']}';
+      final comment = await findByManifestoCommentId(manifestoCommentId);
+      comments.add(comment!);
     }
 
-    return [];
+    return comments;
   }
 }
