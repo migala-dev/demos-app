@@ -31,9 +31,9 @@ class CommentViewService {
     return comments;
   }
 
-  Future<CommentView?> getCommentById(String manifesoCommentId) async {
+  Future<CommentView?> getCommentById(String manifestoCommentId) async {
     final comment = await CommentViewRepository()
-        .findByManifestoCommentId(manifesoCommentId);
+        .findByManifestoCommentId(manifestoCommentId);
 
     return comment;
   }

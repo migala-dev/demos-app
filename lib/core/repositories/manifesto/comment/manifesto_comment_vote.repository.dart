@@ -49,6 +49,18 @@ class ManifestoCommentVoteRepository extends AppRepository implements Table {
         : null;
   }
 
+  Future<List<ManifestoCommentVote>> findByManifestoCommentId(
+      String manifestoCommentId) async {
+    final Database? db = await this.db;
+    final result = await db!.rawQuery('SELECT * FROM $tblManifestoCommentVote '
+        "WHERE $colManifestoCommentId = '$manifestoCommentId'");
+    return result.isNotEmpty
+        ? result
+            .map((commentVote) => ManifestoCommentVote.fromObject(commentVote))
+            .toList()
+        : [];
+  }
+
   Future<ManifestoCommentVote?> findByManifestoCommentIdAndUserId(
       String manifestoCommentId, String userId) async {
     final Database? db = await this.db;
