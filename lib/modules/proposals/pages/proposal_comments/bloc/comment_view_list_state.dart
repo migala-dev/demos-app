@@ -32,11 +32,11 @@ class CommentViewListEmpty extends CommentViewListState {}
 
 class CommentViewListWithData extends CommentViewListState {
   final List<CommentView> commentViews;
-  final bool lastUpdateIsReply;
+  final bool lastUpdateIsNewComment;
 
   const CommentViewListWithData(this.commentViews,
-      {this.lastUpdateIsReply = false});
+      {this.lastUpdateIsNewComment = false});
 
   @override
-  List<Object> get props => [commentViews, lastUpdateIsReply];
+  List<Object> get props => [commentViews, lastUpdateIsNewComment];
 }

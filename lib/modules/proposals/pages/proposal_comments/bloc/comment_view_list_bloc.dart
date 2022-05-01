@@ -55,11 +55,13 @@ class CommentViewListBloc
       Emitter<CommentViewListState> emit) async {
     if (state is CommentViewListWithData) {
       emit(CommentViewListWithData(
-          [...(state as CommentViewListWithData).commentViews, event.comment]));
+          [...(state as CommentViewListWithData).commentViews, event.comment],
+          lastUpdateIsNewComment: true));
       return;
     }
 
-    emit(CommentViewListWithData([event.comment]));
+    emit(
+        CommentViewListWithData([event.comment], lastUpdateIsNewComment: true));
   }
 
   void _onUserReplied(CommentViewListUserReplied event,
@@ -77,7 +79,7 @@ class CommentViewListBloc
 
       commentReplied?.replies!.add(event.comment);
 
-      emit(CommentViewListWithData(commentViews, lastUpdateIsReply: true));
+      emit(CommentViewListWithData(commentViews));
     }
   }
 
@@ -86,11 +88,18 @@ class CommentViewListBloc
     if (state is CommentViewListWithData) {
       final List<CommentView> commentViews =
           List.from((state as CommentViewListWithData).commentViews);
-      final isSubComment = event.comment.replies == null;
+      final isSubComment = event.comment.isSubcomment;
 
       emit(CommentViewListLoadingInProgress());
 
       if (isSubComment) {
+        final comment = commentViews[commentViews.indexWhere((comment) =>
+            comment.manifestoCommentId ==
+            event.comment.manifestoCommentParentId)];
+
+        comment.replies![comment.replies!.indexWhere((reply) =>
+                reply.manifestoCommentId == event.comment.manifestoCommentId)] =
+            event.comment;
       } else {
         commentViews[commentViews.indexWhere((comment) =>
             comment.manifestoCommentId ==
