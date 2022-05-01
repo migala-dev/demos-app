@@ -20,6 +20,7 @@
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/models/manifesto/comment/manifesto_comment_vote.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/enums/current_user_commemt_vote.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_vote.service.dart';
@@ -86,6 +87,7 @@ class MemberComment extends StatelessWidget {
                   votesInOpposing: comment.downVotesCount,
                   onUpvote: () => onVote(comment.manifestoCommentId, true),
                   onDownvote: () => onVote(comment.manifestoCommentId, false),
+                  currentUserCommentVote: getCurrentUserCommentVote(),
                 ),
                 const SizedBox(width: 10),
                 comment.repliesCount > 0 && enableReplies
@@ -148,5 +150,19 @@ class MemberComment extends StatelessWidget {
         await CommentViewService().getCommentById(manifestoCommentId);
 
     CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
+  }
+
+  CurrentUserCommentVote getCurrentUserCommentVote() {
+    final currentUserId = CurrentUserBloc().state!.userId!;
+    final currentUserVoteResult =
+        comment.votes.where((vote) => vote.userId == currentUserId).toList();
+
+    if (currentUserVoteResult.isEmpty) return CurrentUserCommentVote.none;
+
+    final currentUserVote = currentUserVoteResult.first;
+
+    return currentUserVote.upvote
+        ? CurrentUserCommentVote.upvote
+        : CurrentUserCommentVote.downvote;
   }
 }
