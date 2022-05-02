@@ -12,8 +12,8 @@ class ProposalsListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SpaceView space = SpaceBloc().state;
-    Key _key = UniqueKey();
+    final SpaceView space = SpaceBloc().state;
+    final Key _key = UniqueKey();
     return Container(
       key: _key,
       child: FutureBuilder(
@@ -21,7 +21,7 @@ class ProposalsListWidget extends StatelessWidget {
           initialData: const <ProposalView>[],
           builder: (BuildContext context,
               AsyncSnapshot<List<ProposalView>> snapshot) {
-            List<ProposalView>? proposals = snapshot.data;
+            final List<ProposalView>? proposals = snapshot.data;
             if (proposals != null) {
               return proposalViewList.getWidget(context, proposals);
             }
