@@ -34,6 +34,7 @@ class CommentViewListBloc
     on<CommentViewListUserCommented>(_onUserCommeted);
     on<CommentViewListUserReplied>(_onUserReplied);
     on<CommentViewListEmpited>(_onEmpited);
+    on<CommentViewListUserVotedInComment>(_onUserVotedInComment);
   }
 
   void _onListLoaded(
@@ -54,11 +55,13 @@ class CommentViewListBloc
       Emitter<CommentViewListState> emit) async {
     if (state is CommentViewListWithData) {
       emit(CommentViewListWithData(
-          [...(state as CommentViewListWithData).commentViews, event.comment]));
+          [...(state as CommentViewListWithData).commentViews, event.comment],
+          lastUpdateIsNewComment: true));
       return;
     }
 
-    emit(CommentViewListWithData([event.comment]));
+    emit(
+        CommentViewListWithData([event.comment], lastUpdateIsNewComment: true));
   }
 
   void _onUserReplied(CommentViewListUserReplied event,
@@ -76,7 +79,36 @@ class CommentViewListBloc
 
       commentReplied?.replies!.add(event.comment);
 
-      emit(CommentViewListWithData(commentViews, lastUpdateIsReply: true));
+      emit(CommentViewListWithData(commentViews));
+    }
+  }
+
+  void _onUserVotedInComment(CommentViewListUserVotedInComment event,
+      Emitter<CommentViewListState> emit) async {
+    if (state is CommentViewListWithData) {
+      final List<CommentView> commentViews =
+          List.from((state as CommentViewListWithData).commentViews);
+      final isSubComment = event.comment.isSubcomment;
+
+      emit(CommentViewListLoadingInProgress());
+
+      if (isSubComment) {
+        final int parentCommentIndex = commentViews.indexWhere((comment) =>
+            comment.manifestoCommentId ==
+            event.comment.manifestoCommentParentId);
+        final parentComment = commentViews[parentCommentIndex];
+
+        final int replyIndex = parentComment.replies!.indexWhere((reply) =>
+            reply.manifestoCommentId == event.comment.manifestoCommentId);
+        parentComment.replies![replyIndex] = event.comment;
+      } else {
+        final int commentIndex = commentViews.indexWhere((comment) =>
+            comment.manifestoCommentId == event.comment.manifestoCommentId);
+
+        commentViews[commentIndex] = event.comment;
+      }
+
+      emit(CommentViewListWithData(commentViews));
     }
   }
 

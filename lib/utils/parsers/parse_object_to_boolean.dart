@@ -17,26 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-part of 'comment_view_list_bloc.dart';
+bool parseObjectToBoolean(dynamic o) {
+  if (o.runtimeType == bool) return o;
 
-abstract class CommentViewListState extends Equatable {
-  const CommentViewListState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CommentViewListLoadingInProgress extends CommentViewListState {}
-
-class CommentViewListEmpty extends CommentViewListState {}
-
-class CommentViewListWithData extends CommentViewListState {
-  final List<CommentView> commentViews;
-  final bool lastUpdateIsNewComment;
-
-  const CommentViewListWithData(this.commentViews,
-      {this.lastUpdateIsNewComment = false});
-
-  @override
-  List<Object> get props => [commentViews, lastUpdateIsNewComment];
+  return o == 1;
 }

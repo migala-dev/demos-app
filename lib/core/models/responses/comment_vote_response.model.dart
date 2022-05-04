@@ -17,26 +17,13 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-part of 'comment_view_list_bloc.dart';
+import 'package:demos_app/core/models/manifesto/comment/manifesto_comment_vote.model.dart';
 
-abstract class CommentViewListState extends Equatable {
-  const CommentViewListState();
+class CommentVoteResponse {
+  final ManifestoCommentVote commentVote;
 
-  @override
-  List<Object> get props => [];
-}
+  CommentVoteResponse(this.commentVote);
 
-class CommentViewListLoadingInProgress extends CommentViewListState {}
-
-class CommentViewListEmpty extends CommentViewListState {}
-
-class CommentViewListWithData extends CommentViewListState {
-  final List<CommentView> commentViews;
-  final bool lastUpdateIsNewComment;
-
-  const CommentViewListWithData(this.commentViews,
-      {this.lastUpdateIsNewComment = false});
-
-  @override
-  List<Object> get props => [commentViews, lastUpdateIsNewComment];
+  factory CommentVoteResponse.fromObject(dynamic o) =>
+      CommentVoteResponse(ManifestoCommentVote.fromObject(o));
 }
