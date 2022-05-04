@@ -41,6 +41,8 @@ class ProposalView {
   final String createdByProfilePictureKey;
   final List<ManifestoOptionView> manifestoOptions;
   final int numberOfComments;
+  final int participationPercentage;
+  final int approvalPercentage;
 
   String get createdAtFormated =>
       DateFormatterService.parseToDayMonthYearDate(createdAt);
@@ -62,7 +64,9 @@ class ProposalView {
       this.createdByName,
       this.createdByProfilePictureKey,
       this.manifestoOptions,
-      this.numberOfComments);
+      this.numberOfComments,
+      this.participationPercentage,
+      this.approvalPercentage);
 
   factory ProposalView.fromObject(dynamic o) => ProposalView(
       o['manifestoId'],
@@ -84,5 +88,7 @@ class ProposalView {
           .map<ManifestoOptionView>(
               (option) => ManifestoOptionView.fromObject(option))
           .toList(),
-      o['numberOfComments']);
+      o['numberOfComments'],
+      o['participationPercentage'],
+      o['approvalPercentage']);
 }

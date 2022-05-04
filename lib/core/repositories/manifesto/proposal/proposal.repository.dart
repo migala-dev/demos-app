@@ -35,6 +35,8 @@ class ProposalRepository extends AppRepository implements Table {
   final String colProgressStatus = 'progressStatus';
   final String colExpiredAt = 'expiredAt';
   final String colSpaceId = 'spaceId';
+  final String colParticipationPercentage = 'participationPercentage';
+  final String colApprovalPercentage = 'approvalPercentage';
   final String colCreatedBy = 'createdBy';
   final String colCreatedAt = 'createdAt';
   final String colUpdatedBy = 'updatedBy';
@@ -48,6 +50,8 @@ class ProposalRepository extends AppRepository implements Table {
       '$colProgressStatus INTEGER,'
       '$colExpiredAt TEXT,'
       '$colSpaceId TEXT,'
+      '$colParticipationPercentage INTEGER,'
+      '$colApprovalPercentage INTEGER,'
       '$colCreatedBy TEXT,'
       '$colCreatedAt TEXT,'
       '$colUpdatedBy TEXT,'
@@ -86,6 +90,8 @@ class ProposalRepository extends AppRepository implements Table {
         'SET $colStatus = ${proposal.status.index}'
         ', $colProgressStatus = ${proposal.progressStatus.index}'
         ", $colExpiredAt = '${proposal.expiredAt}'"
+        ', $colParticipationPercentage = ${proposal.participationPercentage.toString()}'
+        ', $colApprovalPercentage = ${proposal.approvalPercentage.toString()}'
         ", $colUpdatedBy = '${proposal.updatedBy}' "
         ", $colUpdatedAt = '${proposal.updatedAt}' "
         "WHERE $colId = '${proposal.proposalId}'");
