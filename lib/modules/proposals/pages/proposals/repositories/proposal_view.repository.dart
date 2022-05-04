@@ -51,6 +51,8 @@ class ProposalViewsRepository extends AppRepository {
   final colUpdatedBy = ProposalRepository().colUpdatedBy;
   final colCreatedAt = ProposalRepository().colCreatedAt;
   final colExpiredAt = ProposalRepository().colExpiredAt;
+  final colParticipationPercentage = ProposalRepository().colParticipationPercentage;
+  final colApprovalPercentage = ProposalRepository().colApprovalPercentage;
   final colManifestoOptionId = ManifestoOptionRepository().colId;
   final colParticipated = ProposalParticipationRepository().colParticipated;
   final colManifestoCommentParentId =
@@ -80,7 +82,9 @@ class ProposalViewsRepository extends AppRepository {
               where 
                 $tblManifestoComment.$colManifestoId = $tblManifesto.$colManifestoId AND 
                 $tblManifestoComment.$colManifestoCommentParentId is null
-            ) as "numberOfComments"
+            ) as "numberOfComments",
+            $tblProposals.$colParticipationPercentage,
+            $tblProposals.$colApprovalPercentage
           FROM $tblManifesto
           INNER
             JOIN $tblProposals ON 

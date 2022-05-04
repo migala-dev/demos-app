@@ -3,8 +3,6 @@ import 'package:demos_app/core/models/manifesto/proposal/proposal_vote.model.dar
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/option_result_info.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/result_counter/result_counter.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/spaces/models/space_view.model.dart';
-import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:flutter/material.dart';
 
 class MultipleOptionsResultCounter extends ResultCounterHelper
@@ -34,9 +32,7 @@ class MultipleOptionsResultCounter extends ResultCounterHelper
 
   @override
   int getTotalOfVotesRequired(ProposalView proposal) {
-    final SpaceView space = SpaceBloc().state;
-    final int porcentage = space.participationPercentage;
-    return calculateRequiredVotes(proposal.votesTotal, porcentage);
+    return calculateRequiredVotes(proposal.votesTotal, proposal.participationPercentage);
   }
 
   String? getWinnerOptionId(List<ProposalVote> votes) {
