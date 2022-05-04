@@ -93,17 +93,19 @@ class CommentViewListBloc
       emit(CommentViewListLoadingInProgress());
 
       if (isSubComment) {
-        final comment = commentViews[commentViews.indexWhere((comment) =>
+        final int parentCommentIndex = commentViews.indexWhere((comment) =>
             comment.manifestoCommentId ==
-            event.comment.manifestoCommentParentId)];
+            event.comment.manifestoCommentParentId);
+        final parentComment = commentViews[parentCommentIndex];
 
-        comment.replies![comment.replies!.indexWhere((reply) =>
-                reply.manifestoCommentId == event.comment.manifestoCommentId)] =
-            event.comment;
+        final int replyIndex = parentComment.replies!.indexWhere((reply) =>
+            reply.manifestoCommentId == event.comment.manifestoCommentId);
+        parentComment.replies![replyIndex] = event.comment;
       } else {
-        commentViews[commentViews.indexWhere((comment) =>
-            comment.manifestoCommentId ==
-            event.comment.manifestoCommentId)] = event.comment;
+        final int commentIndex = commentViews.indexWhere((comment) =>
+            comment.manifestoCommentId == event.comment.manifestoCommentId);
+
+        commentViews[commentIndex] = event.comment;
       }
 
       emit(CommentViewListWithData(commentViews));
