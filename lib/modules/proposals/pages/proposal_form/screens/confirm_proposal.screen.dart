@@ -1,9 +1,12 @@
-import 'package:demos_app/core/enums/invitation-status.enum.dart';
-import 'package:demos_app/modules/spaces/models/member_view.model.dart';
-import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
+import 'package:demos_app/core/models/member.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_tile.widget.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_chip.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../spaces/pages/new_space/screens/members/enums/member_type.dart';
 
 class ConfirmProposalScreen extends StatelessWidget {
   const ConfirmProposalScreen({Key? key}) : super(key: key);
