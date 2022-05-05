@@ -18,7 +18,9 @@
 */
 
 import 'package:demos_app/core/interfaces/table.interface.dart';
+import 'package:demos_app/core/models/manifesto/comment/manifesto_comment.model.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ManifestoCommentRepository extends AppRepository implements Table {
   final String tblManifestoComment = 'manifesto_comment';
@@ -28,7 +30,8 @@ class ManifestoCommentRepository extends AppRepository implements Table {
   final String colDeleted = 'deleted';
   final String colCreatedAt = 'createdAt';
   final String colCreatedByMember = 'createdByMember';
-  final String colUpdatedBy = 'updatedBy';
+  final String colUpdatedAt = 'updatedAt';
+  final String colManifestoId = 'manifestoId';
 
   @override
   String getCreateTableQuery() => 'CREATE TABLE $tblManifestoComment('
@@ -38,5 +41,38 @@ class ManifestoCommentRepository extends AppRepository implements Table {
       '$colDeleted BOOLEAN,'
       '$colCreatedAt TEXT,'
       '$colCreatedByMember TEXT,'
-      '$colUpdatedBy TEXT)';
+      '$colUpdatedAt TEXT,'
+      '$colManifestoId TEXT)';
+
+  Future<ManifestoComment?> findById(String manifestoCommentId) async {
+    final Database? db = await this.db;
+    final result = await db!.rawQuery(
+        "SELECT * FROM $tblManifestoComment WHERE $colId = '$manifestoCommentId'");
+    return result.isNotEmpty ? ManifestoComment.fromObject(result[0]) : null;
+  }
+
+  Future<int> update(ManifestoComment comment) async {
+    final Database? db = await this.db;
+    final result = await db!.rawUpdate('UPDATE $tblManifestoComment '
+        "SET $colContent = '${comment.content}'"
+        ", $colManifestoCommentParentId = '${comment.manifestoCommentParentId}'"
+        ", $colDeleted = '${comment.deleted ? 1 : 0}'"
+        ", $colCreatedAt = '${comment.createdAt}'"
+        ", $colCreatedByMember = '${comment.createdByMember}'"
+        ", $colUpdatedAt = '${comment.updatedAt}' "
+        ", $colManifestoId = '${comment.manifestoCommentId}' "
+        "WHERE $colId = '${comment.manifestoCommentId}'");
+    return result;
+  }
+
+  Future<String> insertOrUpdate(ManifestoComment comment) async {
+    final Database? db = await this.db;
+    final ManifestoComment? proposalSaved =
+        await findById(comment.manifestoCommentId);
+    if (proposalSaved == null) {
+      await db!.insert(tblManifestoComment, comment.toMap());
+      return comment.manifestoCommentId;
+    }
+    return update(comment).toString();
+  }
 }

@@ -52,28 +52,26 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
             resizeToAvoidBottomInset: false,
             appBar: AppBar(title: Text(formConfig.formTitle)),
             body: LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12.0),
-                        child: Column(
-                          children: [
-                            Expanded(
-                                child: Column(
-                              children: const [
-                                ContentForm(),
-                                SizedBox(height: 24),
-                                OptionsForm()
-                              ],
-                            )),
-                            SafeWidgetValidator(
-                                child: getFormButtons(formConfig))
-                          ],
-                        )),
-                  ),
+              builder: (context, constraints) => ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: IntrinsicHeight(
+                  child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 12.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: SingleChildScrollView(
+                                  child: Column(
+                            children: const [
+                              ContentForm(),
+                              SizedBox(height: 24),
+                              OptionsForm()
+                            ],
+                          ))),
+                          SafeWidgetValidator(child: getFormButtons(formConfig))
+                        ],
+                      )),
                 ),
               ),
             ),

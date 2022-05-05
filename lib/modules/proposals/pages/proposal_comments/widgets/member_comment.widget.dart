@@ -17,11 +17,18 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
+import 'package:demos_app/core/models/manifesto/comment/manifesto_comment_vote.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/enums/current_user_commemt_vote.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_vote.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/replies_count_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/replies_list_view.widget.dart';
+import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +37,15 @@ class MemberComment extends StatelessWidget {
   final CommentView comment;
   final EdgeInsetsGeometry padding;
   final bool enableReplies;
+
+  final void Function()? onReplied;
+
   const MemberComment({
     Key? key,
     required this.comment,
     this.enableReplies = false,
     this.padding = const EdgeInsets.symmetric(horizontal: 18),
+    this.onReplied,
   }) : super(key: key);
 
   @override
@@ -72,8 +83,12 @@ class MemberComment extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CommentVotesCount(
-                    votesInFavor: comment.upVotesCount,
-                    votesInOpposing: comment.downVotesCount),
+                  votesInFavor: comment.upVotesCount,
+                  votesInOpposing: comment.downVotesCount,
+                  onUpvote: () => onVote(comment.manifestoCommentId, true),
+                  onDownvote: () => onVote(comment.manifestoCommentId, false),
+                  currentUserCommentVote: getCurrentUserCommentVote(),
+                ),
                 const SizedBox(width: 10),
                 comment.repliesCount > 0 && enableReplies
                     ? RepliesCountButton(
@@ -81,7 +96,7 @@ class MemberComment extends StatelessWidget {
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                enableReplies ? ReplyButton(onTap: () {}) : Container(),
+                enableReplies ? ReplyButton(onTap: onReplied) : Container(),
                 IconButton(
                     onPressed: () {},
                     icon: const Icon(Icons.more_vert, color: Colors.grey))
@@ -94,5 +109,60 @@ class MemberComment extends StatelessWidget {
             : Container(),
       ),
     );
+  }
+
+  void onVote(String manifestoCommentId, bool upvote) async {
+    final userId = CurrentUserBloc().state!.userId!;
+    final spaceId = SpaceBloc().state.spaceId;
+
+    final currentUserCommentVote = await CommentVoteService()
+        .getCommentVoteFromLocalDbByManifestoCommentIdAndUserId(
+            manifestoCommentId, userId);
+
+    if (currentUserCommentVote != null) {
+      await updateVote(spaceId!, upvote, currentUserCommentVote);
+      return;
+    }
+
+    final commentVote = await CommentVoteService()
+        .voteComment(spaceId!, manifestoCommentId, upvote);
+
+    await _updateCommentView(commentVote.manifestoCommentId);
+  }
+
+  Future<void> updateVote(String spaceId, bool upvote,
+      ManifestoCommentVote currentUserCommentVote) async {
+    final canUpdateVote = upvote != currentUserCommentVote.upvote;
+    if (canUpdateVote) {
+      await CommentVoteService().updateCommentVote(
+          spaceId, currentUserCommentVote.manifestoCommentVoteId, upvote);
+      await _updateCommentView(currentUserCommentVote.manifestoCommentId);
+      return;
+    }
+
+    await CommentVoteService().deleteCommentVote(
+        spaceId, currentUserCommentVote.manifestoCommentVoteId);
+    await _updateCommentView(currentUserCommentVote.manifestoCommentId);
+  }
+
+  Future<void> _updateCommentView(String manifestoCommentId) async {
+    final commentView =
+        await CommentViewService().getCommentById(manifestoCommentId);
+
+    CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
+  }
+
+  CurrentUserCommentVote getCurrentUserCommentVote() {
+    final currentUserId = CurrentUserBloc().state!.userId!;
+    final currentUserVoteResult =
+        comment.votes.where((vote) => vote.userId == currentUserId).toList();
+
+    if (currentUserVoteResult.isEmpty) return CurrentUserCommentVote.none;
+
+    final currentUserVote = currentUserVoteResult.first;
+
+    return currentUserVote.upvote
+        ? CurrentUserCommentVote.upvote
+        : CurrentUserCommentVote.downvote;
   }
 }

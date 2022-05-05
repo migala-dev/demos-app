@@ -67,6 +67,7 @@ class MultipleOptionWidget extends StatelessWidget {
                   ),
                 )
                 .toList(),
+            proposalFormView.manifestoOptions.length < 20 ?
             AddManifestoOption(
               add: (title) {
                 List<ManifestoOptionView> manisfestoOptions = [
@@ -76,7 +77,7 @@ class MultipleOptionWidget extends StatelessWidget {
                 ProposalFormBloc().add(
                     ProposalFormOnManifestoOptionsChange(manisfestoOptions));
               },
-            ),
+            ) : Container(),
           ],
         );
       },

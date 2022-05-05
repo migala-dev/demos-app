@@ -40,47 +40,55 @@ class ProposalView {
   final String createdByName;
   final String createdByProfilePictureKey;
   final List<ManifestoOptionView> manifestoOptions;
+  final int numberOfComments;
+  final int participationPercentage;
+  final int approvalPercentage;
 
   String get createdAtFormated =>
       DateFormatterService.parseToDayMonthYearDate(createdAt);
 
-  int get numberOfComments => 2;
-
   ProposalView(
-    this.manifestoId,
-    this.proposalId,
-    this.title,
-    this.content,
-    this.optionType,
-    this.spaceId,
-    this.createdBy,
-    this.createdAt,
-    this.expiredAt,
-    this.status,
-    this.progressStatus,
-    this.votesCount,
-    this.votesTotal,
-    this.createdByName,
-    this.createdByProfilePictureKey,
-    this.manifestoOptions
-  );
+      this.manifestoId,
+      this.proposalId,
+      this.title,
+      this.content,
+      this.optionType,
+      this.spaceId,
+      this.createdBy,
+      this.createdAt,
+      this.expiredAt,
+      this.status,
+      this.progressStatus,
+      this.votesCount,
+      this.votesTotal,
+      this.createdByName,
+      this.createdByProfilePictureKey,
+      this.manifestoOptions,
+      this.numberOfComments,
+      this.participationPercentage,
+      this.approvalPercentage);
 
   factory ProposalView.fromObject(dynamic o) => ProposalView(
-        o['manifestoId'],
-        o['proposalId'],
-        o['title'],
-        o['content'],
-        ManifestoOptionType.values[o['optionType']],
-        o['spaceId'],
-        o['createdBy'],
-        o['createdAt'],
-        o['expiredAt'] != null ? DateTime.parse(o['expiredAt']) : null,
-        ProposalStatus.values[o['status']],
-        ProposalProgressStatus.values[o['progressStatus']],
-        o['votesCount'],
-        o['votesTotal'],
-        o['createdByName'],
-        o['createdByProfilePictureKey'],
-        o['manifestoOptions'].map<ManifestoOptionView>((option) => ManifestoOptionView.fromObject(option)).toList()
-      );
+      o['manifestoId'],
+      o['proposalId'],
+      o['title'],
+      o['content'],
+      ManifestoOptionType.values[o['optionType']],
+      o['spaceId'],
+      o['createdBy'],
+      o['createdAt'],
+      o['expiredAt'] != null ? DateTime.parse(o['expiredAt']) : null,
+      ProposalStatus.values[o['status']],
+      ProposalProgressStatus.values[o['progressStatus']],
+      o['votesCount'],
+      o['votesTotal'],
+      o['createdByName'],
+      o['createdByProfilePictureKey'],
+      o['manifestoOptions']
+          .map<ManifestoOptionView>(
+              (option) => ManifestoOptionView.fromObject(option))
+          .toList(),
+      o['numberOfComments'],
+      o['participationPercentage'],
+      o['approvalPercentage']);
 }

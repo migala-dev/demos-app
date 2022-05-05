@@ -17,30 +17,47 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/core/models/manifesto/comment/manifesto_comment_vote.model.dart';
 import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class CommentView {
-  final String commendId;
-  final MemberView member;
+  final String manifestoCommentId;
   final String createdAt;
-  final int upVotesCount;
-  final int downVotesCount;
   final String content;
-
+  final String? manifestoCommentParentId;
+  final List<ManifestoCommentVote> votes;
+  final MemberView member;
   final List<CommentView>? replies;
 
   String get createdAtFormatted =>
       DateFormatterService.parseToDayMonthYearHourDate(createdAt);
 
   int get repliesCount => replies == null ? 0 : replies!.length;
+  bool get isSubcomment => manifestoCommentParentId != null;
+
+  int get upVotesCount => votes.where((vote) => vote.upvote).length;
+  int get downVotesCount => votes.where((vote) => !vote.upvote).length;
 
   CommentView(
-      {required this.commendId,
-      required this.member,
-      required this.createdAt,
-      required this.upVotesCount,
-      required this.downVotesCount,
-      required this.content,
-      this.replies});
+    this.manifestoCommentId,
+    this.createdAt,
+    this.content,
+    this.manifestoCommentParentId,
+    this.votes,
+    this.member,
+    this.replies,
+  );
+
+  factory CommentView.fromObjectAndParams(dynamic o, List<CommentView>? replies,
+          MemberView member, List<ManifestoCommentVote> votes) =>
+      CommentView(
+        o['manifestoCommentId'],
+        o['createdAt'],
+        o['content'],
+        o['manifestoCommentParentId'],
+        votes,
+        member,
+        replies,
+      );
 }

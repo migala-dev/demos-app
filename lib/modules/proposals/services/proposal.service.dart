@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/core/api/proposal.api.dart';
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/models/responses/proposal_participation_response.model.dart';
 import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
@@ -25,6 +26,7 @@ import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart'
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_vote.repository.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 
 class ProposalService {
@@ -60,6 +62,9 @@ class ProposalService {
     ProposalResponse response =
         await ProposalApi().getProposal(spaceId, proposalId);
 
+    if (response.proposal.status == ProposalStatus.open) {
+      await ProposalParticipationRepository().removeByProposalId(proposalId);
+    }
     await _saveProposalResponseOnRepository(response);
   }
 
@@ -89,6 +94,7 @@ class ProposalService {
     final response = await ProposalApi()
         .updateProposal(spaceId, proposalId, proposalFormView);
 
+    await ProposalParticipationRepository().removeByProposalId(proposalId);
     await _saveProposalResponseOnRepository(response);
   }
 
@@ -104,6 +110,9 @@ class ProposalService {
 
     for (final participation in response.participations) {
       await ProposalParticipationRepository().insert(participation);
+    }
+    for (final vote in response.votes) {
+      await ProposalVoteRepository().insert(vote);
     }
   }
 

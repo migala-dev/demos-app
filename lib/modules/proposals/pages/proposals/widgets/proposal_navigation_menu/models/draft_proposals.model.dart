@@ -54,9 +54,8 @@ class DraftProposals implements ProposalViewList {
 
   @override
   Future<bool> itHasProposals(String spaceId) async {
-    ProposalStatus status = ProposalStatus.draft;
     int proposalsCount = await ProposalViewsRepository()
-        .getCountBySpaceIdAndStatus(spaceId, status);
+        .getCountBySpaceIdAndStatus(spaceId, [ProposalStatus.draft]);
 
     return proposalsCount > 0;
   }

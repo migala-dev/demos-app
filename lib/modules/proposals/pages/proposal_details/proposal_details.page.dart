@@ -27,9 +27,11 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/validators/ca
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/big_outlined_button.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/commets_tile.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/proposal_result.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
+import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/general/countdown_timer.widget.dart';
 import 'package:demos_app/widgets/general/quill_content.widget.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
@@ -104,16 +106,29 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          ProposalCardInfo(
-                            getIcon: (size, color) => Icon(
-                              Icons.calendar_today,
-                              size: size,
-                              color: color,
-                            ),
-                            title: 'TERMINA EN:',
-                            child: CountdownTimer(
-                                dateTime: proposalView.expiredAt),
-                          ),
+                          proposalView.status == ProposalStatus.open
+                              ? ProposalCardInfo(
+                                  getIcon: (size, color) => Icon(
+                                    Icons.calendar_today,
+                                    size: size,
+                                    color: color,
+                                  ),
+                                  title: 'TERMINA EN:',
+                                  child: CountdownTimer(
+                                      dateTime: proposalView.expiredAt),
+                                )
+                              : ProposalCardInfo(
+                                  getIcon: (size, color) => Icon(
+                                    Icons.calendar_today,
+                                    size: size,
+                                    color: color,
+                                  ),
+                                  title: 'CERRADA EL:',
+                                  content: DateFormatterService
+                                      .parseDateToStandardDateFormatWithHour(
+                                          proposalView.expiredAt!),
+                                ),
+                                proposalView.status == ProposalStatus.open ?
                           ProposalCardInfo(
                             getIcon: (size, color) => Icon(
                               Icons.how_to_vote,
@@ -123,7 +138,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             title: 'Votos:',
                             content:
                                 '${proposalView.votesCount}/${proposalView.votesTotal}',
-                          )
+                          ) : Container()
                         ]),
                   ),
                   const Divider(color: Colors.grey),
@@ -136,6 +151,9 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            proposalView.status == ProposalStatus.closed ?
+                            ProposalResult(proposal: proposalView,) : 
+                            Container(),
                             getContent(proposalView.content),
                             ListTile(
                               title: const Text(
@@ -198,13 +216,14 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             const SizedBox(
                               height: 16,
                             ),
+                            proposalView.status == ProposalStatus.open ?
                             SafeWidgetValidator(
                               validators: [CanVoteWidgetValidator()],
                               child: BigOutlinedButton(
                                   text: 'Votar',
                                   onPressed: () =>
                                       goToVoteProposal(context, proposalView)),
-                            )
+                            ) : Container()
                           ],
                         ),
                       ),

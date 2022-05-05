@@ -18,6 +18,8 @@
 */
 
 import 'package:demos_app/core/api/cache.api.dart';
+import 'package:demos_app/core/event_handlers/handlers/comment_handler.dart';
+import 'package:demos_app/core/event_handlers/handlers/comment_vote_handler.dart';
 import 'package:demos_app/core/event_handlers/handlers/proposals_handler.dart';
 import 'package:demos_app/core/event_handlers/handlers/space_handler.dart';
 import 'package:demos_app/core/event_handlers/handlers/member_handler.dart';
@@ -29,7 +31,13 @@ import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CacheService {
-  List<EventHandler> eventHandlers = [MemberHandler(), SpaceHandler(), ProposalHandler()];
+  List<EventHandler> eventHandlers = [
+    MemberHandler(),
+    SpaceHandler(),
+    ProposalHandler(),
+    CommentHandler(),
+    CommentVoteHandler()
+  ];
   bool isPendingCache = false;
   bool isRequestInProgress = false;
   final String _lastUpdatedDateKey = 'last-updated-date';
@@ -89,8 +97,8 @@ class CacheService {
       } else {
         ToastUtil.showError('Entidad no implementada: ${dataEvent.entityName}');
       }
-    // ignore: empty_catches
-    } catch(e) {}
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   Future<void> updateLastUpdatedDate() async {

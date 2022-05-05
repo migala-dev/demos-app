@@ -21,18 +21,21 @@ import 'package:demos_app/core/models/manifesto/manifesto.model.dart';
 import 'package:demos_app/core/models/manifesto/manifesto_option.model.dart';
 import 'package:demos_app/core/models/manifesto/proposal/proposal.model.dart';
 import 'package:demos_app/core/models/manifesto/proposal/proposal_participation.model.dart';
+import 'package:demos_app/core/models/manifesto/proposal/proposal_vote.model.dart';
 
 class ProposalResponse {
   final Manifesto manifesto;
   final List<ManifestoOption> manifestoOptions;
   final Proposal proposal;
   final List<ProposalParticipation> participations;
+  final List<ProposalVote> votes;
 
   ProposalResponse(
     this.manifesto,
     this.manifestoOptions,
     this.proposal,
-    this.participations
+    this.participations,
+    this.votes
   );
 
   factory ProposalResponse.fromObject(dynamic o) => ProposalResponse(
@@ -47,5 +50,11 @@ class ProposalResponse {
             .map((participation) =>
                 ProposalParticipation.fromObject(participation))
             .toList() : [],
+        o['votes'] != null ?
+         (o['votes'] as List<dynamic>)
+            .map((vote) =>
+                ProposalVote.fromObject(vote))
+            .toList() : [],
+        
       );
 }

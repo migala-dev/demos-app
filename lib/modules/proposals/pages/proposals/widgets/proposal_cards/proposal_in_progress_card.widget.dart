@@ -30,10 +30,8 @@ import '../../../../../../widgets/general/countdown_timer.widget.dart';
 class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   @override
   final ProposalView proposal;
-  final int totalOfMembers;
-
   const ProposalInProgressCard(
-      {Key? key, required this.proposal, this.totalOfMembers = 0})
+      {Key? key, required this.proposal })
       : super(key: key);
 
   @override
@@ -103,7 +101,7 @@ class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
                       return Column(children: const [
                         SizedBox(height: 15),
                         Text('* Aún no has votado en esta propuesta',
-                            style: TextStyle(color: Colors.grey))
+                            style: TextStyle(color: Colors.redAccent))
                       ]);
                     }
                   }

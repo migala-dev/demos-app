@@ -55,9 +55,8 @@ class InProgressProposals implements ProposalViewList {
 
   @override
   Future<bool> itHasProposals(String spaceId) async {
-    ProposalStatus status = ProposalStatus.open;
     int proposalsCount = await ProposalViewsRepository()
-        .getCountBySpaceIdAndStatus(spaceId, status);
+        .getCountBySpaceIdAndStatus(spaceId, [ProposalStatus.open]);
 
     return proposalsCount > 0;
   }

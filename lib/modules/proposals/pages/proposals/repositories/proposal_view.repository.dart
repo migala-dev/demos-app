@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
+import 'package:demos_app/core/repositories/manifesto/comment/manifesto_comment.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
@@ -34,6 +35,7 @@ class ProposalViewsRepository extends AppRepository {
       ProposalParticipationRepository().tblProposalParticipations;
   final tblManifestoOptions = ManifestoOptionRepository().tblManifestoOptions;
   final tblUsers = UsersRepository().tblUsers;
+  final tblManifestoComment = ManifestoCommentRepository().tblManifestoComment;
   final colUserId = UsersRepository().colId;
   final colUserName = UsersRepository().colName;
   final colUserProfilePictureKey = UsersRepository().colProfilePictureKey;
@@ -49,8 +51,12 @@ class ProposalViewsRepository extends AppRepository {
   final colUpdatedBy = ProposalRepository().colUpdatedBy;
   final colCreatedAt = ProposalRepository().colCreatedAt;
   final colExpiredAt = ProposalRepository().colExpiredAt;
+  final colParticipationPercentage = ProposalRepository().colParticipationPercentage;
+  final colApprovalPercentage = ProposalRepository().colApprovalPercentage;
   final colManifestoOptionId = ManifestoOptionRepository().colId;
   final colParticipated = ProposalParticipationRepository().colParticipated;
+  final colManifestoCommentParentId =
+      ManifestoCommentRepository().colManifestoCommentParentId;
 
   String _getSelectInnerJoinQuery() => '''
     SELECT $tblManifesto.$colManifestoId,
@@ -71,7 +77,14 @@ class ProposalViewsRepository extends AppRepository {
             ) as "votesCount",
             (select count(*) from $tblProposalParticipations
               where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId
-            ) as "votesTotal"
+            ) as "votesTotal",
+            (select count(*) from $tblManifestoComment
+              where 
+                $tblManifestoComment.$colManifestoId = $tblManifesto.$colManifestoId AND 
+                $tblManifestoComment.$colManifestoCommentParentId is null
+            ) as "numberOfComments",
+            $tblProposals.$colParticipationPercentage,
+            $tblProposals.$colApprovalPercentage
           FROM $tblManifesto
           INNER
             JOIN $tblProposals ON 
@@ -84,6 +97,11 @@ class ProposalViewsRepository extends AppRepository {
   String _getFindByProposalIdQuery(String proposalId) => '''
     ${_getSelectInnerJoinQuery()}
     WHERE $colProposalId = '$proposalId'
+  ''';
+
+  String _getFindByManifestoIdQuery(String manifestoId) => '''
+    ${_getSelectInnerJoinQuery()}
+    WHERE $tblManifesto.$colManifestoId = '$manifestoId'
   ''';
 
   String _getFindBySpaceIdAndStatusQuery(
@@ -131,6 +149,17 @@ class ProposalViewsRepository extends AppRepository {
         : null;
   }
 
+  Future<ProposalView?> findByManifestoId(String manifestoId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(_getFindByManifestoIdQuery(manifestoId));
+    List<Map<String, Object?>> resultWithManifestoOptions =
+        await _getResultWithManifestoOptions(result);
+
+    return resultWithManifestoOptions.isNotEmpty
+        ? ProposalView.fromObject(resultWithManifestoOptions[0])
+        : null;
+  }
+
   Future<List<ProposalView>> findAllBySpaceIdAndStatus(
       String spaceId, ProposalStatus proposalStatus) async {
     Database? db = await this.db;
@@ -147,12 +176,14 @@ class ProposalViewsRepository extends AppRepository {
   }
 
   Future<int> getCountBySpaceIdAndStatus(
-      String spaceId, ProposalStatus proposalStatus) async {
+      String spaceId, List<ProposalStatus> proposalStatusses) async {
     Database? db = await this.db;
+    final String validStatus = proposalStatusses.map((s) => s.index.toString()).join(',');
+
 
     final result = await db!.rawQuery("""
        select count(*) as count from $tblProposals
-          where $colSpaceId = '$spaceId' AND $colStatus = ${proposalStatus.index}
+          where $colSpaceId = '$spaceId' AND $colStatus IN($validStatus)
       """);
 
     return result.isNotEmpty ? int.parse(result.first['count'].toString()) : 0;

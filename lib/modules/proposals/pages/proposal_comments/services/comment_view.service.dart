@@ -23,10 +23,18 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal
 
 class CommentViewService {
   Future<List<CommentView>> getComments() async {
-    final String proposalId = ProposalDetailsBloc().state!.proposalId;
+    final String manifestoId = ProposalDetailsBloc().state!.manifestoId;
 
-    final comments = await CommentViewRepository().findByProposalId(proposalId);
+    final comments =
+        await CommentViewRepository().findByManifestoId(manifestoId);
 
     return comments;
+  }
+
+  Future<CommentView?> getCommentById(String manifestoCommentId) async {
+    final comment = await CommentViewRepository()
+        .findByManifestoCommentId(manifestoCommentId);
+
+    return comment;
   }
 }

@@ -23,8 +23,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_fo
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
-import 'package:demos_app/modules/spaces/models/space_view.model.dart';
-import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposals_list.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,11 +32,8 @@ import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_l
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/no_proposals.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/proposals_navigation_menu.widget.dart';
 
-import 'models/proposal_view.model.dart';
-
 class ProposalsPage extends StatelessWidget {
   const ProposalsPage({Key? key}) : super(key: key);
-
   void goToNewProposal(BuildContext context) {
     ProposalFormBloc()
         .add(ProposalFormSetProposalFormView(ProposalFormView.empty()));
@@ -53,9 +49,9 @@ class ProposalsPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        SpaceView space = SpaceBloc().state;
         ProposalViewList? proposalViewList =
             state is ProposalViewListWithData ? state.proposalViewList : null;
+
         return Scaffold(
           floatingActionButton: SafeWidgetMemberValidator(
               roles: const [SpaceRole.representative],
@@ -75,18 +71,8 @@ class ProposalsPage extends StatelessWidget {
                           optionSelected: proposalViewList!),
                       const SizedBox(height: 15),
                       Expanded(
-                        child: FutureBuilder(
-                            future: proposalViewList.getList(space.spaceId!),
-                            initialData: const <ProposalView>[],
-                            builder: (BuildContext context,
-                                AsyncSnapshot<List<ProposalView>> snapshot) {
-                              List<ProposalView>? proposals = snapshot.data;
-                              if (proposals != null) {
-                                return proposalViewList.getWidget(
-                                    context, proposals);
-                              }
-                              return Container();
-                            }),
+                        child: ProposalsListWidget(
+                            proposalViewList: proposalViewList),
                       ),
                     ],
                   ),
