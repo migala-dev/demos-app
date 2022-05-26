@@ -20,6 +20,8 @@
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_progress_status.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
+import 'package:demos_app/core/models/manifesto/proposal/proposal_vote.model.dart';
+import 'package:demos_app/modules/proposals/models/votes_count.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/forms/option_step/models/manifesto_option_view.model.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 
@@ -43,7 +45,14 @@ class ProposalView {
   final int numberOfComments;
   final int participationPercentage;
   final int approvalPercentage;
-
+  final List<ProposalVote> votes;
+  VotesCountService get _voteCountService => VotesCountService(this);
+  bool get insufficientVotes => votes.length >= requiredVotes;
+  int get porcentageRequired =>
+      optionType == ManifestoOptionType.inFavorOrOpposing
+          ? approvalPercentage
+          : participationPercentage;
+  int get requiredVotes => (votesCount * porcentageRequired / 100).ceil();
   String get createdAtFormated =>
       DateFormatterService.parseToDayMonthYearDate(createdAt);
 
@@ -66,7 +75,8 @@ class ProposalView {
       this.manifestoOptions,
       this.numberOfComments,
       this.participationPercentage,
-      this.approvalPercentage);
+      this.approvalPercentage,
+      this.votes);
 
   factory ProposalView.fromObject(dynamic o) => ProposalView(
       o['manifestoId'],
@@ -90,5 +100,103 @@ class ProposalView {
           .toList(),
       o['numberOfComments'],
       o['participationPercentage'],
-      o['approvalPercentage']);
+      o['approvalPercentage'],
+      o['votes'] != null
+          ? o['votes']
+              .map<ProposalVote>((vote) => ProposalVote.fromObject(vote))
+              .toList()
+          : []);
+
+  List<OptionInfo>? _optionsAndVotes;
+  List<OptionInfo> get optionsAndVotes {
+    _optionsAndVotes =
+        _optionsAndVotes ?? _voteCountService.getOptionInfoList();
+    return _optionsAndVotes!;
+  }
+
+  OptionInfo? get mostVotedOptionInfo {
+    if (optionsAndVotes.where((o) => o.mostVoted).isNotEmpty) {
+      OptionInfo? mostVoted = optionsAndVotes.where((o) => o.mostVoted).first;
+      return mostVoted;
+    }
+    return null;
+  }
+}
+
+class VotesCountService {
+  final ProposalView _proposal;
+  final List<OptionMapper> optionMappers = [
+    InFavorOptionMapper(),
+    MultipleOptionsOptionMapper()
+  ];
+  OptionMapper get _optionMapper =>
+      optionMappers.where((o) => o.optionType == _proposal.optionType).first;
+
+  VotesCountService(this._proposal);
+
+  List<OptionInfo> getOptionInfoList() {
+    return _optionMapper.mapVotesToOptionInfoList(_proposal.votes, _proposal.manifestoOptions);
+  }
+}
+
+abstract class OptionMapper {
+  abstract final ManifestoOptionType optionType;
+  List<OptionInfo> mapVotesToOptionInfoList(List<ProposalVote> votes, List<ManifestoOptionView> manifestoOptions);
+}
+
+class InFavorOptionMapper implements OptionMapper {
+  @override
+  final ManifestoOptionType optionType = ManifestoOptionType.inFavorOrOpposing;
+
+  @override
+  List<OptionInfo> mapVotesToOptionInfoList(List<ProposalVote> votes, List<ManifestoOptionView> _manifestoOptions) {
+    final int inFavorVotesCount = votes.where((v) => v.inFavor!).length;
+    final int opposingVotesCount = votes.where((v) => !v.inFavor!).length;
+    return [
+      OptionInfo(
+          label: 'A favor',
+          count: inFavorVotesCount,
+          mostVoted: opposingVotesCount < inFavorVotesCount),
+      OptionInfo(
+          label: 'En contra',
+          count: opposingVotesCount,
+          mostVoted: opposingVotesCount > inFavorVotesCount)
+    ];
+  }
+}
+
+class MultipleOptionsOptionMapper implements OptionMapper {
+  @override
+  final ManifestoOptionType optionType = ManifestoOptionType.multipleOptions;
+
+  @override
+  List<OptionInfo> mapVotesToOptionInfoList(List<ProposalVote> votes, List<ManifestoOptionView> manifestoOptions) {
+    final String? winnerOptionId = _getWinnerOptionId(votes);
+
+    return manifestoOptions
+          .map((o) => OptionInfo(
+                label: o.title,
+                count: votes
+                    .where((v) => v.manifestoOptionId == o.manifestoOptionId)
+                    .length,
+                mostVoted: winnerOptionId == o.manifestoOptionId,
+              ))
+          .toList();
+  }
+
+    String? _getWinnerOptionId(List<ProposalVote> votes) {
+    final Map<String, int> votesCounter = {};
+    votes.where((o) => o.manifestoOptionId != null).forEach((o) {
+      votesCounter[o.manifestoOptionId!] =
+          votesCounter[o.manifestoOptionId!] == null
+              ? 1
+              : votesCounter[o.manifestoOptionId!]! + 1;
+    });
+
+    final List<MapEntry<String, int>> votesCounterList = votesCounter.entries.map<MapEntry<String, int>>((e) => e).toList();
+    
+    votesCounterList.sort((a, b) => a.value.compareTo(b.value));
+
+    return votesCounterList.isNotEmpty ? votesCounterList.first.key : null;
+  }
 }

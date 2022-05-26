@@ -23,6 +23,7 @@ import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart'
 import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_vote.repository.dart';
 import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -36,6 +37,7 @@ class ProposalViewsRepository extends AppRepository {
   final tblManifestoOptions = ManifestoOptionRepository().tblManifestoOptions;
   final tblUsers = UsersRepository().tblUsers;
   final tblManifestoComment = ManifestoCommentRepository().tblManifestoComment;
+  final tbProposalVotes = ProposalVoteRepository().tbProposalVotes;
   final colUserId = UsersRepository().colId;
   final colUserName = UsersRepository().colName;
   final colUserProfilePictureKey = UsersRepository().colProfilePictureKey;
@@ -121,6 +123,10 @@ class ProposalViewsRepository extends AppRepository {
     WHERE $colManifestoId = '$manifestoId'
   """;
 
+  String _getProposalVotesQuery(String proposalId) => """
+    SELECT * FROM $tbProposalVotes WHERE $colProposalId = '$proposalId'
+  """;
+
   Future<List<Map<String, Object?>>> _getResultWithManifestoOptions(
       List<Map<String, Object?>> result) async {
     final Database? db = await this.db;
@@ -133,6 +139,11 @@ class ProposalViewsRepository extends AppRepository {
       final manifestoOptionsResult = await db!.rawQuery(manifestoOptionsQuery);
 
       row['manifestoOptions'] = manifestoOptionsResult;
+
+      final String proposald = row['proposalId'].toString();
+      final String proposalVotesQuery = _getProposalVotesQuery(proposald);
+      final proposalVotesResult = await db.rawQuery(proposalVotesQuery);
+      row['votes'] = proposalVotesResult;
     }
 
     return resultWithManifestoOptions;
