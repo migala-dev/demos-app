@@ -29,8 +29,10 @@ import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dar
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../navigation.service.dart';
 import '../../../../../utils/ui/modals/open_confirmation_dialog.dart';
 import '../../proposals/bloc/proposal_view_list_event.dart';
+import '../screens/confirm_proposal.screen.dart';
 
 class InProgressProposalFormConfig implements ProposalFormConfig {
   @override
@@ -85,18 +87,30 @@ class InProgressProposalFormConfig implements ProposalFormConfig {
 
   @override
   Future<void> primaryAction() async {
-    final spaceId = SpaceBloc().state.spaceId!;
+    final BuildContext context = NavigationService.navigatorKey.currentContext!;
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
-    final proposalId = proposalFormView.proposalId!;
 
-    await ProposalService()
-        .updateProposal(spaceId, proposalId, proposalFormView);
+    final bool? confirmed = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConfirmProposalScreen(
+              title: proposalFormView.title, primaryActionLabel: 'Actualizar'),
+        ));
 
-    final proposalUpdated =
-        await ProposalViewServie().getProposalViewByProposalId(proposalId);
+    if (confirmed != null && confirmed) {
+      final spaceId = SpaceBloc().state.spaceId!;
+      final proposalId = proposalFormView.proposalId!;
 
-    ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
+      await ProposalService()
+          .updateProposal(spaceId, proposalId, proposalFormView);
 
-    ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
+      final proposalUpdated =
+          await ProposalViewServie().getProposalViewByProposalId(proposalId);
+
+      ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
+
+      ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
+      Navigator.pop(context);
+    }
   }
 }

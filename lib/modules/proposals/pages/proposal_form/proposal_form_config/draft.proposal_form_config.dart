@@ -28,12 +28,15 @@ import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../navigation.service.dart';
+import '../screens/confirm_proposal.screen.dart';
+
 class DraftProposalFormConfig implements ProposalFormConfig {
   @override
   String formTitle = 'Editar borrador';
 
   @override
-  String primaryButtonLabel = 'Publicar';
+  String primaryButtonLabel = 'Confirmar';
 
   @override
   String saveDraftLabel = 'Guardar';
@@ -87,10 +90,24 @@ class DraftProposalFormConfig implements ProposalFormConfig {
 
   @override
   Future<void> primaryAction() async {
-    final String spaceId = SpaceBloc().state.spaceId!;
+    final BuildContext context = NavigationService.navigatorKey.currentContext!;
     final ProposalFormView proposalFormView = ProposalFormBloc().state;
 
-    await ProposalService().publishProposalDraft(
-        spaceId, proposalFormView.proposalId!, proposalFormView);
+    final bool? confirmed = await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ConfirmProposalScreen(
+              title: proposalFormView.title, primaryActionLabel: 'Publicar'),
+        ));
+
+    if (confirmed != null && confirmed) {
+      final String spaceId = SpaceBloc().state.spaceId!;
+      final ProposalFormView proposalFormView = ProposalFormBloc().state;
+
+      await ProposalService().publishProposalDraft(
+          spaceId, proposalFormView.proposalId!, proposalFormView);
+      ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+      Navigator.pop(context);
+    }
   }
 }

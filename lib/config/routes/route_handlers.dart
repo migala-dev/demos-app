@@ -27,7 +27,6 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/proposal_details.page.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/proposal_form.page.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/screens/confirm_proposal.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
@@ -88,6 +87,7 @@ var spaceDetailsHandler =
     SpaceBloc().add(SetSpaceViewEvent(spaceView));
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId!));
   }
+  SpaceMembersBloc().add(LoadSpaceMembers());
 
   return const SpaceDetailsScreen();
 });
@@ -165,7 +165,6 @@ var profileSettingsHandler = Handler(
 
 var spaceMembersHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  SpaceMembersBloc().add(LoadSpaceMembers());
   return const SpaceMembersScreen();
 });
 
@@ -193,7 +192,3 @@ var proposalCommentsHandler =
   return const ProposalCommentsPage();
 });
 
-var confirmProposalHandler =
-    Handler(handlerFunc: (BuildContext? context, Object params) {
-  return const ConfirmProposalScreen();
-});

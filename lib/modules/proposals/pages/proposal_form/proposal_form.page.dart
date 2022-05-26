@@ -29,8 +29,6 @@ import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../config/routes/routes.dart';
-
 class ProposalFormScreen extends StatefulWidget {
   const ProposalFormScreen({Key? key}) : super(key: key);
 
@@ -96,7 +94,6 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
             text: formConfig.primaryButtonLabel,
             onPressed: () async {
               await formConfig.primaryAction();
-              Navigator.pushNamed(context, Routes.confirmProposal);
             }),
         const SizedBox(height: 8),
         Row(
