@@ -25,12 +25,13 @@ import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_car
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:flutter/material.dart';
 
+import '../../../proposal_details/widgets/proposal_result/option_result_info.widget.dart';
+
 class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
   @override
   final ProposalView proposal;
 
-  const ProposalHistoryCard(
-      {Key? key, required this.proposal })
+  const ProposalHistoryCard({Key? key, required this.proposal})
       : super(key: key);
 
   @override
@@ -57,7 +58,6 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
                     Text(proposal.title ?? 'Sin titulo',
                         style: const TextStyle(fontSize: 20),
                         overflow: TextOverflow.ellipsis),
-
                     Container(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
@@ -67,6 +67,10 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
                         ))
                   ],
                 ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: getResultWidget(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +82,9 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
                       color: color,
                     ),
                     title: 'CERRADO EL:',
-                    content: DateFormatterService.parseDateToStandardDateFormatWithHour(proposal.expiredAt!),
+                    content: DateFormatterService
+                        .parseDateToStandardDateFormatWithHour(
+                            proposal.expiredAt!),
                   ),
                 ],
               ),
@@ -87,5 +93,19 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
         ),
       ),
     );
+  }
+
+  Widget getResultWidget() {
+    if (proposal.mostVotedOptionInfo != null && !proposal.insufficientVotes) {
+      return OptionResultWidget(
+        optionName: proposal.mostVotedOptionInfo!.label,
+        votesCount: proposal.mostVotedOptionInfo!.count,
+        votesTotal: proposal.votesTotal,
+        isWinningOption: true,
+      );
+    }
+
+    return const Text('VOTOS INSUFICIENTES',
+        style: TextStyle(color: Colors.redAccent, fontSize: 18.0));
   }
 }
