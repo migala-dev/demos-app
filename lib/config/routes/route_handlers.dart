@@ -77,13 +77,13 @@ var spacesHandler = Handler(
 
 var spaceDetailsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  Object? spaceArgument = context!.settings!.arguments;
+  final Object? spaceArgument = context!.settings!.arguments;
   if (spaceArgument is String) {
-    String spaceId = spaceArgument;
+    final String spaceId = spaceArgument;
     SpaceBloc().add(SetSpaceIdEvent(spaceId));
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   } else {
-    SpaceView spaceView = spaceArgument as SpaceView;
+    final SpaceView spaceView = spaceArgument as SpaceView;
     SpaceBloc().add(SetSpaceViewEvent(spaceView));
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId!));
   }

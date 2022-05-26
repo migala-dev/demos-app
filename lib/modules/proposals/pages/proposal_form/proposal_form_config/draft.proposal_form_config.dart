@@ -20,16 +20,15 @@
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_form/screens/confirm_proposal.screen.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
+import 'package:demos_app/navigation.service.dart';
 import 'package:demos_app/utils/ui/modals/open_confirmation_dialog.dart';
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../navigation.service.dart';
-import '../screens/confirm_proposal.screen.dart';
 
 class DraftProposalFormConfig implements ProposalFormConfig {
   @override

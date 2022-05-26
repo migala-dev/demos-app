@@ -1,11 +1,10 @@
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
+import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
-import '../../../../spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
 
 class ConfirmProposalScreen extends StatelessWidget {
   final String title;
