@@ -94,7 +94,8 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
             text: formConfig.primaryButtonLabel,
             onPressed: () async {
               await formConfig.primaryAction();
-            }),
+            },
+            disabled: isPrimaryButtonDisabled()),
         const SizedBox(height: 8),
         Row(
           children: [
