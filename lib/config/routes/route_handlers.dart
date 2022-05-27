@@ -75,19 +75,19 @@ var spacesHandler = Handler(
   return const SpacesScreen();
 });
 
-// Handler de los detalles del espacio
 var spaceDetailsHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
-  Object? spaceArgument = context!.settings!.arguments;
+  final Object? spaceArgument = context!.settings!.arguments;
   if (spaceArgument is String) {
-    String spaceId = spaceArgument;
+    final String spaceId = spaceArgument;
     SpaceBloc().add(SetSpaceIdEvent(spaceId));
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
   } else {
-    SpaceView spaceView = spaceArgument as SpaceView;
+    final SpaceView spaceView = spaceArgument as SpaceView;
     SpaceBloc().add(SetSpaceViewEvent(spaceView));
     ProposalViewListBloc().add(ProposalViewListLoaded(spaceView.spaceId!));
   }
+  SpaceMembersBloc().add(LoadSpaceMembers());
 
   return const SpaceDetailsScreen();
 });
@@ -165,7 +165,6 @@ var profileSettingsHandler = Handler(
 
 var spaceMembersHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-  SpaceMembersBloc().add(LoadSpaceMembers());
   return const SpaceMembersScreen();
 });
 
@@ -192,3 +191,4 @@ var proposalCommentsHandler =
   CommentViewListBloc().add(CommentViewListLoaded());
   return const ProposalCommentsPage();
 });
+

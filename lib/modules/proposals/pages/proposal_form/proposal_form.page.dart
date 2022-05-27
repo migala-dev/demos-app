@@ -67,8 +67,7 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
                               OptionsForm()
                             ],
                           ))),
-                          SafeWidgetValidator(
-                              child: getFormButtons(formConfig))
+                          SafeWidgetValidator(child: getFormButtons(formConfig))
                         ],
                       )),
                 ),
@@ -95,7 +94,6 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
             text: formConfig.primaryButtonLabel,
             onPressed: () async {
               await formConfig.primaryAction();
-              Navigator.pop(context);
             },
             disabled: isPrimaryButtonDisabled()),
         const SizedBox(height: 8),
