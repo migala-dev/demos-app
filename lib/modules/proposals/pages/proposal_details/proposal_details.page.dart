@@ -90,6 +90,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
     return BlocBuilder<ProposalDetailsBloc, ProposalView?>(
         bloc: ProposalDetailsBloc(),
         builder: (context, proposalView) {
+          final Key _countdownKey = UniqueKey();
           if (proposalView == null) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -115,6 +116,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                   ),
                                   title: 'TERMINA EN:',
                                   child: CountdownTimer(
+                                      key: _countdownKey,
                                       dateTime: proposalView.expiredAt),
                                 )
                               : ProposalCardInfo(
@@ -128,17 +130,18 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                       .parseDateToStandardDateFormatWithHour(
                                           proposalView.expiredAt!),
                                 ),
-                                proposalView.status == ProposalStatus.open ?
-                          ProposalCardInfo(
-                            getIcon: (size, color) => Icon(
-                              Icons.how_to_vote,
-                              size: 32,
-                              color: color,
-                            ),
-                            title: 'Votos:',
-                            content:
-                                '${proposalView.votesCount}/${proposalView.votesTotal}',
-                          ) : Container()
+                          proposalView.status == ProposalStatus.open
+                              ? ProposalCardInfo(
+                                  getIcon: (size, color) => Icon(
+                                    Icons.how_to_vote,
+                                    size: 32,
+                                    color: color,
+                                  ),
+                                  title: 'Votos:',
+                                  content:
+                                      '${proposalView.votesCount}/${proposalView.votesTotal}',
+                                )
+                              : Container()
                         ]),
                   ),
                   const Divider(color: Colors.grey),
@@ -151,9 +154,11 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            proposalView.status == ProposalStatus.closed ?
-                            ProposalResult(proposal: proposalView,) : 
-                            Container(),
+                            proposalView.status == ProposalStatus.closed
+                                ? ProposalResult(
+                                    proposal: proposalView,
+                                  )
+                                : Container(),
                             getContent(proposalView.content),
                             ListTile(
                               title: const Text(
@@ -216,14 +221,15 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             const SizedBox(
                               height: 16,
                             ),
-                            proposalView.status == ProposalStatus.open ?
-                            SafeWidgetValidator(
-                              validators: [CanVoteWidgetValidator()],
-                              child: BigOutlinedButton(
-                                  text: 'Votar',
-                                  onPressed: () =>
-                                      goToVoteProposal(context, proposalView)),
-                            ) : Container()
+                            proposalView.status == ProposalStatus.open
+                                ? SafeWidgetValidator(
+                                    validators: [CanVoteWidgetValidator()],
+                                    child: BigOutlinedButton(
+                                        text: 'Votar',
+                                        onPressed: () => goToVoteProposal(
+                                            context, proposalView)),
+                                  )
+                                : Container()
                           ],
                         ),
                       ),

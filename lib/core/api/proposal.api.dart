@@ -21,6 +21,7 @@ import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
 import 'package:demos_app/core/models/responses/proposal_participation_response.model.dart';
+import 'package:demos_app/core/models/responses/proposal_participations_response.model.dart';
 import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_response.dart';
 import 'package:demos_app/core/models/responses/vote_proposal_response.model.dart';
@@ -95,6 +96,18 @@ class ProposalApi {
 
     final httpResponse = await Api.get(endpoint, throwBehavior);
     final response = ProposalParticipationResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
+  Future<ProposalParticipationsResponse> resetProposalVotes(
+      String spaceId, String proposalId) async {
+    final String endpoint =
+        ProposalsPath().getResetProposalParticipationPath(spaceId, proposalId);
+    final ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
+
+    final httpResponse = await Api.post(endpoint, null, throwBehavior);
+    final response = ProposalParticipationsResponse.fromObject(httpResponse);
 
     return response;
   }
