@@ -29,58 +29,71 @@ import 'package:demos_app/core/models/space.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 
 class AllSpacesResponse {
-  late List<Space> _spaces;
-  late List<Member> _members;
-  late List<User> _users;
-  late List<Proposal> _proposals;
-  late List<ProposalParticipation> _proposalParticipations;
-  late List<ProposalVote> _proposalVotes;
-  late List<Manifesto> _manifestos;
-  late List<ManifestoOption> _manifestoOptions;
-  late List<ManifestoComment> _manifestoComments;
-  late List<ManifestoCommentVote> _manifestoCommentVotes;
+  final List<Space> spaces;
+  final List<Member> members;
+  final List<User> users;
+  final List<Proposal> proposals;
+  final List<ProposalParticipation> proposalParticipations;
+  final List<ProposalVote> proposalVotes;
+  final List<Manifesto> manifestos;
+  final List<ManifestoOption> manifestoOptions;
+  final List<ManifestoComment> manifestoComments;
+  final List<ManifestoCommentVote> manifestoCommentVotes;
 
-  List<Space> get spaces => _spaces;
-  List<Member> get members => _members;
-  List<User> get users => _users;
-  List<Proposal> get proposals => _proposals;
-  List<ProposalParticipation> get proposalParticipations => _proposalParticipations;
-  List<ProposalVote> get proposalVotes => _proposalVotes;
-  List<Manifesto> get manifestos => _manifestos;
-  List<ManifestoOption> get manifestoOptions => _manifestoOptions;
-  List<ManifestoComment> get manifestoComments => _manifestoComments;
-  List<ManifestoCommentVote> get manifestoCommentVotes => _manifestoCommentVotes;
+  AllSpacesResponse(
+    this.spaces,
+    this.members,
+    this.users,
+    this.proposals,
+    this.proposalParticipations,
+    this.proposalVotes,
+    this.manifestos,
+    this.manifestoOptions,
+    this.manifestoComments,
+    this.manifestoCommentVotes,
+  );
 
-  AllSpacesResponse.fromObject(dynamic o) {
-    List<dynamic> spacesResponse = o['spaces'];
-    _spaces = spacesResponse.map((s) => Space.fromObject(s)).toList();
-
-    List<dynamic> membersResponse = o['members'];
-    _members = membersResponse.map((s) => Member.fromObject(s)).toList();
-
-    List<dynamic> usersResponse = o['users'];
-    _users = usersResponse.map((m) => User.fromObject(m)).toList();
-
-    List<dynamic> proposalsResponse = o['proposals'];
-    _proposals = proposalsResponse.map((p) => Proposal.fromObject(p)).toList();
-
-    List<dynamic> proposalParticipationsResponse = o['proposalParticipations'];
-    _proposalParticipations = proposalParticipationsResponse.map((p) => ProposalParticipation.fromObject(p)).toList();
-
-    List<dynamic> proposalVotesResponse = o['proposalVotes'];
-    _proposalVotes = proposalVotesResponse.map((v) => ProposalVote.fromObject(v)).toList();
-
-    List<dynamic> manifestosResponse = o['manifestos'];
-    _manifestos = manifestosResponse.map((m) => Manifesto.fromObject(m)).toList();
-
-    List<dynamic> manifestoOptionsResponse = o['manifestoOptions'];
-    _manifestoOptions = manifestoOptionsResponse.map((o) => ManifestoOption.fromObject(o)).toList();
-
-    List<dynamic> manifestoCommentsResponse = o['manifestoComments'];
-    _manifestoComments = manifestoCommentsResponse.map((c) => ManifestoComment.fromObject(c)).toList();
-
-    List<dynamic> manifestoCommentVotesResponse = o['manifestoCommentVotes'];
-    _manifestoCommentVotes = manifestoCommentVotesResponse.map((v) => ManifestoCommentVote.fromObject(v)).toList();
-
-  }
+  factory AllSpacesResponse.fromObject(dynamic o) =>  AllSpacesResponse(
+     (o['spaces'] as List<dynamic>)
+            .map((space) =>
+                Space.fromObject(space))
+            .toList(),
+     (o['members'] as List<dynamic>)
+            .map((member) =>
+                Member.fromObject(member))
+            .toList(),
+     (o['users'] as List<dynamic>)
+            .map((user) =>
+                User.fromObject(user))
+            .toList(),
+     (o['proposals'] as List<dynamic>)
+            .map((proposal) =>
+                Proposal.fromObject(proposal))
+            .toList(),
+     (o['proposalParticipations'] as List<dynamic>)
+            .map((proposalParticipation) =>
+                ProposalParticipation.fromObject(proposalParticipation))
+            .toList(),
+     (o['proposalVotes'] as List<dynamic>)
+            .map((proposalVote) =>
+                ProposalVote.fromObject(proposalVote))
+            .toList(),
+     (o['manifestos'] as List<dynamic>)
+            .map((manifesto) =>
+                Manifesto.fromObject(manifesto))
+            .toList(),
+     (o['manifestoOptions'] as List<dynamic>)
+            .map((manifestoOption) =>
+                ManifestoOption.fromObject(manifestoOption))
+            .toList(),
+     (o['manifestoComments'] as List<dynamic>)
+            .map((manifestoComment) =>
+                ManifestoComment.fromObject(manifestoComment))
+            .toList(),
+     (o['manifestoCommentVotes'] as List<dynamic>)
+            .map((manifestoCommentVote) =>
+                ManifestoCommentVote.fromObject(manifestoCommentVote))
+            .toList(),
+      
+  );
 }
