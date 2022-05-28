@@ -38,7 +38,6 @@ class InvitationViewsRepository extends AppRepository {
   String colCreatedBy = MembersRepository().colCreatedBy;
   String colUserId = MembersRepository().colUserId;
   String colDeleted = MembersRepository().colDeleted;
-  String colPhoneNumber = UsersRepository().colPhoneNumber;
   String colProfilePictureKey = UsersRepository().colProfilePictureKey;
   String colUpdatedAt = UsersRepository().colUpdatedAt;
   String colMemberId = MembersRepository().colId;
@@ -52,7 +51,6 @@ class InvitationViewsRepository extends AppRepository {
         $colExpiredAt,
         $tblUsers.$colUserId,
         $tblUsers.$colName,
-        $tblUsers.$colPhoneNumber,
         $tblUsers.$colProfilePictureKey,
         $tblUsers.$colCreatedAt,
         $tblUsers.$colUpdatedAt

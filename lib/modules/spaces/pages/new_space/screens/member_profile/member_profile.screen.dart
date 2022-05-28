@@ -88,11 +88,13 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
                     IsCurrentUserAdminWidgetValidator()
                   ],
                 ),
-                ProfileField(
-                  title: 'Teléfono',
-                  icon: Icons.phone,
-                  value: widget.member.phoneNumberFormatted,
-                ),
+                widget.member.phoneNumber != null
+                    ? ProfileField(
+                        title: 'Teléfono',
+                        icon: Icons.phone,
+                        value: widget.member.phoneNumberFormatted,
+                      )
+                    : Container(),
                 ProfileField(
                   title: 'Rol',
                   icon: Icons.manage_accounts,
@@ -106,7 +108,9 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
                 ProfileField(
                   title: 'Propuestas',
                   icon: Icons.how_to_vote,
-                  child: ParticipationCounts(created: widget.member.proposalCreatedCount, votes: widget.member.proposalVotedCount),
+                  child: ParticipationCounts(
+                      created: widget.member.proposalCreatedCount,
+                      votes: widget.member.proposalVotedCount),
                   onEdit: isLoading ? null : openUpdateRoleModel,
                 ),
                 widget.member.isInvited

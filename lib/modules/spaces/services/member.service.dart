@@ -114,7 +114,7 @@ class MemberService {
     User? user = CurrentUserBloc().state;
     Member? member = await MembersRepository()
         .findByUserIdAndSpaceIdAndInvitationStatusAccepted(
-            user!.userId!, spaceId);
+            user!.userId, spaceId);
 
     member!.deleted = true;
 
@@ -140,7 +140,7 @@ class MemberService {
     ];
     Member? member = await MembersRepository()
         .findByUserIdAndSpaceIdAndInvitationStatuses(
-            user!.userId!, spaceId, invitationStatus);
+            user!.userId, spaceId, invitationStatus);
     if (member != null) {
       member.invitationStatus = InvitationStatus.expired;
       await MembersRepository().update(member);

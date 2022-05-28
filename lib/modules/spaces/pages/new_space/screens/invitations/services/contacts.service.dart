@@ -16,9 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/repositories/users.repository.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/utils/exists_contact_in_invited_members.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/services/member_view.service.dart';
@@ -59,20 +56,9 @@ class ContactService {
         String phoneNumber =
             contact.phones[0].number.replaceAll(RegExp(r'[^0-9]'), '');
         if (phoneNumber.length >= 10) {
-          User? user =
-              await UsersRepository().getUserByPhoneNumber(phoneNumber);
-          if (user == null) {
-            InvitationContact userContact =
-                InvitationContact.withPhoneNumber(phoneNumber);
+          InvitationContact userContact = InvitationContact(phoneNumber);
             userContact.name = contact.displayName;
             userContacts.add(userContact);
-          } else {
-            InvitationContact userContact = InvitationContact.fromUser(user);
-            if (userContact.name == '') {
-              userContact.name = contact.displayName;
-            }
-            userContacts.add(userContact);
-          }
         }
       }
     });

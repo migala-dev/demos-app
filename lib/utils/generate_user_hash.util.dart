@@ -25,7 +25,7 @@ import 'package:demos_app/core/services/current_user/current_user_private_key.da
 
 Future<String> generateUserHash(String id) async {
   User currentUser = CurrentUserBloc().state!;
-  String privateKey = await UserPrivateKey(currentUser.userId!).getPrivateKey();
+  String privateKey = await UserPrivateKey(currentUser.userId).getPrivateKey();
 
   List<int> bytes = utf8.encode('${id}_$privateKey');
   Digest digest = sha256.convert(bytes);

@@ -20,49 +20,39 @@
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 
 class User {
-  String? _userId;
-  String? _name;
-  late String _phoneNumber;
-  String? _profilePictureKey;
-  String? _createdAt;
-  String? _updatedAt;
+  final String userId;
+  final String name;
+  String? phoneNumber;
+  final String? profilePictureKey;
+  final String createdAt;
+  final String updatedAt;
 
-  User.withPhoneNumber(this._phoneNumber);
+  User(
+    this.userId,
+    this.name,
+    this.profilePictureKey,
+    this.createdAt,
+    this.updatedAt
+  );
 
-  String? get userId => _userId;
-  String get name => _name ?? '';
-  String get phoneNumber => _phoneNumber;
-  String? get profilePictureKey => _profilePictureKey;
   String get createdAtFormatted =>
-      DateFormatterService.parseToStandardDate(_createdAt ?? '');
-
-  set name(String name) => _name = name;
+      DateFormatterService.parseToStandardDate(createdAt);
 
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = {};
-    map['userId'] = _userId;
-    map['name'] = _name;
-    map['phoneNumber'] = _phoneNumber;
-    map['profilePictureKey'] = _profilePictureKey;
-    map['createdAt'] = _createdAt;
-    map['updatedAt'] = _updatedAt;
+    map['userId'] = userId;
+    map['name'] = name;
+    map['profilePictureKey'] = profilePictureKey;
+    map['createdAt'] = createdAt;
+    map['updatedAt'] = updatedAt;
     return map;
   }
 
-  User.fromObject(dynamic o) {
-    _userId = o['userId'];
-    _name = o['name'];
-    _phoneNumber = o['phoneNumber'];
-    _profilePictureKey =
-        o['profilePictureKey'] == 'null' ? null : o['profilePictureKey'];
-    _createdAt = o['createdAt'];
-    _updatedAt = o['updatedAt'];
-  }
-
-  User.fromUserObject(User user) {
-    _userId = user.userId;
-    _name = user.name;
-    _phoneNumber = user.phoneNumber;
-    _profilePictureKey = user.profilePictureKey;
-  }
+  factory User.fromObject(dynamic o) =>  User(
+    o['userId'],
+    o['name'],
+     o['profilePictureKey'] == 'null' ? null : o['profilePictureKey'],
+     o['createdAt'],
+     o['updatedAt']
+  );
 }

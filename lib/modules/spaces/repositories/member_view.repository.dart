@@ -41,7 +41,6 @@ class MemberViewsRepository extends AppRepository {
   String colMemberId = MembersRepository().colId;
   String colInvitationExpiredAt = MembersRepository().colExpiredAt;
   String colProfilePictureKey = UsersRepository().colProfilePictureKey;
-  String colPhoneNumber = UsersRepository().colPhoneNumber;
   String colDeleted = MembersRepository().colDeleted;
   String colParticipated = ProposalParticipationRepository().colParticipated;
   String colCreatedBy = ProposalRepository().colCreatedBy;
@@ -58,7 +57,6 @@ class MemberViewsRepository extends AppRepository {
         $colMemberId,
         $colSpaceId,
         $tblUsers.$colName as "userName",
-        $colPhoneNumber,
         $colInvitationExpiredAt as "invitationExpiredAt",
         $colDeleted,
         (

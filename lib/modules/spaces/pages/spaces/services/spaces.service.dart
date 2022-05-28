@@ -38,7 +38,7 @@ class SpaceService {
 
     if (currentUser != null) {
       List<SpaceView> spaces =
-          await SpaceViewsRepository().findByUserId(currentUser.userId!);
+          await SpaceViewsRepository().findByUserId(currentUser.userId);
       return spaces;
     }
 
@@ -50,7 +50,7 @@ class SpaceService {
 
     if (currentUser != null) {
       List<InvitationView> invitations = await InvitationViewsRepository()
-          .getInvitationsByUserId(currentUser.userId!);
+          .getInvitationsByUserId(currentUser.userId);
       return invitations;
     }
 

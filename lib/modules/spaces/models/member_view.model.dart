@@ -29,7 +29,7 @@ class MemberView {
   final String? memberId;
   final String? spaceId;
   final String? userName;
-  final String? phoneNumber;
+  String? phoneNumber;
   final String? profilePictureKey;
   final int proposalVotedCount;
   final int proposalCreatedCount;
@@ -97,7 +97,6 @@ class MemberView {
       this.memberId,
       this.spaceId,
       this.userName,
-      this.phoneNumber,
       this.invitationExpiredAt});
 
   factory MemberView.fromObject(dynamic o) => MemberView(
@@ -112,6 +111,5 @@ class MemberView {
       memberId: o['memberId'],
       spaceId: o['spaceId'],
       userName: o['userName'],
-      phoneNumber: o['phoneNumber'],
       invitationExpiredAt: o['invitationExpiredAt']);
 }

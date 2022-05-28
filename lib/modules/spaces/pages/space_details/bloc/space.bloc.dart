@@ -66,7 +66,7 @@ class SpaceBloc extends Bloc<SpaceEvent, SpaceView> {
 
   Future<void> setCurrentMember(String spaceId) async {
     User? user = CurrentUserBloc().state;
-    MemberView? memberView = await MemberViewsRepository().findByUserIdAndSpaceId(user!.userId!, spaceId);
+    MemberView? memberView = await MemberViewsRepository().findByUserIdAndSpaceId(user!.userId, spaceId);
     if (memberView != null) {
       CurrentMemberBloc().add(SetCurrentMemberEvent(memberView));
     }
