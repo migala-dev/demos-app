@@ -27,13 +27,8 @@ class User {
   final String createdAt;
   final String updatedAt;
 
-  User(
-    this.userId,
-    this.name,
-    this.profilePictureKey,
-    this.createdAt,
-    this.updatedAt
-  );
+  User(this.userId, this.name, this.phoneNumber, this.profilePictureKey,
+      this.createdAt, this.updatedAt);
 
   String get createdAtFormatted =>
       DateFormatterService.parseToStandardDate(createdAt);
@@ -48,11 +43,11 @@ class User {
     return map;
   }
 
-  factory User.fromObject(dynamic o) =>  User(
-    o['userId'],
-    o['name'],
-     o['profilePictureKey'] == 'null' ? null : o['profilePictureKey'],
-     o['createdAt'],
-     o['updatedAt']
-  );
+  factory User.fromObject(dynamic o) => User(
+      o['userId'],
+      o['name'] ?? '',
+      o['phoneNumber'],
+      o['profilePictureKey'] == 'null' ? null : o['profilePictureKey'],
+      o['createdAt'],
+      o['updatedAt']);
 }

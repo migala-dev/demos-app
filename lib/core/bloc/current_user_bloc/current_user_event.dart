@@ -30,8 +30,9 @@ class CurrentUserLoaded extends CurrentUserEvent {}
 
 class CurrentUserSetted extends CurrentUserEvent {
   final String userId;
+  final String phoneNumber;
 
-  const CurrentUserSetted(this.userId);
+  const CurrentUserSetted(this.userId, this.phoneNumber);
 }
 
 class CurrentUserUpdated extends CurrentUserEvent {

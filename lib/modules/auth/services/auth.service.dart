@@ -95,7 +95,7 @@ class AuthService {
     if (user != null) {
       await UsersRepository().insert(user);
 
-      CurrentUserBloc().add(CurrentUserSetted(user.userId));
+      CurrentUserBloc().add(CurrentUserSetted(user.userId, user.phoneNumber!));
     }
   }
 
