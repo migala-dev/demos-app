@@ -24,6 +24,7 @@ import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/invitation_response.model.dart';
 import 'package:demos_app/core/models/responses/member_response.model.dart';
+import 'package:demos_app/core/models/responses/members_and_phone_numbers_response.model.dart';
 import 'package:demos_app/core/models/responses/send_invitations_response.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 
@@ -35,51 +36,51 @@ class MemberApi {
     return _memberApi;
   }
   Future<AcceptInvitationResponse> acceptInvitation(String spaceId) async {
-    String endpoint = MemberPath().getAcceptInvitationPath(spaceId);
+    final String endpoint = MemberPath().getAcceptInvitationPath(spaceId);
     final httpResponse = await Api.post(endpoint, null, null);
 
-    AcceptInvitationResponse response =
+    final AcceptInvitationResponse response =
         AcceptInvitationResponse.fromObject(httpResponse);
 
     return response;
   }
 
   Future<InvitationResponse> rejectInvitation(String spaceId) async {
-    String endpoint = MemberPath().getRejectInvitationPath(spaceId);
+    final String endpoint = MemberPath().getRejectInvitationPath(spaceId);
     final httpResponse = await Api.post(endpoint, null, null);
 
-    InvitationResponse response = InvitationResponse.fromObject(httpResponse);
+    final InvitationResponse response = InvitationResponse.fromObject(httpResponse);
 
     return response;
   }
 
   Future<SendInvitationsResponse> sendInvitations(
       String spaceId, List<InvitationContact> contacts) async {
-    String endpoint = MemberPath().getInvitationPath(spaceId);
-    Object params = {'users': contacts.map((c) => c.toJson()).toList()};
+    final String endpoint = MemberPath().getInvitationPath(spaceId);
+    final Object params = {'users': contacts.map((c) => c.toJson()).toList()};
 
     final httpResponse = await Api.post(endpoint, params, null);
 
-    SendInvitationsResponse response =
+    final SendInvitationsResponse response =
         SendInvitationsResponse.fromObject(httpResponse);
 
     return response;
   }
 
   Future<MemberResponse> getMember(String spaceId, String memberId) async {
-    String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
 
     final httpResponse = await Api.get(endpoint, ThrowBehavior(showError: false));
 
-    MemberResponse response = MemberResponse.fromObject(httpResponse);
+    final MemberResponse response = MemberResponse.fromObject(httpResponse);
 
     return response;
   }
 
   Future<bool> updateMember(
       String spaceId, String memberId, String? name, SpaceRole role) async {
-    String endpoint = MemberPath().getMemberPath(spaceId, memberId);
-    Object params = {
+    final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    final Object params = {
       'name': name,
       'role': getSpaceRoleString(role),
     };
@@ -90,17 +91,27 @@ class MemberApi {
   }
 
   Future<void> deleteMember(String spaceId, String memberId) async {
-    String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
     await Api.delete(endpoint, null);
   }
 
   Future<void> cancelInvitation(String spaceId, String memberId) async {
-    String endpoint = MemberPath().getMemberInvitationPath(spaceId, memberId);
+    final String endpoint = MemberPath().getMemberInvitationPath(spaceId, memberId);
     await Api.delete(endpoint, null);
   }
 
   Future<void> leaveSpace(String spaceId) async {
-    String endpoint = MemberPath().getMembersSpacePath(spaceId);
+    final String endpoint = MemberPath().getMembersSpacePath(spaceId);
     await Api.delete(endpoint, null);
+  }
+
+  Future<MemberPhoneNumbersResponse> getMemberPhoneNumbers(String spaceId) async {
+    final String endpoint = MemberPath().getMembersPhoneNumbersPath(spaceId);
+
+    final httpResponse = await Api.get(endpoint, ThrowBehavior(showError: false));
+
+    final MemberPhoneNumbersResponse response = MemberPhoneNumbersResponse.fromObject(httpResponse);
+
+    return response;
   }
 }

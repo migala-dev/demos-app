@@ -30,6 +30,10 @@ class MemberPath {
     return '${getMembersPath()}/$spaceId';
   }
 
+  String getMembersPhoneNumbersPath(String spaceId) {
+    return '${getMembersSpacePath(spaceId)}/members/phones';
+  }
+
   String getInvitationPath(String spaceId) {
     return '${getMembersSpacePath(spaceId)}/invitation';
   }

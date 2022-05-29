@@ -19,6 +19,7 @@
 
 import 'package:demos_app/core/api/member.api.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
+import 'package:demos_app/core/models/member_phone_number.model.dart';
 import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
@@ -129,6 +130,11 @@ class MemberService {
 
   Future<List<Member>> getAdministrators(String spaceId) async {
     return await MembersRepository().findAdministratorsBySpaceId(spaceId);
+  }
+
+  Future<List<MemberPhoneNumber>> getMemberPhoneNumbers(String spaceId) async {
+    final response = await MemberApi().getMemberPhoneNumbers(spaceId);
+    return response.membersPhoneNumbers;
   }
 
   Future<void> removeInvitationForExpiration(String spaceId) async {

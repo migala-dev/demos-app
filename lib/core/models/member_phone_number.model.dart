@@ -17,25 +17,16 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:flutter_contacts/flutter_contacts.dart';
-import 'package:demos_app/modules/spaces/models/member_view.model.dart';
+class MemberPhoneNumber {
+  final String memberId;
+  final String userId;
+  final String phoneNumber;
 
-bool isContactAlreadyOnTheSpace(Contact contact, List<MemberView> members) {
-  final contactPhoneNumber =
-      contact.phones[0].number.replaceAll(RegExp(r'[^0-9]'), '');
+  MemberPhoneNumber(this.memberId, this.userId, this.phoneNumber);
 
-  for (final member in members) {
-    if (member.phoneNumber == null) {
-      return false;
-    }
-    final userPhoneNumber = member.phoneNumber!.length > 10
-        ? member.phoneNumber!.substring(3)
-        : member.phoneNumber;
-
-    if (contactPhoneNumber == userPhoneNumber) {
-      return true;
-    }
-  }
-
-  return false;
+  factory MemberPhoneNumber.fromObject(dynamic o) => MemberPhoneNumber(
+    o['memberId'],
+    o['userId'],
+    o['phoneNumber'],
+  );
 }
