@@ -34,10 +34,10 @@ class SpaceService {
   }
 
   Future<List<SpaceView>> getSpaces() async {
-    User? currentUser = CurrentUserBloc().state;
+    final User? currentUser = CurrentUserBloc().state;
 
     if (currentUser != null) {
-      List<SpaceView> spaces =
+      final List<SpaceView> spaces =
           await SpaceViewsRepository().findByUserId(currentUser.userId);
       return spaces;
     }
@@ -46,10 +46,10 @@ class SpaceService {
   }
 
   Future<List<InvitationView>> getInvitations() async {
-    User? currentUser = CurrentUserBloc().state;
+    final User? currentUser = CurrentUserBloc().state;
 
     if (currentUser != null) {
-      List<InvitationView> invitations = await InvitationViewsRepository()
+      final List<InvitationView> invitations = await InvitationViewsRepository()
           .getInvitationsByUserId(currentUser.userId);
       return invitations;
     }

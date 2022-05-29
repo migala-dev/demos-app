@@ -39,7 +39,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/mod
 class MemberService {
   Future<List<Member>> sendInvitations(
       String spaceId, List<InvitationContact> contacts) async {
-    SendInvitationsResponse response =
+    final SendInvitationsResponse response =
         await MemberApi().sendInvitations(spaceId, contacts);
 
     for (final member in response.members) {
@@ -51,7 +51,7 @@ class MemberService {
 
   Future<void> acceptInvitation(String spaceId) async {
     try {
-      AcceptInvitationResponse response =
+      final AcceptInvitationResponse response =
           await MemberApi().acceptInvitation(spaceId);
 
       await SpacesRepository().updateSpace(response.space);
@@ -73,7 +73,7 @@ class MemberService {
   }
 
   Future<Member?> rejectInvitation(String spaceId) async {
-    InvitationResponse response = await MemberApi().rejectInvitation(spaceId);
+    final InvitationResponse response = await MemberApi().rejectInvitation(spaceId);
 
     await MembersRepository().update(response.member);
 
@@ -81,7 +81,7 @@ class MemberService {
   }
 
   Future<void> getMember(String spaceId, String memberId) async {
-    MemberResponse response = await MemberApi().getMember(spaceId, memberId);
+    final MemberResponse response = await MemberApi().getMember(spaceId, memberId);
 
     await MembersRepository().insertOrUpdate(response.member);
 
@@ -94,7 +94,7 @@ class MemberService {
   }
 
   Future<void> cancelInvitation(String memberId) async {
-    Member? member = await MembersRepository().findById(memberId);
+    final Member? member = await MembersRepository().findById(memberId);
 
     member!.invitationStatus = InvitationStatus.canceled;
 
@@ -102,7 +102,7 @@ class MemberService {
   }
 
   Future<void> removeMembership(String memberId, String spaceId) async {
-    Member? member = await MembersRepository().findById(memberId);
+    final Member? member = await MembersRepository().findById(memberId);
 
     member!.deleted = true;
 
@@ -112,8 +112,8 @@ class MemberService {
   Future<void> leaveSpace(String spaceId) async {
     await MemberApi().leaveSpace(spaceId);
 
-    User? user = CurrentUserBloc().state;
-    Member? member = await MembersRepository()
+    final User? user = CurrentUserBloc().state;
+    final Member? member = await MembersRepository()
         .findByUserIdAndSpaceIdAndInvitationStatusAccepted(
             user!.userId, spaceId);
 
@@ -138,13 +138,13 @@ class MemberService {
   }
 
   Future<void> removeInvitationForExpiration(String spaceId) async {
-    User? user = CurrentUserBloc().state;
+    final User? user = CurrentUserBloc().state;
 
-    List<InvitationStatus> invitationStatus = [
+    final List<InvitationStatus> invitationStatus = [
       InvitationStatus.received,
       InvitationStatus.sended
     ];
-    Member? member = await MembersRepository()
+    final Member? member = await MembersRepository()
         .findByUserIdAndSpaceIdAndInvitationStatuses(
             user!.userId, spaceId, invitationStatus);
     if (member != null) {

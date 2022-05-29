@@ -36,7 +36,7 @@ class CurrentUserStorage {
   }
 
   Future<String?> getCurrentUserId() async {
-    String? currentUserId = await _storage.read(key: _currentUserIdKey);
+    final String? currentUserId = await _storage.read(key: _currentUserIdKey);
 
     return currentUserId;
   }
@@ -46,7 +46,7 @@ class CurrentUserStorage {
   }
 
   Future<String?> getCurrentUserPhoneNumber() async {
-    String? currentUserPhoneNumber = await _storage.read(key: _currentUserPhoneNumberKey);
+    final String? currentUserPhoneNumber = await _storage.read(key: _currentUserPhoneNumberKey);
 
     return currentUserPhoneNumber;
   }
