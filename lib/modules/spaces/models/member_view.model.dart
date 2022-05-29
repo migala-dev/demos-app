@@ -44,8 +44,6 @@ class MemberView {
 
     if (userName != null && userName!.isNotEmpty) return userName!;
 
-    if (phoneNumber != null) return phoneNumberFormatted;
-
     return defaultName;
   }
 
@@ -64,6 +62,8 @@ class MemberView {
 
   String get invitationExpiredAtFormatted =>
       DateFormatterService.parseToStandardDate(invitationExpiredAt ?? '');
+
+  bool get isAdmin => role == SpaceRole.admin;
 
   MemberType get memberType {
     if (role == null) return MemberType.invited;

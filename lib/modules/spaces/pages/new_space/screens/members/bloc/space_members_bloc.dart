@@ -38,19 +38,7 @@ class SpaceMembersBloc extends Bloc<SpaceMembersEvent, SpaceMembersState> {
     on<LoadSpaceMembers>((event, emit) async {
       emit(SpaceMembersLoadInProgress());
       final memberViews = await MemberViewService().getMemberViews();
-      final MemberView? currentMember = CurrentMemberBloc().state;
-      if (currentMember != null && currentMember.role == SpaceRole.admin) {
-        final memberPhoneNumbers =
-            await MemberService().getMemberPhoneNumbers(currentMember.spaceId!);
-        for (final memberPhoneNumber in memberPhoneNumbers) {
-          if (memberViews
-              .any((m) => memberPhoneNumber.memberId == m.memberId)) {
-            final MemberView member = memberViews
-                .firstWhere((m) => memberPhoneNumber.memberId == m.memberId);
-            member.phoneNumber = memberPhoneNumber.phoneNumber;
-          }
-        }
-      }
+      await _populatePhoneNumbers(memberViews);
       emit(SpaceMembersWithData(memberViews));
     });
 
@@ -88,5 +76,24 @@ class SpaceMembersBloc extends Bloc<SpaceMembersEvent, SpaceMembersState> {
             .copyWithMemberDeleted(event.userId));
       }
     });
+  }
+
+  Future<void> _populatePhoneNumbers(List<MemberView> memberViews) async {
+    try {
+      final MemberView? currentMember = CurrentMemberBloc().state;
+      if (currentMember!.isAdmin) {
+        final memberPhoneNumbers =
+            await MemberService().getMemberPhoneNumbers(currentMember.spaceId!);
+        for (final memberPhoneNumber in memberPhoneNumbers) {
+          if (memberViews
+              .any((m) => memberPhoneNumber.memberId == m.memberId)) {
+            final MemberView member = memberViews
+                .firstWhere((m) => memberPhoneNumber.memberId == m.memberId);
+            member.phoneNumber = memberPhoneNumber.phoneNumber;
+          }
+        }
+      }
+      // ignore: empty_catches
+    } catch (err) {}
   }
 }
