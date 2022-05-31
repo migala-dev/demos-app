@@ -68,12 +68,13 @@ class ProposalService {
     await _saveProposalResponseOnRepository(response);
   }
 
-  Future<void> getProposalParticipation(String spaceId, String participationId) async {
+  Future<void> getProposalParticipation(
+      String spaceId, String participationId) async {
     ProposalParticipationResponse response =
         await ProposalApi().getProposalParticipation(spaceId, participationId);
 
-    await ProposalParticipationRepository().insertOrUpdate(response.proposalParticipation);
-
+    await ProposalParticipationRepository()
+        .insertOrUpdate(response.proposalParticipation);
   }
 
   Future<void> cancelProposal(String spaceId, String proposalId) async {
@@ -96,6 +97,17 @@ class ProposalService {
 
     await ProposalParticipationRepository().removeByProposalId(proposalId);
     await _saveProposalResponseOnRepository(response);
+  }
+
+  Future<void> resetProposalVotes(String spaceId, String proposalId) async {
+    final response =
+        await ProposalApi().resetProposalVotes(spaceId, proposalId);
+
+    await ProposalRepository().insertOrUpdate(response.proposal);
+    await ProposalParticipationRepository().removeByProposalId(proposalId);
+    for (final participation in response.participations) {
+      await ProposalParticipationRepository().insert(participation);
+    }
   }
 
   Future<void> _saveProposalResponseOnRepository(

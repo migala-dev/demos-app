@@ -9,9 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ConfirmProposalScreen extends StatelessWidget {
   final String title;
   final String primaryActionLabel;
+  final String? textActionLabel;
 
   const ConfirmProposalScreen(
-      {Key? key, required this.title, this.primaryActionLabel = 'Publicar'})
+      {Key? key, required this.title, this.primaryActionLabel = 'Publicar', this.textActionLabel})
       : super(key: key);
 
   @override
@@ -50,7 +51,7 @@ class ConfirmProposalScreen extends StatelessWidget {
                       style: const TextStyle(color: Colors.black, fontSize: 18),
                       children: <TextSpan>[
                         TextSpan(
-                          text: primaryActionLabel.toLowerCase(),
+                          text: textActionLabel ?? primaryActionLabel.toLowerCase(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
