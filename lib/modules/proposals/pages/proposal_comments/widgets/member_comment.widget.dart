@@ -112,7 +112,7 @@ class MemberComment extends StatelessWidget {
   }
 
   void onVote(String manifestoCommentId, bool upvote) async {
-    final userId = CurrentUserBloc().state!.userId!;
+    final userId = CurrentUserBloc().state!.userId;
     final spaceId = SpaceBloc().state.spaceId;
 
     final currentUserCommentVote = await CommentVoteService()
@@ -153,7 +153,7 @@ class MemberComment extends StatelessWidget {
   }
 
   CurrentUserCommentVote getCurrentUserCommentVote() {
-    final currentUserId = CurrentUserBloc().state!.userId!;
+    final currentUserId = CurrentUserBloc().state!.userId;
     final currentUserVoteResult =
         comment.votes.where((vote) => vote.userId == currentUserId).toList();
 

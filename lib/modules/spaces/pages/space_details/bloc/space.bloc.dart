@@ -37,18 +37,18 @@ class SpaceBloc extends Bloc<SpaceEvent, SpaceView> {
 
   SpaceBloc._internal() : super(SpaceView.empty()) {
     on<SetSpaceIdEvent>((event, emit) async {
-      String spaceId = event.spaceId;
+      final String spaceId = event.spaceId;
       await set(spaceId, emit);
     });
     on<SetSpaceViewEvent>((event, emit) async {
-      SpaceView spaceView = event.spaceView;
+      final SpaceView spaceView = event.spaceView;
       
       setCurrentMember(spaceView.spaceId!);
 
       emit(spaceView);
     });
     on<UpdateSpaceEvent>((event, emit) async {
-      String spaceId = event.spaceId;
+      final String spaceId = event.spaceId;
 
       if (state.spaceId == spaceId) {
         await set(spaceId, emit);
@@ -57,7 +57,7 @@ class SpaceBloc extends Bloc<SpaceEvent, SpaceView> {
   }
 
   Future<void> set(String spaceId, Emitter<SpaceView?> emit) async {
-    SpaceView space = await SpaceViewsRepository().findById(spaceId);
+    final SpaceView space = await SpaceViewsRepository().findById(spaceId);
 
     setCurrentMember(spaceId);
 
@@ -65,8 +65,8 @@ class SpaceBloc extends Bloc<SpaceEvent, SpaceView> {
   }
 
   Future<void> setCurrentMember(String spaceId) async {
-    User? user = CurrentUserBloc().state;
-    MemberView? memberView = await MemberViewsRepository().findByUserIdAndSpaceId(user!.userId!, spaceId);
+    final User? user = CurrentUserBloc().state;
+    final MemberView? memberView = await MemberViewsRepository().findByUserIdAndSpaceId(user!.userId, spaceId);
     if (memberView != null) {
       CurrentMemberBloc().add(SetCurrentMemberEvent(memberView));
     }

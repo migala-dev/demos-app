@@ -95,7 +95,7 @@ class AuthService {
     if (user != null) {
       await UsersRepository().insert(user);
 
-      CurrentUserBloc().add(CurrentUserSetted(user.userId!));
+      CurrentUserBloc().add(CurrentUserSetted(user.userId, user.phoneNumber!));
     }
   }
 
@@ -108,7 +108,7 @@ class AuthService {
 
   void createWebSocketConnection(User? user) {
     WebSocketService webSocketService = WebSocketService();
-    webSocketService.createConnection(user!.userId!);
+    webSocketService.createConnection(user!.userId);
   }
 
   String? getPhoneNumber() {

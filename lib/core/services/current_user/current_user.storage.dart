@@ -23,6 +23,7 @@ import 'current_user_private_key.dart';
 
 class CurrentUserStorage {
   final String _currentUserIdKey = 'current-user-id-key';
+  final String _currentUserPhoneNumberKey = 'current-user-phone-nuumber-key';
   final _storage = const FlutterSecureStorage();
 
   static final _currentUserStorage = CurrentUserStorage._internal();
@@ -35,8 +36,20 @@ class CurrentUserStorage {
   }
 
   Future<String?> getCurrentUserId() async {
-    String? currentUserId = await _storage.read(key: _currentUserIdKey);
+    final String? currentUserId = await _storage.read(key: _currentUserIdKey);
 
     return currentUserId;
   }
+
+   Future<void> setCurrentUserPhoneNumber(String phoneNumber) async {
+    await _storage.write(key: _currentUserPhoneNumberKey, value: phoneNumber);
+  }
+
+  Future<String?> getCurrentUserPhoneNumber() async {
+    final String? currentUserPhoneNumber = await _storage.read(key: _currentUserPhoneNumberKey);
+
+    return currentUserPhoneNumber;
+  }
+
+
 }

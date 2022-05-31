@@ -17,18 +17,18 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
-import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
-import 'package:demos_app/core/models/user.model.dart';
-import 'package:demos_app/core/services/current_user/current_user_private_key.dart';
+import 'package:demos_app/core/models/member_phone_number.model.dart';
 
-Future<String> generateUserHash(String id) async {
-  final User currentUser = CurrentUserBloc().state!;
-  final String privateKey = await UserPrivateKey(currentUser.userId).getPrivateKey();
+class MemberPhoneNumbersResponse {
+  final List<MemberPhoneNumber> membersPhoneNumbers;
 
-  final List<int> bytes = utf8.encode('${id}_$privateKey');
-  final Digest digest = sha256.convert(bytes);
+  MemberPhoneNumbersResponse(this.membersPhoneNumbers);
 
-  return digest.toString();
+  factory MemberPhoneNumbersResponse.fromObject(dynamic o) =>
+      MemberPhoneNumbersResponse(
+        (o['memberPhoneNumbers'] as List<dynamic>)
+            .map((memberPhoneNumber) =>
+                MemberPhoneNumber.fromObject(memberPhoneNumber))
+            .toList(),
+      );
 }

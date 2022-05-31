@@ -37,6 +37,7 @@ class CurrentUserBloc extends Bloc<CurrentUserEvent, User?> {
         String? currentUserId = await CurrentUserStorage().getCurrentUserId();
         if (currentUserId != null) {
           User? user = await UsersRepository().findById(currentUserId);
+          user?.phoneNumber = await CurrentUserStorage().getCurrentUserPhoneNumber();
           emit(user);
         }
       }
@@ -44,6 +45,7 @@ class CurrentUserBloc extends Bloc<CurrentUserEvent, User?> {
 
     on<CurrentUserSetted>((event, emit) async {
       await CurrentUserStorage().setCurrentUserId(event.userId);
+      await CurrentUserStorage().setCurrentUserPhoneNumber(event.phoneNumber);
 
       add(CurrentUserLoaded());
     });

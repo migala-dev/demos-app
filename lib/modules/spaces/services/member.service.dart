@@ -19,6 +19,7 @@
 
 import 'package:demos_app/core/api/member.api.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
+import 'package:demos_app/core/models/member_phone_number.model.dart';
 import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
@@ -38,7 +39,7 @@ import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/mod
 class MemberService {
   Future<List<Member>> sendInvitations(
       String spaceId, List<InvitationContact> contacts) async {
-    SendInvitationsResponse response =
+    final SendInvitationsResponse response =
         await MemberApi().sendInvitations(spaceId, contacts);
 
     for (final member in response.members) {
@@ -50,7 +51,7 @@ class MemberService {
 
   Future<void> acceptInvitation(String spaceId) async {
     try {
-      AcceptInvitationResponse response =
+      final AcceptInvitationResponse response =
           await MemberApi().acceptInvitation(spaceId);
 
       await SpacesRepository().updateSpace(response.space);
@@ -72,7 +73,7 @@ class MemberService {
   }
 
   Future<Member?> rejectInvitation(String spaceId) async {
-    InvitationResponse response = await MemberApi().rejectInvitation(spaceId);
+    final InvitationResponse response = await MemberApi().rejectInvitation(spaceId);
 
     await MembersRepository().update(response.member);
 
@@ -80,7 +81,7 @@ class MemberService {
   }
 
   Future<void> getMember(String spaceId, String memberId) async {
-    MemberResponse response = await MemberApi().getMember(spaceId, memberId);
+    final MemberResponse response = await MemberApi().getMember(spaceId, memberId);
 
     await MembersRepository().insertOrUpdate(response.member);
 
@@ -93,7 +94,7 @@ class MemberService {
   }
 
   Future<void> cancelInvitation(String memberId) async {
-    Member? member = await MembersRepository().findById(memberId);
+    final Member? member = await MembersRepository().findById(memberId);
 
     member!.invitationStatus = InvitationStatus.canceled;
 
@@ -101,7 +102,7 @@ class MemberService {
   }
 
   Future<void> removeMembership(String memberId, String spaceId) async {
-    Member? member = await MembersRepository().findById(memberId);
+    final Member? member = await MembersRepository().findById(memberId);
 
     member!.deleted = true;
 
@@ -111,10 +112,10 @@ class MemberService {
   Future<void> leaveSpace(String spaceId) async {
     await MemberApi().leaveSpace(spaceId);
 
-    User? user = CurrentUserBloc().state;
-    Member? member = await MembersRepository()
+    final User? user = CurrentUserBloc().state;
+    final Member? member = await MembersRepository()
         .findByUserIdAndSpaceIdAndInvitationStatusAccepted(
-            user!.userId!, spaceId);
+            user!.userId, spaceId);
 
     member!.deleted = true;
 
@@ -131,16 +132,21 @@ class MemberService {
     return await MembersRepository().findAdministratorsBySpaceId(spaceId);
   }
 
-  Future<void> removeInvitationForExpiration(String spaceId) async {
-    User? user = CurrentUserBloc().state;
+  Future<List<MemberPhoneNumber>> getMemberPhoneNumbers(String spaceId) async {
+    final response = await MemberApi().getMemberPhoneNumbers(spaceId);
+    return response.membersPhoneNumbers;
+  }
 
-    List<InvitationStatus> invitationStatus = [
+  Future<void> removeInvitationForExpiration(String spaceId) async {
+    final User? user = CurrentUserBloc().state;
+
+    final List<InvitationStatus> invitationStatus = [
       InvitationStatus.received,
       InvitationStatus.sended
     ];
-    Member? member = await MembersRepository()
+    final Member? member = await MembersRepository()
         .findByUserIdAndSpaceIdAndInvitationStatuses(
-            user!.userId!, spaceId, invitationStatus);
+            user!.userId, spaceId, invitationStatus);
     if (member != null) {
       member.invitationStatus = InvitationStatus.expired;
       await MembersRepository().update(member);

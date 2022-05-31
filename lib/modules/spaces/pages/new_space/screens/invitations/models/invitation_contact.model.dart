@@ -18,7 +18,6 @@
 */
 
 import 'dart:math';
-import 'package:demos_app/core/models/user.model.dart';
 import 'package:flutter/material.dart';
 
 const List<MaterialColor> primaries = <MaterialColor>[
@@ -39,15 +38,14 @@ const List<MaterialColor> primaries = <MaterialColor>[
   Colors.blueGrey,
 ];
 
-class InvitationContact extends User {
-  final Color _color = primaries[Random().nextInt(primaries.length)];
+class InvitationContact {
+  String? userId;
+  String name = 'A';
+  String? profilePictureKey;
+  final String? phoneNumber;
+  final Color color = primaries[Random().nextInt(primaries.length)];
 
-  InvitationContact.withPhoneNumber(String phoneNumber)
-      : super.withPhoneNumber(phoneNumber);
-
-  Color get color => _color;
-
-  InvitationContact.fromUser(User user) : super.fromUserObject(user);
+  InvitationContact(this.phoneNumber);
 
   Map<String, dynamic> toJson() =>
       <String, dynamic>{'phoneNumber': phoneNumber, 'userId': userId};

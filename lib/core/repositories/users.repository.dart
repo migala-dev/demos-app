@@ -28,7 +28,6 @@ class UsersRepository extends AppRepository implements Table {
   final String tblUsers = 'user';
   final String colId = 'userId';
   final String colName = 'name';
-  final String colPhoneNumber = 'phoneNumber';
   final String colProfilePictureKey = 'profilePictureKey';
   final String colCreatedAt = 'createdAt';
   final String colUpdatedAt = 'updatedAt';
@@ -43,36 +42,28 @@ class UsersRepository extends AppRepository implements Table {
   String getCreateTableQuery() => 'CREATE TABLE $tblUsers('
       '$colId TEXT PRIMARY KEY, '
       '$colName TEXT, '
-      '$colPhoneNumber TEXT UNIQUE,'
       '$colProfilePictureKey TEXT,'
       '$colCreatedAt TEXT,'
       '$colUpdatedAt TEXT)';
 
   Future<String> insertOrUpdate(User user) async {
     Database? db = await this.db;
-    User? userSaved = await findById(user.userId!);
+    User? userSaved = await findById(user.userId);
     if (userSaved == null) {
       await db!.insert(tblUsers, user.toMap());
-      return user.userId!;
+      return user.userId;
     }
     return updateUser(user).toString();
   }
 
   Future<String> insert(User user) async {
     Database? db = await this.db;
-    User? userSaved = await findById(user.userId!);
+    User? userSaved = await findById(user.userId);
     if (userSaved == null) {
       await db!.insert(tblUsers, user.toMap());
-      return user.userId!;
+      return user.userId;
     }
-    return userSaved.userId!;
-  }
-
-  Future<User?> getUserByPhoneNumber(String phoneNumber) async {
-    Database? db = await this.db;
-    final result = await db!.rawQuery(
-        "SELECT * FROM $tblUsers WHERE $colPhoneNumber LIKE '%$phoneNumber'");
-    return result.isNotEmpty ? User.fromObject(result[0]) : null;
+    return userSaved.userId;
   }
 
   Future<User?> findById(String userId) async {
