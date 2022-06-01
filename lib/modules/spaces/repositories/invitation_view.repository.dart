@@ -94,7 +94,7 @@ class InvitationViewsRepository extends AppRepository {
   }
 
   Future<InvitationView?> getInvitationByMemberId(String memberId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
 
     final query = _getFindAllSpacesByMemberIdQuery(memberId);
     final result = await db!.rawQuery(query);

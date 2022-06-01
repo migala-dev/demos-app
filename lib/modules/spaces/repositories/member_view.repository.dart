@@ -92,7 +92,7 @@ class MemberViewsRepository extends AppRepository {
   }
   Future<MemberView?> findByMemberId(
       String memberId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
 
     final query = """
       ${_getSelectMemberViewQuery()}
