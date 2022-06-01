@@ -60,14 +60,15 @@ class MemberComment extends StatelessWidget {
           children: [
             Row(
               children: [
+                 comment.member != null ?
                 ProfilePicture(
-                  imageKey: comment.member.profilePictureKey,
+                  imageKey: comment.member!.profilePictureKey,
                   width: 40,
                   percentage: 0.9,
-                ),
+                ) : Container(),
                 const SizedBox(width: 10),
                 Text(
-                  '${comment.member.displayName} ',
+                  '${comment.member != null ? comment.member!.displayName : '[Miembro Eliminado]'} ',
                   overflow: TextOverflow.clip,
                 ),
                 Text(comment.createdAtFormatted,

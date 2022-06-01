@@ -27,7 +27,7 @@ class CommentView {
   final String content;
   final String? manifestoCommentParentId;
   final List<ManifestoCommentVote> votes;
-  final MemberView member;
+  final MemberView? member;
   final List<CommentView>? replies;
 
   String get createdAtFormatted =>
@@ -50,7 +50,7 @@ class CommentView {
   );
 
   factory CommentView.fromObjectAndParams(dynamic o, List<CommentView>? replies,
-          MemberView member, List<ManifestoCommentVote> votes) =>
+          MemberView? member, List<ManifestoCommentVote> votes) =>
       CommentView(
         o['manifestoCommentId'],
         o['createdAt'],

@@ -93,12 +93,12 @@ class InvitationViewsRepository extends AppRepository {
     ''';
   }
 
-  Future<InvitationView> getInvitationByMemberId(String memberId) async {
+  Future<InvitationView?> getInvitationByMemberId(String memberId) async {
     Database? db = await this.db;
 
     final query = _getFindAllSpacesByMemberIdQuery(memberId);
     final result = await db!.rawQuery(query);
 
-    return InvitationView.fromObject(result.first);
+    return result.isNotEmpty ? InvitationView.fromObject(result.first) : null;
   }
 }

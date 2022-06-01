@@ -38,8 +38,11 @@ class NewInvitationDialogService {
   }
 
   Future<void> open(Member member) async {
-    InvitationView invitation = await InvitationViewsRepository().getInvitationByMemberId(member.memberId!);
-    _openInvitation(invitation);
+    InvitationView? invitation = await InvitationViewsRepository()
+        .getInvitationByMemberId(member.memberId!);
+    if (invitation != null) {
+      _openInvitation(invitation);
+    }
   }
 
   Future<void> _openInvitation(InvitationView invitation) async {

@@ -87,7 +87,9 @@ class UpdateMemberEvent implements EventHandler {
         if (currentMember != null && currentMember.memberId! == memberId) {
           MemberView? member =
               await MemberViewsRepository().findByMemberId(memberId);
-          CurrentMemberBloc().add(SetCurrentMemberEvent(member));
+          if (member != null) {
+            CurrentMemberBloc().add(SetCurrentMemberEvent(member));
+          }
         }
       }
     } catch (err) {
