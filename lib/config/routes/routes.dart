@@ -23,6 +23,7 @@ import 'package:flutter/widgets.dart';
 
 class Routes {
   static const String root = '/';
+  static const String splash = '/splash';
   // Authentification
   static const String login = '/login';
   static const String verifyPhone = '/verify-code';
@@ -54,14 +55,13 @@ class Routes {
   static const String configuration = '/settings/configuration';
   static const String profileSettings = '/settings/profile';
 
-  static void configureRoutes(FluroRouter router, String initialRoute) {
+  static void configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return;
     });
 
-    var rootHandler = initialRoute == login ? loginHandler : spacesHandler;
-    router.define(root, handler: rootHandler);
+    router.define(root, handler: splashHandler);
     // Authentification
     router.define(login, handler: loginHandler);
     router.define(verifyPhone, handler: verifyPhoneHandler);
