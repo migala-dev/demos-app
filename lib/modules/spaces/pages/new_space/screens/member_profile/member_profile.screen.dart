@@ -51,7 +51,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
         bloc: SpaceMembersBloc(),
         builder: (context, state) {
           if (state is SpaceMembersWithData) {
-            MemberView member = state.memberViews
+            final MemberView member = state.memberViews
                 .firstWhere((m) => m.memberId == widget.memberId);
 
             return Scaffold(
@@ -156,11 +156,11 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
   }
 
   void openUpdateNameModal(MemberView member) async {
-    String? newName = await openUpdateStringFieldModal(context,
+    final String? newName = await openUpdateStringFieldModal(context,
         title: 'Nombre en el espacio',
         hintText: 'Introduce el nuevo nombre',
         initialValue: member.memberName);
-    bool isNewNameValid = member.memberName != newName && newName != null;
+    final bool isNewNameValid = member.memberName != newName && newName != null;
 
     if (isNewNameValid) {
       updateMemberName(newName, member);
