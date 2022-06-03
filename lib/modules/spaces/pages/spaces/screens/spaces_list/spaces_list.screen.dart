@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
+import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -54,7 +55,7 @@ class SpaceListScreen extends StatelessWidget {
             },
             child: const Icon(Icons.add),
           )),
-          body: getBody(context)),
+          body: CacheRefreshIndicator(child: getBody(context))),
     );
   }
 

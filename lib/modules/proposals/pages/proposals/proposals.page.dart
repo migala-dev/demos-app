@@ -25,6 +25,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposals_list.widget.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
+import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
@@ -60,7 +61,7 @@ class ProposalsPage extends StatelessWidget {
                 onPressed: () => goToNewProposal(context),
               )),
           body: state is ProposalViewListEmpty
-              ? Center(child: NoProposals())
+              ? CacheRefreshIndicator(child: Center(child: NoProposals()))
               : Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(

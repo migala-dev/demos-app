@@ -17,30 +17,28 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/core/services/cache.service.dart';
 import 'package:flutter/material.dart';
 
-class CommentsEmptyAlert extends StatelessWidget {
-  const CommentsEmptyAlert({Key? key}) : super(key: key);
+class CacheRefreshIndicator extends StatelessWidget {
+  final Widget? child;
+  final Widget? list;
+  final int heightAdjustment;
+
+  const CacheRefreshIndicator({Key? key, this.child, this.list, this.heightAdjustment = 90})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(
-            Icons.message,
-            color: Colors.grey,
-            size: 35,
-          ),
-          SizedBox(height: 10),
-          Text(
-            'No hay comentarios',
-            style: TextStyle(color: Colors.grey),
-          )
-        ],
-      ),
-    );
+    return RefreshIndicator(
+        onRefresh: () async {
+          await CacheService().getCache();
+        },
+        child: child != null
+            ? SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height - heightAdjustment, child: child))
+            : list!);
   }
 }
