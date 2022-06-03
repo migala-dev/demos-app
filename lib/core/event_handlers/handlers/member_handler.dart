@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/api/space.api.dart';
 import 'package:demos_app/core/interfaces/event.handler.interface.dart';
 import 'package:demos_app/core/mixins/event_handler_mixin.dart';
@@ -32,7 +33,10 @@ import 'package:demos_app/modules/spaces/pages/new_space/services/new_space.serv
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/modules/spaces/repositories/member_view.repository.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
+import 'package:demos_app/navigation.service.dart';
 import 'package:demos_app/shared/services/new_invitation_dialog.service.dart';
+import 'package:demos_app/utils/ui/toast.util.dart';
+import 'package:flutter/material.dart';
 
 class MemberHandler extends EventHandlerMixin {
   static final _memberHandler = MemberHandler._internal();
@@ -130,6 +134,7 @@ class MembershipRemovedEvent implements EventHandler {
     final String memberId = dataEvent.data!['memberId'];
     final String spaceId = dataEvent.data!['spaceId'];
     try {
+      _closeTheCurrentSpace(spaceId, memberId);
       await MemberService().removeMembership(memberId, spaceId);
 
       SpacesBloc().add(LoadSpacesEvent());
@@ -137,6 +142,19 @@ class MembershipRemovedEvent implements EventHandler {
       if (err != UserIsNotMemberError()) {
         rethrow;
       }
+    }
+  }
+
+  void _closeTheCurrentSpace(String spaceId, String memberId) {
+    final currerntSpaceId = SpaceBloc().state.spaceId;
+    MemberView? memberView = CurrentMemberBloc().state;
+
+    if (currerntSpaceId == spaceId &&
+        (memberView != null && memberView.memberId == memberId)) {
+    final BuildContext context = NavigationService.navigatorKey.currentContext!;
+
+    Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false);
+      ToastUtil.showError('Has sido expulsado de este espacio.');
     }
   }
 }
