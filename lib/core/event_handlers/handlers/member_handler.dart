@@ -56,9 +56,9 @@ class SpaceInvitationEvent implements EventHandler {
 
   @override
   Future<void> handleEvent(Cache dataEvent) async {
-    String spaceId = dataEvent.data!['spaceId'];
+    final String spaceId = dataEvent.data!['spaceId'];
 
-    SpaceResponse response = await SpaceApi().getSpace(spaceId);
+    final SpaceResponse response = await SpaceApi().getSpace(spaceId);
 
     await NewSpaceService().handleSpaceInvitation(response);
 
@@ -83,11 +83,13 @@ class UpdateMemberEvent implements EventHandler {
       if (currerntSpaceId == spaceId) {
         spaceMembersBloc.add(SpaceMemberUpdated(memberId));
 
-        MemberView? currentMember = CurrentMemberBloc().state;
+        final MemberView? currentMember = CurrentMemberBloc().state;
         if (currentMember != null && currentMember.memberId! == memberId) {
-          MemberView? member =
+          final MemberView? member =
               await MemberViewsRepository().findByMemberId(memberId);
-          CurrentMemberBloc().add(SetCurrentMemberEvent(member));
+          if (member != null) {
+            CurrentMemberBloc().add(SetCurrentMemberEvent(member));
+          }
         }
       }
     } catch (err) {
@@ -104,8 +106,8 @@ class InvitationCanceledEvent implements EventHandler {
 
   @override
   Future<void> handleEvent(Cache dataEvent) async {
-    String memberId = dataEvent.data!['memberId'];
-    String spaceId = dataEvent.data!['spaceId'];
+    final String memberId = dataEvent.data!['memberId'];
+    final String spaceId = dataEvent.data!['spaceId'];
     final spaceMembersBloc = SpaceMembersBloc();
     final currerntSpaceId = SpaceBloc().state.spaceId;
 
@@ -125,8 +127,8 @@ class MembershipRemovedEvent implements EventHandler {
 
   @override
   Future<void> handleEvent(Cache dataEvent) async {
-    String memberId = dataEvent.data!['memberId'];
-    String spaceId = dataEvent.data!['spaceId'];
+    final String memberId = dataEvent.data!['memberId'];
+    final String spaceId = dataEvent.data!['spaceId'];
     try {
       await MemberService().removeMembership(memberId, spaceId);
 

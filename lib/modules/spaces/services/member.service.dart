@@ -20,6 +20,13 @@
 import 'package:demos_app/core/api/member.api.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/models/member_phone_number.model.dart';
+import 'package:demos_app/core/repositories/manifesto/comment/manifesto_comment.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/comment/manifesto_comment_vote.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/manifesto_option.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_participation.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal_vote.repository.dart';
 import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
@@ -62,6 +69,34 @@ class MemberService {
 
       for (final user in response.users) {
         await UsersRepository().insertOrUpdate(user);
+      }
+
+      for (final proposal in response.proposals) {
+        await ProposalRepository().insertOrUpdate(proposal);
+      }
+
+      for (final proposalParticipation in response.proposalParticipations) {
+        await ProposalParticipationRepository().insertOrUpdate(proposalParticipation);
+      }
+
+      for (final propsalVote in response.proposalVotes) {
+        await ProposalVoteRepository().insert(propsalVote);
+      }
+
+      for (final manifesto in response.manifestos) {
+        await ManifestoRepository().insertOrUpdate(manifesto);
+      }
+
+      for (final manifestoOption in response.manifestoOptions) {
+        await ManifestoOptionRepository().insertOrUpdate(manifestoOption);
+      }
+
+      for (final manifestoComment in response.manifestoComments) {
+        await ManifestoCommentRepository().insertOrUpdate(manifestoComment);
+      }
+
+      for (final manifestoCommentVote in response.manifestoCommentVotes) {
+        await ManifestoCommentVoteRepository().insertOrUpdate(manifestoCommentVote);
       }
     } catch (err) {
       if (err == InvitationExpiredError() ||

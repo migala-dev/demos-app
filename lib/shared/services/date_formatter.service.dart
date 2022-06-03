@@ -22,6 +22,7 @@ import 'package:intl/intl.dart';
 
 class DateFormatterService {
   static String parseToStandardDate(String date) {
+    if(date.isEmpty) return '';
     try {
       final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
       final DateTime inputDate = dateFormat.parse(date);

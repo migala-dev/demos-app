@@ -90,9 +90,9 @@ class MemberViewsRepository extends AppRepository {
 
     return result.isEmpty ? null : MemberView.fromObject(result.first);
   }
-  Future<MemberView> findByMemberId(
+  Future<MemberView?> findByMemberId(
       String memberId) async {
-    Database? db = await this.db;
+    final Database? db = await this.db;
 
     final query = """
       ${_getSelectMemberViewQuery()}
@@ -100,10 +100,11 @@ class MemberViewsRepository extends AppRepository {
         $tblMembers.$colMemberId = '$memberId'
         AND $tblMembers.$colDeleted = 0
         AND $tblMembers.$colInvitationStatus = ${InvitationStatus.accepted.index}
+        LIMIT 1
     """;
     final result = await db!.rawQuery(query);
-
-    return result.map((row) => MemberView.fromObject(row)).toList().first;
+    final List<MemberView> memberViews = result.map((row) => MemberView.fromObject(row)).toList();
+    return memberViews.isNotEmpty ? memberViews.first : null;
   }
 
   Future<List<MemberView>> findMembersBySpaceId(String spaceId) async {

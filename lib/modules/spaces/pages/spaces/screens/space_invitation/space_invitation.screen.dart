@@ -23,7 +23,6 @@ import 'package:demos_app/core/models/errors/invitation_expired.error.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:demos_app/shared/models/option.model.dart';
-import 'package:demos_app/shared/services/phone_formatter.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/navigation/go_to_space_details.dart';
 import 'package:demos_app/utils/ui/reload_spaces.util.dart';
@@ -126,8 +125,7 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
   Widget getInvitedByWidget() {
     String userName = widget.invitationView.invitedBy.name.isEmpty
-        ? PhoneFormatterService.format(
-            widget.invitationView.invitedBy.phoneNumber)
+        ? 'Anónimo'
         : widget.invitationView.invitedBy.name;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -40,7 +40,7 @@ class ManifestoComment {
   factory ManifestoComment.fromObject(dynamic o) => ManifestoComment(
       o['manifestoCommentId'],
       o['content'],
-      o['manifestoCommentParentId'],
+      o['manifestoCommentParentId'] == 'null' ? null : o['manifestoCommentParentId'],
       o['deleted'] == 1 ? true : false,
       o['createdAt'],
       o['createdByMember'],

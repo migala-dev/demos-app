@@ -94,6 +94,5 @@ class AllSpacesResponse {
             .map((manifestoCommentVote) =>
                 ManifestoCommentVote.fromObject(manifestoCommentVote))
             .toList(),
-      
   );
 }

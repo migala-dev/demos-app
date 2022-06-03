@@ -22,20 +22,14 @@ import 'package:demos_app/core/models/member.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 
 class SpaceResponse {
-  late Space _space;
-  late Member _member;
-  late User? _invitedBy;
+  final Space space;
+  final Member member;
+  final User? invitedBy;
 
-  Space get space => _space;
-  Member get member => _member;
-  User? get invitedBy => _invitedBy;
+  SpaceResponse(this.space, this.member, this.invitedBy);
 
-  SpaceResponse.fromObject(dynamic o) {
-    _space = Space.fromObject(o['space']);
-    _member = Member.fromObject(o['member']);
-
-    if (o['invitedBy'] != null) {
-      _invitedBy = User.fromObject(o['invitedBy']);
-    }
-  }
+  factory SpaceResponse.fromObject(dynamic o) => SpaceResponse(
+      Space.fromObject(o['space']),
+      Member.fromObject(o['member']),
+      o['invitedBy'] != null ? User.fromObject(o['invitedBy']) : null);
 }

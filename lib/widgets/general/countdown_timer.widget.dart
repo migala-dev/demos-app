@@ -26,6 +26,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   }
 
   void setCountDown() {
+    if (!mounted) return;
     setState(() {
       difference = widget.dateTime!.difference(DateTime.now());
     });

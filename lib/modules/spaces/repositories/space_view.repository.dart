@@ -48,7 +48,9 @@ class SpaceViewsRepository extends AppRepository {
         $tblSpaces.$colCreatedAt,
         (
           select count(*) from $tblMembers
-          where $tblMembers.$colSpaceId = $tblSpaces.$colSpaceId AND $colInvitationStatus = ${InvitationStatus.accepted.index}
+          where $tblMembers.$colSpaceId = $tblSpaces.$colSpaceId 
+            AND $colInvitationStatus = ${InvitationStatus.accepted.index} 
+            AND $colDeleted = 0
         ) as "membersCount"
       FROM $tblSpaces
       INNER
