@@ -82,6 +82,7 @@ flutter:
     - assets/images/migala-coin.png
     - assets/images/default-profile.png
     - assets/images/demos-logo.png
+    - assets/images/splash-logo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific 'variants', see
