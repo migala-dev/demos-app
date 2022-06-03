@@ -81,17 +81,15 @@ void main() async {
       ),
       BlocProvider(create: (_) => ApiPendingCubit())
     ],
-    child: DemosApp(
-        initialRoute: userIsAuthenticate ? Routes.spaces : Routes.login),
+    child: DemosApp(),
   ));
 }
 
 class DemosApp extends StatefulWidget {
-  final String initialRoute;
 
-  DemosApp({Key? key, required this.initialRoute}) : super(key: key) {
+  DemosApp({Key? key}) : super(key: key) {
     final router = FluroRouter();
-    Routes.configureRoutes(router, initialRoute);
+    Routes.configureRoutes(router);
     Application.router = router;
   }
 

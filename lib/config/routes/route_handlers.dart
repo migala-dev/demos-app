@@ -52,12 +52,18 @@ import 'package:demos_app/modules/spaces/pages/spaces/spaces.page.dart';
 import 'package:demos_app/modules/spaces/screens/general_configuration.screen.dart';
 import 'package:demos_app/modules/spaces/screens/general_settings.screen.dart';
 import 'package:demos_app/modules/spaces/screens/profile.screen.dart';
+import 'package:demos_app/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 
 var loginHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return const LoginPage();
+});
+
+var splashHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  return const Splash();
 });
 
 var verifyPhoneHandler = Handler(
