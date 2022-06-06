@@ -20,7 +20,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:demos_app/config/themes/cubit/api-pending.cubit.dart';
-import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
+import 'package:demos_app/config/themes/cubit/request_behavior.dart';
 import 'package:demos_app/core/models/errors/get_error_by_message.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
@@ -45,54 +45,60 @@ class Api {
     return headers;
   }
 
-  static Future<dynamic> get(String endpoint, ThrowBehavior? throwBehavior) async {
+  static Future<dynamic> get(
+      String endpoint, RequestBehavior? requestBehavior) async {
     Future<http.Response> call =
         http.get(Uri.parse(endpoint), headers: _getDefaultHeaders());
-    var response = await _handleErrors(call, throwBehavior);
+    var response = await _handleErrors(call, requestBehavior);
     return jsonDecode(response!.body);
   }
 
-  static Future<dynamic> post(String endpoint, Object? body, ThrowBehavior? throwBehavior) async {
+  static Future<dynamic> post(
+      String endpoint, Object? body, RequestBehavior? requestBehavior) async {
     Map<String, String> headers =
         body != null ? _getHeadersWithApplicationJSON() : _getDefaultHeaders();
     String bodyFormatted = body != null ? json.encoder.convert(body) : '';
 
     Future<http.Response> call =
         http.post(Uri.parse(endpoint), headers: headers, body: bodyFormatted);
-    var response = await _handleErrors(call, throwBehavior);
-    return response!.body != '' ?jsonDecode(response.body) : null;
+    var response = await _handleErrors(call, requestBehavior);
+    return response!.body != '' ? jsonDecode(response.body) : null;
   }
 
-  static Future<dynamic> put(String endpoint, Object? body, ThrowBehavior? throwBehavior) async {
+  static Future<dynamic> put(
+      String endpoint, Object? body, RequestBehavior? requestBehavior) async {
     Map<String, String> headers =
         body != null ? _getHeadersWithApplicationJSON() : _getDefaultHeaders();
     String bodyFormatted = body != null ? json.encoder.convert(body) : '';
 
     Future<http.Response> call =
         http.put(Uri.parse(endpoint), headers: headers, body: bodyFormatted);
-    var response = await _handleErrors(call, throwBehavior);
-    return response!.body != '' ?jsonDecode(response.body) : null;
+    var response = await _handleErrors(call, requestBehavior);
+    return response!.body != '' ? jsonDecode(response.body) : null;
   }
 
-  static Future<dynamic> patch(String endpoint, Object? body, ThrowBehavior? throwBehavior) async {
+  static Future<dynamic> patch(
+      String endpoint, Object? body, RequestBehavior? requestBehavior) async {
     Future<http.Response> call = http.patch(Uri.parse(endpoint),
         headers: _getHeadersWithApplicationJSON(),
         body: json.encoder.convert(body));
-    var response = await _handleErrors(call, throwBehavior);
+    var response = await _handleErrors(call, requestBehavior);
     return jsonDecode(response!.body);
   }
 
-  static Future<dynamic> delete(String endpoint, ThrowBehavior? throwBehavior) async {
+  static Future<dynamic> delete(
+      String endpoint, RequestBehavior? requestBehavior) async {
     Future<http.Response> call = http.delete(
       Uri.parse(endpoint),
       headers: _getHeadersWithApplicationJSON(),
     );
-    var response = await _handleErrors(call, throwBehavior);
-    
-    return response!.body != '' ?jsonDecode(response.body) : null;
+    var response = await _handleErrors(call, requestBehavior);
+
+    return response!.body != '' ? jsonDecode(response.body) : null;
   }
 
-  static Future<dynamic> upload(String endpoint, File imageFile, ThrowBehavior? throwBehavior) async {
+  static Future<dynamic> upload(
+      String endpoint, File imageFile, RequestBehavior? requestBehavior) async {
     var stream = http.ByteStream(imageFile.openRead());
     stream.cast();
     var length = await imageFile.length();
@@ -110,38 +116,43 @@ class Api {
     request.files.add(multipartFile);
 
     Future<http.Response> call = http.Response.fromStream(await request.send());
-    var response = await _handleErrors(call, throwBehavior);
+    var response = await _handleErrors(call, requestBehavior);
     return jsonDecode(response!.body);
   }
 
   static Future<http.Response?> _handleErrors(
-      Future<http.Response> call, ThrowBehavior? throwBehavior) async {
+      Future<http.Response> call, RequestBehavior? requestBehavior) async {
+    requestBehavior ??= RequestBehavior();
     try {
-      http.Response response = await _loadingWrapper(call);
+      http.Response response = await _loadingWrapper(call, requestBehavior);
       if (response.statusCode != 200) {
         await _handleServerErrors(response);
       }
       return response;
     } catch (err) {
-      throwBehavior ??= ThrowBehavior();
       String messege = err.toString();
-      if (throwBehavior.showError) {
+      if (requestBehavior.showError) {
         _displayMessageError(messege);
       }
       throw (getErrorByMessage(messege));
     }
   }
 
-  static Future<http.Response>  _loadingWrapper(Future<http.Response> call) async {
+  static Future<http.Response> _loadingWrapper(
+      Future<http.Response> call, RequestBehavior requestBehavior) async {
     ApiTimestamp timestamp = ApiTimestamp();
-    ApiPendingCubit().addApiTimestamp(timestamp);
+    if (requestBehavior.showLoading) {
+      ApiPendingCubit().addApiTimestamp(timestamp);
+    }
     try {
       http.Response response = await call;
       return response;
-    } catch(err) {
+    } catch (err) {
       rethrow;
     } finally {
-      ApiPendingCubit().removeApiTimestamp(timestamp);
+      if (requestBehavior.showLoading) {
+        ApiPendingCubit().removeApiTimestamp(timestamp);
+      }
     }
   }
 

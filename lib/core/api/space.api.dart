@@ -18,7 +18,7 @@
 */
 
 import 'dart:io';
-import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
+import 'package:demos_app/config/themes/cubit/request_behavior.dart';
 import 'package:demos_app/constans/space.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
@@ -111,9 +111,9 @@ class SpaceApi {
   }
 
   Future<SpaceResponse> getSpace(String spaceId) async {
-    ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
+    RequestBehavior requestBehavior = RequestBehavior(showError: false, showLoading: false);
     String endpoint = SpacePath().getSpacePath(spaceId);
-    final httpResponse = await Api.get(endpoint, throwBehavior);
+    final httpResponse = await Api.get(endpoint, requestBehavior);
 
     SpaceResponse response = SpaceResponse.fromObject(httpResponse);
 
