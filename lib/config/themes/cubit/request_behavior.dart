@@ -17,8 +17,9 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-class ThrowBehavior {
+class RequestBehavior {
   late bool showError;
+  late bool showLoading;
 
-  ThrowBehavior({ this.showError = true });
+  RequestBehavior({ this.showError = true, this.showLoading = true });
 }

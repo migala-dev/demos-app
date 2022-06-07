@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
+import 'package:demos_app/config/themes/cubit/request_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/constans/proposals.path.dart';
 import 'package:demos_app/core/models/responses/proposal_participation_response.model.dart';
@@ -80,9 +80,9 @@ class ProposalApi {
 
   Future<ProposalResponse> getProposal(String spaceId, String proposalId) async {
     final String endpoint = ProposalsPath().getProposalPath(spaceId, proposalId);
-    final ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
+    final RequestBehavior requestBehavior = RequestBehavior(showError: false);
 
-    final httpResponse = await Api.get(endpoint, throwBehavior);
+    final httpResponse = await Api.get(endpoint, requestBehavior);
     final response = ProposalResponse.fromObject(httpResponse);
 
     return response;
@@ -92,9 +92,9 @@ class ProposalApi {
       String spaceId, String participationId) async {
     final String endpoint =
         ProposalsPath().getProposalParticipationPath(spaceId, participationId);
-    final ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
+    final RequestBehavior requestBehavior = RequestBehavior(showError: false);
 
-    final httpResponse = await Api.get(endpoint, throwBehavior);
+    final httpResponse = await Api.get(endpoint, requestBehavior);
     final response = ProposalParticipationResponse.fromObject(httpResponse);
 
     return response;
@@ -104,9 +104,9 @@ class ProposalApi {
       String spaceId, String proposalId) async {
     final String endpoint =
         ProposalsPath().getResetProposalParticipationPath(spaceId, proposalId);
-    final ThrowBehavior throwBehavior = ThrowBehavior(showError: false);
+    final RequestBehavior requestBehavior = RequestBehavior(showError: false);
 
-    final httpResponse = await Api.post(endpoint, null, throwBehavior);
+    final httpResponse = await Api.post(endpoint, null, requestBehavior);
     final response = ProposalParticipationsResponse.fromObject(httpResponse);
 
     return response;
