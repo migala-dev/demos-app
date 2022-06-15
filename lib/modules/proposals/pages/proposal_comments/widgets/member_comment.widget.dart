@@ -60,12 +60,13 @@ class MemberComment extends StatelessWidget {
           children: [
             Row(
               children: [
-                 comment.member != null ?
-                ProfilePicture(
-                  imageKey: comment.member!.profilePictureKey,
-                  width: 40,
-                  percentage: 0.9,
-                ) : Container(),
+                comment.member != null
+                    ? ProfilePicture(
+                        imageKey: comment.member!.profilePictureKey,
+                        width: 40,
+                        percentage: 0.9,
+                      )
+                    : Container(),
                 const SizedBox(width: 10),
                 Text(
                   '${comment.member != null ? comment.member!.displayName : '[Miembro Eliminado]'} ',
@@ -150,7 +151,7 @@ class MemberComment extends StatelessWidget {
     final commentView =
         await CommentViewService().getCommentById(manifestoCommentId);
 
-    CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
+    CommentViewListBloc().add(CommentViewListCommentUpdated(commentView!));
   }
 
   CurrentUserCommentVote getCurrentUserCommentVote() {
