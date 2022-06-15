@@ -19,5 +19,18 @@
 
 import 'package:flutter/material.dart';
 
-// TODO: define color palette and fonts
-final darkTheme = ThemeData.dark().copyWith();
+class CardWidget extends StatelessWidget {
+  final Widget child;
+
+  const CardWidget({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(topRight: Radius.circular(25.0)),
+      ),
+      child: child,
+    );
+  }
+}

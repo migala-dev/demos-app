@@ -33,22 +33,16 @@ class InitialProfile extends StatefulWidget {
 class _InitialProfileState extends State<InitialProfile> {
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
+      backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+          padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 40.0, bottom: 12.0),
           child: SafeArea(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Perfil',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 35,
-                ),
-                textAlign: TextAlign.start,
-              ),
               Expanded(
                   child: Profile(
                 children: [

@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 
 class BigButton extends StatelessWidget {
@@ -27,48 +28,67 @@ class BigButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
 
-  const BigButton(
-      {Key? key,
-      required this.text,
-      required this.onPressed,
-      this.isLoading = false,
-      this.disabled = false,
-      this.backgroundColor,
-      this.textColor
-       })
-      : super(key: key);
+  const BigButton({
+    Key? key,
+    required this.text,
+    required this.onPressed,
+    this.isLoading = false,
+    this.disabled = false,
+    this.backgroundColor,
+    this.textColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-        constraints:
-            const BoxConstraints.tightFor(width: double.infinity, height: 52),
-        child: isLoading ? getLoadingButton() : getMainButton(context));
+    return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: ConstrainedBox(
+            constraints: const BoxConstraints.tightFor(
+                width: double.infinity, height: 48),
+            child: isLoading ? getLoadingButton() : getMainButton(context)));
   }
 
   Widget getLoadingButton() {
-    return const ElevatedButton(
-        onPressed: null,
-        child: CircularProgressIndicator(
-          color: Colors.black,
-        ));
+    return getBaseButton(
+        () {},
+        CircularProgressIndicator(
+          color: primaryColor,
+          strokeWidth: 5.0,
+        ),
+        secondaryColorLight);
   }
 
   Widget getMainButton(BuildContext context) {
-    Color color = backgroundColor ?? Theme.of(context).primaryColor;
+    Color color = backgroundColor ?? secondaryColor;
     Color finalBackgroundColor = disabled ? Colors.grey : color;
+    return getBaseButton(() {
+      if (!disabled) {
+        onPressed();
+      }
+    },
+        Text(
+          text.toUpperCase(),
+          style: TextStyle(
+              fontSize: 18,
+              color: primaryColor,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'Rubik'),
+        ),
+        finalBackgroundColor);
+  }
 
+  Widget getBaseButton(
+      VoidCallback onButtonPressed, Widget child, Color background) {
     return ElevatedButton(
         onPressed: () {
-          if (!disabled) {
-            onPressed();
-          }
+          onButtonPressed();
         },
         style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(finalBackgroundColor)),
-        child: Text(
-          text.toUpperCase(),
-          style: TextStyle(fontSize: 16, color: textColor),
-        ));
+            backgroundColor: MaterialStateProperty.all(background),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0)))),
+        child: child);
   }
 }

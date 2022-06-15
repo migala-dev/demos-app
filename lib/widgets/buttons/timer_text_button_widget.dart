@@ -19,6 +19,7 @@
 
 import 'dart:async';
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
 
@@ -103,10 +104,10 @@ class _TimerTextButtonState extends State<TimerTextButton> {
 
   Widget getTimer() {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(widget.text), Text(_currentTimeRemaining)],
+        children: [Text(widget.text.toUpperCase(), style: TextStyle(color: primaryColorDark, fontSize: 12.0), ), Text(_currentTimeRemaining,  style: TextStyle(color: primaryColorDark, fontSize: 14.0))],
       ),
     );
   }
@@ -114,7 +115,7 @@ class _TimerTextButtonState extends State<TimerTextButton> {
   Widget getLink() {
     return TextButton(
         onPressed: widget.disabled ? null : onActionPressed,
-        child: Text(widget.text));
+        child: Text(widget.text.toUpperCase(), style: TextStyle(color: primaryColor),));
   }
 
   void onActionPressed() {
