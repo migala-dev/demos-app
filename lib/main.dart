@@ -63,8 +63,6 @@ void main() async {
   final connectionStatusBloc = ConnectionStatusBloc();
   connectionStatusBloc.listenStatusConnection();
 
-  final bool userIsAuthenticate = await TokenService().isAuthenticate();
-
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(

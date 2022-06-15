@@ -90,7 +90,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
                           physics: const BouncingScrollPhysics(),
                           children: [
                             ProfileField(
-                              placeholderPrefix: 'Sin ',
                               title: 'Nombre en el espacio',
                               icon: Icons.person,
                               value: member.currentMemberName,
@@ -127,7 +126,6 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
                             ),
                             member.isInvited
                                 ? ProfileField(
-                                    placeholderPrefix: '',
                                     title: 'La invitacion expira el',
                                     icon: Icons.calendar_today,
                                     value: member.invitationExpiredAtFormatted,
