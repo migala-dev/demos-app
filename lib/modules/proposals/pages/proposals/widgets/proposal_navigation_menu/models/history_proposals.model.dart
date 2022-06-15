@@ -26,12 +26,12 @@ import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_nav
 import 'package:flutter/material.dart';
 
 class HistoryProposals implements ProposalViewList {
-  static final HistoryProposals _hisotryProposals =
+  static final HistoryProposals _historyProposals =
       HistoryProposals._internal();
 
   HistoryProposals._internal();
 
-  factory HistoryProposals() => _hisotryProposals;
+  factory HistoryProposals() => _historyProposals;
 
   @override
   String title = 'HISTORIAL';
@@ -56,7 +56,8 @@ class HistoryProposals implements ProposalViewList {
   @override
   Future<bool> itHasProposals(String spaceId) async {
     int proposalsCount = await ProposalViewsRepository()
-        .getCountBySpaceIdAndStatus(spaceId, [ProposalStatus.closed, ProposalStatus.cancelled]);
+        .getCountBySpaceIdAndStatus(
+            spaceId, [ProposalStatus.closed, ProposalStatus.cancelled]);
 
     return proposalsCount > 0;
   }
