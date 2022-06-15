@@ -53,6 +53,7 @@ class MemberComment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final commentIsDeleted = comment.content == '' && comment.deleted;
     return Padding(
       padding: padding,
       child: ExpansionWidget(
@@ -81,10 +82,7 @@ class MemberComment extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            Text(
-                comment.content == '' && comment.deleted
-                    ? '[Comentario Eliminado]'
-                    : comment.content,
+            Text(commentIsDeleted ? '[Comentario Eliminado]' : comment.content,
                 style: TextStyle(color: Colors.grey.shade700)),
             const SizedBox(height: 10),
             Row(
@@ -105,12 +103,15 @@ class MemberComment extends StatelessWidget {
                     : Container(),
                 const SizedBox(width: 5),
                 enableReplies ? ReplyButton(onTap: onReplied) : Container(),
-                SafeWidgetValidator(
-                  validators: [
-                    IsCurrentMemberWidgetValidator(comment.member!.memberId!)
-                  ],
-                  child: PopupCommentMenuOptions(comment: comment),
-                )
+                commentIsDeleted
+                    ? Container()
+                    : SafeWidgetValidator(
+                        validators: [
+                          IsCurrentMemberWidgetValidator(
+                              comment.member!.memberId!)
+                        ],
+                        child: PopupCommentMenuOptions(comment: comment),
+                      )
               ],
             )
           ],

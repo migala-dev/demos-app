@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/modules/proposals/pages/proposal_comments/menu_options/delete_comment.menu_option.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/menu_options/update_comment.menu_option.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/widgets/general/popup_menu_options.widget.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,9 @@ class PopupCommentMenuOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PopupMenuOptions(menuOptions: [DeleteCommentMenuOption(comment)]);
+    return PopupMenuOptions(menuOptions: [
+      UpdateCommentMenuOption(comment),
+      DeleteCommentMenuOption(comment)
+    ]);
   }
 }

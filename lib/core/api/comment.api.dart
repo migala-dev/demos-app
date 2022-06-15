@@ -68,6 +68,19 @@ class CommentApi {
     return response;
   }
 
+  Future<CommentResponse> updateComment(
+      String spaceId, String manifestoCommentId, String content) async {
+    final String endpoint =
+        CommentsPath().getManifestoCommentPath(spaceId, manifestoCommentId);
+
+    final body = _getBodyFromContent(content);
+
+    final httpResponse = await Api.put(endpoint, body, null);
+    final response = CommentResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Map<String, dynamic> _getBodyFromContent(String content) =>
       {'content': content};
 }
