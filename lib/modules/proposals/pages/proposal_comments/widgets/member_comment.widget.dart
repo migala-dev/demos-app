@@ -78,7 +78,10 @@ class MemberComment extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            Text(comment.content,
+            Text(
+                comment.content == '' && comment.deleted
+                    ? '[Comentario Eliminado]'
+                    : comment.content,
                 style: TextStyle(color: Colors.grey.shade700)),
             const SizedBox(height: 10),
             Row(
