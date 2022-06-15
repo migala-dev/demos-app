@@ -38,9 +38,9 @@ class HistoryProposals implements ProposalViewList {
 
   @override
   Future<List<ProposalView>> getList(String spaceId) async {
-    ProposalStatus status = ProposalStatus.closed;
+    final List<ProposalStatus> statusses = [ProposalStatus.closed, ProposalStatus.cancelled];
     return await ProposalViewsRepository()
-        .findAllBySpaceIdAndStatus(spaceId, status);
+        .findAllBySpaceIdAndStatusses(spaceId, statusses);
   }
 
   @override
