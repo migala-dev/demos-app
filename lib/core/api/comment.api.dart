@@ -57,6 +57,17 @@ class CommentApi {
     return response;
   }
 
+  Future<CommentResponse> deleteComment(
+      String spaceId, String manifestoCommentId) async {
+    final String endpoint =
+        CommentsPath().getManifestoCommentPath(spaceId, manifestoCommentId);
+
+    final httpResponse = await Api.delete(endpoint, null);
+    final response = CommentResponse.fromObject(httpResponse);
+
+    return response;
+  }
+
   Map<String, dynamic> _getBodyFromContent(String content) =>
       {'content': content};
 }

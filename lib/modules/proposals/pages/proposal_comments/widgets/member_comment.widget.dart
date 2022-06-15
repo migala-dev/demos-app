@@ -27,9 +27,12 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/services/com
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/replies_count_button.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/popup_comment_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/replies_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
+import 'package:demos_app/modules/spaces/validators/is_current_member.widget_validator.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
+import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:expansion_widget/expansion_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -102,9 +105,12 @@ class MemberComment extends StatelessWidget {
                     : Container(),
                 const SizedBox(width: 5),
                 enableReplies ? ReplyButton(onTap: onReplied) : Container(),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert, color: Colors.grey))
+                SafeWidgetValidator(
+                  validators: [
+                    IsCurrentMemberWidgetValidator(comment.member!.memberId!)
+                  ],
+                  child: PopupCommentMenuOptions(comment: comment),
+                )
               ],
             )
           ],
@@ -170,4 +176,6 @@ class MemberComment extends StatelessWidget {
         ? CurrentUserCommentVote.upvote
         : CurrentUserCommentVote.downvote;
   }
+
+  // Future<void> delete
 }
