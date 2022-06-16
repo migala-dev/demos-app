@@ -19,65 +19,62 @@
 
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
+import 'package:demos_app/utils/parsers/parse_object_to_boolean.dart';
 
 class Member {
-  String? _memberId;
-  String? _spaceId;
-  String? _userId;
-  SpaceRole? _role;
-  String? _name;
-  String? _expiredAt;
-  String? _createdBy;
-  String? _updatedBy;
-  String? _createdAt;
-  String? _updatedAt;
-  InvitationStatus? invitationStatus;
-  bool deleted = false;
+  final String memberId;
+  final String spaceId;
+  final String userId;
+  final SpaceRole role;
+  final String? name;
+  final String expiredAt;
+  final String createdBy;
+  final String updatedBy;
+  final String createdAt;
+  final String updatedAt;
+  final InvitationStatus invitationStatus;
+  final bool deleted;
 
-  String? get memberId => _memberId;
-  String? get spaceId => _spaceId;
-  String? get userId => _userId;
-  SpaceRole? get role => _role;
-  String? get name => _name;
-  String? get expiredAt => _expiredAt;
-  String? get createdBy => _createdBy;
-  String? get updatedBy => _updatedBy;
-  String? get createdAt => _createdAt;
+  Member(
+      this.memberId,
+      this.spaceId,
+      this.userId,
+      this.role,
+      this.name,
+      this.expiredAt,
+      this.createdAt,
+      this.createdBy,
+      this.updatedAt,
+      this.updatedBy,
+      this.invitationStatus,
+      this.deleted);
 
-  Map<String, dynamic> toMap() {
-    final Map<String, dynamic> map = <String, dynamic>{};
-    map['memberId'] = _memberId;
-    map['spaceId'] = _spaceId;
-    map['userId'] = _userId;
-    map['invitationStatus'] = invitationStatus?.index;
-    map['role'] = getSpaceRoleString(_role);
-    map['name'] = _name;
-    map['expiredAt'] = _expiredAt;
-    map['deleted'] = deleted ? 1 : 0;
-    map['createdBy'] = _createdBy;
-    map['updatedBy'] = _updatedBy;
-    map['createdAt'] = _createdAt;
-    map['updatedAt'] = _updatedAt;
+  factory Member.fromObject(dynamic o) => Member(
+      o['memberId'],
+      o['spaceId'],
+      o['userId'],
+      getSpaceRoleFromString(o['role']),
+      o['name'],
+      o['expiredAt'],
+      o['createdAt'],
+      o['createdBy'],
+      o['updatedAt'],
+      o['updatedBy'],
+      getInvitationStatusFromInt(o['invitationStatus']),
+      parseObjectToBoolean(o['deleted']));
 
-    return map;
-  }
-
-  Member.fromObject(dynamic o) {
-    _memberId = o['memberId'];
-    _spaceId = o['spaceId'];
-    _userId = o['userId'];
-    invitationStatus = getInvitationStatusFromInt(o['invitationStatus']);
-    _role = getSpaceRoleFromString(o['role']);
-    _name = o['name'];
-    _expiredAt = o['expiredAt'];
-    if (o['deleted'].runtimeType == int) {
-      deleted = o['deleted'] == 0 ? false : true;
-    } else {
-      deleted = o['deleted'];
-    }
-    _createdBy = o['createdBy'];
-    _updatedBy = o['updatedBy'];
-    _createdAt = o['createdAt'];
-    _updatedAt = o['updatedAt'];
-  }
+  Map<String, dynamic> toMap() => {
+        'memberId': memberId,
+        'spaceId': spaceId,
+        'userId': userId,
+        'invitationStatus': invitationStatus.index,
+        'role': getSpaceRoleString(role),
+        'name': name,
+        'expiredAt': expiredAt,
+        'deleted': deleted ? 1 : 0,
+        'createdBy': createdBy,
+        'updatedBy': updatedBy,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt,
+      };
 }
