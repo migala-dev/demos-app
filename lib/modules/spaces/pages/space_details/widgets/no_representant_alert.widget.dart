@@ -85,7 +85,7 @@ class _NoRepresentantAlertState extends State<NoRepresentantAlert> {
       return Container();
     }
     return Container(
-      padding: const EdgeInsets.all(15.0),
+      padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: backgroundColor,
         border: Border.all(color: Colors.orange.shade200, width: 1.5),
