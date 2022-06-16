@@ -93,7 +93,7 @@ flutter:
           weight: 400
         - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Montserrat/Montserrat-Semibold.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
           weight: 700
@@ -116,7 +116,7 @@ flutter:
           weight: 400
         - asset: assets/fonts/Rubik/Rubik-Medium.ttf
           weight: 500
-        - asset: assets/fonts/Rubik/Rubik-Semibold.ttf
+        - asset: assets/fonts/Rubik/Rubik-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Rubik/Rubik-Bold.ttf
           weight: 700

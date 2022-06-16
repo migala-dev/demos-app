@@ -48,7 +48,10 @@ class HistoryProposals implements ProposalViewList {
     return ProposalViewListWidget(
       proposals: proposals,
       getProposalCard: (proposal) {
-        return ProposalHistoryCard(proposal: proposal);
+        return ProposalHistoryCard(
+          proposal: proposal,
+          status: proposal.status,
+        );
       },
     );
   }
