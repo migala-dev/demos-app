@@ -32,8 +32,8 @@ class Member {
   final String updatedBy;
   final String createdAt;
   final String updatedAt;
-  final InvitationStatus invitationStatus;
-  final bool deleted;
+  InvitationStatus invitationStatus;
+  bool deleted;
 
   Member(
       this.memberId,
