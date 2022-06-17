@@ -88,13 +88,17 @@ class MemberComment extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CommentVotesCount(
-                  votesInFavor: comment.upVotesCount,
-                  votesInOpposing: comment.downVotesCount,
-                  onUpvote: () => onVote(comment.manifestoCommentId, true),
-                  onDownvote: () => onVote(comment.manifestoCommentId, false),
-                  currentUserCommentVote: getCurrentUserCommentVote(),
-                ),
+                commentIsDeleted
+                    ? Container()
+                    : CommentVotesCount(
+                        votesInFavor: comment.upVotesCount,
+                        votesInOpposing: comment.downVotesCount,
+                        onUpvote: () =>
+                            onVote(comment.manifestoCommentId, true),
+                        onDownvote: () =>
+                            onVote(comment.manifestoCommentId, false),
+                        currentUserCommentVote: getCurrentUserCommentVote(),
+                      ),
                 const SizedBox(width: 10),
                 comment.repliesCount > 0 && enableReplies
                     ? RepliesCountButton(
@@ -102,7 +106,9 @@ class MemberComment extends StatelessWidget {
                         repliesCount: comment.repliesCount)
                     : Container(),
                 const SizedBox(width: 5),
-                enableReplies ? ReplyButton(onTap: onReplied) : Container(),
+                enableReplies && !commentIsDeleted
+                    ? ReplyButton(onTap: onReplied)
+                    : Container(),
                 commentIsDeleted
                     ? Container()
                     : SafeWidgetValidator(
@@ -177,6 +183,4 @@ class MemberComment extends StatelessWidget {
         ? CurrentUserCommentVote.upvote
         : CurrentUserCommentVote.downvote;
   }
-
-  // Future<void> delete
 }
