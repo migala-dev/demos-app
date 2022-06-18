@@ -17,7 +17,9 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:flutter/material.dart';
+class RequestBehavior {
+  late bool showError;
+  late bool showLoading;
 
-// TODO: define color palette and fonts
-final darkTheme = ThemeData.dark().copyWith();
+  RequestBehavior({ this.showError = true, this.showLoading = true });
+}

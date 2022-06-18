@@ -26,12 +26,12 @@ import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_nav
 import 'package:flutter/material.dart';
 
 class InProgressProposals implements ProposalViewList {
-  static final InProgressProposals _draftProposals =
+  static final InProgressProposals _inProgressProposals =
       InProgressProposals._internal();
 
   InProgressProposals._internal();
 
-  factory InProgressProposals() => _draftProposals;
+  factory InProgressProposals() => _inProgressProposals;
 
   @override
   String title = 'EN PROGRESO';

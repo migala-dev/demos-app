@@ -26,6 +26,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comm
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/input_comment.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment.widget.dart';
 import 'package:demos_app/widgets/buttons/chip_button.widget.dart';
+import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,9 +102,10 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
                   child: Stack(
                     alignment: AlignmentDirectional.center,
                     children: [
-                      ListView.builder(
+                      CacheRefreshIndicator(
+                          list: ListView.builder(
                         controller: _commentListController,
-                        physics: const BouncingScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         itemCount: comments.length,
                         itemBuilder: (context, index) => Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -113,7 +115,7 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
                             onReplied: () => setReply(comments[index]),
                           ),
                         ),
-                      ),
+                      )),
                       showNewCommentChip
                           ? Positioned(
                               bottom: 5,
@@ -134,7 +136,9 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
 
           return Column(
             children: const [
-              Expanded(child: CommentsEmptyAlert()),
+              Expanded(
+                  child: CacheRefreshIndicator(
+                      child: CommentsEmptyAlert(), heightAdjustment: 135)),
               InputComment()
             ],
           );

@@ -177,7 +177,7 @@ var spaceMembersHandler = Handler(
 var memberProfileHandler =
     Handler(handlerFunc: (BuildContext? context, Object params) {
   final memberView = context!.settings!.arguments as MemberView;
-  return MemberProfileScreen(memberView);
+  return MemberProfileScreen(memberView.memberId!);
 });
 
 var voteProposalHandler =

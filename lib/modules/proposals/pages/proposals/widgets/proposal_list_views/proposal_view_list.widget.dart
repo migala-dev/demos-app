@@ -19,6 +19,7 @@
 
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
+import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:flutter/material.dart';
 
 class ProposalViewListWidget extends StatelessWidget {
@@ -30,12 +31,12 @@ class ProposalViewListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      physics: const BouncingScrollPhysics(),
+    return CacheRefreshIndicator(list: ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(),
       itemCount: proposals.length,
       itemBuilder: (context, index) => Container(
           margin: const EdgeInsets.only(bottom: 10),
           child: getProposalCard(proposals[index]),
-    ));
+    )));
   }
 }

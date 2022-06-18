@@ -24,20 +24,23 @@ class CommentsEmptyAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Icon(
-          Icons.message,
-          color: Colors.grey,
-          size: 35,
-        ),
-        SizedBox(height: 10),
-        Text(
-          'No hay comentarios',
-          style: TextStyle(color: Colors.grey),
-        )
-      ],
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          Icon(
+            Icons.message,
+            color: Colors.grey,
+            size: 35,
+          ),
+          SizedBox(height: 10),
+          Text(
+            'No hay comentarios',
+            style: TextStyle(color: Colors.grey),
+          )
+        ],
+      ),
     );
   }
 }

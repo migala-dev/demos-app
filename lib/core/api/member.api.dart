@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/config/themes/cubit/throw_behavior.dart';
+import 'package:demos_app/config/themes/cubit/request_behavior.dart';
 import 'package:demos_app/constans/member.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
@@ -70,7 +70,7 @@ class MemberApi {
   Future<MemberResponse> getMember(String spaceId, String memberId) async {
     final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
 
-    final httpResponse = await Api.get(endpoint, ThrowBehavior(showError: false));
+    final httpResponse = await Api.get(endpoint, RequestBehavior(showError: false));
 
     final MemberResponse response = MemberResponse.fromObject(httpResponse);
 
@@ -108,7 +108,7 @@ class MemberApi {
   Future<MemberPhoneNumbersResponse> getMemberPhoneNumbers(String spaceId) async {
     final String endpoint = MemberPath().getMembersPhoneNumbersPath(spaceId);
 
-    final httpResponse = await Api.get(endpoint, ThrowBehavior(showError: false));
+    final httpResponse = await Api.get(endpoint, RequestBehavior(showError: false, showLoading: false));
 
     final MemberPhoneNumbersResponse response = MemberPhoneNumbersResponse.fromObject(httpResponse);
 

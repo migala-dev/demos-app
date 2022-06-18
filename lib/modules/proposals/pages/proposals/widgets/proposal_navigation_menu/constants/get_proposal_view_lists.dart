@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/core/enums/space_role.enum.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/closed_proposals.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/draft_proposals.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/history_proposals.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/in_progress_proposals.model.dart';
@@ -30,6 +31,7 @@ Future<List<ProposalViewList>> getProposalViewLists() async {
   List<ProposalViewList> lists = [
     InProgressProposals(),
     HistoryProposals(),
+    ClosedProposals(),
   ];
   if (currentMember != null) {
     if (currentMember.role == SpaceRole.representative) {
