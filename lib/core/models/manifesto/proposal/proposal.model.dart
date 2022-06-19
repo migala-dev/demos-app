@@ -19,6 +19,7 @@
 
 import 'package:demos_app/core/enums/proposal/proposal_progress_status.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
+import 'package:demos_app/utils/parsers/parse_object_to_boolean.dart';
 
 class Proposal {
   final String proposalId;
@@ -29,6 +30,7 @@ class Proposal {
   final String spaceId;
   final int participationPercentage;
   final int approvalPercentage;
+  final bool insufficientVotes;
   final String createdBy;
   final String createdAt;
   final String updatedBy;
@@ -43,6 +45,7 @@ class Proposal {
       this.spaceId,
       this.participationPercentage,
       this.approvalPercentage,
+      this.insufficientVotes,
       this.createdBy,
       this.createdAt,
       this.updatedBy,
@@ -58,6 +61,7 @@ class Proposal {
         o['spaceId'],
         o['participationPercentage'],
         o['approvalPercentage'],
+        parseObjectToBoolean(o['insufficientVotes']),
         o['createdBy'],
         o['createdAt'],
         o['updatedBy'],
@@ -73,6 +77,7 @@ class Proposal {
         'spaceId': spaceId,
         'participationPercentage': participationPercentage,
         'approvalPercentage': approvalPercentage,
+        'insufficientVotes': insufficientVotes,
         'createdBy': createdBy,
         'createdAt': createdAt,
         'updatedBy': updatedBy,

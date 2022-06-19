@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/utils/parsers/parse_object_to_boolean.dart';
+
 class ProposalParticipation {
   final String proposalParticipationId;
   final String userId;
@@ -34,9 +36,7 @@ class ProposalParticipation {
         o['proposalId'],
         o['memberId'],
         o['spaceId'],
-        o['participated'].runtimeType == int
-            ? o['participated'] != 0
-            : o['participated'],
+        parseObjectToBoolean(o['participated'])
       );
 
   Map<String, dynamic> toMap() => {
