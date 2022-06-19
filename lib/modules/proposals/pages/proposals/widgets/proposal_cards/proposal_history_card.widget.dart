@@ -19,6 +19,7 @@
 
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
@@ -30,8 +31,10 @@ import '../../../proposal_details/widgets/proposal_result/option_result_info.wid
 class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
   @override
   final ProposalView proposal;
+  final ProposalStatus status;
 
-  const ProposalHistoryCard({Key? key, required this.proposal})
+  const ProposalHistoryCard(
+      {Key? key, required this.proposal, required this.status})
       : super(key: key);
 
   @override
@@ -70,23 +73,11 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
               ),
               Container(
                 padding: const EdgeInsets.only(bottom: 12.0),
-                child: getResultWidget(),
+                child: getResultWidget(status),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ProposalCardInfo(
-                    getIcon: (size, color) => Icon(
-                      Icons.calendar_today,
-                      size: size,
-                      color: color,
-                    ),
-                    title: 'CERRADO EL:',
-                    content: DateFormatterService
-                        .parseDateToStandardDateFormatWithHour(
-                            proposal.expiredAt!),
-                  ),
-                ],
+                children: [getDate()],
               ),
             ],
           ),
@@ -95,7 +86,7 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
     );
   }
 
-  Widget getResultWidget() {
+  Widget getResultWidget(ProposalStatus status) {
     if (proposal.mostVotedOptionInfo != null && !proposal.insufficientVotes) {
       return OptionResultWidget(
         optionName: proposal.mostVotedOptionInfo!.label,
@@ -104,8 +95,34 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
         isWinningOption: true,
       );
     }
+    final String text;
 
-    return const Text('VOTOS INSUFICIENTES',
-        style: TextStyle(color: Colors.redAccent, fontSize: 18.0));
+    if (status == ProposalStatus.cancelled) {
+      text = 'CANCELADA';
+    } else if (proposal.insufficientVotes) {
+      text = 'VOTOS INSUFICIENTES';
+    } else {
+      text = '';
+    }
+
+    return Text(text,
+        style: const TextStyle(color: Colors.redAccent, fontSize: 18.0));
+  }
+
+  Widget getDate() {
+    if (proposal.status != ProposalStatus.cancelled) {
+      return ProposalCardInfo(
+        getIcon: (size, color) => Icon(
+          Icons.calendar_today,
+          size: size,
+          color: color,
+        ),
+        title: 'CERRADO EL:',
+        content: DateFormatterService.parseDateToStandardDateFormatWithHour(
+            proposal.expiredAt!),
+      );
+    } else {
+      return Container();
+    }
   }
 }
