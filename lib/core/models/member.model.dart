@@ -27,7 +27,7 @@ class Member {
   final String userId;
   final SpaceRole role;
   final String? name;
-  final String expiredAt;
+  final String? expiredAt;
   final String createdBy;
   final String updatedBy;
   final String createdAt;

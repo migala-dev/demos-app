@@ -104,7 +104,9 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
                             ),
                           ),
                         ))),
-                BigButton(isLoading: false, text: 'VERIFICAR', onPressed: () {})
+                BigButton(isLoading: isLoading, text: 'VERIFICAR', onPressed: () {
+                  verifyCode();
+                })
               ],
             )));
   }
