@@ -30,8 +30,8 @@ Future<List<ProposalViewList>> getProposalViewLists() async {
   MemberView? currentMember = CurrentMemberBloc().state;
   List<ProposalViewList> lists = [
     InProgressProposals(),
-    HistoryProposals(),
     ClosedProposals(),
+    HistoryProposals(),
   ];
   if (currentMember != null) {
     if (currentMember.role == SpaceRole.representative) {
