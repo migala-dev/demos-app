@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
@@ -58,7 +59,7 @@ class ProfileField extends StatelessWidget {
               validators: editableButtonValidators,
               child: IconButton(
                 icon: Icon(
-                  Icons.edit_outlined,
+                  DemosIcons.pencil,
                   color: onEdit == null ? Colors.grey : accentColor,
                 ),
                 onPressed: onEdit,
