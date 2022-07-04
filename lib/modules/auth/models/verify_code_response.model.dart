@@ -21,22 +21,23 @@ import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
 
 class VerifyCodeReponse {
-  late User? _user;
-  late Tokens? _tokens;
-  late String? _bucketName;
-  late String? _session;
+  final User? user;
+  final Tokens? tokens;
+  final String? bucketName;
+  final String? session;
 
-  User? get user => _user;
-  Tokens? get tokens => _tokens;
-  String? get bucketName => _bucketName;
-  String? get session => _session;
+  VerifyCodeReponse(
+    this.user,
+    this.tokens,
+    this.bucketName,
+    this.session
+  );
 
-  VerifyCodeReponse.fromObject(dynamic o) {
-    _session = o['session'];
-    if (o['user'] != null && o['tokens'] != null) {
-      _user = User.fromObject(o['user']);
-      _tokens = Tokens.fromObject(o['tokens']);
-      _bucketName = o['bucketName'];
-    }
-  }
+  factory VerifyCodeReponse.fromObject(dynamic o) => VerifyCodeReponse(
+    o['user'] != null ? User.fromObject(o['user']) : null,
+    o['tokens'] != null ? Tokens.fromObject(o['tokens']) : null,
+    o['bucketName'],
+    o['session']
+  );
+    
 }

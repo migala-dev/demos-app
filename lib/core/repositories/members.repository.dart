@@ -65,22 +65,22 @@ class MembersRepository extends AppRepository implements Table {
 
   Future<String> insertOrUpdate(Member member) async {
     Database? db = await this.db;
-    Member? memberSaved = await findById(member.memberId!);
+    Member? memberSaved = await findById(member.memberId);
     if (memberSaved == null) {
       await db!.insert(tblMembers, member.toMap());
-      return member.memberId!;
+      return member.memberId;
     }
     return update(member).toString();
   }
 
   Future<String> insert(Member member) async {
     Database? db = await this.db;
-    Member? memberSaved = await findById(member.memberId!);
+    Member? memberSaved = await findById(member.memberId);
     if (memberSaved == null) {
       await db!.insert(tblMembers, member.toMap());
-      return member.memberId!;
+      return member.memberId;
     }
-    return memberSaved.memberId!;
+    return memberSaved.memberId;
   }
 
   Future<Member?> findById(String memberId) async {
@@ -112,7 +112,7 @@ class MembersRepository extends AppRepository implements Table {
   Future<int> update(Member member) async {
     Database? db = await this.db;
     final result = await db!.rawUpdate('UPDATE $tblMembers '
-        "SET $colInvitationStatus = '${member.invitationStatus?.index}'"
+        "SET $colInvitationStatus = '${member.invitationStatus.index}'"
         ", $colRole = '${getSpaceRoleString(member.role)}' "
         ", $colName = '${secureSQLString(member.name)}' "
         ', $colDeleted = ${member.deleted ? 1 : 0} '

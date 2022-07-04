@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/core/services/current_user/current_user.service.dart';
+import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
@@ -32,12 +33,14 @@ class Profile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).primaryColor;
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          BlocBuilder<CurrentUserBloc, User?>(
+          Expanded(
+              child: BlocBuilder<CurrentUserBloc, User?>(
             bloc: CurrentUserBloc(),
             builder: (context, state) {
               return Column(
@@ -48,19 +51,42 @@ class Profile extends StatelessWidget {
                     imageKey: state?.profilePictureKey,
                     onPictureEditPress: () => onPictureEditPress(context),
                   )),
-                  Container(
-                    margin: const EdgeInsets.only(top: 20.0),
-                    child: ProfileForm(
-                      onEditNamePress: (String? name) {
-                        updateName(name);
-                      },
-                      user: state,
-                    ),
-                  ),
+                  Expanded(
+                      child: Container(
+                          margin:
+                              const EdgeInsets.only(top: 44.0, bottom: 16.0),
+                          child: CardWidget(
+                              child:  Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 28.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(height: 40.0),
+                                Text(
+                                  'Perfil',
+                                  style: TextStyle(
+                                      fontSize: 26.0,
+                                      color: primaryColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                    const SizedBox(height: 40.0),
+                                Expanded(
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                      ProfileForm(
+                                        onEditNamePress: (String? name) {
+                                          updateName(name);
+                                        },
+                                        user: state,
+                                      )
+                                    ]))
+                              ])))))
                 ],
               );
             },
-          ),
+          )),
           Column(
             children: children ?? [],
           ),

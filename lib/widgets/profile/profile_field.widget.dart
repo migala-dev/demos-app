@@ -28,7 +28,7 @@ class ProfileField extends StatelessWidget {
   final IconData icon;
   final bool editable;
   final VoidCallback? onEdit;
-  final String placeholderPrefix;
+  final String placeholder;
   final List<WidgetValidator>? editableButtonValidators;
 
   const ProfileField(
@@ -37,7 +37,7 @@ class ProfileField extends StatelessWidget {
       required this.icon,
       this.value,
       this.editable = false,
-      this.placeholderPrefix = 'Introduce tu',
+      this.placeholder = 'Vacío',
       this.onEdit,
       this.editableButtonValidators,
       this.child})
@@ -51,12 +51,14 @@ class ProfileField extends StatelessWidget {
         margin: const EdgeInsets.only(top: 6.0),
         child: Icon(icon),
       ),
+      horizontalTitleGap: 0,
+      contentPadding: const EdgeInsets.all(0),
       trailing: editable
           ? SafeWidgetValidator(
               validators: editableButtonValidators,
               child: IconButton(
                 icon: Icon(
-                  Icons.edit,
+                  Icons.edit_outlined,
                   color: onEdit == null ? Colors.grey : accentColor,
                 ),
                 onPressed: onEdit,
@@ -87,7 +89,7 @@ class ProfileField extends StatelessWidget {
   }
 
   Widget getWithoutValueLabel() {
-    return Text('$placeholderPrefix ${title.toLowerCase()}',
+    return Text(placeholder,
         style: const TextStyle(color: Colors.black26, fontSize: 18));
   }
 }

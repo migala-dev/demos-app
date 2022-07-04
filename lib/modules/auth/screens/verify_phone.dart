@@ -18,76 +18,157 @@
 */
 
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/modules/auth/services/auth.service.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
+import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 import 'package:demos_app/utils/ui/ui_utils.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/buttons/timer_text_button_widget.dart';
 
-class VerifyPhonePage extends StatelessWidget {
+class VerifyPhonePage extends StatefulWidget {
   const VerifyPhonePage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    String? phoneNumber =
-        PhoneFormatterService.format(AuthService().getPhoneNumber());
+  State<VerifyPhonePage> createState() => _VerifyPhonePageState();
+}
 
+class _VerifyPhonePageState extends State<VerifyPhonePage>
+    with LoadingStateHandler {
+  final TextEditingController _verifyCodeController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final String phoneNumber = PhoneFormatterService.format(AuthService().getPhoneNumber());
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-          leading: IconButton(
-        icon: const Icon(
-          Icons.arrow_back,
-        ),
-        onPressed: () {
-          goToLogin(context);
-        },
-      )),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('Verifica tu número teléfono',
-                style: TextStyle(fontSize: 42)),
-            const SizedBox(height: 20),
-            Text(
-              'Código enviado al $phoneNumber',
-              style: const TextStyle(color: Colors.grey),
-            ),
-            const SizedBox(height: 75),
-            const Expanded(child: SecurityCodeForm())
-          ],
-        ),
-      ),
-    );
+        resizeToAvoidBottomInset: false,
+        backgroundColor: primaryColor,
+        appBar: AppBar(
+            leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+          ),
+          onPressed: () {
+            goToLogin(context);
+          },
+        )),
+        body: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Container(
+                        margin: const EdgeInsets.only(bottom: 16.0),
+                        child: CardWidget(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 15),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 50),
+                                Text('Verifica tu número teléfono',
+                                    style: TextStyle(
+                                        fontSize: 28.0,
+                                        color: primaryColor,
+                                        fontWeight: FontWeight.w600)),
+                                const SizedBox(height: 20),
+                                const Text(
+                                  'Mensaje enviado al',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(phoneNumber, 
+                                  style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w600)),
+                                const SizedBox(height: 75),
+                                Expanded(
+                                    child: SecurityCodeForm(
+                                  verifyCodeController: _verifyCodeController,
+                                  isLoading: isLoading,
+                                  verifyCode: () {
+                                    verifyCode();
+                                  },
+                                  resendCode: (restartTimer) {
+                                    resendCode(restartTimer);
+                                  },
+                                ))
+                              ],
+                            ),
+                          ),
+                        ))),
+                BigButton(isLoading: isLoading, text: 'VERIFICAR', onPressed: () {
+                  verifyCode();
+                })
+              ],
+            )));
   }
 
   void goToLogin(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, Routes.login, (r) => false);
   }
+
+  void resendCode(void Function() restartTimer) async {
+    wrapLoadingTransaction(() async {
+      _verifyCodeController.text = '';
+      final bool isCodeResended = await AuthService().resendCode();
+      if (isCodeResended) {
+        restartTimer();
+      }
+    });
+  }
+
+  void verifyCode() async {
+    wrapLoadingTransaction(() async {
+      final String code = _verifyCodeController.text;
+      if (code != '') {
+        try {
+          final User? user = await AuthService().verifyCode(code);
+          if (user != null) {
+            final bool thisUserHasAlreadyInfo =
+                user.name != '' || user.profilePictureKey != null;
+            final String route =
+                thisUserHasAlreadyInfo ? Routes.spaces : Routes.initialProfile;
+            Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);
+          }
+        } catch (err) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.login, (r) => false);
+        }
+      }
+    });
+  }
 }
 
 class SecurityCodeForm extends StatefulWidget {
-  const SecurityCodeForm({
-    Key? key,
-  }) : super(key: key);
+  final TextEditingController verifyCodeController;
+  final bool isLoading;
+  final VoidCallback verifyCode;
+  final Function(VoidCallback restartTimer) resendCode;
+
+  const SecurityCodeForm(
+      {Key? key,
+      required this.verifyCodeController,
+      required this.isLoading,
+      required this.verifyCode,
+      required this.resendCode})
+      : super(key: key);
 
   @override
   _SecurityCodeFormState createState() => _SecurityCodeFormState();
 }
 
-class _SecurityCodeFormState extends State<SecurityCodeForm>
-    with LoadingStateHandler {
-  final TextEditingController _verifyCodeController = TextEditingController();
-
+class _SecurityCodeFormState extends State<SecurityCodeForm> {
   BoxDecoration get _pinPutDecoration {
-    return const BoxDecoration(
-      border: Border(bottom: BorderSide(color: Colors.black, width: 4.0)),
+    return BoxDecoration(
+      border: Border(bottom: BorderSide(color: primaryColorDark, width: 4.0)),
     );
   }
 
@@ -109,20 +190,20 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
             PinPut(
               fieldsCount: 6,
               onSubmit: (String pin) {
-                verifyCode();
+                widget.verifyCode();
                 hideKeyboard(context);
               },
-              controller: _verifyCodeController,
+              controller: widget.verifyCodeController,
               textStyle: const TextStyle(fontSize: 20.0),
               submittedFieldDecoration: _pinPutDecoration.copyWith(
                 border: Border(
                     bottom: BorderSide(
-                        color: Colors.blueAccent.withOpacity(0.5), width: 4.0)),
+                        color: primaryColorLight, width: 4.0)),
               ),
               selectedFieldDecoration: _pinPutDecoration,
               followingFieldDecoration: _pinPutDecoration.copyWith(
-                border: const Border(
-                    bottom: BorderSide(color: Colors.blueAccent, width: 4.0)),
+                border: Border(
+                    bottom: BorderSide(color: primaryColor, width: 4.0)),
               ),
             ),
             const SizedBox(
@@ -131,47 +212,14 @@ class _SecurityCodeFormState extends State<SecurityCodeForm>
             TimerTextButton(
               text: 'Reenviar código de verificación',
               onPressed: (restartTimer) {
-                resendCode(restartTimer);
+                widget.resendCode(restartTimer);
               },
               duration: const Duration(minutes: 2, seconds: 30),
-              disabled: isLoading,
+              disabled: widget.isLoading,
             ),
           ],
         ),
-        BigButton(
-            isLoading: isLoading, text: 'VERIFICAR', onPressed: verifyCode)
       ],
     );
-  }
-
-  void resendCode(void Function() restartTimer) async {
-    wrapLoadingTransaction(() async {
-      _verifyCodeController.text = '';
-      bool isCodeResended = await AuthService().resendCode();
-      if (isCodeResended) {
-        restartTimer();
-      }
-    });
-  }
-
-  void verifyCode() async {
-    wrapLoadingTransaction(() async {
-      String code = _verifyCodeController.text;
-      if (code != '') {
-        try {
-          User? user = await AuthService().verifyCode(code);
-          if (user != null) {
-            bool thisUserHasAlreadyInfo =
-                user.name != '' || user.profilePictureKey != null;
-            String route =
-                thisUserHasAlreadyInfo ? Routes.spaces : Routes.initialProfile;
-            Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);
-          }
-        } catch (err) {
-          Navigator.pushNamedAndRemoveUntil(
-              context, Routes.login, (r) => false);
-        }
-      }
-    });
   }
 }

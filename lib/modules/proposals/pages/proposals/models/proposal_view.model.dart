@@ -47,12 +47,12 @@ class ProposalView {
   final int approvalPercentage;
   final List<ProposalVote> votes;
   VotesCountService get _voteCountService => VotesCountService(this);
-  bool get insufficientVotes => votes.length >= requiredVotes;
+  bool get insufficientVotes => votes.length < requiredVotes;
   int get porcentageRequired =>
       optionType == ManifestoOptionType.inFavorOrOpposing
           ? approvalPercentage
           : participationPercentage;
-  int get requiredVotes => (votesCount * porcentageRequired / 100).ceil();
+  int get requiredVotes => (votesTotal * porcentageRequired / 100).ceil();
   String get createdAtFormated =>
       DateFormatterService.parseToDayMonthYearDate(createdAt);
 

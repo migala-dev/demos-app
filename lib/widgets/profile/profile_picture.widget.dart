@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/widgets/general/bucket_image.image.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +52,9 @@ class ProfilePicture extends StatelessWidget {
                     child: FloatingActionButton(
                     elevation: 0,
                     mini: true,
-                    child: const Icon(Icons.photo_camera),
+                    child: const Icon(Icons.photo_camera, color: Colors.black,),
                     onPressed: onPictureEditPress,
+                    backgroundColor: secondaryColor,
                   ))
                 : Container())
       ],

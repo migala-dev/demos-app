@@ -34,8 +34,8 @@ class VersionAndBuildNumber extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
           if (snapshot.hasData) {
             return Text(
-              'Versión ' + snapshot.data!,
-              style: const TextStyle(color: Colors.grey),
+              'VERSIÓN ' + snapshot.data!,
+              style: const TextStyle(color: Colors.white70, fontSize: 12.0, fontStyle: FontStyle.italic),
             );
           } else {
             return const Text('');
