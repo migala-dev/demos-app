@@ -19,10 +19,10 @@
 
 import 'package:flutter/material.dart';
 
-class RepliesCountButton extends StatelessWidget {
+class ShowRepliesButton extends StatelessWidget {
   final VoidCallback onTap;
   final int repliesCount;
-  const RepliesCountButton(
+  const ShowRepliesButton(
       {Key? key, required this.onTap, required this.repliesCount})
       : super(key: key);
 
