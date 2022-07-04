@@ -88,17 +88,17 @@ class MemberComment extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                commentIsDeleted
-                    ? Container()
-                    : CommentVotesCount(
-                        votesInFavor: comment.upVotesCount,
-                        votesInOpposing: comment.downVotesCount,
-                        onUpvote: () =>
-                            onVote(comment.manifestoCommentId, true),
-                        onDownvote: () =>
-                            onVote(comment.manifestoCommentId, false),
-                        currentUserCommentVote: getCurrentUserCommentVote(),
-                      ),
+                CommentVotesCount(
+                  votesInFavor: comment.upVotesCount,
+                  votesInOpposing: comment.downVotesCount,
+                  onUpvote: commentIsDeleted
+                      ? null
+                      : () => onVote(comment.manifestoCommentId, true),
+                  onDownvote: commentIsDeleted
+                      ? null
+                      : () => onVote(comment.manifestoCommentId, false),
+                  currentUserCommentVote: getCurrentUserCommentVote(),
+                ),
                 const SizedBox(width: 10),
                 comment.repliesCount > 0 && enableReplies
                     ? ShowRepliesButton(
