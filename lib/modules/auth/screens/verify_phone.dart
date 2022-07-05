@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/models/user.model.dart';
@@ -51,7 +52,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
         appBar: AppBar(
             leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back,
+            DemosIcons.back_arrow,
           ),
           onPressed: () {
             goToLogin(context);

@@ -125,6 +125,10 @@ flutter:
         - asset: assets/fonts/Rubik/Rubik-Black.ttf
           weight: 900
 
+    - family: DemosIcons
+      fonts:
+        - asset: assets/fonts/DemosIcons.ttf
+
   assets:
     - assets/images/migala-coin.png
     - assets/images/default-profile.png
