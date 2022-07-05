@@ -17,6 +17,9 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
+import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_options.widget.dart';
@@ -29,6 +32,7 @@ class EmptySpacesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+        backgroundColor: primaryColor,
         appBar: AppBar(
           title: const Text('Demos'),
           actions: [PopupSpacesMenuOptions()],
@@ -36,34 +40,31 @@ class EmptySpacesScreen extends StatelessWidget {
         body: Center(
           child: Padding(
             padding: EdgeInsets.only(
-                bottom: size.height * 0.2, right: 20.0, left: 20.0),
+                bottom: size.height * 0.05, right: 20.0, left: 20.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 28.0),
-                  child: Icon(
-                    Icons.category,
-                    color: Colors.grey,
-                    size: size.width * 0.35,
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 28.0),
+                        child: Icon(
+                          DemosIcons.empty_space_outlined,
+                          color: primaryColorLight,
+                          size: size.width * 0.3,
+                        ),
+                      ),
+                      Text('No tienes espacios por el momento',
+                          style: TextStyle(
+                              color: primaryColorLight, fontSize: 16.0)),
+                    ],
                   ),
                 ),
-                const Text('No tienes espacios por el momento',
-                    style: TextStyle(color: Colors.grey, fontSize: 16.0)),
-                const SizedBox(
-                  height: 10,
-                ),
                 SafeWidgetValidator(
-                    child: ConstrainedBox(
-                  constraints:
-                      const BoxConstraints.tightFor(width: double.infinity),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        goToCreateNewSpace(context);
-                      },
-                      child: const Text(
-                        'Crea tu primer espacio',
-                      )),
+                    child: BigButton(
+                  onPressed: () => goToCreateNewSpace(context),
+                  text: 'Crea tu primer espacio',
                 ))
               ],
             ),
