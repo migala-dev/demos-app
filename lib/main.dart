@@ -17,7 +17,6 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,12 +37,10 @@ import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/widgets/general/no_connection_notificator.widget.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'navigation.service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
@@ -98,13 +95,11 @@ class DemosApp extends StatefulWidget {
 }
 
 class _DemosAppState extends State<DemosApp> with WidgetsBindingObserver {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-    _firebaseMessaging.getToken().then((token) => print(token));
   }
 
   @override
