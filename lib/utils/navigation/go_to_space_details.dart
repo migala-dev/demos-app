@@ -17,12 +17,14 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/navigation.service.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 
-Future<void> goToSpaceDetails(BuildContext context, SpaceView spaceView) async {
+Future<void> goToSpaceDetails(SpaceView spaceView) async {
+    final BuildContext context = NavigationService.navigatorKey.currentContext!;
   Application.router.navigateTo(context, Routes.spacesDetails,
       routeSettings: RouteSettings(
         arguments: spaceView,

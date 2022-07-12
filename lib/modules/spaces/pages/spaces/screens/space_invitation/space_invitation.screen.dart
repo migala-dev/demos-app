@@ -169,9 +169,9 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
         reloadSpaceList();
         Navigator.pop(context);
-        Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false,
-            arguments: widget.invitationView);
-        await goToSpaceDetails(context, widget.invitationView);
+        Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false);
+        await Future.delayed(const Duration(milliseconds: 100));
+        await goToSpaceDetails(widget.invitationView);
       } catch (err) {
         if (err == InvitationExpiredError() ||
             err == InvalidInvitationStatusError()) {
