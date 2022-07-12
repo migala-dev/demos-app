@@ -39,9 +39,14 @@ mixin LoadingStateHandler<T extends StatefulWidget> on State<T> {
     }
   }
 
-  void setIsLoadingState(bool loading) {
-    setState(() {
-      isLoading = loading;
-    });
+  Future<void> setIsLoadingState(bool loading) async {
+    if (mounted) {
+      setState(() {
+        isLoading = loading;
+      });
+    } else {
+      await Future.delayed(const Duration(milliseconds: 100));
+      setIsLoadingState(loading);
+    }
   }
 }

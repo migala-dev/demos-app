@@ -78,7 +78,7 @@ class SpaceListScreen extends StatelessWidget {
       spaces: spaces,
       getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
       onSpaceTab: (spaceView) async {
-        await goToSpaceDetails(context, spaceView);
+        await goToSpaceDetails(spaceView);
       },
     );
   }

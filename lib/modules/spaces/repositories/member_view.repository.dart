@@ -45,7 +45,9 @@ class MemberViewsRepository extends AppRepository {
   String colParticipated = ProposalParticipationRepository().colParticipated;
   String colCreatedBy = ProposalRepository().colCreatedBy;
   String colProposalStatus = ProposalRepository().colStatus;
-
+  final String memberStatus = '${InvitationStatus.accepted.index}, '
+        '${InvitationStatus.sended.index}, '
+        '${InvitationStatus.received.index}';
   String _getSelectMemberViewQuery() => '''
       SELECT
         $tblMembers.$colUserId,
@@ -99,7 +101,7 @@ class MemberViewsRepository extends AppRepository {
       WHERE 
         $tblMembers.$colMemberId = '$memberId'
         AND $tblMembers.$colDeleted = 0
-        AND $tblMembers.$colInvitationStatus = ${InvitationStatus.accepted.index}
+        AND $tblMembers.$colInvitationStatus IN($memberStatus)
         LIMIT 1
     """;
     final result = await db!.rawQuery(query);
@@ -109,16 +111,12 @@ class MemberViewsRepository extends AppRepository {
 
   Future<List<MemberView>> findMembersBySpaceId(String spaceId) async {
     Database? db = await this.db;
-    final String validStatus = '${InvitationStatus.accepted.index}, '
-        '${InvitationStatus.sended.index}, '
-        '${InvitationStatus.received.index}';
-
     final query = """
       ${_getSelectMemberViewQuery()}
       WHERE 
         $tblMembers.$colSpaceId = '$spaceId'
         AND $tblMembers.$colDeleted = 0
-        AND $tblMembers.$colInvitationStatus IN($validStatus)
+        AND $tblMembers.$colInvitationStatus IN($memberStatus)
     """;
     final result = await db!.rawQuery(query);
 

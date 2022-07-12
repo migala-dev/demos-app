@@ -54,16 +54,16 @@ class SpaceMembersBloc extends Bloc<SpaceMembersEvent, SpaceMembersState> {
           return;
         }
 
-        if (member.invitationStatus! == InvitationStatus.accepted ||
-            member.invitationStatus! == InvitationStatus.received) {
-          emit(currentState.copyWithMemberUpdate(member));
-        } else if (member.invitationStatus! == InvitationStatus.sended) {
-          emit(currentState.copyWithNewInvitation(member));
-        } else if (member.invitationStatus! == InvitationStatus.rejected ||
-            member.invitationStatus! == InvitationStatus.canceled) {
-          emit(currentState.copyWithMemberDeleted(member.memberId!));
+        if (currentState.memberViews
+            .any((m) => m.memberId == member.memberId)) {
+          if (member.invitationStatus! == InvitationStatus.rejected ||
+              member.invitationStatus! == InvitationStatus.canceled) {
+            emit(currentState.copyWithMemberDeleted(member.memberId!));
+          } else {
+            emit(currentState.copyWithMemberUpdate(member));
+          }
         } else {
-          emit(currentState);
+          emit(currentState.copyWithNewInvitation(member));
         }
       } else {
         emit(currentState);
