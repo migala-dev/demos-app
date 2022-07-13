@@ -28,8 +28,7 @@ import 'package:demos_app/modules/spaces/services/member.service.dart';
 import 'package:flutter/material.dart';
 
 class NoRepresentantAlert extends StatefulWidget {
-
-  const NoRepresentantAlert({Key? key }) : super(key: key);
+  const NoRepresentantAlert({Key? key}) : super(key: key);
 
   @override
   State<NoRepresentantAlert> createState() => _NoRepresentantAlertState();
@@ -66,7 +65,7 @@ class _NoRepresentantAlertState extends State<NoRepresentantAlert> {
   }
 
   Future<void> init() async {
-    SpaceView space = SpaceBloc().state; 
+    SpaceView space = SpaceBloc().state;
     if (space.spaceId != null) {
       final List<Member> representatives =
           await MemberService().getRepresentatives(space.spaceId!);
@@ -98,13 +97,17 @@ class _NoRepresentantAlertState extends State<NoRepresentantAlert> {
             children: [
               Icon(
                 Icons.warning,
-                size: 55,
+                size: MediaQuery.of(context).size.width * 0.15,
                 color: fontColor,
               ),
               Column(
                 children: [
-                  Text('Aun no tienes ningun representante',
-                      style: TextStyle(color: fontColor)),
+                  Text(
+                    'Aun no tienes ningun representante',
+                    style: TextStyle(
+                        color: fontColor,
+                        fontSize: MediaQuery.of(context).size.width * 0.035),
+                  ),
                   ElevatedButton(
                       onPressed: () => goToMembers(context),
                       child: const Text('Agrega el primero'),
