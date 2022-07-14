@@ -48,8 +48,13 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
               margin: const EdgeInsets.only(bottom: 12.0),
               child: ElevatedButton(
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(backgroundColor)),
+                    backgroundColor: MaterialStateProperty.all(backgroundColor),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
                   onPressed: () {
                     if (widget.onChange != null) {
                       widget.onChange!(option);

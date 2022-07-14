@@ -70,7 +70,7 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 EntityTitle(name: getProposalName(), type: 'Propuesta'),
-                const Spacer(),
+                const SizedBox(height: 15),
                 const Text('Opción'),
                 Expanded(
                   flex: 3,
@@ -84,7 +84,6 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
                     },
                   )),
                 ),
-                const Spacer(),
                 SafeWidgetValidator(
                     child: BigButton(
                   text: 'Votar',
