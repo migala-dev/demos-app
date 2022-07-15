@@ -153,8 +153,8 @@ class InFavorOptionMapper implements OptionMapper {
   @override
   List<OptionInfo> mapVotesToOptionInfoList(
       List<ProposalVote> votes, List<ManifestoOptionView> _manifestoOptions) {
-    final int inFavorVotesCount = votes.where((v) => v.inFavor!).length;
-    final int opposingVotesCount = votes.where((v) => !v.inFavor!).length;
+    final int inFavorVotesCount = votes.where((v) => v.inFavor != null && v.inFavor!).length;
+    final int opposingVotesCount = votes.where((v) => v.inFavor != null && !v.inFavor!).length;
     return [
       OptionInfo(
           label: 'A favor',
@@ -199,9 +199,14 @@ class MultipleOptionsOptionMapper implements OptionMapper {
 
     final List<MapEntry<String, int>> votesCounterList =
         votesCounter.entries.map<MapEntry<String, int>>((e) => e).toList();
+    
+    final firstCount = votesCounterList.first.value;
+    if (votesCounterList.every((v) => v.value == firstCount)) {
+      return null;
+    }
 
     votesCounterList.sort((a, b) => a.value.compareTo(b.value));
 
-    return votesCounterList.isNotEmpty ? votesCounterList.first.key : null;
+    return votesCounterList.isNotEmpty ? votesCounterList.last.key : null;
   }
 }

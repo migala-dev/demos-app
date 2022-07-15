@@ -121,7 +121,7 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
       Option(
           'En contra',
           () => _vote(() async => await ProposalVoteService()
-              .voteInFavor(spaceId, proposalId, true))),
+              .voteInFavor(spaceId, proposalId, false))),
     ];
   }
 

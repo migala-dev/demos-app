@@ -102,7 +102,7 @@ class ProposalHistoryCard extends StatelessWidget implements ProposalCard {
     } else if (proposal.insufficientVotes) {
       text = 'VOTOS INSUFICIENTES';
     } else {
-      text = '';
+      text = 'NO CONCLUSIVO';
     }
 
     return Text(text,
