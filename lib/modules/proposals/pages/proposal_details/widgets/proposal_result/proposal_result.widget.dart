@@ -13,7 +13,7 @@ class ProposalResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<ProposalVote> nullComments =
-        proposal.votes.where((o) => o.manifestoOptionId == null || o.inFavor == null).toList();
+        proposal.votes.where((o) => o.manifestoOptionId == null && o.inFavor == null).toList();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
