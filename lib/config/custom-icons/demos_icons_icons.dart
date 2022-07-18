@@ -44,7 +44,6 @@ class DemosIcons {
   static const IconData done = IconData(0xe812, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData empty_proposals = IconData(0xe813, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData empty_space_outlined = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData empty_spaces = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData exit = IconData(0xe816, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home_outlined = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData home = IconData(0xe818, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -71,4 +70,6 @@ class DemosIcons {
   static const IconData user_card = IconData(0xe82d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData vote = IconData(0xe82e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData add_member = IconData(0xe82f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData empty_spaces = IconData(0xe830, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData add_space = IconData(0xe831, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
