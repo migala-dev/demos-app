@@ -87,7 +87,7 @@ class ProposalView {
       o['spaceId'],
       o['createdBy'],
       o['createdAt'],
-      o['expiredAt'] != null ? DateTime.parse(o['expiredAt']) : null,
+      o['expiredAt'] != null ? DateTime.parse(o['expiredAt']).toLocal() : null,
       ProposalStatus.values[o['status']],
       ProposalProgressStatus.values[o['progressStatus']],
       o['votesCount'],
