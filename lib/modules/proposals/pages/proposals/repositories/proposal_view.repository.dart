@@ -53,12 +53,14 @@ class ProposalViewsRepository extends AppRepository {
   final colUpdatedBy = ProposalRepository().colUpdatedBy;
   final colCreatedAt = ProposalRepository().colCreatedAt;
   final colExpiredAt = ProposalRepository().colExpiredAt;
-  final colParticipationPercentage = ProposalRepository().colParticipationPercentage;
+  final colParticipationPercentage =
+      ProposalRepository().colParticipationPercentage;
   final colApprovalPercentage = ProposalRepository().colApprovalPercentage;
   final colManifestoOptionId = ManifestoOptionRepository().colId;
   final colParticipated = ProposalParticipationRepository().colParticipated;
   final colManifestoCommentParentId =
       ManifestoCommentRepository().colManifestoCommentParentId;
+  final colInsufficientVotes = ProposalRepository().colInsufficientVotes;
 
   String _getSelectInnerJoinQuery() => '''
     SELECT $tblManifesto.$colManifestoId,
@@ -74,6 +76,7 @@ class ProposalViewsRepository extends AppRepository {
             $colUserName as "createdByName",
             $colUserProfilePictureKey as "createdByProfilePictureKey",
             $colExpiredAt,
+            $colInsufficientVotes,
             (select count(*) from $tblProposalParticipations
               where $tblProposalParticipations.$colProposalId = $tblProposals.$colProposalId AND $colParticipated = 1
             ) as "votesCount",
@@ -115,9 +118,19 @@ class ProposalViewsRepository extends AppRepository {
     """;
   }
 
+  String _getFindBySpaceIdAndStatusQuery2(
+      String spaceId, ProposalStatus proposalStatus, int insufficientVotes) {
+    return '''
+      ${_getSelectInnerJoinQuery()}
+      WHERE $tblProposals.$colStatus = ${proposalStatus.index}
+      AND $tblManifesto.$colSpaceId = '$spaceId'
+      AND $tblProposals.$colInsufficientVotes = $insufficientVotes
+    ''';
+  }
+
   String _getFindBySpaceIdAndStatussesQuery(
       String spaceId, List<ProposalStatus> proposalStatusses) {
-        final String validStatus = proposalStatusses.map((s) => s.index).join(',');
+    final String validStatus = proposalStatusses.map((s) => s.index).join(',');
     return """
       ${_getSelectInnerJoinQuery()}
       WHERE $tblProposals.$colStatus IN($validStatus)
@@ -196,11 +209,28 @@ class ProposalViewsRepository extends AppRepository {
         .toList();
   }
 
+  Future<List<ProposalView>> findAllBySpaceIdAndStatus2(String spaceId,
+      ProposalStatus proposalStatus, int insufficientVotes) async {
+    Database? db = await this.db;
+
+    final query = _getFindBySpaceIdAndStatusQuery2(
+        spaceId, proposalStatus, insufficientVotes);
+    final result = await db!.rawQuery(query);
+
+    List<Map<String, Object?>> resultWithManifestoOptions =
+        await _getResultWithManifestoOptions(result);
+
+    return resultWithManifestoOptions
+        .map((row) => ProposalView.fromObject(row))
+        .toList();
+  }
+
   Future<List<ProposalView>> findAllBySpaceIdAndStatusses(
       String spaceId, List<ProposalStatus> proposalStatusses) async {
     final Database? db = await this.db;
 
-    final query = _getFindBySpaceIdAndStatussesQuery(spaceId, proposalStatusses);
+    final query =
+        _getFindBySpaceIdAndStatussesQuery(spaceId, proposalStatusses);
     final result = await db!.rawQuery(query);
 
     final List<Map<String, Object?>> resultWithManifestoOptions =
@@ -214,8 +244,8 @@ class ProposalViewsRepository extends AppRepository {
   Future<int> getCountBySpaceIdAndStatus(
       String spaceId, List<ProposalStatus> proposalStatusses) async {
     Database? db = await this.db;
-    final String validStatus = proposalStatusses.map((s) => s.index.toString()).join(',');
-
+    final String validStatus =
+        proposalStatusses.map((s) => s.index.toString()).join(',');
 
     final result = await db!.rawQuery("""
        select count(*) as count from $tblProposals

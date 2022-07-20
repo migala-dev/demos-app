@@ -21,7 +21,7 @@ import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card_info.widget.dart';
 import 'package:demos_app/modules/proposals/services/proposal_participation.service.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +30,7 @@ import '../../../../../../widgets/general/countdown_timer.widget.dart';
 class ProposalInProgressCard extends StatelessWidget implements ProposalCard {
   @override
   final ProposalView proposal;
-  const ProposalInProgressCard(
-      {Key? key, required this.proposal })
+  const ProposalInProgressCard({Key? key, required this.proposal})
       : super(key: key);
 
   @override
