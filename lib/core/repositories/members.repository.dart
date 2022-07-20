@@ -86,6 +86,13 @@ class MembersRepository extends AppRepository implements Table {
   Future<Member?> findById(String memberId) async {
     Database? db = await this.db;
     final result = await db!.rawQuery(
+        "SELECT * FROM $tblMembers WHERE $colId = '$memberId'");
+    return result.isNotEmpty ? Member.fromObject(result[0]) : null;
+  }
+
+  Future<Member?> findByIdAndNotDeleted(String memberId) async {
+    Database? db = await this.db;
+    final result = await db!.rawQuery(
         "SELECT * FROM $tblMembers WHERE $colId = '$memberId' AND $colDeleted = 0");
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
@@ -101,12 +108,12 @@ class MembersRepository extends AppRepository implements Table {
     return result.isNotEmpty ? Member.fromObject(result[0]) : null;
   }
 
-  Future<Member?> findByUserIdAndSpaceIdAndInvitationStatusAccepted(
-      String userId, String spaceId) async {
+  Future<List<Member>> finalAllBySpaceId( String spaceId) async {
     Database? db = await this.db;
     var result = await db!.rawQuery(
-        "SELECT * FROM $tblMembers WHERE $colUserId = '$userId' AND $colSpaceId = '$spaceId' AND $colDeleted = 0 AND $colInvitationStatus = ${InvitationStatus.accepted.index}");
-    return result.isNotEmpty ? Member.fromObject(result[0]) : null;
+        "SELECT * FROM $tblMembers WHERE $colSpaceId = '$spaceId' AND $colDeleted = 0 ");
+
+    return result.map((row) => Member.fromObject(row)).toList();
   }
 
   Future<int> update(Member member) async {

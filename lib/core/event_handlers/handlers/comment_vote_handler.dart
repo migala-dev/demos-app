@@ -74,12 +74,15 @@ Future<void> _handleCommentVoteUpdate(Cache dataEvent) async {
   final String spaceId = dataEvent.data!['spaceId'];
   final String manifestoCommentVoteId =
       dataEvent.data!['manifestoCommentVoteId'];
+  try {
+    final commentVote = await CommentVoteService()
+        .getCommentVote(spaceId, manifestoCommentVoteId);
 
-  final commentVote = await CommentVoteService()
-      .getCommentVote(spaceId, manifestoCommentVoteId);
+    final commentView = await CommentViewService()
+        .getCommentById(commentVote.manifestoCommentId);
 
-  final commentView =
-      await CommentViewService().getCommentById(commentVote.manifestoCommentId);
-
-  CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
+    CommentViewListBloc().add(CommentViewListUserVotedInComment(commentView!));
+    // in some cases the comment vote is deleted before we get it.
+    // ignore: empty_catches
+  } catch (err) {}
 }

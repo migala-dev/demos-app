@@ -36,16 +36,19 @@ class ContactService {
   static Future<List<Contact>> getUninvitedContacts(
       List<Contact> contacts) async {
     final List<Contact> filteredContacts = [];
+    if (SpaceMembersBloc().state is SpaceMembersWithData) {
+      final membersState = SpaceMembersBloc().state as SpaceMembersWithData;
 
-    final membersState = SpaceMembersBloc().state as SpaceMembersWithData;
-
-    for (final contact in contacts) {
-      if (!isContactAlreadyOnTheSpace(contact, membersState.memberViews)) {
-        filteredContacts.add(contact);
+      for (final contact in contacts) {
+        if (!isContactAlreadyOnTheSpace(contact, membersState.memberViews)) {
+          filteredContacts.add(contact);
+        }
       }
+
+      return filteredContacts;
     }
 
-    return filteredContacts;
+    return contacts;
   }
 
   static Future<List<InvitationContact>> mapContactsToUser(
@@ -57,8 +60,8 @@ class ContactService {
             contact.phones[0].number.replaceAll(RegExp(r'[^0-9]'), '');
         if (phoneNumber.length >= 10) {
           InvitationContact userContact = InvitationContact(phoneNumber);
-            userContact.name = contact.displayName;
-            userContacts.add(userContact);
+          userContact.name = contact.displayName;
+          userContacts.add(userContact);
         }
       }
     });

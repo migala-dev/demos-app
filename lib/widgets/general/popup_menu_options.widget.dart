@@ -51,7 +51,7 @@ class _MenuChildItem extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(icon),
+        Icon(icon, color: Colors.black,),
         const SizedBox(
           width: 5,
         ),

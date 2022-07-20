@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/services/proposal_vote.service.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
@@ -77,6 +79,9 @@ class _NullVoteScreenState extends State<NullVoteScreen> {
 
   void vote(BuildContext context) async {
     await ProposalVoteService().voteNull(widget.proposal.spaceId, widget.proposal.proposalId, reasons);
+    ProposalViewListBloc()
+        .add(ProposalViewListUpdated(widget.proposal.spaceId));
+    Navigator.pop(context);
     Navigator.pop(context);
     Navigator.pop(context);
   }
