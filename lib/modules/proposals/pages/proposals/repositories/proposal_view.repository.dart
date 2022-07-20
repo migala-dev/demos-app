@@ -118,13 +118,13 @@ class ProposalViewsRepository extends AppRepository {
     """;
   }
 
-  String _getFindBySpaceIdAndStatusQuery2(
-      String spaceId, ProposalStatus proposalStatus, int insufficientVotes) {
+  String _getFindBySpaceIdAndStatusQueryAndInsufficientVotes(
+      String spaceId, ProposalStatus proposalStatus) {
     return '''
       ${_getSelectInnerJoinQuery()}
       WHERE $tblProposals.$colStatus = ${proposalStatus.index}
       AND $tblManifesto.$colSpaceId = '$spaceId'
-      AND $tblProposals.$colInsufficientVotes = $insufficientVotes
+      AND $tblProposals.$colInsufficientVotes = 0
     ''';
   }
 
@@ -209,12 +209,12 @@ class ProposalViewsRepository extends AppRepository {
         .toList();
   }
 
-  Future<List<ProposalView>> findAllBySpaceIdAndStatus2(String spaceId,
-      ProposalStatus proposalStatus, int insufficientVotes) async {
+  Future<List<ProposalView>> findAllBySpaceIdAndStatusAndInsufficientVotes(
+      String spaceId, ProposalStatus proposalStatus) async {
     Database? db = await this.db;
 
-    final query = _getFindBySpaceIdAndStatusQuery2(
-        spaceId, proposalStatus, insufficientVotes);
+    final query = _getFindBySpaceIdAndStatusQueryAndInsufficientVotes(
+        spaceId, proposalStatus);
     final result = await db!.rawQuery(query);
 
     List<Map<String, Object?>> resultWithManifestoOptions =

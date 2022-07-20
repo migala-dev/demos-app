@@ -38,9 +38,8 @@ class ClosedProposals implements ProposalViewList {
   @override
   Future<List<ProposalView>> getList(String spaceId) async {
     ProposalStatus status = ProposalStatus.closed;
-    int insufficientVotes = 0;
     return await ProposalViewsRepository()
-        .findAllBySpaceIdAndStatus2(spaceId, status, insufficientVotes);
+        .findAllBySpaceIdAndStatusAndInsufficientVotes(spaceId, status);
   }
 
   @override
