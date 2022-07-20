@@ -58,9 +58,11 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
+      backgroundColor: primaryColor,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20, top: 40),
         child: Column(
           children: [
             RightCloseButton(onPressed: () => Navigator.pop(context)),
@@ -69,9 +71,9 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                EntityTitle(name: getProposalName(), type: 'Propuesta'),
-                const SizedBox(height: 15),
-                const Text('Opción'),
+                EntityTitle(name: getProposalName(), label: 'Propuesta'),
+                const Spacer(flex: 1),
+                const Text('Opciones', style: TextStyle(color: Colors.white),),
                 Expanded(
                   flex: 3,
                   child: SafeWidgetValidator(

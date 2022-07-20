@@ -60,7 +60,7 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
           },
         )),
         body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12.0),
+            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
                 Expanded(
@@ -231,7 +231,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
               onPressed: (restartTimer) {
                 widget.resendCode(restartTimer);
               },
-              duration: const Duration(minutes: 2, seconds: 30),
+              duration: const Duration(minutes: 0, seconds: 30),
               disabled: widget.isLoading,
             ),
           ],

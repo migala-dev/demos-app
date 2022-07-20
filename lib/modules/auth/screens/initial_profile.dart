@@ -38,7 +38,7 @@ class _InitialProfileState extends State<InitialProfile> {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: Padding(
-          padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 40.0, bottom: 12.0),
+          padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 40.0, bottom: 20.0),
           child: SafeArea(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

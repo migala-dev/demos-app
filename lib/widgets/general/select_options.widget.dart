@@ -20,6 +20,8 @@
 import 'package:demos_app/shared/models/option.model.dart';
 import 'package:flutter/material.dart';
 
+import '../../config/themes/main_theme.dart';
+
 class SelectOptionListWidget extends StatefulWidget {
   final List<Option> options;
   final void Function(Option)? onChange;
@@ -43,7 +45,7 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
           final Option option = widget.options[position];
           final bool isSelected = optionSelected?.label == option.label;
           final Color backgroundColor =
-              isSelected ? Colors.blue.shade100 : Colors.white;
+              isSelected ? primaryColorDark : primaryColorLight;
           return Container(
               margin: const EdgeInsets.only(bottom: 12.0),
               child: ElevatedButton(
@@ -51,7 +53,7 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
                     backgroundColor: MaterialStateProperty.all(backgroundColor),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0),
+                        borderRadius: BorderRadius.circular(28.0),
                       ),
                     ),
                   ),
@@ -66,27 +68,17 @@ class _SelectOptionListWidgetState extends State<SelectOptionListWidget> {
                         vertical: 16.0, horizontal: 8.0),
                     child: Row(
                       children: [
-                        isSelected
-                            ? const Icon(
-                                Icons.check,
-                                color: Colors.black,
-                              )
-                            : Container(
-                                width: 18.0,
-                              ),
                         Expanded(
                             child: Center(
-                                child: Container(
-                          margin: const EdgeInsets.only(right: 12.0),
-                          child: Text(
-                            option.label,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
+                                child: Text(
+                            option.label.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: isSelected ? Colors.white : primaryColor,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
-                        )))
+                        ))
                       ],
                     ),
                   )));

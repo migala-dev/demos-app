@@ -25,7 +25,7 @@ final Color primaryColor = const Color(0xFF000033);
 final Color primaryColorDark = const Color(0xFF3B4879);
 final Color primaryColorLight = const Color(0xFFB6BACE);
 final Color secondaryColor = const Color(0xFFFFCC00);
-final Color secondaryColorDark = const Color(0xFFFF9900);
+const Color  secondaryColorDark =  Color(0xFFFF9900);
 final Color secondaryColorLight = const Color(0xFFFFDF81);
 
 final mainTheme = ThemeData(
@@ -46,6 +46,7 @@ final mainTheme = ThemeData(
     bodyText2: TextStyle(fontSize: 16.0),
   ),
   colorScheme: ThemeData().colorScheme.copyWith(
-    secondary: secondaryColor, 
+    secondary: secondaryColor,
+    secondaryContainer: secondaryColorDark,
   )
 );
