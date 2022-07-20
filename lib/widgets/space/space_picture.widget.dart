@@ -87,7 +87,7 @@ class SpacePicture extends StatelessWidget {
 
   Widget getDefaultImage(double width) {
     return Image(
-        image: const AssetImage('assets/images/default-profile.png'),
+        image: const AssetImage('assets/images/default-space.png'),
         width: width,
         height: width,
         fit: BoxFit.cover);

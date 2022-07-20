@@ -50,7 +50,10 @@ class Api {
     Future<http.Response> call =
         http.get(Uri.parse(endpoint), headers: _getDefaultHeaders());
     var response = await _handleErrors(call, requestBehavior);
-    return jsonDecode(response!.body);
+    if (response!.body.isEmpty) {
+      throw Error.safeToString('Body Response empty');
+    }
+    return jsonDecode(response.body);
   }
 
   static Future<dynamic> post(

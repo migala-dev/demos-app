@@ -13,9 +13,7 @@ class ProposalResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<ProposalVote> nullComments =
-        proposal.votes.where((o) => o.nullVoteComment != null).toList();
-    bool showNullVotes = nullComments.isNotEmpty;
-
+        proposal.votes.where((o) => o.manifestoOptionId == null && o.inFavor == null).toList();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,19 +53,19 @@ class ProposalResult extends StatelessWidget {
             textAlign: TextAlign.right,
           ),
         ),
-        showNullVotes
-            ? ListTile(
-                title: const Padding(
-                  padding: EdgeInsets.only(bottom: 8),
+        ListTile(
+                title: Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Votos Nulos',
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
+                    'Votos Nulos (${nullComments.length})',
+                    style: const TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Text(
                     nullComments
+                        .where((o) => o.nullVoteComment != null && o.nullVoteComment!.isNotEmpty)
                         .map((o) => '• ${o.nullVoteComment}\n')
                         .join('')
                         .toString(),
@@ -78,7 +76,6 @@ class ProposalResult extends StatelessWidget {
                   ),
                 ),
               )
-            : Container(),
       ],
     );
   }

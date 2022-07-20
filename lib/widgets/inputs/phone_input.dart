@@ -18,7 +18,9 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 
 class PhoneInput extends StatefulWidget {
   final TextEditingController controller;
@@ -53,21 +55,25 @@ class _PhoneInputState extends State<PhoneInput> {
     return IntlPhoneField(
       countries: countries,
       enabled: !widget.disabled,
-      searchText: 'Buscar por nombre de país',
-      autoValidate: false,
       validator: validatePhone,
       decoration: const InputDecoration(
         labelText: 'Número Teléfonico',
       ),
+      invalidNumberMessage: 'Número Teléfonico Invalido',
       initialCountryCode: 'MX',
+      pickerDialogStyle: PickerDialogStyle(
+        searchFieldInputDecoration: const InputDecoration(
+          labelText: 'Buscar por nombre de país',
+        ),
+      ),
       onChanged: (phone) {
         widget.controller.text = phone.completeNumber;
       },
     );
   }
 
-  String? validatePhone(String? phoneNumber) {
-    return isPhoneNumberValid(phoneNumber)
+  String? validatePhone(PhoneNumber? phoneNumber) {
+    return isPhoneNumberValid(phoneNumber.toString())
         ? null
         : 'Número Teléfonico invalido.';
   }

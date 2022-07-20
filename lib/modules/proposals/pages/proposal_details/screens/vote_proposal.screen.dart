@@ -58,9 +58,11 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
+      backgroundColor: primaryColor,
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20, top: 40),
         child: Column(
           children: [
             RightCloseButton(onPressed: () => Navigator.pop(context)),
@@ -69,9 +71,9 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                EntityTitle(name: getProposalName(), type: 'Propuesta'),
-                const Spacer(),
-                const Text('Opción'),
+                EntityTitle(name: getProposalName(), label: 'Propuesta'),
+                const Spacer(flex: 1),
+                const Text('Opciones', style: TextStyle(color: Colors.white),),
                 Expanded(
                   flex: 3,
                   child: SafeWidgetValidator(
@@ -84,7 +86,6 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
                     },
                   )),
                 ),
-                const Spacer(),
                 SafeWidgetValidator(
                     child: BigButton(
                   text: 'Votar',
@@ -122,7 +123,7 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
       Option(
           'En contra',
           () => _vote(() async => await ProposalVoteService()
-              .voteInFavor(spaceId, proposalId, true))),
+              .voteInFavor(spaceId, proposalId, false))),
     ];
   }
 

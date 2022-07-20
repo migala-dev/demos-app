@@ -27,7 +27,7 @@ class BigButton extends StatelessWidget {
   final bool disabled;
   final Color? backgroundColor;
   final Color? textColor;
-
+  
   const BigButton({
     Key? key,
     required this.text,
@@ -40,13 +40,10 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: const EdgeInsets.symmetric(horizontal: 24.0),
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: ConstrainedBox(
-            constraints: const BoxConstraints.tightFor(
-                width: double.infinity, height: 48),
-            child: isLoading ? getLoadingButton() : getMainButton(context)));
+    return ConstrainedBox(
+        constraints:
+            const BoxConstraints.tightFor(width: double.infinity, height: 48),
+        child: isLoading ? getLoadingButton() : getMainButton(context));
   }
 
   Widget getLoadingButton() {
