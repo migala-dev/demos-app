@@ -29,7 +29,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/comme
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/proposal_result.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card_info.widget.dart';
 import 'package:demos_app/modules/proposals/services/proposal_participation.service.dart';
 import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
