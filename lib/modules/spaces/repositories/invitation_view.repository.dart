@@ -47,7 +47,7 @@ class InvitationViewsRepository extends AppRepository {
       SELECT $tblSpaces.$colSpaceId,
         $tblSpaces.$colName as "spaceName",
         $colPictureKey,
-        $tblMembers.$colCreatedAt as "memberCreateAt",
+        $tblSpaces.$colCreatedAt as "spaceCreatedAt",
         $colExpiredAt,
         $tblUsers.$colUserId,
         $tblUsers.$colName,

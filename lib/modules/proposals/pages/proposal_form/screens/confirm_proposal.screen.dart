@@ -1,3 +1,4 @@
+import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
@@ -12,15 +13,21 @@ class ConfirmProposalScreen extends StatelessWidget {
   final String? textActionLabel;
 
   const ConfirmProposalScreen(
-      {Key? key, required this.title, this.primaryActionLabel = 'Publicar', this.textActionLabel})
+      {Key? key,
+      required this.title,
+      this.primaryActionLabel = 'Publicar',
+      this.textActionLabel})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    SpaceView space = SpaceBloc().state;
     return BlocBuilder<SpaceMembersBloc, SpaceMembersState>(
         bloc: SpaceMembersBloc(),
         builder: (context, memberListState) {
+          List<MemberView> members = [];
+          if (memberListState is SpaceMembersWithData) {
+            members = memberListState.memberViews;
+          }
           return Scaffold(
             appBar: AppBar(
               actions: [
@@ -51,20 +58,21 @@ class ConfirmProposalScreen extends StatelessWidget {
                       style: const TextStyle(color: Colors.black, fontSize: 18),
                       children: <TextSpan>[
                         TextSpan(
-                          text: textActionLabel ?? primaryActionLabel.toLowerCase(),
+                          text: textActionLabel ??
+                              primaryActionLabel.toLowerCase(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 18),
                         ),
                         TextSpan(
                           text:
-                              ' la propuesta solo podrán votar los miembros actuales del espacio (${space.membersCount}):',
+                              ' la propuesta solo podrán votar los miembros actuales del espacio (${members.length}):',
                           style: const TextStyle(fontSize: 18),
                         )
                       ],
                     ),
                   ),
                   Expanded(
-                    child: getMemberListWidget(memberListState),
+                    child:  MembersListView(memberViews: members)
                   ),
                   BigButton(
                       text: primaryActionLabel,
@@ -76,14 +84,5 @@ class ConfirmProposalScreen extends StatelessWidget {
             ),
           );
         });
-  }
-
-  Widget getMemberListWidget(SpaceMembersState state) {
-    if (state is SpaceMembersWithData) {
-      final members = state.memberViews;
-      
-      return MembersListView(memberViews: members);
-    }
-    return Container();
   }
 }

@@ -24,7 +24,6 @@ bool isContactAlreadyOnTheSpace(Contact contact, List<MemberView> members) {
   if (contact.phones.isEmpty) {
     return true;
   }
-
   final contactPhoneNumber =
       contact.phones[0].number.replaceAll(RegExp(r'[^0-9]'), '');
 

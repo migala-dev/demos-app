@@ -45,7 +45,7 @@ class DateFormatterService {
     static String parseDateToStandardDateFormatWithHour(DateTime date) {
       initializeDateFormatting('es');
       final outputFormat = DateFormat('dd/MMMM/yyyy hh:mm a', 'es');
-      return outputFormat.format(date);
+      return outputFormat.format(date.toLocal());
   }
 
   static String parseToDayMonthYearDate(String date) {
@@ -54,7 +54,7 @@ class DateFormatterService {
       final DateTime inputDate = dateFormat.parse(date);
 
       final outputFormat = DateFormat('dd/MM/yyyy');
-      return outputFormat.format(inputDate);
+      return outputFormat.format(inputDate.toLocal());
     } catch (e) {
       return date;
     }
@@ -66,7 +66,7 @@ class DateFormatterService {
       final inputDate = dateFormat.parse(date);
 
       final outputFormat = DateFormat('MM/dd/yyyy hh:mm a');
-      return outputFormat.format(inputDate);
+      return outputFormat.format(inputDate.toLocal());
     } catch (e) {
       return date;
     }
