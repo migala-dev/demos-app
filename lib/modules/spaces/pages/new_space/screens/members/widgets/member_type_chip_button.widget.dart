@@ -40,12 +40,15 @@ class MemberTypeChipButton extends StatelessWidget {
     final Color backgroundColor = selected ? Colors.grey : Colors.transparent;
     final Color accentColor = selected ? Colors.white : Colors.blue;
 
-    return GestureDetector(
-      onTap: () => onTap(type),
-      child: MemberTypeChip(
-        text: text,
-        accentColor: accentColor,
-        backgroundColor: backgroundColor,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: GestureDetector(
+        onTap: () => onTap(type),
+        child: MemberTypeChip(
+          text: text,
+          accentColor: accentColor,
+          backgroundColor: backgroundColor,
+        ),
       ),
     );
   }

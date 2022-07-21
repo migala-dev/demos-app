@@ -43,28 +43,24 @@ class MemberTypeFilter extends StatelessWidget {
           selected: selected == MemberType.all,
           onTap: onFilteredMembersChange,
         ),
-        const SizedBox(width: 10),
         MemberTypeChipButton(
           text: 'Trabajadores',
           type: MemberType.worker,
           selected: selected == MemberType.worker,
           onTap: onFilteredMembersChange,
         ),
-        const SizedBox(width: 10),
         MemberTypeChipButton(
           text: 'Administradores',
           type: MemberType.administrator,
           selected: selected == MemberType.administrator,
           onTap: onFilteredMembersChange,
         ),
-        const SizedBox(width: 10),
         MemberTypeChipButton(
           text: 'Representates',
           type: MemberType.representative,
           selected: selected == MemberType.representative,
           onTap: onFilteredMembersChange,
         ),
-        const SizedBox(width: 10),
         MemberTypeChipButton(
           text: 'Invitaciones',
           type: MemberType.invited,
