@@ -26,17 +26,21 @@ class ProposalViewListWidget extends StatelessWidget {
   final ProposalCard Function(ProposalView) getProposalCard;
   final List<ProposalView> proposals;
 
-  const ProposalViewListWidget({Key? key, required this.proposals, required this.getProposalCard})
+  const ProposalViewListWidget(
+      {Key? key, required this.proposals, required this.getProposalCard})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CacheRefreshIndicator(list: ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemCount: proposals.length,
-      itemBuilder: (context, index) => Container(
-          margin: const EdgeInsets.only(bottom: 10),
+    return CacheRefreshIndicator(
+      list: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: proposals.length,
+        itemBuilder: (context, index) => Container(
+          margin: const EdgeInsets.only(bottom: 10, right: 15, left: 15),
           child: getProposalCard(proposals[index]),
-    )));
+        ),
+      ),
+    );
   }
 }
