@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
@@ -55,16 +56,17 @@ class InvitationContactList extends StatelessWidget {
                 color: Colors.white,
                 child: ListTile(
                   leading: Stack(
+                    clipBehavior: Clip.none,
                     children: <Widget>[
                       getAvatar(contact),
                       getCheckCirculeIfUserIsSelected(contact),
                     ],
                   ),
-                  title: Text(contact.name),
+                  title: Text(contact.name, style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w500, color: primaryColor),),
                   subtitle: Container(
                     padding: const EdgeInsets.only(bottom: 8.0, top: 4.0),
                     child:
-                        Text(PhoneFormatterService.format(contact.phoneNumber)),
+                        Text(PhoneFormatterService.format(contact.phoneNumber), style: const TextStyle(fontSize: 12.0),),
                     decoration: BoxDecoration(
                         border: Border(bottom: BorderSide(color: greyColor))),
                   ),
@@ -80,16 +82,6 @@ class InvitationContactList extends StatelessWidget {
   }
 
   Widget getAvatar(InvitationContact user) {
-    if (user.profilePictureKey == null) {
-      return CircleAvatar(
-        backgroundColor: user.color,
-        radius: 24.0,
-        child: Text(
-          getInitials(user.name),
-          style: const TextStyle(color: Colors.white, fontSize: 22.0),
-        ),
-      );
-    }
     return ProfilePicture(
       imageKey: user.profilePictureKey,
       percentage: 0.12,
@@ -103,21 +95,21 @@ class InvitationContactList extends StatelessWidget {
   Widget getCheckCirculeIfUserIsSelected(InvitationContact contact) {
     bool isContactSelected = contactsSelected.contains(contact);
     return Positioned(
-        right: 0.0,
-        bottom: 0.0,
-        child: Container(
-            width: 16.0 * (isContactSelected ? 1 : 0),
-            height: 16.0 * (isContactSelected ? 1 : 0),
+        right: -4.0,
+        bottom: -4.0,
+        child: isContactSelected ? Container(
+            width: 20.0 ,
+            height: 20.0,
             decoration: BoxDecoration(
                 border: Border.all(color: Colors.white),
                 borderRadius: BorderRadius.circular(10),
-                color: Colors.green),
+                color: secondaryColorLight),
             child: const Center(
               child: Icon(
                 Icons.done,
-                color: Colors.white,
+                color: primaryColor,
                 size: 14.0,
               ),
-            )));
+            )): Container());
   }
 }
