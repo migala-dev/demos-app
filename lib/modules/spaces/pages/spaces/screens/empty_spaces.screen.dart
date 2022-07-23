@@ -39,8 +39,7 @@ class EmptySpacesScreen extends StatelessWidget {
         ),
         body: Center(
           child: Padding(
-            padding: EdgeInsets.only(
-                bottom: size.height * 0.05, right: 20.0, left: 20.0),
+            padding: const EdgeInsets.only(bottom: 20.0, right: 24.0, left: 24.0),
             child: Column(
               children: [
                 Expanded(
@@ -48,16 +47,17 @@ class EmptySpacesScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(bottom: 28.0),
+                        margin: const EdgeInsets.only(bottom: 32.0),
                         child: Icon(
-                          DemosIcons.empty_space_outlined,
+                          DemosIcons.empty_spaces,
                           color: primaryColorLight,
-                          size: size.width * 0.3,
+                          size: size.width * 0.25,
                         ),
                       ),
-                      Text('No tienes espacios por el momento',
+                      Text('No tienes espacios por el momento.',
+                          textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: primaryColorLight, fontSize: 16.0)),
+                              color: primaryColorLight, fontSize: 20.0)),
                     ],
                   ),
                 ),

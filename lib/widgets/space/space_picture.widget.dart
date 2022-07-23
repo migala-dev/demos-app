@@ -42,10 +42,11 @@ class SpacePicture extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Stack(
+       clipBehavior: Clip.none,
       children: [
         getImage(size),
         Positioned(
-            bottom: 0,
+            bottom: -15,
             right: 0,
             child: editable
                 ? FloatingActionButton(

@@ -18,7 +18,6 @@
 */
 
 import 'package:demos_app/modules/spaces/pages/new_space/screens/space_percentages_form/widgets/space_percentage.widget.dart';
-import 'package:demos_app/utils/ui/global_colors.util.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
@@ -42,9 +41,7 @@ class _SpacePercentagesFormScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 12.0),
-      child: Column(
+    return Column(
         children: [
           SpacePercentage(
             initialValue: approvalPercentage,
@@ -57,12 +54,7 @@ class _SpacePercentagesFormScreenState
             subtitle: 'En votaciones A favor/En contra',
             toBeApprovedLabel: ' para aprobar la propuesta.',
           ),
-          Container(
-            height: 30.0,
-            margin: const EdgeInsets.only(bottom: 12.0),
-            decoration: BoxDecoration(
-                border: Border(bottom: BorderSide(color: greyColor))),
-          ),
+          const SizedBox(height: 8),
           SpacePercentage(
             initialValue: participationPercentage,
             onChange: (participationPercentage) {
@@ -75,11 +67,11 @@ class _SpacePercentagesFormScreenState
             toBeApprovedLabel:
                 ' para aprobar una de las opciones de una propuesta.',
           ),
-          const Spacer(),
-          Text(
-              '* Estos porcentages podrán ser actualizados dentro del espacio.',
-              style: TextStyle(color: Colors.grey[600])),
           const SizedBox(height: 16),
+          const Text(
+              '* Estos porcentages podrán ser actualizados dentro del espacio.',
+              style: TextStyle(color: Colors.white, fontSize: 14.0)),
+          const Spacer(),
           BigButton(
               text: 'Crear',
               isLoading: widget.isLoading,
@@ -88,7 +80,6 @@ class _SpacePercentagesFormScreenState
                     approvalPercentage, participationPercentage);
               })
         ],
-      ),
-    );
+      );
   }
 }

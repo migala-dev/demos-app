@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +41,8 @@ class SpaceTile<T extends SpaceView> extends StatelessWidget {
         width: 50.0,
         pictureKey: spaceView.pictureKey,
       ),
-      title: Text(spaceView.name),
-      subtitle: Text(getSubtitle(spaceView)),
+      title: Text(spaceView.name, style: const TextStyle(fontWeight: FontWeight.w600, color: primaryColor),),
+      subtitle: Text(getSubtitle(spaceView), style: const TextStyle(fontWeight: FontWeight.w500),),
       onTap: () {
         onSpaceTab();
       },
