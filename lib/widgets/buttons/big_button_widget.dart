@@ -49,7 +49,7 @@ class BigButton extends StatelessWidget {
   Widget getLoadingButton() {
     return getBaseButton(
         () {},
-        CircularProgressIndicator(
+        const CircularProgressIndicator(
           color: primaryColor,
           strokeWidth: 5.0,
         ),
@@ -66,7 +66,7 @@ class BigButton extends StatelessWidget {
     },
         Text(
           text.toUpperCase(),
-          style: TextStyle(
+          style: const TextStyle(
               fontSize: 18,
               color: primaryColor,
               fontWeight: FontWeight.w500,
