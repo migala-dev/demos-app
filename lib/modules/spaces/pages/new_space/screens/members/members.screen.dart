@@ -82,8 +82,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
 
       return Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+          SizedBox(
             height: 70,
             child: MemberTypeFilter(
               selected: filter,
@@ -100,13 +99,15 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
     );
   }
 
-  void _onFilteredMembersChange(MemberType newFilter) => setState(() {
-        if (filter == newFilter) {
-          filter = MemberType.all;
-        } else {
-          filter = newFilter;
-        }
-      });
+  void _onFilteredMembersChange(MemberType newFilter) => setState(
+        () {
+          if (filter == newFilter) {
+            filter = MemberType.all;
+          } else {
+            filter = newFilter;
+          }
+        },
+      );
 
   List<MemberView> _getMembersFiltered(
       MemberType filter, List<MemberView> members) {
