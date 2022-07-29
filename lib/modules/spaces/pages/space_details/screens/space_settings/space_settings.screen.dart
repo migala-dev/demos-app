@@ -71,7 +71,7 @@ class SpaceSettingsScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(
                 top: 8,
-                bottom: 48,
+                bottom: 32,
                 right: 16,
                 left: 16,
               ),
