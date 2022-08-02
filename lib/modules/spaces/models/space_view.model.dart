@@ -30,7 +30,7 @@ class SpaceView {
   final String manifestoLastUpdatedDate;
 
   DateTime get lastActivityDate {
-    List<DateTime> dates = [DateTime.parse(createdAt)];
+    final List<DateTime> dates = [DateTime.parse(createdAt)];
     if (proposalsLastUpdatedDate.isNotEmpty) {
       dates.add(DateTime.parse(proposalsLastUpdatedDate));
     }
