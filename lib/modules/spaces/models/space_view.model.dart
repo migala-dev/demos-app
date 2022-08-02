@@ -26,6 +26,20 @@ class SpaceView {
   final int approvalPercentage;
   final int membersCount;
   final String createdAt;
+  final String proposalsLastUpdatedDate;
+  final String manifestoLastUpdatedDate;
+
+  DateTime get lastActivityDate {
+    List<DateTime> dates = [DateTime.parse(createdAt)];
+    if (proposalsLastUpdatedDate.isNotEmpty) {
+      dates.add(DateTime.parse(proposalsLastUpdatedDate));
+    }
+    if (manifestoLastUpdatedDate.isNotEmpty) {
+      dates.add(DateTime.parse(manifestoLastUpdatedDate));
+    } 
+    dates.sort((a, b) => b.compareTo(a));
+    return dates.first;
+  } 
 
   SpaceView(
       {required this.spaceId,
@@ -35,7 +49,9 @@ class SpaceView {
       this.description,
       this.approvalPercentage = 51,
       this.participationPercentage = 51,
-      this.createdAt = ''});
+      this.createdAt = '',
+      this.proposalsLastUpdatedDate = '',
+      this.manifestoLastUpdatedDate = ''});
 
   factory SpaceView.fromObject(Map<String, dynamic> o) => SpaceView(
       spaceId: o['spaceId'],
@@ -45,7 +61,9 @@ class SpaceView {
       description: o['description'],
       participationPercentage: o['participationPercentage'],
       approvalPercentage: o['approvalPercentage'],
-      createdAt: o['createdAt']);
+      createdAt: o['createdAt'],
+      proposalsLastUpdatedDate: o['proposalsLastUpdatedDate'] ?? '',
+      manifestoLastUpdatedDate: o['manifestoLastUpdatedDate'] ?? '');
 
   SpaceView.empty(
       {this.spaceId,
@@ -55,6 +73,8 @@ class SpaceView {
       this.description = '',
       this.approvalPercentage = 51,
       this.participationPercentage = 51,
-      this.createdAt = ''});
+      this.createdAt = '',
+      this.proposalsLastUpdatedDate = '',
+      this.manifestoLastUpdatedDate = ''});
 
 }
