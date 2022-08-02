@@ -26,7 +26,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/services/com
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_vote.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/show_replies_button.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/toggle_reply_section.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/popup_comment_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/replies_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
@@ -91,17 +91,14 @@ class MemberComment extends StatelessWidget {
                 CommentVotesCount(
                   votesInFavor: comment.upVotesCount,
                   votesInOpposing: comment.downVotesCount,
-                  onUpvote: commentIsDeleted
-                      ? null
-                      : () => onVote(comment.manifestoCommentId, true),
-                  onDownvote: commentIsDeleted
-                      ? null
-                      : () => onVote(comment.manifestoCommentId, false),
+                  disabled: commentIsDeleted,
+                  onUpvote: () => onVote(comment.manifestoCommentId, true),
+                  onDownvote: () => onVote(comment.manifestoCommentId, false),
                   currentUserCommentVote: getCurrentUserCommentVote(),
                 ),
                 const SizedBox(width: 10),
                 comment.repliesCount > 0 && enableReplies
-                    ? ShowRepliesButton(
+                    ? ToggleReplySection(
                         onTap: toggleFunction,
                         repliesCount: comment.repliesCount)
                     : Container(),

@@ -19,10 +19,10 @@
 
 import 'package:flutter/material.dart';
 
-class ShowRepliesButton extends StatelessWidget {
+class ToggleReplySection extends StatelessWidget {
   final VoidCallback onTap;
   final int repliesCount;
-  const ShowRepliesButton(
+  const ToggleReplySection(
       {Key? key, required this.onTap, required this.repliesCount})
       : super(key: key);
 
