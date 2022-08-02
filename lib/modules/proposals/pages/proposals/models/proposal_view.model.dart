@@ -177,7 +177,7 @@ class MultipleOptionsOptionMapper implements OptionMapper {
   @override
   List<OptionInfo> mapVotesToOptionInfoList(
       List<ProposalVote> votes, List<ManifestoOptionView> manifestoOptions) {
-    final String? winnerOptionId = _getWinnerOptionId(votes);
+    final String? winnerOptionId = _getWinnerOptionId(votes, manifestoOptions);
 
     return manifestoOptions
         .map((o) => OptionInfo(
@@ -190,7 +190,7 @@ class MultipleOptionsOptionMapper implements OptionMapper {
         .toList();
   }
 
-  String? _getWinnerOptionId(List<ProposalVote> votes) {
+  String? _getWinnerOptionId(List<ProposalVote> votes,  List<ManifestoOptionView> manifestoOptions) {
     final Map<String, int> votesCounter = {};
     votes.where((o) => o.manifestoOptionId != null).forEach((o) {
       votesCounter[o.manifestoOptionId!] =
@@ -201,7 +201,7 @@ class MultipleOptionsOptionMapper implements OptionMapper {
 
     final List<MapEntry<String, int>> votesCounterList =
         votesCounter.entries.map<MapEntry<String, int>>((e) => e).toList();
-    if (votesCounterList.isNotEmpty) {
+    if (votesCounterList.isNotEmpty && votesCounterList.length == manifestoOptions.length) {
       final firstCount = votesCounterList.first.value;
       if (votesCounterList.every((v) => v.value == firstCount)) {
         return null;
@@ -210,6 +210,6 @@ class MultipleOptionsOptionMapper implements OptionMapper {
       votesCounterList.sort((a, b) => a.value.compareTo(b.value));
     }
 
-    return votesCounterList.isNotEmpty ? votesCounterList.last.key : null;
+    return votesCounterList.isNotEmpty ? votesCounterList.first.key : null;
   }
 }

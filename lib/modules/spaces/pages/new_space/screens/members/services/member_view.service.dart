@@ -24,6 +24,7 @@ import 'package:demos_app/modules/spaces/repositories/member_view.repository.dar
 
 class MemberViewService {
   Future<List<MemberView>> getMemberViews() async {
+    await Future.delayed(const Duration(milliseconds: 100));
     final SpaceView currentSpace = SpaceBloc().state;
     if (currentSpace.spaceId != null) {
       final String spaceId = currentSpace.spaceId!;

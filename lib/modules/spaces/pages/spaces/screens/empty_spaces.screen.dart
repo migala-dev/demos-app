@@ -54,7 +54,7 @@ class EmptySpacesScreen extends StatelessWidget {
                           size: size.width * 0.25,
                         ),
                       ),
-                      Text('No tienes espacios por el momento.',
+                      const Text('No tienes espacios por el momento.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: primaryColorLight, fontSize: 20.0)),

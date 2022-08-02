@@ -75,14 +75,14 @@ class ProfileField extends StatelessWidget {
       title: Text(
         title,
         style: const TextStyle(
-            color: primaryColor, fontSize: 14, fontFamily: 'Rubik'),
+            color: primaryColorLight, fontSize: 14, fontFamily: 'Rubik'),
       ),
       subtitle: child == null
           ? hasValue()
               ? getValueLabel()
               : getWithoutValueLabel()
           : child!,
-      shape: const Border(bottom: BorderSide()),
+      shape: const Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
     );
   }
 
@@ -92,11 +92,11 @@ class ProfileField extends StatelessWidget {
 
   Widget getValueLabel() {
     return Text(value ?? '',
-        style: const TextStyle(color: Colors.black, fontSize: 18));
+        style: const TextStyle(color: Colors.black, fontSize: 16));
   }
 
   Widget getWithoutValueLabel() {
     return Text(placeholder,
-        style: const TextStyle(color: Colors.black26, fontSize: 18));
+        style: const TextStyle(color: Colors.black26, fontSize: 16));
   }
 }

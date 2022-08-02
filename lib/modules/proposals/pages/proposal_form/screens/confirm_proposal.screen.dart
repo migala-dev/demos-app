@@ -1,3 +1,4 @@
+import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/members_list_view.widget.dart';
@@ -27,7 +28,9 @@ class ConfirmProposalScreen extends StatelessWidget {
         builder: (context, memberListState) {
           List<MemberView> members = [];
           if (memberListState is SpaceMembersWithData) {
-            members = memberListState.memberViews;
+            members = memberListState.memberViews
+                .where((m) => m.invitationStatus == InvitationStatus.accepted)
+                .toList();
           }
           return Scaffold(
             backgroundColor: primaryColor,
@@ -51,28 +54,29 @@ class ConfirmProposalScreen extends StatelessWidget {
                       child: CardWidget(
                     child: Column(children: [
                       Container(
-                        padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 20.0),
-                        child:  
-                      RichText(
-                        text: TextSpan(
-                          text: 'Al ',
-                          style: const TextStyle(
-                              color: Colors.black, fontSize: 18),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: textActionLabel ??
-                                  primaryActionLabel.toLowerCase(),
+                          padding: const EdgeInsets.only(
+                              top: 16.0, left: 16.0, right: 20.0),
+                          child: RichText(
+                            text: TextSpan(
+                              text: 'Al ',
                               style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                                  color: Colors.black, fontSize: 18),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: textActionLabel ??
+                                      primaryActionLabel.toLowerCase(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                                TextSpan(
+                                  text:
+                                      ' la propuesta solo podrán votar los miembros actuales del espacio (${members.length}):',
+                                  style: const TextStyle(fontSize: 18),
+                                )
+                              ],
                             ),
-                            TextSpan(
-                              text:
-                                  ' la propuesta solo podrán votar los miembros actuales del espacio (${members.length}):',
-                              style: const TextStyle(fontSize: 18),
-                            )
-                          ],
-                        ),
-                      )),
+                          )),
                       Expanded(child: MembersListView(memberViews: members)),
                     ]),
                   )),
