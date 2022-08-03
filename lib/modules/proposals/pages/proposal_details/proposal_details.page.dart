@@ -304,7 +304,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
   }
 
   Widget getContent(String? content) {
-    if (content == null || content.isEmpty || content.length == 17) {
+    if (content == null || content.isEmpty || content == r'[{"insert":"\n"}]') {
       return Container();
     }
 
