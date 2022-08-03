@@ -24,6 +24,7 @@ class CommentVotesCount extends StatelessWidget {
   final int votesInFavor;
   final int votesInOpposing;
   final CurrentUserCommentVote currentUserCommentVote;
+  final bool disabled;
 
   final void Function()? onUpvote;
   final void Function()? onDownvote;
@@ -37,14 +38,15 @@ class CommentVotesCount extends StatelessWidget {
           ? Colors.red
           : Colors.grey;
 
-  const CommentVotesCount(
-      {Key? key,
-      required this.votesInFavor,
-      required this.votesInOpposing,
-      required this.currentUserCommentVote,
-      this.onUpvote,
-      this.onDownvote})
-      : super(key: key);
+  const CommentVotesCount({
+    Key? key,
+    required this.votesInFavor,
+    required this.votesInOpposing,
+    required this.currentUserCommentVote,
+    this.disabled = false,
+    this.onUpvote,
+    this.onDownvote,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class CommentVotesCount extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            onTap: onUpvote,
+            onTap: disabled ? null : onUpvote,
             child: Row(children: [
               Icon(Icons.arrow_upward, size: 15, color: upvoteColor),
               Text(votesCount > 0 ? '$votesCount' : ''),
@@ -64,7 +66,7 @@ class CommentVotesCount extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           GestureDetector(
-            onTap: onDownvote,
+            onTap: disabled ? null : onDownvote,
             child: Row(children: [
               Icon(Icons.arrow_downward, size: 15, color: downvoteColor),
               Text(votesCount < 0 ? '${-votesCount}' : '')
