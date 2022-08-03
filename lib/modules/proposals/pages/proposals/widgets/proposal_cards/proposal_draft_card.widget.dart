@@ -24,7 +24,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/enums/proposal_f
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card.interface.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card_info.widget.dart';
 import 'package:flutter/material.dart';
 
 class ProposalDraftCard extends StatelessWidget implements ProposalCard {

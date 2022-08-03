@@ -115,7 +115,7 @@ class _TimerTextButtonState extends State<TimerTextButton> {
   Widget getLink() {
     return TextButton(
         onPressed: widget.disabled ? null : onActionPressed,
-        child: Text(widget.text.toUpperCase(), style: TextStyle(color: primaryColor),));
+        child: Text(widget.text.toUpperCase(), style: const TextStyle(color: primaryColor),));
   }
 
   void onActionPressed() {

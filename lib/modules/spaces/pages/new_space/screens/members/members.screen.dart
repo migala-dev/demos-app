@@ -17,6 +17,9 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
+import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -51,6 +54,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
       bloc: SpaceMembersBloc(),
       builder: (context, state) {
         return Scaffold(
+          backgroundColor: primaryColor,
           appBar: AppBar(
             title: const Text('Miembros'),
             actions: [
@@ -66,9 +70,9 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
           floatingActionButton: SafeWidgetValidator(
             validators: [IsCurrentUserAdminWidgetValidator()],
             child: FloatingActionButton(
-                child: const Icon(Icons.person_add),
-                onPressed: () =>
-                    Navigator.pushNamed(context, Routes.invitations)),
+              child: const Icon(DemosIcons.add_member, color: Colors.black),
+              onPressed: () => Navigator.pushNamed(context, Routes.invitations),
+            ),
           ),
         );
       },
@@ -82,15 +86,21 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
 
       return Column(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+          SizedBox(
             height: 70,
             child: MemberTypeFilter(
               selected: filter,
               onFilteredMembersChange: _onFilteredMembersChange,
             ),
           ),
-          Expanded(child: MembersListView(memberViews: filteredMembers))
+          Expanded(
+              child: Padding(
+            padding:
+                const EdgeInsets.only(bottom: 32, right: 8, left: 8, top: 4),
+            child: CardWidget(
+              child: MembersListView(memberViews: filteredMembers),
+            ),
+          ))
         ],
       );
     }
@@ -100,13 +110,15 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
     );
   }
 
-  void _onFilteredMembersChange(MemberType newFilter) => setState(() {
-        if (filter == newFilter) {
-          filter = MemberType.all;
-        } else {
-          filter = newFilter;
-        }
-      });
+  void _onFilteredMembersChange(MemberType newFilter) => setState(
+        () {
+          if (filter == newFilter) {
+            filter = MemberType.all;
+          } else {
+            filter = newFilter;
+          }
+        },
+      );
 
   List<MemberView> _getMembersFiltered(
       MemberType filter, List<MemberView> members) {

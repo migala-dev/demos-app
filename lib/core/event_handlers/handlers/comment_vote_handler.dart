@@ -74,7 +74,6 @@ Future<void> _handleCommentVoteUpdate(Cache dataEvent) async {
   final String spaceId = dataEvent.data!['spaceId'];
   final String manifestoCommentVoteId =
       dataEvent.data!['manifestoCommentVoteId'];
-
   final commentVote = await CommentVoteService()
       .getCommentVote(spaceId, manifestoCommentVoteId);
 

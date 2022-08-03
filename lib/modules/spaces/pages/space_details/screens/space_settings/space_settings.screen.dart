@@ -42,8 +42,7 @@ class SpaceSettingsScreen extends StatelessWidget {
   void goToEditSpace(BuildContext context) =>
       Navigator.pushNamed(context, Routes.editSpace);
 
-  void goToSpaces(BuildContext context) => Navigator.pushNamedAndRemoveUntil(
-      context, Routes.spaces, (route) => false);
+  void goToSpaces(BuildContext context) => Navigator.of(context).popUntil(ModalRoute.withName(Routes.spaces));
 
   void leaveSpace(BuildContext context) {
     openConfirmationDialog(context,

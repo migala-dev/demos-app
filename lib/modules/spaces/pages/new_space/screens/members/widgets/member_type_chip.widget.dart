@@ -22,13 +22,15 @@ import 'package:flutter/material.dart';
 class MemberTypeChip extends StatelessWidget {
   final Color backgroundColor;
   final Color accentColor;
+  final Color fontColor;
 
-  const MemberTypeChip(
-      {Key? key,
-      required this.text,
-      required this.backgroundColor,
-      required this.accentColor})
-      : super(key: key);
+  const MemberTypeChip({
+    Key? key,
+    required this.text,
+    required this.backgroundColor,
+    required this.accentColor,
+    required this.fontColor,
+  }) : super(key: key);
 
   final String text;
 
@@ -37,10 +39,17 @@ class MemberTypeChip extends StatelessWidget {
     return Chip(
       label: Text(
         text,
-        style: TextStyle(color: accentColor, fontWeight: FontWeight.w300),
+        style: TextStyle(
+          color: fontColor,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Rubik',
+        ),
       ),
       backgroundColor: backgroundColor,
-      side: BorderSide(color: accentColor, width: 0.5),
+      side: BorderSide(color: accentColor, width: 1.5),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
     );
   }
 }

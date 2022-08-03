@@ -29,7 +29,9 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/comme
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/proposal_result.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card_info.widget.dart';
+import 'package:demos_app/modules/proposals/services/proposal_participation.service.dart';
+import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/general/countdown_timer.widget.dart';
@@ -224,11 +226,26 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             proposalView.status == ProposalStatus.open
                                 ? SafeWidgetValidator(
                                     validators: [CanVoteWidgetValidator()],
-                                    child: BigOutlinedButton(
-                                        text: 'Votar',
-                                        onPressed: () => goToVoteProposal(
-                                            context, proposalView)),
-                                  )
+                                    child: FutureBuilder(
+                                      future:
+                                          didCurrentUserParticipatedInProposal(
+                                              proposalView),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<bool> snapshot) {
+                                        String voteLabel = 'Votar';
+                                        final bool
+                                            didCurrentMemberParticipatedInProposal =
+                                            snapshot.hasData && snapshot.data!;
+                                        if (didCurrentMemberParticipatedInProposal) {
+                                          voteLabel = 'Actualizar voto';
+                                        }
+
+                                        return BigOutlinedButton(
+                                            text: voteLabel,
+                                            onPressed: () => goToVoteProposal(
+                                                context, proposalView));
+                                      },
+                                    ))
                                 : Container()
                           ],
                         ),
@@ -316,4 +333,12 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
         Routes.proposalComments,
         transition: TransitionType.inFromBottom,
       );
+
+  Future<bool> didCurrentUserParticipatedInProposal(
+      ProposalView proposalView) async {
+    final String currentUserId = CurrentMemberBloc().state!.userId;
+
+    return ProposalParticipationService()
+        .didUserParticipatedInProposal(currentUserId, proposalView.proposalId);
+  }
 }

@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/enums/member_type.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/widgets/member_type_chip.widget.dart';
@@ -37,15 +38,20 @@ class MemberTypeChipButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color backgroundColor = selected ? Colors.grey : Colors.transparent;
-    final Color accentColor = selected ? Colors.white : Colors.blue;
+    final Color backgroundColor = selected ? secondaryColorDark : primaryColor;
+    final Color accentColor = selected ? primaryColor : secondaryColorDark;
+    final Color fontColor = selected ? primaryColor : Colors.white;
 
-    return GestureDetector(
-      onTap: () => onTap(type),
-      child: MemberTypeChip(
-        text: text,
-        accentColor: accentColor,
-        backgroundColor: backgroundColor,
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: GestureDetector(
+        onTap: () => onTap(type),
+        child: MemberTypeChip(
+          text: text,
+          accentColor: accentColor,
+          backgroundColor: backgroundColor,
+          fontColor: fontColor,
+        ),
       ),
     );
   }

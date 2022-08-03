@@ -36,12 +36,14 @@ class SpaceMembersWithData extends SpaceMembersState {
   @override
   List<Object> get props => [memberViews];
 
-  SpaceMembersWithData copyWithMemberUpdate(MemberView updatedMember) {
+  SpaceMembersWithData copyWithMemberUpdate(MemberView memberUpdated) {
     int memberIndex = memberViews
-        .indexWhere((member) => member.memberId == updatedMember.memberId);
+        .indexWhere((member) => member.memberId == memberUpdated.memberId);
     if (memberIndex != -1) {
+      final oldMember = memberViews[memberIndex];
+      memberUpdated.phoneNumber = oldMember.phoneNumber;
       memberViews.removeAt(memberIndex);
-      memberViews.insert(memberIndex, updatedMember);
+      memberViews.insert(memberIndex, memberUpdated);
     }
 
     return SpaceMembersWithData([...memberViews]);

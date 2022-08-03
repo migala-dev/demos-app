@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_track_shape.widget.dart';
@@ -31,8 +32,9 @@ class SliderCommonTheme extends StatelessWidget {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
           trackShape: CustomTrackShape(),
+          activeTrackColor: secondaryColorDark,
           thumbColor: Colors.white,
-          inactiveTrackColor: Colors.grey[300],
+          inactiveTrackColor: Colors.grey[400],
           trackHeight: 5.0),
       child: child,
     );

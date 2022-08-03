@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
@@ -29,6 +30,7 @@ import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.da
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/utils/ui/toast.util.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
+import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 
 class InvitationsScreen extends StatefulWidget {
@@ -63,7 +65,7 @@ class _InvitationsScreenState extends State<InvitationsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: primaryColor,
       appBar: AppBar(
         title: appBarTitle(),
       ),
@@ -71,17 +73,22 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     );
   }
 
-  Column appBarTitle() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Invitaciones'),
-        Text(
-          '${contactsSelected.length} seleccionados',
-          style: const TextStyle(color: Colors.grey, fontSize: 14),
-        )
-      ],
-    );
+  Widget appBarTitle() {
+    return Container(
+        margin: const EdgeInsets.only(top: 14.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Invitaciones',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            Text(
+              '${contactsSelected.length} seleccionados',
+              style: const TextStyle(color: Colors.grey, fontSize: 14),
+            )
+          ],
+        ));
   }
 
   Widget getBody() {
@@ -90,30 +97,42 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     }
     if (contacts.isEmpty) return const Center(child: Text('Sin contactos'));
     return Column(children: [
-      InvitationSearchField(
-          contactsSelected: contactsSelected,
-          searchTextFieldController: searchTextFieldController,
-          onSearchChange: (searchParamValue) {
-            setState(() {
-              searchParam = searchParamValue;
-            });
-          },
-          unselectContact: (contact) {
-            unselectContact(contact);
-          }),
       Expanded(
-        child: InvitationContactList(
-          contactsSelected: contactsSelected,
-          contacts: contacts,
-          searchParam: searchParam,
-          onContactTap: (contact) {
-            toggleContact(contact);
-          },
+          child: Container(
+            
+        margin: const EdgeInsets.only(bottom: 12.0, right: 12.0, left: 12.0, top: 20.0),
+            child: CardWidget(
+        child: Padding(padding: const EdgeInsets.only(top: 0), child:
+        
+        Column(
+          children: [
+            InvitationSearchField(
+                contactsSelected: contactsSelected,
+                searchTextFieldController: searchTextFieldController,
+                onSearchChange: (searchParamValue) {
+                  setState(() {
+                    searchParam = searchParamValue;
+                  });
+                },
+                unselectContact: (contact) {
+                  unselectContact(contact);
+                }),
+            Expanded(
+              child: InvitationContactList(
+                contactsSelected: contactsSelected,
+                contacts: contacts,
+                searchParam: searchParam,
+                onContactTap: (contact) {
+                  toggleContact(contact);
+                },
+              ),
+            )
+          ],
         ),
-      ),
+      )))),
       Container(
         child: SafeWidgetMemberValidator(
-              roles: const [SpaceRole.admin],
+            roles: const [SpaceRole.admin],
             child: BigButton(
               text: 'Invitar',
               onPressed: sendInvitations,

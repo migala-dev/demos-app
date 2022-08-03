@@ -68,7 +68,7 @@ class CommentPublishedHandler implements EventHandler {
       if (isCommentReply) {
         handleCommentReply(commentView!, comment.manifestoCommentParentId!);
       } else {
-        await handleComment(commentView!, comment.manifestoCommentId);
+        await handleComment(commentView!, comment.manifestoId);
       }
     }
   }

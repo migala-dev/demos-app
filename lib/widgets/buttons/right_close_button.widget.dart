@@ -28,7 +28,7 @@ class RightCloseButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        IconButton(onPressed: onPressed, icon: const Icon(Icons.close))
+        IconButton(onPressed: onPressed, icon: const Icon(Icons.close, color: Colors.white,))
       ],
     );
   }
