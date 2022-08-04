@@ -19,6 +19,7 @@
 
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
+import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
                   icon: const Icon(Icons.search))
             ],
           ),
-          body: getBody(state),
+          body: CacheRefreshIndicator(child: getBody(state)),
           floatingActionButton: SafeWidgetValidator(
             validators: [IsCurrentUserAdminWidgetValidator()],
             child: FloatingActionButton(
