@@ -1,6 +1,6 @@
 class CommentPart {
   final bool isMention;
-  final String text;
+  final String content;
 
-  CommentPart(this.isMention, this.text);
+  CommentPart(this.isMention, this.content);
 }

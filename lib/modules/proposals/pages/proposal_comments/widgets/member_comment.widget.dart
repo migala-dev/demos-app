@@ -27,6 +27,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/services/com
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/reply_button.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/comment_votes_count.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/buttons/toggle_reply_section.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment_content.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/popup_comment_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/replies_list_view.widget.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
@@ -82,8 +83,10 @@ class MemberComment extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15),
-            Text(commentIsDeleted ? '[Comentario Eliminado]' : comment.content,
-                style: TextStyle(color: Colors.grey.shade700)),
+            MemeberCommentContent(
+              comment: comment,
+              commentIsDeleted: commentIsDeleted,
+            ),
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

@@ -2,7 +2,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comme
 import 'package:validators/validators.dart';
 
 class CommentMentionPreprocessorService {
-  static const String mentionPattern = '@user@';
+  static const String mentionPattern = '@member@';
 
   static List<CommentPart> split(String comment) {
     final commentSplited = comment.split(mentionPattern);
