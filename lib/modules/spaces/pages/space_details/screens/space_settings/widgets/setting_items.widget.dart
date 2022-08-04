@@ -52,7 +52,6 @@ class SettingItem extends StatelessWidget {
           style: TextStyle(fontSize: 14, color: color),
         ),
         onTap: onTap,
-        // contentPadding: const EdgeInsets.symmetric(horizontal: 28),
         horizontalTitleGap: 8,
         dense: true,
       ),
