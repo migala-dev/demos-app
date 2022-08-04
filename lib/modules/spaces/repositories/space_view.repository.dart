@@ -18,7 +18,10 @@
 */
 
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
+import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/repositories/app_repository.dart';
+import 'package:demos_app/core/repositories/manifesto/manifesto.repository.dart';
+import 'package:demos_app/core/repositories/manifesto/proposal/proposal.repository.dart';
 import 'package:demos_app/core/repositories/members.repository.dart';
 import 'package:demos_app/core/repositories/spaces.repository.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -27,6 +30,8 @@ import 'package:sqflite/sqflite.dart';
 class SpaceViewsRepository extends AppRepository {
   String tblSpaces = SpacesRepository().tblSpaces;
   String tblMembers = MembersRepository().tblMembers;
+  String tblProposals = ProposalRepository().tblProposals;
+  String tblManifesto = ManifestoRepository().tblManifesto;
   String colSpaceId = SpacesRepository().colId;
   String colSpaceName = SpacesRepository().colName;
   String colDescription = SpacesRepository().colDescription;
@@ -37,6 +42,8 @@ class SpaceViewsRepository extends AppRepository {
   String colCreatedAt = MembersRepository().colCreatedAt;
   String colUserId = MembersRepository().colUserId;
   String colDeleted = MembersRepository().colDeleted;
+  String colUpdatedAt = ProposalRepository().colUpdatedAt;
+  String colStatus = ProposalRepository().colStatus;
 
   String _getSelectSpacesQuery() => '''
       SELECT $tblSpaces.$colSpaceId,
@@ -51,7 +58,18 @@ class SpaceViewsRepository extends AppRepository {
           where $tblMembers.$colSpaceId = $tblSpaces.$colSpaceId 
             AND $colInvitationStatus = ${InvitationStatus.accepted.index} 
             AND $colDeleted = 0
-        ) as "membersCount"
+        ) as "membersCount",
+        (
+          select $tblProposals.$colUpdatedAt from $tblProposals
+          where $tblProposals.$colSpaceId = $tblSpaces.$colSpaceId 
+            AND $colStatus IN(${ProposalStatus.open.index}, ${ProposalStatus.closed.index}, ${ProposalStatus.cancelled.index})
+            order by datetime($colUpdatedAt) DESC Limit 1
+        ) as "proposalsLastUpdatedDate",
+        (
+          select $tblManifesto.$colUpdatedAt from $tblManifesto
+          where $tblManifesto.$colSpaceId = $tblSpaces.$colSpaceId
+            order by datetime($colUpdatedAt) DESC Limit 1
+        ) as "manifestoLastUpdatedDate"
       FROM $tblSpaces
       INNER
         JOIN $tblMembers ON 
@@ -69,7 +87,11 @@ class SpaceViewsRepository extends AppRepository {
     final query = _getSelectSpacesByUserIdQuery(userId);
     final result = await db!.rawQuery(query);
 
-    return result.map((row) => SpaceView.fromObject(row)).toList();
+    final spaceList = result.map((row) => SpaceView.fromObject(row)).toList();
+
+    spaceList.sort(((a, b) => b.lastActivityDate.compareTo(a.lastActivityDate)));
+    
+    return spaceList;
   }
 
     String _getSelectOneSpaceBySpaceIdQuery(String spaceId) => '''

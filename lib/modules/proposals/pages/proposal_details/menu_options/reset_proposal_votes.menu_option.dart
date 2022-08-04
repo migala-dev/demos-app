@@ -24,6 +24,7 @@ import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_l
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/services/proposal_view.service.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/shared/interfaces/menu_option.interface.dart';
 import 'package:flutter/material.dart';
 
@@ -57,7 +58,7 @@ class ResetProposalVotesMenuOption implements MenuOption {
           
       ProposalViewListBloc().add(ProposalViewListUpdated(proposal.spaceId));
       ProposalDetailsBloc().add(SetProposalViewEvent(proposalUpdated!));
-      
+      SpacesBloc().add(LoadSpacesEvent());
     }
   }
 }

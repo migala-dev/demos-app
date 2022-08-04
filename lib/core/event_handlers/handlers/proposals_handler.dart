@@ -23,6 +23,7 @@ import 'package:demos_app/core/models/cache.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 
 class ProposalHandler extends EventHandlerMixin {
   static final _proposalHandler = ProposalHandler._internal();
@@ -50,6 +51,7 @@ class ProposalPublishedEvent implements EventHandler {
     await ProposalService().getProposal(spaceId, proposalId);
 
     ProposalViewListBloc().add(ProposalViewListUpdated(spaceId));
+    SpacesBloc().add(LoadSpacesEvent());
   }
 }
 

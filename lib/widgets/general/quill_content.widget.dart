@@ -37,7 +37,7 @@ class _QuillContentState extends State<QuillContent> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.content == null) {
+    if (widget.content == null || widget.content == r'[{"insert":"\n"}]') {
       return Container();
     }
     try {

@@ -68,7 +68,7 @@ class _SpaceListScreenState extends State<SpaceListScreen>
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Espacios'),
+          title: getTitle(),
           actions: [PopupSpacesMenuOptions()],
         ),
         backgroundColor: primaryColor,
@@ -174,5 +174,15 @@ class _SpaceListScreenState extends State<SpaceListScreen>
             arguments: invitationView);
       },
     );
+  }
+
+    Widget getTitle() {
+    if (areOnlySpaceInvitations(widget.spaces, widget.invitations)) {
+      return const Text('Tus Invitaciones');
+    }
+
+    if (areOnlySpaces(widget.spaces, widget.invitations)) return const Text('Tus Espacios');
+
+    return const Text('Demos');
   }
 }
