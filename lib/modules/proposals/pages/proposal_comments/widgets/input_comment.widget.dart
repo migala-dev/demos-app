@@ -20,6 +20,7 @@
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment.service.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_mention_preprocessor.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
@@ -155,14 +156,22 @@ class _InputCommentState extends State<InputComment> {
     final content = _contentController.text;
     final spaceId = SpaceBloc().state.spaceId!;
     final manifestoId = ProposalDetailsBloc().state!.manifestoId;
+
+    final commentReplyCubit = CommentReplyCubit();
     final manifestoCommentParentId =
-        CommentReplyCubit().state.commentReplied!.manifestoCommentId;
+        commentReplyCubit.state.commentReplied!.manifestoCommentId;
+    final userIdReplied =
+        commentReplyCubit.state.commentReplied!.member!.userId;
 
     clearKeyboardInput();
-    CommentReplyCubit().cancelReply();
+    commentReplyCubit.cancelReply();
+
+    final contentWithReply =
+        CommentMentionPreprocessorService.addMentionToStart(
+            userIdReplied, content);
 
     final comment = await CommentService().sendCommentReply(
-        content, spaceId, manifestoId, manifestoCommentParentId);
+        contentWithReply, spaceId, manifestoId, manifestoCommentParentId);
 
     final commentView =
         await CommentViewService().getCommentById(comment.manifestoCommentId);
