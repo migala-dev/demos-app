@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/modules/proposals/pages/proposals/proposals.page.dart';
+import 'package:demos_app/modules/spaces/space.screen.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,18 +40,18 @@ class SpaceDetailsScreen extends StatelessWidget {
             return const Center(child: CircularProgressIndicator());
           }
           return Scaffold(
-              appBar: AppBar(
-                  titleSpacing: 0,
-                  title: GestureDetector(
-                    child: Row(
-                      children: [
-                        SpacePictureHeader(pictureKey: space.pictureKey),
-                        Text(space.name)
-                      ],
-                    ),
-                    onTap: () => goToSpaceSettings(context),
-                  )),
-              body: const ProposalsPage(),
+            appBar: AppBar(
+                titleSpacing: 0,
+                title: GestureDetector(
+                  child: Row(
+                    children: [
+                      SpacePictureHeader(pictureKey: space.pictureKey),
+                      Text(space.name)
+                    ],
+                  ),
+                  onTap: () => goToSpaceSettings(context),
+                )),
+            body: const SpaceScreen(),
           );
         });
   }
