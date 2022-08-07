@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
@@ -62,7 +64,7 @@ class _VoteProposalScreenState extends State<VoteProposalScreen> {
     return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
-        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20, top: 40),
+        padding: EdgeInsets.only(left: 24, right: 24, bottom: Platform.isIOS ? 32.0 : 20.0, top: 40),
         child: Column(
           children: [
             RightCloseButton(onPressed: () => Navigator.pop(context)),

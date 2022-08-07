@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
@@ -57,6 +59,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
         return Scaffold(
           backgroundColor: primaryColor,
           appBar: AppBar(
+            centerTitle: false,
             title: const Text('Miembros'),
             actions: [
               IconButton(
@@ -67,7 +70,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
                   icon: const Icon(Icons.search))
             ],
           ),
-          body: CacheRefreshIndicator(child: getBody(state)),
+          body: getBody(state),
           floatingActionButton: SafeWidgetValidator(
             validators: [IsCurrentUserAdminWidgetValidator()],
             child: FloatingActionButton(
@@ -97,9 +100,9 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
           Expanded(
               child: Padding(
             padding:
-                const EdgeInsets.only(bottom: 32, right: 8, left: 8, top: 4),
+                EdgeInsets.only(bottom: Platform.isIOS ?  64.0 : 32.0, right: 8, left: 8, top: 4),
             child: CardWidget(
-              child: MembersListView(memberViews: filteredMembers),
+              child: CacheRefreshIndicator(child: MembersListView(memberViews: filteredMembers)),
             ),
           ))
         ],

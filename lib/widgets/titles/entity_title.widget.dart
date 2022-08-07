@@ -46,6 +46,8 @@ class EntityTitle extends StatelessWidget {
         Text(
           name,
           style: TextStyle(fontSize: 40, color: nameColor, fontWeight: FontWeight.w500),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
         )
       ],
     );

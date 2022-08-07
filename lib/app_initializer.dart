@@ -21,7 +21,6 @@ import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/services/current_user/current_user.storage.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
-
 import 'core/services/current_user/current_user_private_key.dart';
 
 class AppInitializer {

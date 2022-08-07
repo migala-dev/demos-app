@@ -1,6 +1,8 @@
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _SplashState extends State<Splash> {
 
   void _navigateToInitialRoute() async {
     await Future.delayed(const Duration(seconds: 2));
+    await clearSecureCacheIfIsTheFirstRun();
     final bool userIsAuthenticate = await TokenService().isAuthenticate();
     final String initialRoute =
         userIsAuthenticate ? Routes.spaces : Routes.login;
@@ -68,5 +71,18 @@ class _SplashState extends State<Splash> {
             )),
       )),
     );
+  }
+
+
+  Future<void> clearSecureCacheIfIsTheFirstRun() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool('first_run') ?? true) {
+      const FlutterSecureStorage storage = FlutterSecureStorage();
+
+      await storage.deleteAll();
+
+      prefs.setBool('first_run', false);
+    }
   }
 }
