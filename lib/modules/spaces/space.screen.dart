@@ -51,6 +51,10 @@ class _SpaceScreenState extends State<SpaceScreen> {
     Navigator.pushNamed(context, Routes.proposalForm);
   }
 
+  void goToNewSuggestion(BuildContext context) {
+    Navigator.pushNamed(context, Routes.proposalForm);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProposalViewListBloc, ProposalViewListState>(
@@ -77,14 +81,17 @@ class _SpaceScreenState extends State<SpaceScreen> {
             return SafeWidgetMemberValidator(
               roles: const [SpaceRole.representative],
               child: FloatingActionButton(
-                child: const Icon(Icons.how_to_vote),
+                child: const Icon(DemosIcons.add_proposal, color: primaryColor),
                 onPressed: () => goToNewProposal(context),
               ),
             );
           } else {
             return SafeWidgetMemberValidator(
               roles: const [SpaceRole.worker],
-              child: FloatingActionButton(onPressed: () {}),
+              child: FloatingActionButton(
+                child: const Icon(DemosIcons.add_proposal, color: primaryColor),
+                onPressed: () => goToNewSuggestion(context),
+              ),
             );
           }
         }
