@@ -60,7 +60,8 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
           },
         )),
         body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+            margin:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
                 Expanded(
@@ -171,11 +172,10 @@ class SecurityCodeForm extends StatefulWidget {
 }
 
 class _SecurityCodeFormState extends State<SecurityCodeForm> {
-
   @override
   Widget build(BuildContext context) {
     const length = 6;
-    final borderColor = primaryColorDark;
+    const borderColor = primaryColorDark;
     const errorColor = Color.fromRGBO(255, 234, 238, 1);
     const fillColor = Colors.white;
     final defaultPinTheme = PinTheme(
