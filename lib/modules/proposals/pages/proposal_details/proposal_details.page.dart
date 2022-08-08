@@ -121,16 +121,36 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                                       key: _countdownKey,
                                       dateTime: proposalView.expiredAt),
                                 )
-                              : ProposalCardInfo(
-                                  getIcon: (size, color) => Icon(
-                                    Icons.calendar_today,
-                                    size: size,
-                                    color: color,
-                                  ),
-                                  title: 'CERRADA EL:',
-                                  content: DateFormatterService
-                                      .parseDateToStandardDateFormatWithHour(
-                                          proposalView.expiredAt!),
+                              : Row(
+                                  children: [
+                                    ProposalCardInfo(
+                                      getIcon: (size, color) => Icon(
+                                        Icons.calendar_today,
+                                        size: size,
+                                        color: color,
+                                      ),
+                                      title: 'CERRADA EL:',
+                                      content: proposalView.status ==
+                                              ProposalStatus.cancelled
+                                          ? DateFormatterService
+                                              .parseDateToStandardDateFormat(
+                                                  proposalView.expiredAt!)
+                                          : DateFormatterService
+                                              .parseDateToStandardDateFormatWithHour(
+                                                  proposalView.expiredAt!),
+                                    ),
+                                    proposalView.status ==
+                                            ProposalStatus.cancelled
+                                        ? const Padding(
+                                            padding: EdgeInsets.only(left: 32),
+                                            child: Text(
+                                              'CANCELADA',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            ),
+                                          )
+                                        : Container(),
+                                  ],
                                 ),
                           proposalView.status == ProposalStatus.open
                               ? ProposalCardInfo(
