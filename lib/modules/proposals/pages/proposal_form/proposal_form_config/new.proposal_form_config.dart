@@ -24,6 +24,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/screens/confirm_
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/services/proposal.service.dart';
+import 'package:demos_app/modules/spaces/bloc/spaces/spaces_bloc.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space.bloc.dart';
 import 'package:demos_app/navigation.service.dart';
 import 'package:demos_app/utils/ui/modals/open_custom_confirmation.dialog.dart';
@@ -94,6 +95,7 @@ class NewProposalFormConfig implements ProposalFormConfig {
           .createAndPublishProposal(spaceId, proposalFormView);
 
       ProposalViewListBloc().add(ProposalViewListLoaded(spaceId));
+      SpacesBloc().add(LoadSpacesEvent());
       Navigator.pop(context);
     }
   }
