@@ -93,9 +93,75 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
         bloc: ProposalDetailsBloc(),
         builder: (context, proposalView) {
           final Key _countdownKey = UniqueKey();
+
           if (proposalView == null) {
             return const Center(child: CircularProgressIndicator());
           }
+
+          final Map<ProposalStatus, List<Widget> Function(ProposalView)>
+              headers = {
+            ProposalStatus.open: (p) => [
+                  ProposalCardInfo(
+                    getIcon: (size, color) => Icon(
+                      Icons.calendar_today,
+                      size: size,
+                      color: color,
+                    ),
+                    title: 'TERMINA EN:',
+                    child: CountdownTimer(
+                        key: _countdownKey, dateTime: p.expiredAt),
+                  ),
+                  ProposalCardInfo(
+                    getIcon: (size, color) => Icon(
+                      Icons.how_to_vote,
+                      size: 32,
+                      color: color,
+                    ),
+                    title: 'Votos:',
+                    content: '${p.votesCount}/${p.votesTotal}',
+                  )
+                ],
+            ProposalStatus.closed: (p) => [
+                  ProposalCardInfo(
+                    getIcon: (size, color) => Icon(
+                      Icons.calendar_today,
+                      size: size,
+                      color: color,
+                    ),
+                    title: 'CERRADA EL:',
+                    content: DateFormatterService
+                        .parseDateToStandardDateFormatWithHour(p.expiredAt!),
+                  ),
+                ],
+            ProposalStatus.cancelled: (p) => [
+                  Row(
+                    children: [
+                      ProposalCardInfo(
+                          getIcon: (size, color) => Icon(
+                                Icons.calendar_today,
+                                size: size,
+                                color: color,
+                              ),
+                          title: 'CERRADA EL:',
+                          content: DateFormatterService
+                              .parseDateToStandardDateFormat(p.expiredAt!)),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 32),
+                        child: Text(
+                          'CANCELADA',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+            ProposalStatus.deleted: (p) => [],
+            ProposalStatus.draft: (p) => [],
+          };
+
           return Scaffold(
             body: NestedScrollView(
               controller: _controller,
@@ -107,64 +173,10 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          proposalView.status == ProposalStatus.open
-                              ? ProposalCardInfo(
-                                  getIcon: (size, color) => Icon(
-                                    Icons.calendar_today,
-                                    size: size,
-                                    color: color,
-                                  ),
-                                  title: 'TERMINA EN:',
-                                  child: CountdownTimer(
-                                      key: _countdownKey,
-                                      dateTime: proposalView.expiredAt),
-                                )
-                              : Row(
-                                  children: [
-                                    ProposalCardInfo(
-                                      getIcon: (size, color) => Icon(
-                                        Icons.calendar_today,
-                                        size: size,
-                                        color: color,
-                                      ),
-                                      title: 'CERRADA EL:',
-                                      content: proposalView.status ==
-                                              ProposalStatus.cancelled
-                                          ? DateFormatterService
-                                              .parseDateToStandardDateFormat(
-                                                  proposalView.expiredAt!)
-                                          : DateFormatterService
-                                              .parseDateToStandardDateFormatWithHour(
-                                                  proposalView.expiredAt!),
-                                    ),
-                                    proposalView.status ==
-                                            ProposalStatus.cancelled
-                                        ? const Padding(
-                                            padding: EdgeInsets.only(left: 32),
-                                            child: Text(
-                                              'CANCELADA',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                            ),
-                                          )
-                                        : Container(),
-                                  ],
-                                ),
-                          proposalView.status == ProposalStatus.open
-                              ? ProposalCardInfo(
-                                  getIcon: (size, color) => Icon(
-                                    Icons.how_to_vote,
-                                    size: 32,
-                                    color: color,
-                                  ),
-                                  title: 'Votos:',
-                                  content:
-                                      '${proposalView.votesCount}/${proposalView.votesTotal}',
-                                )
-                              : Container()
-                        ]),
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children:
+                          headers[proposalView.status]!(proposalView).toList(),
+                    ),
                   ),
                   const Divider(color: Colors.grey),
                   Expanded(
