@@ -19,4 +19,10 @@ class CommentMentionPreprocessorService {
 
     return '$mentionPattern$uuid$mentionPattern $str';
   }
+
+  static String deleteMentions(String comment) {
+    final commentParts = split(comment).where((part) => !part.isMention);
+
+    return commentParts.map((part) => part.content).join();
+  }
 }

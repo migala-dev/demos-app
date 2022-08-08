@@ -68,6 +68,7 @@ class _InputCommentState extends State<InputComment> {
             builder: (context, state) {
               if (state.isReplying) {
                 final MemberView? member = state.commentReplied!.member;
+                final content = state.commentReplied!.content;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -93,7 +94,8 @@ class _InputCommentState extends State<InputComment> {
                     Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: Text(
-                        state.commentReplied!.content,
+                        CommentMentionPreprocessorService.deleteMentions(
+                            content),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
