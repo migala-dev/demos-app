@@ -158,8 +158,7 @@ class _InputCommentState extends State<InputComment> {
     final manifestoId = ProposalDetailsBloc().state!.manifestoId;
 
     final commentReplyCubit = CommentReplyCubit();
-    final manifestoCommentParentId =
-        commentReplyCubit.state.commentReplied!.manifestoCommentId;
+    final manifestoCommentParentId = commentReplyCubit.state.commentParentId!;
     final memberIdReplied =
         commentReplyCubit.state.commentReplied!.member!.memberId!;
 
