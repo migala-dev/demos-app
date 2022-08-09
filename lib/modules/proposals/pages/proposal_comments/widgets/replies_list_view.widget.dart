@@ -52,7 +52,10 @@ class RepliesListView extends StatelessWidget {
 
   void replySubComment(
       CommentView commentReplied, String manifestoCommentParentId) {
-    CommentReplyCubit().setReply(commentReplied,
-        manifestoCommentParentId: manifestoCommentParentId);
+    CommentReplyCubit().setReply(
+      commentReplied,
+      manifestoCommentParentId: manifestoCommentParentId,
+      addMention: true,
+    );
   }
 }

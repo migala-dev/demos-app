@@ -32,10 +32,14 @@ class CommentReplyCubit extends Cubit<CommentReplyState> {
     emit(CommentReplyState.empy());
   }
 
-  void setReply(CommentView comment, {String? manifestoCommentParentId}) {
-    emit(CommentReplyState(
-      comment,
-      commentParentId: manifestoCommentParentId,
-    ));
+  void setReply(
+    CommentView comment, {
+    String? manifestoCommentParentId,
+    bool addMention = false,
+  }) {
+    emit(CommentReplyState(comment,
+        commentParentId: manifestoCommentParentId,
+        isReplying: true,
+        addMention: addMention));
   }
 }

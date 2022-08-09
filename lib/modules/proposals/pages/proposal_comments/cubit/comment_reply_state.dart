@@ -23,12 +23,22 @@ class CommentReplyState extends Equatable {
   final String? commentParentId;
   final CommentView? commentReplied;
 
-  bool get isReplying => commentParentId != null;
+  final bool isReplying;
+  final bool addMention;
 
-  const CommentReplyState(this.commentReplied, {this.commentParentId});
+  const CommentReplyState(
+    this.commentReplied, {
+    this.commentParentId,
+    this.isReplying = false,
+    this.addMention = false,
+  });
 
   factory CommentReplyState.empy() => const CommentReplyState(null);
 
   @override
-  List<Object> get props => [isReplying];
+  List<Object> get props => [
+        isReplying,
+        commentReplied != null ? commentReplied!.content : '',
+        addMention
+      ];
 }

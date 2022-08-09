@@ -171,6 +171,7 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
       });
 
   void setReply(CommentView commentReplied) {
-    CommentReplyCubit().setReply(commentReplied);
+    CommentReplyCubit().setReply(commentReplied,
+        manifestoCommentParentId: commentReplied.manifestoCommentId);
   }
 }
