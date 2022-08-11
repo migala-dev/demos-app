@@ -134,28 +134,24 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   ),
                 ],
             ProposalStatus.cancelled: (p) => [
-                  Row(
-                    children: [
-                      ProposalCardInfo(
-                          getIcon: (size, color) => Icon(
-                                Icons.calendar_today,
-                                size: size,
-                                color: color,
-                              ),
-                          title: 'CERRADA EL:',
-                          content: DateFormatterService
-                              .parseDateToStandardDateFormat(p.expiredAt!)),
-                      const Padding(
-                        padding: EdgeInsets.only(left: 32),
-                        child: Text(
-                          'CANCELADA',
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      )
-                    ],
+                  ProposalCardInfo(
+                    getIcon: (size, color) => Icon(
+                      Icons.calendar_today,
+                      size: size,
+                      color: color,
+                    ),
+                    title: 'CERRADA EL:',
+                    content: DateFormatterService.parseDateToStandardDateFormat(
+                        p.expiredAt!),
+                  ),
+                  ProposalCardInfo(
+                    getIcon: ((size, color) => Icon(
+                          Icons.info,
+                          size: size,
+                          color: color,
+                        )),
+                    title: 'Estatus',
+                    content: 'CANCELADA',
                   ),
                 ],
             ProposalStatus.deleted: (p) => [],
