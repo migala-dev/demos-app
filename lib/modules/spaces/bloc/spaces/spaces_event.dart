@@ -27,3 +27,11 @@ abstract class SpacesEvent extends Equatable {
 }
 
 class LoadSpacesEvent extends SpacesEvent {}
+
+
+class UpdateSpacesMemberCountEvent extends SpacesEvent {
+  final String spaceId;
+
+  const UpdateSpacesMemberCountEvent(this.spaceId);
+
+}

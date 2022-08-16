@@ -56,4 +56,8 @@ class SpaceService {
 
     return [];
   }
+
+  Future<int> getMembersCount(String spaceId) {
+    return  SpaceViewsRepository().getMembersCount(spaceId);
+  }
 }
