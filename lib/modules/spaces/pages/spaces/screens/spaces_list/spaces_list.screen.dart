@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
@@ -68,6 +70,7 @@ class _SpaceListScreenState extends State<SpaceListScreen>
 
     return Scaffold(
         appBar: AppBar(
+          centerTitle: false,
           title: getTitle(),
           actions: [PopupSpacesMenuOptions()],
         ),
@@ -82,11 +85,10 @@ class _SpaceListScreenState extends State<SpaceListScreen>
             color: Colors.black,
           ),
         )),
-        body: CacheRefreshIndicator(
-            child: Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 32.0, right: 8.0, left: 8.0, top: 4.0),
-                child: CardWidget(child: getBody(context)))));
+        body: Padding(
+                padding: EdgeInsets.only(
+                    bottom: Platform.isIOS ? 64.0 : 32.0, right: 8.0, left: 8.0, top: 4.0),
+                child: CardWidget(child: getBody(context))));
   }
 
   Widget getBody(BuildContext context) {
@@ -155,17 +157,19 @@ class _SpaceListScreenState extends State<SpaceListScreen>
   }
 
   Widget getSpaceList() {
-    return SpaceListWidget<SpaceView>(
+    return CacheRefreshIndicator(
+            child: SpaceListWidget<SpaceView>(
       spaces: widget.spaces,
       getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
       onSpaceTab: (spaceView) async {
         await goToSpaceDetails(spaceView);
       },
-    );
+    ));
   }
 
   Widget getInvitationList() {
-    return SpaceListWidget<InvitationView>(
+    return CacheRefreshIndicator(
+            child: SpaceListWidget<InvitationView>(
       spaces: widget.invitations,
       getSubtitle: (invitationView) =>
           'Expira el ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
@@ -173,7 +177,7 @@ class _SpaceListScreenState extends State<SpaceListScreen>
         Navigator.pushNamed(context, Routes.spaceInvitation,
             arguments: invitationView);
       },
-    );
+    ));
   }
 
     Widget getTitle() {
@@ -183,6 +187,6 @@ class _SpaceListScreenState extends State<SpaceListScreen>
 
     if (areOnlySpaces(widget.spaces, widget.invitations)) return const Text('Tus Espacios');
 
-    return const Text('Demos');
+    return const Text('Demos', textAlign: TextAlign.left,);
   }
 }

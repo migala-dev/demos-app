@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
 import 'package:demos_app/modules/spaces/models/member_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
@@ -44,7 +46,7 @@ class ConfirmProposalScreen extends StatelessWidget {
               elevation: 0,
             ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: Platform.isIOS ? 32.0 : 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

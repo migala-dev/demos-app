@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -63,21 +65,24 @@ class SpaceSettingsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
+        centerTitle: false,
         title: const Text('Ajustes'),
       ),
-      body: Column(
+      body: Container(
+        padding: EdgeInsets.only(bottom: Platform.isIOS ? 20.0 : 0),
+        child: Column(
         children: [
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(
                 top: 8,
-                bottom: 32,
+                bottom: 20.0,
                 right: 16,
                 left: 16,
               ),
               child: CardWidget(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
                   child: Column(
                     children: [
                       BlocBuilder<SpaceBloc, SpaceView>(
@@ -139,6 +144,6 @@ class SpaceSettingsScreen extends StatelessWidget {
           )
         ],
       ),
-    );
+    ));
   }
 }

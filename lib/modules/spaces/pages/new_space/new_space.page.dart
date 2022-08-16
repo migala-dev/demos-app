@@ -50,6 +50,7 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
     return Scaffold(
         backgroundColor: primaryColor,
         appBar: AppBar(
+          centerTitle: false,
           title: _appBarTitle(),
         ),
         body: LayoutBuilder(
@@ -59,8 +60,8 @@ class _NewSpaceScreenState extends State<NewSpaceScreen>
                         BoxConstraints(minHeight: constraints.maxHeight),
                     child: IntrinsicHeight(
                       child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 20.0),
+                        margin: EdgeInsets.symmetric(
+                            horizontal: 20.0, vertical: Platform.isIOS ? 36.0 : 30.0),
                         child: getCurrentScreen(),
                       ),
                     ),

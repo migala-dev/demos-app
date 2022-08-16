@@ -17,8 +17,11 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
@@ -102,7 +105,9 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
               headerSliverBuilder: (BuildContext context, bool isScroll) {
                 return <Widget>[getSliverAppBar(context, proposalView)];
               },
-              body: Column(
+              body: Container(
+                padding: EdgeInsets.only(bottom: Platform.isIOS ? 16.0 : 0),
+                child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -259,13 +264,14 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                 ],
               ),
             ),
-          );
+          ));
         });
   }
 
   SliverAppBar getSliverAppBar(
       BuildContext context, ProposalView proposalView) {
     return SliverAppBar(
+      centerTitle: false,
       actions: proposalView.status == ProposalStatus.open
           ? [
               SafeWidgetMemberValidator(
@@ -273,14 +279,16 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   child: PopupProposalDetailsMenuOptions())
             ]
           : null,
-      backgroundColor: const Color(0xFFEFB355),
+      backgroundColor: secondaryColorDark,
       expandedHeight: MediaQuery.of(context).size.height * 0.3,
       pinned: true,
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext cont, BoxConstraints constraints) {
           return FlexibleSpaceBar(
             title: getAppBarWidget != null
-                ? getAppBarWidget!(proposalView.title ?? 'Sin titulo')
+                ? Container(
+                  padding: EdgeInsets.only(left: Platform.isIOS ? 24.0 : 0),
+                  child: getAppBarWidget!(proposalView.title ?? 'Sin titulo'))
                 : Container(),
           );
         },

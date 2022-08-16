@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
@@ -34,13 +36,15 @@ class EmptySpacesScreen extends StatelessWidget {
     return Scaffold(
         backgroundColor: primaryColor,
         appBar: AppBar(
+          centerTitle: false,
           title: const Text('Demos'),
           actions: [PopupSpacesMenuOptions()],
         ),
         body: Center(
           child: Padding(
             padding:
-                const EdgeInsets.only(bottom: 20.0, right: 24.0, left: 24.0),
+                EdgeInsets.only(
+                  bottom: Platform.isIOS ? 40.0 : 20.0, right: 24.0, left: 24.0),
             child: Column(
               children: [
                 Expanded(
@@ -52,13 +56,13 @@ class EmptySpacesScreen extends StatelessWidget {
                         child: Icon(
                           DemosIcons.empty_spaces,
                           color: primaryColorLight,
-                          size: size.width * 0.25,
+                          size: size.width * 0.2,
                         ),
                       ),
                       const Text('No tienes espacios por el momento.',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: primaryColorLight, fontSize: 20.0)),
+                              color: primaryColorLight, fontSize: 16.0)),
                     ],
                   ),
                 ),

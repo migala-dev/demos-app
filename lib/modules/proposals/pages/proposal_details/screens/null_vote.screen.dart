@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_event.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
@@ -46,8 +48,8 @@ class _NullVoteScreenState extends State<NullVoteScreen> {
     return Scaffold(
       backgroundColor: primaryColor,
       body: Container(
-        padding: const EdgeInsets.only(
-            top: 32.0, left: 32.0, right: 32.0, bottom: 20.0),
+        padding:  EdgeInsets.only(
+            top: 32.0, left: 32.0, right: 32.0, bottom: Platform.isIOS ? 32.0 : 20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
