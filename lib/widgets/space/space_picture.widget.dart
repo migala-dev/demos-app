@@ -42,10 +42,11 @@ class SpacePicture extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Stack(
+       clipBehavior: Clip.none,
       children: [
         getImage(size),
         Positioned(
-            bottom: 0,
+            bottom: -15,
             right: 0,
             child: editable
                 ? FloatingActionButton(
@@ -87,7 +88,7 @@ class SpacePicture extends StatelessWidget {
 
   Widget getDefaultImage(double width) {
     return Image(
-        image: const AssetImage('assets/images/default-profile.png'),
+        image: const AssetImage('assets/images/default-space.png'),
         width: width,
         height: width,
         fit: BoxFit.cover);

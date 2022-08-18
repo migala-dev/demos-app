@@ -24,12 +24,17 @@ import 'package:demos_app/modules/spaces/repositories/member_view.repository.dar
 
 class MemberViewService {
   Future<List<MemberView>> getMemberViews() async {
+    await Future.delayed(const Duration(milliseconds: 100));
     final SpaceView currentSpace = SpaceBloc().state;
-    final String spaceId = currentSpace.spaceId!;
+    if (currentSpace.spaceId != null) {
+      final String spaceId = currentSpace.spaceId!;
 
-    List<MemberView> members = await MemberViewsRepository().findMembersBySpaceId(spaceId);
-    
-    return members;
+      List<MemberView> members =
+          await MemberViewsRepository().findMembersBySpaceId(spaceId);
+
+      return members;
+    }
+    return [];
   }
 
   Future<MemberView?> getMemberViewByMemberId(String memberId) async {

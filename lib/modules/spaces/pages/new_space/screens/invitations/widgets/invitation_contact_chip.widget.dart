@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/models/invitation_contact.model.dart';
 import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,6 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
 
   @override
   Widget build(BuildContext context) {
-    Color color = widget.contact.color;
     return GestureDetector(
       child: FittedBox(
           child: Container(
@@ -48,47 +48,41 @@ class _InvitationContactChipState extends State<InvitationContactChip> {
         margin: const EdgeInsets.only(right: 4.0, top: 4.0, bottom: 4.0),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            color: !unselectMode ? Colors.grey[200] : color),
+            color: !unselectMode ? Colors.grey[200] : primaryColor),
         child: Row(
           children: [
-            widget.contact.profilePictureKey == null || unselectMode
-                ? GestureDetector(
-                    child: Container(
-                        width: 32.0,
-                        height: 32.0,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: color),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            !unselectMode
-                                ? Text(
-                                    widget.contact.name[0].toUpperCase(),
-                                    style: const TextStyle(
-                                        color: Colors.white, fontSize: 16.0),
-                                  )
-                                : const Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                    size: 22.0,
-                                  ),
-                          ],
-                        )),
-                    onTap: () {
-                      setState(() {
-                        if (unselectMode) {
-                          widget.unselectContact();
-                        }
-                        unselectMode = !unselectMode;
-                      });
-                    },
-                  )
-                : ProfilePicture(
-                    imageKey: widget.contact.profilePictureKey,
-                    width: 80,
-                  ),
+            GestureDetector(
+              child: Container(
+                  width: 32.0,
+                  height: 32.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: primaryColor),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      !unselectMode
+                          ? ProfilePicture(
+                              imageKey: widget.contact.profilePictureKey,
+                              width: 80,
+                            )
+                          : const Icon(
+                              Icons.close,
+                              color: Colors.white,
+                              size: 22.0,
+                            ),
+                    ],
+                  )),
+              onTap: () {
+                setState(() {
+                  if (unselectMode) {
+                    widget.unselectContact();
+                  }
+                  unselectMode = !unselectMode;
+                });
+              },
+            ),
             Container(
               margin: const EdgeInsets.only(left: 4, right: 16),
               child: Text(

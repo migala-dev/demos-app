@@ -107,7 +107,16 @@ class _TimerTextButtonState extends State<TimerTextButton> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [Text(widget.text.toUpperCase(), style: TextStyle(color: primaryColorDark, fontSize: 12.0), ), Text(_currentTimeRemaining,  style: TextStyle(color: primaryColorDark, fontSize: 14.0))],
+        children: [
+          Text(
+            widget.text.toUpperCase(),
+            style: const TextStyle(color: primaryColorDark, fontSize: 12.0),
+          ),
+          Text(
+            _currentTimeRemaining,
+            style: const TextStyle(color: primaryColorDark, fontSize: 14.0),
+          )
+        ],
       ),
     );
   }
@@ -115,7 +124,10 @@ class _TimerTextButtonState extends State<TimerTextButton> {
   Widget getLink() {
     return TextButton(
         onPressed: widget.disabled ? null : onActionPressed,
-        child: Text(widget.text.toUpperCase(), style: TextStyle(color: primaryColor),));
+        child: Text(
+          widget.text.toUpperCase(),
+          style: const TextStyle(color: primaryColor),
+        ));
   }
 
   void onActionPressed() {

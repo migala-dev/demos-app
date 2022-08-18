@@ -17,8 +17,11 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/enums/manifesto_option_type.enum.dart';
 import 'package:demos_app/core/enums/proposal/proposal_status.enum.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
@@ -29,7 +32,9 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/comme
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/popup_proposal_details_menu_options.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/widgets/proposal_result/proposal_result.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/models/proposal_view.model.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_cart_info.widget.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_cards/proposal_card_info.widget.dart';
+import 'package:demos_app/modules/proposals/services/proposal_participation.service.dart';
+import 'package:demos_app/modules/spaces/bloc/current_member/current_member.bloc.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/widgets/general/countdown_timer.widget.dart';
@@ -100,7 +105,9 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
               headerSliverBuilder: (BuildContext context, bool isScroll) {
                 return <Widget>[getSliverAppBar(context, proposalView)];
               },
-              body: Column(
+              body: Container(
+                padding: EdgeInsets.only(bottom: Platform.isIOS ? 16.0 : 0),
+                child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -224,11 +231,26 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                             proposalView.status == ProposalStatus.open
                                 ? SafeWidgetValidator(
                                     validators: [CanVoteWidgetValidator()],
-                                    child: BigOutlinedButton(
-                                        text: 'Votar',
-                                        onPressed: () => goToVoteProposal(
-                                            context, proposalView)),
-                                  )
+                                    child: FutureBuilder(
+                                      future:
+                                          didCurrentUserParticipatedInProposal(
+                                              proposalView),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<bool> snapshot) {
+                                        String voteLabel = 'Votar';
+                                        final bool
+                                            didCurrentMemberParticipatedInProposal =
+                                            snapshot.hasData && snapshot.data!;
+                                        if (didCurrentMemberParticipatedInProposal) {
+                                          voteLabel = 'Actualizar voto';
+                                        }
+
+                                        return BigOutlinedButton(
+                                            text: voteLabel,
+                                            onPressed: () => goToVoteProposal(
+                                                context, proposalView));
+                                      },
+                                    ))
                                 : Container()
                           ],
                         ),
@@ -242,13 +264,14 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                 ],
               ),
             ),
-          );
+          ));
         });
   }
 
   SliverAppBar getSliverAppBar(
       BuildContext context, ProposalView proposalView) {
     return SliverAppBar(
+      centerTitle: false,
       actions: proposalView.status == ProposalStatus.open
           ? [
               SafeWidgetMemberValidator(
@@ -256,14 +279,16 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
                   child: PopupProposalDetailsMenuOptions())
             ]
           : null,
-      backgroundColor: const Color(0xFFEFB355),
+      backgroundColor: secondaryColorDark,
       expandedHeight: MediaQuery.of(context).size.height * 0.3,
       pinned: true,
       flexibleSpace: LayoutBuilder(
         builder: (BuildContext cont, BoxConstraints constraints) {
           return FlexibleSpaceBar(
             title: getAppBarWidget != null
-                ? getAppBarWidget!(proposalView.title ?? 'Sin titulo')
+                ? Container(
+                  padding: EdgeInsets.only(left: Platform.isIOS ? 24.0 : 0),
+                  child: getAppBarWidget!(proposalView.title ?? 'Sin titulo'))
                 : Container(),
           );
         },
@@ -287,7 +312,7 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
   }
 
   Widget getContent(String? content) {
-    if (content == null || content.isEmpty) {
+    if (content == null || content.isEmpty || content == r'[{"insert":"\n"}]') {
       return Container();
     }
 
@@ -316,4 +341,12 @@ class _ProposalDetailsPageState extends State<ProposalDetailsPage> {
         Routes.proposalComments,
         transition: TransitionType.inFromBottom,
       );
+
+  Future<bool> didCurrentUserParticipatedInProposal(
+      ProposalView proposalView) async {
+    final String currentUserId = CurrentMemberBloc().state!.userId;
+
+    return ProposalParticipationService()
+        .didUserParticipatedInProposal(currentUserId, proposalView.proposalId);
+  }
 }

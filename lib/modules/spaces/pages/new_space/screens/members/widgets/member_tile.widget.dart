@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'package:demos_app/core/enums/invitation-status.enum.dart';
@@ -42,27 +43,27 @@ class MemberTile extends StatelessWidget {
       ),
       title: Row(
         children: [
-          Text(member.displayName),
-          const SizedBox(width: 10),
+          Text(member.displayName, style: const TextStyle(fontSize: 16.0)),
+          const SizedBox(width: 4),
           _getRoleTile(),
         ],
       ),
-      subtitle: Text(_getSubtitleText()),
+      subtitle: Text(_getSubtitleText(), style: const TextStyle(fontSize: 14.0),),
     );
   }
 
   Widget _getRoleTile() {
     return Container(
       alignment: Alignment.center,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      height: 20,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: const BorderRadius.all(Radius.circular(100)),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      height: 22,
+      decoration: const BoxDecoration(
+        color: Color(0xFFF8D6A1),
+        borderRadius:  BorderRadius.all(Radius.circular(4)),
       ),
       child: Text(
         getMemberTypeName(member.memberType),
-        style: const TextStyle(fontSize: 12, color: Colors.grey),
+        style: const TextStyle(fontSize: 11, color: primaryColor, fontWeight: FontWeight.w600),
       ),
     );
   }

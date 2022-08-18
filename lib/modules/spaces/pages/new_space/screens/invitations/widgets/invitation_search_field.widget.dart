@@ -54,7 +54,6 @@ class _InvitationSearchFieldState extends State<InvitationSearchField> {
         padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 8.0),
         width: double.infinity,
         decoration: BoxDecoration(
-            color: Colors.white,
             border: Border(bottom: BorderSide(color: greyColor, width: 1.0))),
         child: Wrap(children: [
           ...widget.contactsSelected

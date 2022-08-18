@@ -129,7 +129,7 @@ class MemberService {
   }
 
   Future<void> cancelInvitation(String memberId) async {
-    final Member? member = await MembersRepository().findById(memberId);
+    final Member? member = await MembersRepository().findByIdAndNotDeleted(memberId);
 
     member!.invitationStatus = InvitationStatus.canceled;
 
@@ -137,7 +137,7 @@ class MemberService {
   }
 
   Future<void> removeMembership(String memberId, String spaceId) async {
-    final Member? member = await MembersRepository().findById(memberId);
+    final Member? member = await MembersRepository().findByIdAndNotDeleted(memberId);
 
     member!.deleted = true;
 
@@ -146,15 +146,13 @@ class MemberService {
 
   Future<void> leaveSpace(String spaceId) async {
     await MemberApi().leaveSpace(spaceId);
+    final List<Member> members = await MembersRepository()
+        .finalAllBySpaceId(spaceId);
+        for(final member in members) {
+          member.deleted = true;
+          await MembersRepository().update(member);
+        }
 
-    final User? user = CurrentUserBloc().state;
-    final Member? member = await MembersRepository()
-        .findByUserIdAndSpaceIdAndInvitationStatusAccepted(
-            user!.userId, spaceId);
-
-    member!.deleted = true;
-
-    await MembersRepository().update(member);
 
     SpacesBloc().add(LoadSpacesEvent());
   }

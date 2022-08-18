@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> with LoadingStateHandler {
                 child: IntrinsicHeight(
                     child: Container(
                         margin: const EdgeInsets.symmetric(
-                            horizontal: 20.0, vertical: 12.0),
+                            horizontal: 20.0, vertical: 20.0),
                         child: Column(
                           children: [
                             Row(

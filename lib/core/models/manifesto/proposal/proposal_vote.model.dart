@@ -22,7 +22,7 @@ class ProposalVote {
   final String proposalId;
   final String userHash;
   final String? manifestoOptionId;
-  final bool? inFavor;
+  bool? inFavor;
   final String? nullVoteComment;
   final String createdAt;
   final String updatedAt;
@@ -46,7 +46,7 @@ class ProposalVote {
         'proposalId': proposalId,
         'userHash': userHash,
         'manifestoOptionId': manifestoOptionId,
-        'inFavor': inFavor != null && inFavor! ? 1 : 0,
+        'inFavor': inFavor == null ? inFavor : inFavor! ? 1 : 0,
         'nullVoteComment': nullVoteComment,
         'createdAt': createdAt,
         'updatedAt': updatedAt,

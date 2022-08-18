@@ -30,10 +30,12 @@ class ProfileSettingScreen extends StatefulWidget {
 class _ProfileState extends State<ProfileSettingScreen> {
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: primaryColor,
         appBar: AppBar(
-          title: const Text('Perfil'),
+          title: const Text('Perfil', style: TextStyle(fontSize: 22.0),),
         ),
         body: Container(
           margin: const EdgeInsets.symmetric(vertical: 28, horizontal: 28),

@@ -67,7 +67,9 @@ class MemberViewsRepository extends AppRepository {
         ) as "proposalVotedCount",
         (
           select count(*) from $tblProposals
-          where $tblProposals.$colCreatedBy = $tblMembers.$colUserId AND $colProposalStatus != ${ProposalStatus.draft.index}
+          where $tblProposals.$colCreatedBy = $tblMembers.$colUserId 
+            AND $colProposalStatus != ${ProposalStatus.draft.index}
+            AND $tblProposals.$colSpaceId = $tblMembers.$colSpaceId
         ) as "proposalCreatedCount"
       FROM $tblMembers
       INNER

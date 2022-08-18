@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/widget_validator.interface.dart';
@@ -45,11 +47,14 @@ class ProfileField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accentColor = Theme.of(context).colorScheme.secondary;
     return ListTile(
       leading: Container(
         margin: const EdgeInsets.only(top: 6.0),
-        child: Icon(icon),
+        child: Icon(
+          icon,
+          size: 32,
+          color: primaryColorLight,
+        ),
       ),
       horizontalTitleGap: 0,
       contentPadding: const EdgeInsets.all(0),
@@ -58,8 +63,8 @@ class ProfileField extends StatelessWidget {
               validators: editableButtonValidators,
               child: IconButton(
                 icon: Icon(
-                  Icons.edit_outlined,
-                  color: onEdit == null ? Colors.grey : accentColor,
+                  DemosIcons.pencil,
+                  color: onEdit == null ? Colors.grey : secondaryColorDark,
                 ),
                 onPressed: onEdit,
               ))
@@ -69,13 +74,15 @@ class ProfileField extends StatelessWidget {
             ),
       title: Text(
         title,
-        style: const TextStyle(color: Colors.grey, fontSize: 14),
+        style: const TextStyle(
+            color: primaryColorLight, fontSize: 14, fontFamily: 'Rubik'),
       ),
       subtitle: child == null
           ? hasValue()
               ? getValueLabel()
               : getWithoutValueLabel()
           : child!,
+      shape: const Border(bottom: BorderSide(color: Color(0xFFEEEEEE))),
     );
   }
 
@@ -85,11 +92,11 @@ class ProfileField extends StatelessWidget {
 
   Widget getValueLabel() {
     return Text(value ?? '',
-        style: const TextStyle(color: Colors.black, fontSize: 18));
+        style: const TextStyle(color: Colors.black, fontSize: 16));
   }
 
   Widget getWithoutValueLabel() {
     return Text(placeholder,
-        style: const TextStyle(color: Colors.black26, fontSize: 18));
+        style: const TextStyle(color: Colors.black26, fontSize: 16));
   }
 }

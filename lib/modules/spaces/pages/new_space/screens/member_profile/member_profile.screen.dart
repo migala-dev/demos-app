@@ -17,8 +17,11 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/widgets/participation_counts.widget.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/members/bloc/space_members_bloc.dart';
+import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:demos_app/modules/spaces/validators/is_current_user_admin.widget_validator.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/member_profile/modals/select_role_modal.dart';
@@ -48,102 +51,122 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SpaceMembersBloc, SpaceMembersState>(
-        bloc: SpaceMembersBloc(),
-        builder: (context, state) {
-          if (state is SpaceMembersWithData) {
-            final MemberView member = state.memberViews
-                .firstWhere((m) => m.memberId == widget.memberId);
+      bloc: SpaceMembersBloc(),
+      builder: (context, state) {
+        if (state is SpaceMembersWithData) {
+          final MemberView member = state.memberViews
+              .firstWhere((m) => m.memberId == widget.memberId);
 
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('Perfil'),
-                actions: [
-                  FutureBuilder(
-                    future: isCurrentUser(member),
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                      if (snapshot.hasData) {
-                        final isCurrentUser = snapshot.data!;
-                        if (isCurrentUser) {
-                          return Container();
-                        }
-
-                        return MemberProfilePopupMenuOptions(
-                            memberIsInvited: member.isInvited,
-                            memberId: member.memberId!,
-                            spaceId: member.spaceId!);
+          return Scaffold(
+            backgroundColor: primaryColor,
+            appBar: AppBar(
+              title: const Text('Perfil'),
+              actions: [
+                FutureBuilder(
+                  future: isCurrentUser(member),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                    if (snapshot.hasData) {
+                      final isCurrentUser = snapshot.data!;
+                      if (isCurrentUser) {
+                        return Container();
                       }
 
-                      return const CircularProgressIndicator();
-                    },
-                  ),
-                ],
-              ),
-              body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                child: Column(
-                  children: [
-                    ProfilePicture(imageKey: member.profilePictureKey),
-                    Expanded(
-                      child: ListView(
-                          physics: const BouncingScrollPhysics(),
-                          children: [
-                            ProfileField(
-                              title: 'Nombre en el espacio',
-                              icon: Icons.person,
-                              value: member.currentMemberName,
-                              editable: !member.isInvited,
-                              onEdit: isLoading ? null : () => openUpdateNameModal(member),
-                              editableButtonValidators: [
-                                IsCurrentUserAdminWidgetValidator()
-                              ],
-                            ),
-                            member.phoneNumber != null
-                                ? ProfileField(
-                                    title: 'Teléfono',
-                                    icon: Icons.phone,
-                                    value: member.phoneNumberFormatted,
-                                  )
-                                : Container(),
-                            ProfileField(
-                              title: 'Rol',
-                              icon: Icons.manage_accounts,
-                              value: getSpaceRoleName(member.role),
-                              editable: !member.isInvited,
-                              onEdit: isLoading ? null : () => openUpdateRoleModel(member),
-                              editableButtonValidators: [
-                                IsCurrentUserAdminWidgetValidator()
-                              ],
-                            ),
-                            ProfileField(
-                              title: 'Propuestas',
-                              icon: Icons.how_to_vote,
-                              child: ParticipationCounts(
-                                  created: member.proposalCreatedCount,
-                                  votes: member.proposalVotedCount),
-                              onEdit: isLoading ? null : () => openUpdateRoleModel(member),
-                            ),
-                            member.isInvited
-                                ? ProfileField(
-                                    title: 'La invitacion expira el',
-                                    icon: Icons.calendar_today,
-                                    value: member.invitationExpiredAtFormatted,
-                                  )
-                                : ProfileField(
-                                    title: 'Miembro desde',
-                                    icon: Icons.calendar_today,
-                                    value: member.memberCreatedAtFormatted,
-                                  )
-                          ]),
-                    ),
-                  ],
+                      return MemberProfilePopupMenuOptions(
+                          memberIsInvited: member.isInvited,
+                          memberId: member.memberId!,
+                          spaceId: member.spaceId!);
+                    }
+
+                    return const CircularProgressIndicator();
+                  },
                 ),
-              ),
-            );
-          }
-          return Container();
-        });
+              ],
+            ),
+            body: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: ProfilePicture(
+                    imageKey: member.profilePictureKey,
+                    width: 300,
+                  ),
+                ),
+                Expanded(
+                  child: CardWidget(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 8,
+                      ),
+                      child: ListView(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          ProfileField(
+                            title: 'Nombre en el espacio',
+                            icon: DemosIcons.person,
+                            value: member.currentMemberName,
+                            editable: !member.isInvited,
+                            onEdit: isLoading
+                                ? null
+                                : () => openUpdateNameModal(member),
+                            editableButtonValidators: [
+                              IsCurrentUserAdminWidgetValidator()
+                            ],
+                          ),
+                          member.phoneNumber != null
+                              ? ProfileField(
+                                  title: 'Teléfono',
+                                  icon: DemosIcons.phone,
+                                  value: member.phoneNumberFormatted,
+                                )
+                              : Container(),
+                          ProfileField(
+                            title: 'Rol',
+                            icon: DemosIcons.role,
+                            value: getSpaceRoleName(member.role),
+                            editable: !member.isInvited,
+                            onEdit: isLoading
+                                ? null
+                                : () => openUpdateRoleModel(member),
+                            editableButtonValidators: [
+                              IsCurrentUserAdminWidgetValidator()
+                            ],
+                          ),
+                          ProfileField(
+                            title: 'Propuestas',
+                            icon: DemosIcons.proposal,
+                            child: ParticipationCounts(
+                                created: member.proposalCreatedCount,
+                                votes: member.proposalVotedCount),
+                            onEdit: isLoading
+                                ? null
+                                : () => openUpdateRoleModel(member),
+                          ),
+                          member.isInvited
+                              ? ProfileField(
+                                  title: 'La invitacion expira el',
+                                  icon: DemosIcons.user_card,
+                                  value: member.invitationExpiredAtFormatted,
+                                )
+                              : ProfileField(
+                                  title: 'Miembro desde',
+                                  icon: DemosIcons.user_card,
+                                  value: member.memberCreatedAtFormatted,
+                                )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        return Container();
+      },
+    );
   }
 
   Future<bool> isCurrentUser(MemberView member) async {
@@ -175,8 +198,7 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
 
   void openUpdateRoleModel(MemberView member) async {
     if (member.role == SpaceRole.admin) {
-      final admins =
-          await MemberService().getAdministrators(member.spaceId!);
+      final admins = await MemberService().getAdministrators(member.spaceId!);
 
       final existsAnotherAdministrator = admins.length > 1;
       if (!existsAnotherAdministrator) {
@@ -192,7 +214,8 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
       context: context,
       builder: (context) {
         return SelectRoleModal(
-            updateRole: (role) => updateRole(role, member), currentRole: member.role!);
+            updateRole: (role) => updateRole(role, member),
+            currentRole: member.role!);
       },
     );
   }
@@ -200,9 +223,9 @@ class _MemberProfileScreenState extends State<MemberProfileScreen>
   void updateRole(SpaceRole newRole, MemberView member) {
     wrapLoadingTransaction(() async {
       if (newRole != member.role) {
-        await MemberService().updateMember(member.spaceId!,
-            member.memberId!, member.memberName, newRole);
-          member.role = newRole;
+        await MemberService().updateMember(
+            member.spaceId!, member.memberId!, member.memberName, newRole);
+        member.role = newRole;
       }
     });
   }

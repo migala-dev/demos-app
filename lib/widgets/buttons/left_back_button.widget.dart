@@ -32,7 +32,7 @@ class LeftBackButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10),
             constraints: const BoxConstraints(),
             onPressed: onPressed,
-            icon: const Icon(Icons.arrow_back))
+            icon: const Icon(Icons.arrow_back, color: Colors.white,))
       ],
     );
   }

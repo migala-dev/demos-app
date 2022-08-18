@@ -51,76 +51,80 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
+        backgroundColor: primaryColor,
         body: Container(
-      padding: const EdgeInsets.only(
-          top: 32.0, bottom: 20.0, left: 24.0, right: 24.0),
-      child: Column(
-        children: [
-          RightCloseButton(onPressed: () => goBack(context)),
-          Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          padding: const EdgeInsets.only(top: 32.0, left: 32.0, right: 32.0, bottom: 20.0),
+          child: Column(
             children: [
+              RightCloseButton(onPressed: () => goBack(context)),
               Expanded(
-                  flex: 3,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      widget.invitationView.pictureKey != null
-                          ? SpacePicture(
-                              width: 150,
-                              pictureKey: widget.invitationView.pictureKey,
-                            )
-                          : Container(),
-                      SizedBox(
-                        width: double.infinity,
-                        child: getSpaceNameWidget(),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          widget.invitationView.pictureKey != null
+                              ? SpacePicture(
+                                  width: 150,
+                                  pictureKey: widget.invitationView.pictureKey,
+                                )
+                              : Container(),
+                          SizedBox(
+                            width: double.infinity,
+                            child: getSpaceNameWidget(),
+                          ),
+                        ],
+                      )),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: getInvitedByWidget(),
                       ),
-                    ],
-                  )),
-              Expanded(
-                flex: 1,
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: getInvitedByWidget(),
+                    ),
                   ),
-                ),
-              ),
-              Expanded(
-                flex: 3,
-                child: SafeWidgetValidator(
-                    child: SelectOptionListWidget(
-                  options: getOptions(),
-                  onChange: (option) {
-                    setState(() {
-                      optionSelected = option;
-                    });
-                  },
-                )),
-              ),
+                  Expanded(
+                    flex: 3,
+                    child: SafeWidgetValidator(
+                        child: SelectOptionListWidget(
+                      options: getOptions(),
+                      onChange: (option) {
+                        setState(() {
+                          optionSelected = option;
+                        });
+                      },
+                    )),
+                  ),
+                ],
+              )),
+              SafeWidgetValidator(
+                child: BigButton(
+                    text: 'Continuar',
+                    isLoading: isLoading,
+                    disabled: optionSelected == null,
+                    onPressed: () {
+                      if (optionSelected != null) {
+                        optionSelected!.accept();
+                      }
+                    }),
+              )
             ],
-          )),
-          SafeWidgetValidator(
-            child: BigButton(
-                text: 'Continuar',
-                isLoading: isLoading,
-                disabled: optionSelected == null,
-                onPressed: () {
-                  if (optionSelected != null) {
-                    optionSelected!.accept();
-                  }
-                }),
-          )
-        ],
-      ),
-    ));
+          ),
+        ));
   }
 
   Widget getSpaceNameWidget() {
-    return EntityTitle(name: widget.invitationView.name, type: 'Espacio');
+    return EntityTitle(
+      name: widget.invitationView.name,
+      label: 'ESPACIO',
+    );
   }
 
   Widget getInvitedByWidget() {
@@ -131,9 +135,9 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          padding: const EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 12.0),
           child: ProfilePicture(
-            width: 84,
+            width: 100,
             imageKey: widget.invitationView.invitedBy.profilePictureKey,
           ),
         ),
@@ -141,12 +145,15 @@ class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'INVITADO POR',
-              style: TextStyle(color: Colors.grey),
+              'INVITADO POR:',
+              style: TextStyle(fontSize: 12.0, color: Colors.white),
             ),
             Text(
               userName,
-              style: const TextStyle(fontSize: 16),
+              style: const TextStyle(
+                  fontSize: 22,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500),
             )
           ],
         )

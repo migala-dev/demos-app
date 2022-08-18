@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/models/user.model.dart';
@@ -25,10 +26,10 @@ import 'package:demos_app/shared/services/phone_formatter.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
-import 'package:pinput/pin_put/pin_put.dart';
 import 'package:demos_app/utils/ui/ui_utils.dart';
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 import 'package:demos_app/widgets/buttons/timer_text_button_widget.dart';
+import 'package:pinput/pinput.dart';
 
 class VerifyPhonePage extends StatefulWidget {
   const VerifyPhonePage({Key? key}) : super(key: key);
@@ -43,7 +44,8 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
 
   @override
   Widget build(BuildContext context) {
-    final String phoneNumber = PhoneFormatterService.format(AuthService().getPhoneNumber());
+    final String phoneNumber =
+        PhoneFormatterService.format(AuthService().getPhoneNumber());
     final Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -51,14 +53,15 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
         appBar: AppBar(
             leading: IconButton(
           icon: const Icon(
-            Icons.arrow_back,
+            DemosIcons.back_arrow,
           ),
           onPressed: () {
             goToLogin(context);
           },
         )),
         body: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12.0),
+            margin:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
             child: Column(
               children: [
                 Expanded(
@@ -84,10 +87,10 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                Text(phoneNumber, 
-                                  style: const TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w600)),
+                                Text(phoneNumber,
+                                    style: const TextStyle(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w600)),
                                 const SizedBox(height: 75),
                                 Expanded(
                                     child: SecurityCodeForm(
@@ -104,9 +107,12 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
                             ),
                           ),
                         ))),
-                BigButton(isLoading: isLoading, text: 'VERIFICAR', onPressed: () {
-                  verifyCode();
-                })
+                BigButton(
+                    isLoading: isLoading,
+                    text: 'VERIFICAR',
+                    onPressed: () {
+                      verifyCode();
+                    })
               ],
             )));
   }
@@ -166,14 +172,22 @@ class SecurityCodeForm extends StatefulWidget {
 }
 
 class _SecurityCodeFormState extends State<SecurityCodeForm> {
-  BoxDecoration get _pinPutDecoration {
-    return BoxDecoration(
-      border: Border(bottom: BorderSide(color: primaryColorDark, width: 4.0)),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    const length = 6;
+    const borderColor = primaryColorDark;
+    const errorColor = Color.fromRGBO(255, 234, 238, 1);
+    const fillColor = Colors.white;
+    final defaultPinTheme = PinTheme(
+      width: 56,
+      height: 60,
+      decoration: BoxDecoration(
+        color: fillColor,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey),
+      ),
+    );
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -187,23 +201,26 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
             const SizedBox(
               height: 20,
             ),
-            PinPut(
-              fieldsCount: 6,
-              onSubmit: (String pin) {
+            Pinput(
+              length: length,
+              controller: widget.verifyCodeController,
+              defaultPinTheme: defaultPinTheme,
+              onCompleted: (pin) {
                 widget.verifyCode();
                 hideKeyboard(context);
               },
-              controller: widget.verifyCodeController,
-              textStyle: const TextStyle(fontSize: 20.0),
-              submittedFieldDecoration: _pinPutDecoration.copyWith(
-                border: Border(
-                    bottom: BorderSide(
-                        color: primaryColorLight, width: 4.0)),
+              focusedPinTheme: defaultPinTheme.copyWith(
+                height: 68,
+                width: 64,
+                decoration: defaultPinTheme.decoration!.copyWith(
+                  border: Border.all(color: borderColor),
+                ),
               ),
-              selectedFieldDecoration: _pinPutDecoration,
-              followingFieldDecoration: _pinPutDecoration.copyWith(
-                border: Border(
-                    bottom: BorderSide(color: primaryColor, width: 4.0)),
+              errorPinTheme: defaultPinTheme.copyWith(
+                decoration: BoxDecoration(
+                  color: errorColor,
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
             ),
             const SizedBox(
@@ -214,7 +231,7 @@ class _SecurityCodeFormState extends State<SecurityCodeForm> {
               onPressed: (restartTimer) {
                 widget.resendCode(restartTimer);
               },
-              duration: const Duration(minutes: 2, seconds: 30),
+              duration: const Duration(minutes: 0, seconds: 30),
               disabled: widget.isLoading,
             ),
           ],

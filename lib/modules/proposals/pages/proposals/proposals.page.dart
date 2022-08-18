@@ -55,28 +55,33 @@ class ProposalsPage extends StatelessWidget {
 
         return Scaffold(
           floatingActionButton: SafeWidgetMemberValidator(
-              roles: const [SpaceRole.representative],
-              child: FloatingActionButton(
-                child: const Icon(Icons.how_to_vote),
-                onPressed: () => goToNewProposal(context),
-              )),
+            roles: const [SpaceRole.representative],
+            child: FloatingActionButton(
+              child: const Icon(Icons.how_to_vote),
+              onPressed: () => goToNewProposal(context),
+            ),
+          ),
           body: state is ProposalViewListEmpty
-              ? CacheRefreshIndicator(child: Center(child: NoProposals()))
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 15),
-                      ProposalsNavigationMenu(
-                          optionSelected: proposalViewList!),
-                      const SizedBox(height: 15),
-                      Expanded(
-                        child: ProposalsListWidget(
-                            proposalViewList: proposalViewList),
-                      ),
-                    ],
+              ? CacheRefreshIndicator(
+                  child: Center(
+                    child: NoProposals(),
                   ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: ProposalsNavigationMenu(
+                        optionSelected: proposalViewList!,
+                      ),
+                    ),
+                    Expanded(
+                      child: ProposalsListWidget(
+                        proposalViewList: proposalViewList,
+                      ),
+                    ),
+                  ],
                 ),
         );
       },

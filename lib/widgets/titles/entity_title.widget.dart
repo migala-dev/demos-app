@@ -17,12 +17,21 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/material.dart';
 
 class EntityTitle extends StatelessWidget {
   final String name;
-  final String type;
-  const EntityTitle({Key? key, required this.name, required this.type})
+  final String label;
+  final Color nameColor;
+  final Color labelColor;
+
+  const EntityTitle(
+      {Key? key,
+      required this.name,
+      required this.label,
+      this.nameColor = Colors.white,
+      this.labelColor = secondaryColorDark})
       : super(key: key);
 
   @override
@@ -30,10 +39,15 @@ class EntityTitle extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(type),
+        Text(
+          label,
+          style: TextStyle(color: labelColor),
+        ),
         Text(
           name,
-          style: const TextStyle(fontSize: 40),
+          style: TextStyle(fontSize: 40, color: nameColor, fontWeight: FontWeight.w500),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
         )
       ],
     );

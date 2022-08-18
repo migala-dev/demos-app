@@ -82,6 +82,7 @@ class SpaceMembersBloc extends Bloc<SpaceMembersEvent, SpaceMembersState> {
     try {
       final MemberView? currentMember = CurrentMemberBloc().state;
       if (currentMember!.isAdmin) {
+
         final memberPhoneNumbers =
             await MemberService().getMemberPhoneNumbers(currentMember.spaceId!);
         for (final memberPhoneNumber in memberPhoneNumbers) {

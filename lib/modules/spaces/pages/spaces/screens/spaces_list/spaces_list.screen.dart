@@ -17,8 +17,13 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
+import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -30,7 +35,7 @@ import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/utils/navigation/go_to_space_details.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 
-class SpaceListScreen extends StatelessWidget {
+class SpaceListScreen extends StatefulWidget {
   final List<SpaceView> spaces;
   final List<InvitationView> invitations;
 
@@ -39,87 +44,149 @@ class SpaceListScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<SpaceListScreen> createState() => _SpaceListScreenState();
+}
+
+class _SpaceListScreenState extends State<SpaceListScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  var tabIndex = 0;
+
+  @override
+  void initState() {
+    _tabController = TabController(vsync: this, length: 2);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-          appBar: AppBar(
-            title: getTitle(),
-            actions: [PopupSpacesMenuOptions()],
-            bottom: getSpacesTabBar(),
+    final Color primaryColor = Theme.of(context).primaryColor;
+
+    return Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: getTitle(),
+          actions: [PopupSpacesMenuOptions()],
+        ),
+        backgroundColor: primaryColor,
+        floatingActionButton: SafeWidgetValidator(
+            child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.newSpace);
+          },
+          child: const Icon(
+            DemosIcons.add_space,
+            color: Colors.black,
           ),
-          floatingActionButton: SafeWidgetValidator(
-              child: FloatingActionButton(
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.newSpace);
-            },
-            child: const Icon(Icons.add),
-          )),
-          body: CacheRefreshIndicator(child: getBody(context))),
-    );
+        )),
+        body: Padding(
+                padding: EdgeInsets.only(
+                    bottom: Platform.isIOS ? 64.0 : 32.0, right: 8.0, left: 8.0, top: 4.0),
+                child: CardWidget(child: getBody(context))));
   }
 
   Widget getBody(BuildContext context) {
-    if (areOnlySpaceInvitations(spaces, invitations)) {
-      return getInvitationList(context);
+    if (areOnlySpaceInvitations(widget.spaces, widget.invitations)) {
+      return getInvitationList();
     }
-    if (areOnlySpaces(spaces, invitations)) return getSpaceList(context);
+    if (areOnlySpaces(widget.spaces, widget.invitations)) {
+      return getSpaceList();
+    }
 
-    return TabBarView(
+    return Column(
       children: [
-        getSpaceList(context),
-        getInvitationList(context),
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
+          height: 40,
+          decoration: BoxDecoration(
+            color: secondaryColorDark,
+            border: Border.all(color: const Color(0xFFEEEEEE)),
+            borderRadius: BorderRadius.circular(
+              25.0,
+            ),
+          ),
+          child: TabBar(
+            controller: _tabController,
+            // give the indicator a decoration (color and border radius)
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                25.0,
+              ),
+              color: Colors.white,
+            ),
+            labelColor: primaryColor,
+            unselectedLabelColor: primaryColor,
+
+            tabs: [
+              const Tab(
+                text: 'TUS ESPACIOS',
+              ),
+              Tab(
+                  icon: Badge(
+                      showBadge: widget.invitations.isNotEmpty,
+                      elevation: 0,
+                      badgeColor: primaryColor,
+                      position: const BadgePosition(end: -20),
+                      badgeContent: Text(
+                        widget.invitations.length.toString(),
+                        style: const TextStyle(
+                            fontSize: 10.0, color: Colors.white),
+                      ),
+                      child: const Text('INVITACIONES'))),
+            ],
+          ),
+        ),
+        // tab bar view here
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              getSpaceList(),
+              getInvitationList(),
+            ],
+          ),
+        ),
       ],
     );
   }
 
-  Widget getSpaceList(BuildContext context) {
-    return SpaceListWidget<SpaceView>(
-      spaces: spaces,
+  Widget getSpaceList() {
+    return CacheRefreshIndicator(
+            child: SpaceListWidget<SpaceView>(
+      spaces: widget.spaces,
       getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
       onSpaceTab: (spaceView) async {
         await goToSpaceDetails(spaceView);
       },
-    );
+    ));
   }
 
-  Widget getInvitationList(BuildContext context) {
-    return SpaceListWidget<InvitationView>(
-      spaces: invitations,
+  Widget getInvitationList() {
+    return CacheRefreshIndicator(
+            child: SpaceListWidget<InvitationView>(
+      spaces: widget.invitations,
       getSubtitle: (invitationView) =>
-          'Fecha de expiración: ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
+          'Expira el ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
       onSpaceTab: (invitationView) {
         Navigator.pushNamed(context, Routes.spaceInvitation,
             arguments: invitationView);
       },
-    );
+    ));
   }
 
-  Widget getTitle() {
-    if (areOnlySpaceInvitations(spaces, invitations)) {
+    Widget getTitle() {
+    if (areOnlySpaceInvitations(widget.spaces, widget.invitations)) {
       return const Text('Tus Invitaciones');
     }
 
-    if (areOnlySpaces(spaces, invitations)) return const Text('Tus Espacios');
+    if (areOnlySpaces(widget.spaces, widget.invitations)) return const Text('Tus Espacios');
 
-    return const Text('Demos');
-  }
-
-  PreferredSizeWidget? getSpacesTabBar() {
-    if (requiresTabBar(spaces, invitations)) {
-      return TabBar(
-        tabs: [
-          const Tab(icon: Text('Espacios')),
-          Tab(
-              icon: Badge(
-                  showBadge: invitations.isNotEmpty,
-                  elevation: 0,
-                  position: const BadgePosition(end: -28),
-                  badgeContent: Text('${invitations.length}'),
-                  child: const Text('Invitaciones'))),
-        ],
-      );
-    }
-    return null;
+    return const Text('Demos', textAlign: TextAlign.left,);
   }
 }
