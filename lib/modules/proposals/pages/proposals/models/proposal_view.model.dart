@@ -190,7 +190,8 @@ class MultipleOptionsOptionMapper implements OptionMapper {
         .toList();
   }
 
-  String? _getWinnerOptionId(List<ProposalVote> votes,  List<ManifestoOptionView> manifestoOptions) {
+  String? _getWinnerOptionId(
+      List<ProposalVote> votes, List<ManifestoOptionView> manifestoOptions) {
     final Map<String, int> votesCounter = {};
     votes.where((o) => o.manifestoOptionId != null).forEach((o) {
       votesCounter[o.manifestoOptionId!] =
@@ -201,15 +202,16 @@ class MultipleOptionsOptionMapper implements OptionMapper {
 
     final List<MapEntry<String, int>> votesCounterList =
         votesCounter.entries.map<MapEntry<String, int>>((e) => e).toList();
-    if (votesCounterList.isNotEmpty && votesCounterList.length == manifestoOptions.length) {
+    if (votesCounterList.isNotEmpty &&
+        votesCounterList.length == manifestoOptions.length) {
       final firstCount = votesCounterList.first.value;
       if (votesCounterList.every((v) => v.value == firstCount)) {
         return null;
       }
-
-      votesCounterList.sort((a, b) => a.value.compareTo(b.value));
     }
 
-    return votesCounterList.isNotEmpty ? votesCounterList.first.key : null;
+    votesCounterList.sort((a, b) => a.value.compareTo(b.value));
+
+    return votesCounterList.isNotEmpty ? votesCounterList.last.key : null;
   }
 }
