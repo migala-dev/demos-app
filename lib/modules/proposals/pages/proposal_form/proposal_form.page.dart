@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/interfaces/proposal_form_config.interface.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
@@ -48,12 +50,13 @@ class _ProposalFormScreenState extends State<ProposalFormScreen> {
           onWillPop: () => onWillPop(formConfig),
           child: Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: AppBar(title: Text(formConfig.formTitle)),
+            appBar: AppBar(centerTitle: false, title: Text(formConfig.formTitle)),
             body: LayoutBuilder(
               builder: (context, constraints) => ConstrainedBox(
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: IntrinsicHeight(
                   child: Container(
+                    padding: EdgeInsets.only(bottom: Platform.isIOS ? 20.0  : 0),
                       margin: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 12.0),
                       child: Column(

@@ -40,13 +40,15 @@ class InformationTile extends StatelessWidget {
       margin: const EdgeInsets.only(top: 16),
       child: ListTile(
         leading: picture,
-        title: Text(
+        title: Container(
+          margin: const EdgeInsets.only(top: 12.0),
+          child: Text(
           name,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,
             color: primaryColor,
-          ),
+          )),
         ),
         subtitle: Text(
           subtitle,
@@ -56,7 +58,7 @@ class InformationTile extends StatelessWidget {
             const VisualDensity(vertical: VisualDensity.maximumDensity),
         minVerticalPadding: 16,
         onTap: onTap,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 28),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16),
         horizontalTitleGap: 16,
       ),
     );
