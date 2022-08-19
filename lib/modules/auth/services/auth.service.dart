@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/app_initializer.dart';
 import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:demos_app/core/models/user.model.dart';
@@ -79,9 +80,8 @@ class AuthService {
 
     await GeneralSpaceService().getUserSpaces();
 
-    createWebSocketConnection(response.user);
-
     CacheService().getCache();
+    AppInitializer().initBasicComponentApp(response.user!.userId);
 
     return response.user;
   }
@@ -106,12 +106,11 @@ class AuthService {
     }
   }
 
-  void createWebSocketConnection(User? user) {
-    WebSocketService webSocketService = WebSocketService();
-    webSocketService.createConnection(user!.userId);
-  }
-
   String? getPhoneNumber() {
     return _phoneNumber;
+  }
+
+  void saveUserDevice(String deviceId) {
+    AuthApi().saveUserDevice(deviceId);
   }
 }

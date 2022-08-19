@@ -22,4 +22,6 @@ class RequestBehavior {
   late bool showLoading;
 
   RequestBehavior({ this.showError = true, this.showLoading = true });
+
+  RequestBehavior.hideLoading({ this.showError = true, this.showLoading = false });
 }

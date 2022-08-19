@@ -41,16 +41,21 @@ class AppInitializer {
     final String? currentUserId = await CurrentUserStorage().getCurrentUserId();
 
     if (!isAlreadyInitialize && userIsAuthenticate && currentUserId != null) {
-      WebSocketService webSocketService = WebSocketService();
-      webSocketService.createConnection(currentUserId);
       await TokenService().refreshTokens();
       await CacheService().getCache();
+      await initBasicComponentApp(currentUserId);
+    }
+  }
+
+  Future<void> initBasicComponentApp(String currentUserId) async {
+      WebSocketService webSocketService = WebSocketService();
+      webSocketService.createConnection(currentUserId);
       await UserPrivateKey(currentUserId).generatePrivateKey();
       isAlreadyInitialize = true;
       await Firebase.initializeApp();
       _initializeNotifications();
-    }
   }
+
 
   void disconnectWebsocket() {
     WebSocketService webSocketService = WebSocketService();

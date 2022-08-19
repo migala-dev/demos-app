@@ -39,6 +39,10 @@ class ApiPath {
     return '${_getAuthPath()}/refresh-tokens';
   }
 
+  String getUserDevicePath() {
+    return '${_getAuthPath()}/user-device';
+  }
+
   //  Users paths
   String getUserPath() {
     Enviroment enviroment = getEnviroment();

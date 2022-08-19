@@ -1,4 +1,5 @@
 
+import 'package:demos_app/modules/auth/services/auth.service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -10,22 +11,20 @@ class PushNotificationService {
   PushNotificationService(this.flutterLocalNotificationsPlugin, this.channel);
 
   Future initialise() async {
+    saveUserDevice();
+    startOnMessageListener();
+    startOnMessageOpenedAppListener();
+  }
 
-    // If you want to test the push notification locally,
-    // you need to get the token and input to the Firebase console
-    // https://console.firebase.google.com/project/YOUR_PROJECT_ID/notification/compose
-    String? token = await FirebaseMessaging.instance.getToken();
-    print("FirebaseMessaging token: $token");
+  Future<void> saveUserDevice() async {
+    String? deviceId = await FirebaseMessaging.instance.getToken();
+    if (deviceId != null) {
+      AuthService().saveUserDevice(deviceId);
+    }
+  }
 
-      FirebaseMessaging.instance
-        .getInitialMessage()
-        .then((RemoteMessage? message) {
-      if (message != null) {
-       print(message);
-      }
-    });
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  void startOnMessageListener() {
+ FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
       if (notification != null && android != null && !kIsWeb) {
@@ -38,15 +37,15 @@ class PushNotificationService {
               channel.id,
               channel.name,
               channelDescription: channel.description,
-              // TODO add a proper drawable resource to android, for now using
-              //      one that already exists in example app.
-              icon: 'launch_background',
+              icon: 'demos'
             ),
           ),
         );
       }
     });
+  }
 
+  void startOnMessageOpenedAppListener() {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published!');
     });

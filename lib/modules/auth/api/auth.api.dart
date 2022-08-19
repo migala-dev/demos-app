@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/themes/cubit/request_behavior.dart';
 import 'package:demos_app/constans/api_path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/modules/auth/models/verify_code_response.model.dart';
@@ -54,5 +55,13 @@ class AuthApi {
     VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
 
     return response;
+  }
+
+  Future<void> saveUserDevice(String deviceId) async {
+    String endpoint = ApiPath().getUserDevicePath();
+    Object params = {
+      'deviceId': deviceId
+    };
+    await Api.post(endpoint, params, RequestBehavior.hideLoading());
   }
 }
