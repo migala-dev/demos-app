@@ -48,7 +48,7 @@ class NewProposalFormConfig implements ProposalFormConfig {
 
   @override
   Future<bool> openOnWillPopDialog(BuildContext context) async {
-    const String title = '¿Deseas guardar esta propuesta como borrador?';
+    const String title = '¿Deseas guardar el borrador?';
 
     final List<DialogOption> options = [
       DialogOption(label: 'Guardar', onPressed: saveDraft, isPrimary: true),

@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
@@ -67,6 +69,7 @@ class _InvitationsScreenState extends State<InvitationsScreen>
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
+        centerTitle: false,
         title: appBarTitle(),
       ),
       body: getBody(),
@@ -139,7 +142,7 @@ class _InvitationsScreenState extends State<InvitationsScreen>
               isLoading: isLoading,
             )),
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
-        margin: const EdgeInsets.only(bottom: 12.0),
+        margin: EdgeInsets.only(bottom: Platform.isIOS ? 32.0 : 12.0),
       )
     ]);
   }

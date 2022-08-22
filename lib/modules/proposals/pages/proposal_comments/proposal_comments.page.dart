@@ -17,6 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/config/routes/application.dart';
 import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
@@ -80,6 +82,7 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: const Text('Comentarios'),
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
@@ -134,14 +137,16 @@ class _ProposalCommentsPageState extends State<ProposalCommentsPage> {
             );
           }
 
-          return Column(
+          return Container(
+            padding: EdgeInsets.only(bottom: Platform.isIOS ? 20.0 : 0),
+            child: Column(
             children: const [
               Expanded(
                   child: CacheRefreshIndicator(
                       child: CommentsEmptyAlert(), heightAdjustment: 135)),
               InputComment()
             ],
-          );
+          ));
         },
       ),
     );

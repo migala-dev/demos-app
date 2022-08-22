@@ -19,6 +19,7 @@
 
 import 'dart:io';
 
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +89,7 @@ AlertDialog _showAndroidAlertDialog(
                         option.label,
                         textAlign: TextAlign.center,
                         style:
-                            const TextStyle(color: Colors.blue, fontSize: 14.0),
+                            const TextStyle(color: primaryColor, fontSize: 14.0),
                       )),
                   onTap: () {
                     option.onPressed();
@@ -106,35 +107,33 @@ CupertinoAlertDialog _showIOSAlertDialog(
     BuildContext context, String title, List<DialogOption> options) {
   return CupertinoAlertDialog(
     content: SizedBox(
-      height: 232,
+      height: 20 + options.length * 70,
       child: Column(
         children: [
           Text(
             title,
-            style: const TextStyle(fontSize: 22),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 20),
           Column(children: [
             ...options.map((option) {
               if (option.isPrimary) {
                 return CupertinoButton(
-                    color: Colors.blue,
+                    color: primaryColor,
                     onPressed: () {
                       option.onPressed();
-                      Navigator.pop(context);
+                      Navigator.pop(context, option);
                     },
-                    child: const Text('Publicar'));
+                    child: Text(option.label));
               }
               return CupertinoButton(
                   onPressed: () {
                     option.onPressed();
-                    Navigator.pop(context);
+                    Navigator.pop(context, option);
                   },
-                  child: const Text('Guardar como borrador'));
+                  child: Text(option.label, style: 
+                            const TextStyle(color: primaryColor, fontSize: 18.0),));
             }),
-            CupertinoButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancelar')),
           ])
         ],
       ),

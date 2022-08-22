@@ -109,7 +109,7 @@ class MemberComment extends StatelessWidget {
                 enableReplies && !commentIsDeleted
                     ? ReplyButton(onTap: onReplied)
                     : Container(),
-                commentIsDeleted
+                commentIsDeleted || comment.member == null
                     ? Container()
                     : SafeWidgetValidator(
                         validators: [
