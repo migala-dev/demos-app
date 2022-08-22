@@ -4,7 +4,7 @@ import 'package:validators/validators.dart';
 class CommentMentionPreprocessorService {
   static const String mentionPattern = '@member@';
 
-  static List<CommentPart> split(String comment) {
+  static List<CommentPart> splitCommentByMentions(String comment) {
     final commentSplited = comment.split(mentionPattern);
 
     return commentSplited
@@ -12,16 +12,18 @@ class CommentMentionPreprocessorService {
         .toList();
   }
 
-  static String addMentionToStart(String uuid, String str) {
-    if (!isUUID(uuid)) {
+  static String appendMentionAtBeginigOfTheMessage(
+      String memberId, String str) {
+    if (!isUUID(memberId)) {
       throw Exception('uuid is not valid');
     }
 
-    return '$mentionPattern$uuid$mentionPattern $str';
+    return '$mentionPattern$memberId$mentionPattern $str';
   }
 
   static String deleteMentions(String comment) {
-    final commentParts = split(comment).where((part) => !part.isMention);
+    final commentParts =
+        splitCommentByMentions(comment).where((part) => !part.isMention);
 
     return commentParts.map((part) => part.content).join();
   }

@@ -40,6 +40,6 @@ class CommentReplyCubit extends Cubit<CommentReplyState> {
     emit(CommentReplyState(comment,
         commentParentId: manifestoCommentParentId,
         isReplying: true,
-        addMention: addMention));
+        isReplyingASubComment: addMention));
   }
 }

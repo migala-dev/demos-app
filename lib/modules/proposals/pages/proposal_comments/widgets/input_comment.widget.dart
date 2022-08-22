@@ -163,13 +163,13 @@ class _InputCommentState extends State<InputComment> {
     final manifestoCommentParentId = commentReplyCubit.state.commentParentId!;
     final memberIdReplied =
         commentReplyCubit.state.commentReplied!.member!.memberId!;
-    final addMention = commentReplyCubit.state.addMention;
+    final isReplyingASubComment = commentReplyCubit.state.isReplyingASubComment;
 
     clearKeyboardInput();
     commentReplyCubit.cancelReply();
 
-    final processedContent = addMention
-        ? CommentMentionPreprocessorService.addMentionToStart(
+    final processedContent = isReplyingASubComment
+        ? CommentMentionPreprocessorService.appendMentionAtBeginigOfTheMessage(
             memberIdReplied, content)
         : content;
 

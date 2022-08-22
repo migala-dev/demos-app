@@ -16,7 +16,8 @@ class MemeberCommentContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final commentParts =
-        CommentMentionPreprocessorService.split(comment.content);
+        CommentMentionPreprocessorService.splitCommentByMentions(
+            comment.content);
     final hasMention = commentParts.any((part) => part.isMention);
 
     if (hasMention) {

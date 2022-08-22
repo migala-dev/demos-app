@@ -14,7 +14,7 @@ class MentionTile extends StatelessWidget {
     final width = pictureProfileWidth + (member.displayName.length * 10);
     return Container(
       height: 25,
-      width: width + 0.0,
+      width: width,
       padding: const EdgeInsets.symmetric(horizontal: 5),
       margin: const EdgeInsets.only(left: 5),
       decoration: BoxDecoration(

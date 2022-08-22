@@ -24,13 +24,13 @@ class CommentReplyState extends Equatable {
   final CommentView? commentReplied;
 
   final bool isReplying;
-  final bool addMention;
+  final bool isReplyingASubComment;
 
   const CommentReplyState(
     this.commentReplied, {
     this.commentParentId,
     this.isReplying = false,
-    this.addMention = false,
+    this.isReplyingASubComment = false,
   });
 
   factory CommentReplyState.empy() => const CommentReplyState(null);
@@ -39,6 +39,6 @@ class CommentReplyState extends Equatable {
   List<Object> get props => [
         isReplying,
         commentReplied != null ? commentReplied!.content : '',
-        addMention
+        isReplyingASubComment
       ];
 }
