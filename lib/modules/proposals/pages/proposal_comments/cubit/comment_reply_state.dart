@@ -33,7 +33,7 @@ class CommentReplyState extends Equatable {
     this.isReplyingASubComment = false,
   });
 
-  factory CommentReplyState.empy() => const CommentReplyState(null);
+  factory CommentReplyState.empty() => const CommentReplyState(null);
 
   @override
   List<Object> get props => [
