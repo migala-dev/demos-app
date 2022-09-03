@@ -55,6 +55,17 @@ class ProposalsPage extends StatelessWidget {
         ProposalViewList? proposalViewList =
             state is ProposalViewListWithData ? state.proposalViewList : null;
 
+        List<BottomNavigationBarItem> bottomNavigationBarItems = const [
+          BottomNavigationBarItem(
+            icon: Icon(DemosIcons.proposal),
+            label: 'Propuestas',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(DemosIcons.notes_outlined),
+            label: 'Sugerencias',
+          ),
+        ];
+
         return Scaffold(
           floatingActionButton: SafeWidgetMemberValidator(
             roles: const [SpaceRole.representative],
@@ -68,16 +79,7 @@ class ProposalsPage extends StatelessWidget {
                 const BorderRadius.only(topRight: Radius.circular(24)),
             child: BottomNavigationBar(
               backgroundColor: primaryColorLight,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(DemosIcons.proposal),
-                  label: 'Propuestas',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(DemosIcons.notes_outlined),
-                  label: 'Sugerencias',
-                )
-              ],
+              items: bottomNavigationBarItems,
             ),
           ),
           body: state is ProposalViewListEmpty
