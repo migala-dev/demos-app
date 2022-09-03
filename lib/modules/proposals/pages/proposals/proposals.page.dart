@@ -17,7 +17,9 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/routes/routes.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
@@ -59,6 +61,23 @@ class ProposalsPage extends StatelessWidget {
             child: FloatingActionButton(
               child: const Icon(Icons.how_to_vote),
               onPressed: () => goToNewProposal(context),
+            ),
+          ),
+          bottomNavigationBar: ClipRRect(
+            borderRadius:
+                const BorderRadius.only(topRight: Radius.circular(24)),
+            child: BottomNavigationBar(
+              backgroundColor: primaryColorLight,
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(DemosIcons.proposal),
+                  label: 'Propuestas',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(DemosIcons.notes_outlined),
+                  label: 'Sugerencias',
+                )
+              ],
             ),
           ),
           body: state is ProposalViewListEmpty
