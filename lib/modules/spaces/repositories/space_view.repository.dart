@@ -37,7 +37,8 @@ class SpaceViewsRepository extends AppRepository {
   String colDescription = SpacesRepository().colDescription;
   String colPictureKey = SpacesRepository().colPictureKey;
   String colApprovalPercentage = SpacesRepository().colApprovalPercentage;
-  String colParticipationPercentage = SpacesRepository().colParticipationPercentage;
+  String colParticipationPercentage =
+      SpacesRepository().colParticipationPercentage;
   String colInvitationStatus = MembersRepository().colInvitationStatus;
   String colCreatedAt = MembersRepository().colCreatedAt;
   String colUserId = MembersRepository().colUserId;
@@ -89,12 +90,13 @@ class SpaceViewsRepository extends AppRepository {
 
     final spaceList = result.map((row) => SpaceView.fromObject(row)).toList();
 
-    spaceList.sort(((a, b) => b.lastActivityDate.compareTo(a.lastActivityDate)));
-    
+    spaceList
+        .sort(((a, b) => b.lastActivityDate.compareTo(a.lastActivityDate)));
+
     return spaceList;
   }
 
-    String _getSelectOneSpaceBySpaceIdQuery(String spaceId) => '''
+  String _getSelectOneSpaceBySpaceIdQuery(String spaceId) => '''
       ${_getSelectSpacesQuery()}
       WHERE $colInvitationStatus = ${InvitationStatus.accepted.index} AND $tblSpaces.$colSpaceId  = '$spaceId' AND $colDeleted = 0
       LIMIT 1
@@ -107,5 +109,30 @@ class SpaceViewsRepository extends AppRepository {
     final result = await db!.rawQuery(query);
 
     return SpaceView.fromObject(result.first);
+  }
+
+  String _getMembersCountBySpaceIdQuery(String spaceId) => '''
+           SELECT 
+           (
+          select count(*) from $tblMembers
+          where $tblMembers.$colSpaceId = $tblSpaces.$colSpaceId 
+            AND $colInvitationStatus = ${InvitationStatus.accepted.index} 
+            AND $colDeleted = 0
+        ) as "membersCount"
+      FROM $tblSpaces
+      INNER
+        JOIN $tblMembers ON 
+            $tblSpaces.$colSpaceId = $tblMembers.$colSpaceId
+      WHERE $colInvitationStatus = ${InvitationStatus.accepted.index} AND $tblSpaces.$colSpaceId  = '$spaceId' AND $colDeleted = 0
+      LIMIT 1
+    ''';
+
+  Future<int> getMembersCount(String spaceId) async {
+    Database? db = await this.db;
+
+    final query = _getMembersCountBySpaceIdQuery(spaceId);
+    final result = await db!.rawQuery(query);
+    Object? membersCount = result.first['membersCount'];
+    return membersCount != null ? int.parse(membersCount.toString()) : 0;
   }
 }

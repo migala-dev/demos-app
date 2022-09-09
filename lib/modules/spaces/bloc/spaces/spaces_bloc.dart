@@ -32,16 +32,31 @@ class SpacesBloc extends Bloc<SpacesEvent, SpacesState> {
   static final _spacesBloc = SpacesBloc._internal();
   SpacesBloc._internal() : super(LoadingSpaces()) {
     on<LoadSpacesEvent>(_onLoadSpaces);
+    on<UpdateSpacesMemberCountEvent>(_onMembersCountUpdate);
   }
   factory SpacesBloc() => _spacesBloc;
 
   FutureOr<void> _onLoadSpaces(
       SpacesEvent event, Emitter<SpacesState> emit) async {
-    final spaceService = SpaceService();
+    final spaces = await SpaceService().getSpaces();
+    final invitations = await SpaceService().getInvitations();
 
-    final spacesStored = await spaceService.getSpaces();
-    final invitationsStored = await spaceService.getInvitations();
-
-    emit(SpacesState(spaces: spacesStored, invitations: invitationsStored));
+    emit(SpacesState(spaces: spaces, invitations: invitations));
   }
+
+  Future<void> _onMembersCountUpdate(
+      UpdateSpacesMemberCountEvent event, Emitter<SpacesState> emit) async {
+
+        int membersCount = await SpaceService().getMembersCount(event.spaceId);
+
+        List<SpaceView> spaces = state.spaces.map((space) {
+          if (space.spaceId == event.spaceId) {
+            space.membersCount = membersCount;
+            return SpaceView.fromCopy(space);
+          }
+          return space;
+        }).toList();
+
+        emit(SpacesState(spaces: spaces, invitations: state.invitations));
+      }
 }
