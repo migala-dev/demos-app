@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/modules/spaces/space.screen.dart';
+import 'package:demos_app/modules/spaces/space_navigation_and_pages.screen.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,7 +51,7 @@ class SpaceDetailsScreen extends StatelessWidget {
                   ),
                   onTap: () => goToSpaceSettings(context),
                 )),
-            body: const SpaceScreen(),
+            body: const SpaceNavigationAndPagesScreen(),
           );
         });
   }
