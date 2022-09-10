@@ -96,6 +96,9 @@ class UpdateMemberEvent implements EventHandler {
           }
         }
       }
+
+    SpacesBloc().add(UpdateSpacesMemberCountEvent(spaceId));
+
     } catch (err) {
       if (err != UserIsNotMemberError()) {
         rethrow;

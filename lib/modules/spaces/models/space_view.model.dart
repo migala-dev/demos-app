@@ -24,7 +24,7 @@ class SpaceView {
   final String? description;
   final int participationPercentage;
   final int approvalPercentage;
-  final int membersCount;
+  int membersCount;
   final String createdAt;
   final String proposalsLastUpdatedDate;
   final String manifestoLastUpdatedDate;
@@ -36,10 +36,10 @@ class SpaceView {
     }
     if (manifestoLastUpdatedDate.isNotEmpty) {
       dates.add(DateTime.parse(manifestoLastUpdatedDate));
-    } 
+    }
     dates.sort((a, b) => b.compareTo(a));
     return dates.first;
-  } 
+  }
 
   SpaceView(
       {required this.spaceId,
@@ -77,4 +77,15 @@ class SpaceView {
       this.proposalsLastUpdatedDate = '',
       this.manifestoLastUpdatedDate = ''});
 
+  factory SpaceView.fromCopy(SpaceView space) => SpaceView(
+      spaceId: space.spaceId,
+      name: space.name,
+      pictureKey: space.pictureKey,
+      membersCount: space.membersCount,
+      description: space.description,
+      approvalPercentage: space.approvalPercentage,
+      participationPercentage: space.participationPercentage,
+      createdAt: space.createdAt,
+      proposalsLastUpdatedDate: space.proposalsLastUpdatedDate,
+      manifestoLastUpdatedDate: space.manifestoLastUpdatedDate);
 }
