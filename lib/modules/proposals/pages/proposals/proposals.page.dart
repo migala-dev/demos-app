@@ -24,6 +24,9 @@ import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_nav
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposals_list.widget.dart';
 import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'bloc/proposal_view_list_bloc.dart';
 
 class ProposalsPage extends StatelessWidget {
   const ProposalsPage({
@@ -37,25 +40,29 @@ class ProposalsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: state is ProposalViewListEmpty
-          ? CacheRefreshIndicator(child: Center(child: NoProposals()))
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: ProposalsNavigationMenu(
-                    optionSelected: proposalViewList!,
+    return BlocBuilder<ProposalViewListBloc, ProposalViewListState>(
+        bloc: ProposalViewListBloc(),
+        builder: (context, state) {
+          return Container(
+            child: state is ProposalViewListEmpty
+                ? CacheRefreshIndicator(child: Center(child: NoProposals()))
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: ProposalsNavigationMenu(
+                          optionSelected: proposalViewList!,
+                        ),
+                      ),
+                      Expanded(
+                        child: ProposalsListWidget(
+                          proposalViewList: proposalViewList!,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                Expanded(
-                  child: ProposalsListWidget(
-                    proposalViewList: proposalViewList!,
-                  ),
-                )
-              ],
-            ),
-    );
+          );
+        });
   }
 }
