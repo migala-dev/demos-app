@@ -29,40 +29,41 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/proposal_view_list_bloc.dart';
 
 class ProposalsPage extends StatelessWidget {
-  const ProposalsPage({
-    Key? key,
-    required this.proposalViewList,
-    required this.state,
-  }) : super(key: key);
-
-  final ProposalViewList? proposalViewList;
-  final ProposalViewListState state;
+  const ProposalsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProposalViewListBloc, ProposalViewListState>(
-        bloc: ProposalViewListBloc(),
-        builder: (context, state) {
-          return Container(
-            child: state is ProposalViewListEmpty
-                ? CacheRefreshIndicator(child: Center(child: NoProposals()))
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: ProposalsNavigationMenu(
-                          optionSelected: proposalViewList!,
-                        ),
+      bloc: ProposalViewListBloc(),
+      builder: (context, state) {
+        if (state is ProposalViewListLoadingInProgress) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final ProposalViewList? proposalViewList =
+            state is ProposalViewListWithData ? state.proposalViewList : null;
+
+        return Container(
+          child: state is ProposalViewListEmpty
+              ? CacheRefreshIndicator(child: Center(child: NoProposals()))
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: ProposalsNavigationMenu(
+                        optionSelected: proposalViewList!,
                       ),
-                      Expanded(
-                        child: ProposalsListWidget(
-                          proposalViewList: proposalViewList!,
-                        ),
-                      )
-                    ],
-                  ),
-          );
-        });
+                    ),
+                    Expanded(
+                      child: ProposalsListWidget(
+                        proposalViewList: proposalViewList,
+                      ),
+                    )
+                  ],
+                ),
+        );
+      },
+    );
   }
 }

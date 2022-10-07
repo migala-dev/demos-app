@@ -25,15 +25,73 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_fo
 import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/proposals.page.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
 import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/modules/suggestions/suggestions.page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_state.dart';
 
-enum SpaceTab { proposalsTab, suggestionsTab }
+abstract class SpaceTab {
+  Widget getBody();
+  Widget getFloatingActionButton(BuildContext context);
+  BottomNavigationBarItem getBarItem();
+}
+
+class ProposalSpaceTab implements SpaceTab {
+  void _goToProposal(BuildContext context) {
+    ProposalFormBloc()
+        .add(ProposalFormSetProposalFormView(ProposalFormView.empty()));
+    Navigator.pushNamed(context, Routes.proposalForm);
+  }
+
+  @override
+  Widget getBody() => const ProposalsPage();
+
+  @override
+  Widget getFloatingActionButton(BuildContext context) {
+    return SafeWidgetMemberValidator(
+      roles: const [SpaceRole.representative],
+      child: FloatingActionButton(
+        child: const Icon(DemosIcons.add_proposal, color: primaryColor),
+        onPressed: () => _goToProposal(context),
+      ),
+    );
+  }
+
+  @override
+  BottomNavigationBarItem getBarItem() {
+    return const BottomNavigationBarItem(
+      label: 'Propuestas',
+      icon: Icon(DemosIcons.home),
+    );
+  }
+}
+
+class SuggestionSpaceTab implements SpaceTab {
+  void _goToSuggestion(BuildContext context) {
+    Navigator.pushNamed(context, Routes.proposalForm);
+  }
+
+  @override
+  Widget getBody() => const SuggestionPage();
+
+  @override
+  Widget getFloatingActionButton(BuildContext context) {
+    return SafeWidgetMemberValidator(
+      roles: const [SpaceRole.worker, SpaceRole.admin],
+      child: FloatingActionButton(
+        child: const Icon(DemosIcons.add_proposal, color: primaryColor),
+        onPressed: () => _goToSuggestion(context),
+      ),
+    );
+  }
+
+  @override
+  BottomNavigationBarItem getBarItem() {
+    return const BottomNavigationBarItem(
+      icon: Icon(DemosIcons.notes_outlined),
+      label: 'Sugerencias',
+    );
+  }
+}
 
 class SpaceNavigationAndPagesScreen extends StatefulWidget {
   const SpaceNavigationAndPagesScreen({Key? key}) : super(key: key);
@@ -45,87 +103,25 @@ class SpaceNavigationAndPagesScreen extends StatefulWidget {
 
 class _SpaceNavigationAndPagesScreenState
     extends State<SpaceNavigationAndPagesScreen> {
-  SpaceTab selectedTab = SpaceTab.proposalsTab;
+  int selectedTab = 0;
+  List<SpaceTab> spaceTabs = [ProposalSpaceTab(), SuggestionSpaceTab()];
 
-  void goToProposal(BuildContext context) {
-    ProposalFormBloc()
-        .add(ProposalFormSetProposalFormView(ProposalFormView.empty()));
-    Navigator.pushNamed(context, Routes.proposalForm);
-  }
-
-  void goToSuggestion(BuildContext context) {
-    Navigator.pushNamed(context, Routes.proposalForm);
-  }
+  SpaceTab get currentTab => spaceTabs[selectedTab];
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProposalViewListBloc, ProposalViewListState>(
-      bloc: ProposalViewListBloc(),
-      builder: (context, state) {
-        if (state is ProposalViewListLoadingInProgress) {
-          return const Center(child: CircularProgressIndicator());
-        }
-
-        final ProposalViewList? proposalViewList =
-            state is ProposalViewListWithData ? state.proposalViewList : null;
-
-        const List<BottomNavigationBarItem> barItems = [
-          BottomNavigationBarItem(
-            label: 'Propuestas',
-            icon: Icon(DemosIcons.home),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(DemosIcons.notes_outlined),
-            label: 'Sugerencias',
-          ),
-        ];
-
-        final Map<SpaceTab, Widget> tabs = {
-          SpaceTab.proposalsTab:
-              ProposalsPage(proposalViewList: proposalViewList, state: state),
-          SpaceTab.suggestionsTab: const SuggestionPage(),
-        };
-
-        final Map<SpaceTab, Widget> floatingActionsButtons = {
-          SpaceTab.proposalsTab: SafeWidgetMemberValidator(
-            roles: const [SpaceRole.representative],
-            child: FloatingActionButton(
-              child: const Icon(DemosIcons.add_proposal, color: primaryColor),
-              onPressed: () => goToProposal(context),
-            ),
-          ),
-          SpaceTab.suggestionsTab: SafeWidgetMemberValidator(
-            roles: const [SpaceRole.worker, SpaceRole.admin],
-            child: FloatingActionButton(
-              child: const Icon(DemosIcons.add_proposal, color: primaryColor),
-              onPressed: () => goToSuggestion(context),
-            ),
-          )
-        };
-
-        Widget getBody() => tabs[selectedTab]!;
-
-        Widget getFloatingActionButton() =>
-            floatingActionsButtons[selectedTab]!;
-
-        void onItemTapped(int index) =>
-            setState(() => selectedTab = SpaceTab.values[index]);
-
-        return Scaffold(
-          floatingActionButton: getFloatingActionButton(),
-          body: getBody(),
-          bottomNavigationBar: ClipRRect(
-            borderRadius:
-                const BorderRadius.only(topRight: Radius.circular(24)),
-            child: BottomNavigationBar(
-              backgroundColor: primaryColorLight,
-              currentIndex: selectedTab.index,
-              onTap: onItemTapped,
-              items: barItems,
-            ),
-          ),
-        );
-      },
+    return Scaffold(
+      floatingActionButton: currentTab.getFloatingActionButton(context),
+      body: currentTab.getBody(),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(topRight: Radius.circular(24)),
+        child: BottomNavigationBar(
+          backgroundColor: primaryColorLight,
+          currentIndex: selectedTab,
+          onTap: (int index) => setState(() => selectedTab = index),
+          items: spaceTabs.map((t) => t.getBarItem()).toList(),
+        ),
+      ),
     );
   }
 }
