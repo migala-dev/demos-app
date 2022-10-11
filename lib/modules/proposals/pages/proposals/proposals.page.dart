@@ -17,29 +17,19 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/config/routes/routes.dart';
-import 'package:demos_app/core/enums/space_role.enum.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form.bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/bloc/proposal_form_bloc.events.dart';
-import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_form_view.model.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_state.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/no_proposals.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/models/proposal_list.interface.dart';
+import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/proposals_navigation_menu.widget.dart';
 import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposals_list.widget.dart';
-import 'package:demos_app/modules/spaces/widgets/safe_member_validator.widget.dart';
 import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_bloc.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/bloc/proposal_view_list_state.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/no_proposals.widget.dart';
-import 'package:demos_app/modules/proposals/pages/proposals/widgets/proposal_navigation_menu/proposals_navigation_menu.widget.dart';
+
+import 'bloc/proposal_view_list_bloc.dart';
 
 class ProposalsPage extends StatelessWidget {
   const ProposalsPage({Key? key}) : super(key: key);
-  void goToNewProposal(BuildContext context) {
-    ProposalFormBloc()
-        .add(ProposalFormSetProposalFormView(ProposalFormView.empty()));
-    Navigator.pushNamed(context, Routes.proposalForm);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,23 +40,12 @@ class ProposalsPage extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        ProposalViewList? proposalViewList =
+        final ProposalViewList? proposalViewList =
             state is ProposalViewListWithData ? state.proposalViewList : null;
 
-        return Scaffold(
-          floatingActionButton: SafeWidgetMemberValidator(
-            roles: const [SpaceRole.representative],
-            child: FloatingActionButton(
-              child: const Icon(Icons.how_to_vote),
-              onPressed: () => goToNewProposal(context),
-            ),
-          ),
-          body: state is ProposalViewListEmpty
-              ? CacheRefreshIndicator(
-                  child: Center(
-                    child: NoProposals(),
-                  ),
-                )
+        return Container(
+          child: state is ProposalViewListEmpty
+              ? CacheRefreshIndicator(child: Center(child: NoProposals()))
               : Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -80,7 +59,7 @@ class ProposalsPage extends StatelessWidget {
                       child: ProposalsListWidget(
                         proposalViewList: proposalViewList,
                       ),
-                    ),
+                    )
                   ],
                 ),
         );
