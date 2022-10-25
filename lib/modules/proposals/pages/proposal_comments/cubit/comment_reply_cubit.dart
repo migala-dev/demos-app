@@ -25,14 +25,21 @@ part 'comment_reply_state.dart';
 
 class CommentReplyCubit extends Cubit<CommentReplyState> {
   static final _commentReplyCubit = CommentReplyCubit._internal();
-  CommentReplyCubit._internal() : super(CommentReplyState.empy());
+  CommentReplyCubit._internal() : super(CommentReplyState.empty());
   factory CommentReplyCubit() => _commentReplyCubit;
 
   void cancelReply() {
-    emit(CommentReplyState.empy());
+    emit(CommentReplyState.empty());
   }
 
-  void setReply(CommentView comment) {
-    emit(CommentReplyState(true, comment));
+  void setReply(
+    CommentView comment, {
+    String? manifestoCommentParentId,
+    bool addMention = false,
+  }) {
+    emit(CommentReplyState(comment,
+        commentParentId: manifestoCommentParentId,
+        isReplying: true,
+        isReplyingASubComment: addMention));
   }
 }

@@ -17,6 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/models/comment_view.model.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/widgets/member_comment.widget.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +40,22 @@ class RepliesListView extends StatelessWidget {
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: MemberComment(
+              enableReplies: true,
+              onReplied: () => replySubComment(
+                  replies[index], replies[index].manifestoCommentParentId!),
               comment: replies[index],
               padding: const EdgeInsets.only(left: 10)),
         ),
       ),
+    );
+  }
+
+  void replySubComment(
+      CommentView commentReplied, String manifestoCommentParentId) {
+    CommentReplyCubit().setReply(
+      commentReplied,
+      manifestoCommentParentId: manifestoCommentParentId,
+      addMention: true,
     );
   }
 }

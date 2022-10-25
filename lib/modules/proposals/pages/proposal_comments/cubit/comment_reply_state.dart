@@ -20,13 +20,25 @@
 part of 'comment_reply_cubit.dart';
 
 class CommentReplyState extends Equatable {
-  final bool isReplying;
+  final String? commentParentId;
   final CommentView? commentReplied;
 
-  const CommentReplyState(this.isReplying, this.commentReplied);
+  final bool isReplying;
+  final bool isReplyingASubComment;
 
-  factory CommentReplyState.empy() => const CommentReplyState(false, null);
+  const CommentReplyState(
+    this.commentReplied, {
+    this.commentParentId,
+    this.isReplying = false,
+    this.isReplyingASubComment = false,
+  });
+
+  factory CommentReplyState.empty() => const CommentReplyState(null);
 
   @override
-  List<Object> get props => [isReplying];
+  List<Object> get props => [
+        isReplying,
+        commentReplied != null ? commentReplied!.content : '',
+        isReplyingASubComment
+      ];
 }

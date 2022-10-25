@@ -20,6 +20,7 @@
 import 'package:demos_app/modules/proposals/pages/proposal_comments/bloc/comment_view_list_bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/cubit/comment_reply_cubit.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment.service.dart';
+import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_mention_preprocessor.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_comments/services/comment_view.service.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details.bloc.dart';
 import 'package:demos_app/modules/proposals/pages/proposal_details/bloc/proposal_details_bloc.events.dart';
@@ -67,6 +68,7 @@ class _InputCommentState extends State<InputComment> {
             builder: (context, state) {
               if (state.isReplying) {
                 final MemberView? member = state.commentReplied!.member;
+                final content = state.commentReplied!.content;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -92,7 +94,8 @@ class _InputCommentState extends State<InputComment> {
                     Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: Text(
-                        state.commentReplied!.content,
+                        CommentMentionPreprocessorService.deleteMentions(
+                            content),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
@@ -155,14 +158,23 @@ class _InputCommentState extends State<InputComment> {
     final content = _contentController.text;
     final spaceId = SpaceBloc().state.spaceId!;
     final manifestoId = ProposalDetailsBloc().state!.manifestoId;
-    final manifestoCommentParentId =
-        CommentReplyCubit().state.commentReplied!.manifestoCommentId;
+
+    final commentReplyCubit = CommentReplyCubit();
+    final manifestoCommentParentId = commentReplyCubit.state.commentParentId!;
+    final memberIdReplied =
+        commentReplyCubit.state.commentReplied!.member!.memberId!;
+    final isReplyingASubComment = commentReplyCubit.state.isReplyingASubComment;
 
     clearKeyboardInput();
-    CommentReplyCubit().cancelReply();
+    commentReplyCubit.cancelReply();
+
+    final processedContent = isReplyingASubComment
+        ? CommentMentionPreprocessorService.appendMentionAtBeginigOfTheMessage(
+            memberIdReplied, content)
+        : content;
 
     final comment = await CommentService().sendCommentReply(
-        content, spaceId, manifestoId, manifestoCommentParentId);
+        processedContent, spaceId, manifestoId, manifestoCommentParentId);
 
     final commentView =
         await CommentViewService().getCommentById(comment.manifestoCommentId);
