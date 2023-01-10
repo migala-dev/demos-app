@@ -32,6 +32,7 @@ import 'package:demos_app/widgets/pages/image_editor.page.dart';
 import 'package:demos_app/widgets/space/space_picture.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class EditSpaceScreen extends StatefulWidget {
@@ -99,6 +100,17 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
                           subtitle: space.description ?? 'Sin descripcion',
                           icon: DemosIcons.info_outlined,
                           onEdit: () => updateSpaceDescription(space),
+                        ),
+                        SafeWidgetValidator(
+                          validators: [IsCurrentUserAdminWidgetValidator()],
+                          child: SpaceField(
+                            title: 'Bot de Telegram',
+                            subtitle: '@demos_notificaciones_bot',
+                            icon: Icons.group,
+                            iconTrailing: Icons.telegram,
+                            onEdit: () => Clipboard.setData(ClipboardData(
+                                text: '/demosLinkSpaceId $space.spaceId')),
+                          ),
                         ),
                       ],
                     ),
