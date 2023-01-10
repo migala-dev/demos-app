@@ -105,7 +105,6 @@ class _SpaceNavigationAndPagesScreenState
     extends State<SpaceNavigationAndPagesScreen> {
   int selectedTab = 0;
   List<SpaceTab> spaceTabs = [ProposalSpaceTab(), SuggestionSpaceTab()];
-
   SpaceTab get currentTab => spaceTabs[selectedTab];
 
   @override
@@ -113,7 +112,7 @@ class _SpaceNavigationAndPagesScreenState
     return Scaffold(
       floatingActionButton: currentTab.getFloatingActionButton(context),
       body: currentTab.getBody(),
-      bottomNavigationBar: ClipRRect(
+     /*  bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(topRight: Radius.circular(24)),
         child: BottomNavigationBar(
           backgroundColor: primaryColorLight,
@@ -121,7 +120,7 @@ class _SpaceNavigationAndPagesScreenState
           onTap: (int index) => setState(() => selectedTab = index),
           items: spaceTabs.map((t) => t.getBarItem()).toList(),
         ),
-      ),
+      ), */
     );
   }
 }

@@ -23,6 +23,8 @@ import 'package:flutter/material.dart';
 
 import 'package:demos_app/widgets/buttons/big_button_widget.dart';
 
+import '../../../shared/services/new_invitation_dialog.service.dart';
+
 class InitialProfile extends StatefulWidget {
   const InitialProfile({Key? key}) : super(key: key);
 
@@ -38,7 +40,8 @@ class _InitialProfileState extends State<InitialProfile> {
       backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: Padding(
-          padding: const EdgeInsets.only(right: 20.0, left: 20.0, top: 40.0, bottom: 20.0),
+          padding: const EdgeInsets.only(
+              right: 20.0, left: 20.0, top: 40.0, bottom: 20.0),
           child: SafeArea(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,6 +61,7 @@ class _InitialProfileState extends State<InitialProfile> {
   }
 
   void goToSpaces() {
+    NewInvitationDialogService().enablePromtInvitaitons();
     Navigator.pushNamedAndRemoveUntil(context, Routes.spaces, (r) => false);
   }
 }

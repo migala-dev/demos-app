@@ -17,10 +17,15 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'dart:io';
+
 import 'package:demos_app/core/services/cache.service.dart';
 import 'package:demos_app/core/services/current_user/current_user.storage.dart';
 import 'package:demos_app/core/services/token.service.dart';
 import 'package:demos_app/core/services/websocket.service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'core/services/current_user/current_user_private_key.dart';
 
 class AppInitializer {
@@ -31,6 +36,7 @@ class AppInitializer {
   bool isAlreadyInitialize = false;
 
   Future<void> initApp() async {
+    await clearSecureCacheIfIsTheFirstRun();
     final bool userIsAuthenticate = await TokenService().isAuthenticate();
     final String? currentUserId = await CurrentUserStorage().getCurrentUserId();
 
@@ -40,6 +46,7 @@ class AppInitializer {
       await TokenService().refreshTokens();
       await CacheService().getCache();
       await UserPrivateKey(currentUserId).generatePrivateKey();
+      CurrentUserBloc().add(CurrentUserLoaded());
       isAlreadyInitialize = true;
     }
   }
@@ -50,4 +57,16 @@ class AppInitializer {
 
     isAlreadyInitialize = false;
   }
+
+  Future<void> clearSecureCacheIfIsTheFirstRun() async {
+  final prefs = await SharedPreferences.getInstance();
+
+  if (Platform.isIOS && (prefs.getBool('first_run') ?? true)) {
+    const FlutterSecureStorage storage = FlutterSecureStorage();
+
+    await storage.deleteAll();
+
+    prefs.setBool('first_run', false);
+  }
+}
 }

@@ -22,6 +22,7 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'package:demos_app/modules/auth/services/auth.service.dart';
+import 'package:demos_app/shared/services/new_invitation_dialog.service.dart';
 import 'package:demos_app/shared/services/phone_formatter.service.dart';
 import 'package:demos_app/utils/mixins/loading_state_handler.mixin.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
@@ -142,6 +143,11 @@ class _VerifyPhonePageState extends State<VerifyPhonePage>
                 user.name != '' || user.profilePictureKey != null;
             final String route =
                 thisUserHasAlreadyInfo ? Routes.spaces : Routes.initialProfile;
+
+            if (route == Routes.spaces) {
+              NewInvitationDialogService().enablePromtInvitaitons();
+            }
+
             Navigator.pushNamedAndRemoveUntil(context, route, (r) => false);
           }
         } catch (err) {

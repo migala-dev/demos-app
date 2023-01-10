@@ -32,16 +32,23 @@ class NewInvitationDialogService {
   NewInvitationDialogService._internal();
   final List<InvitationView> _pendingInvitations = [];
   InvitationView? _currentInvitation;
+  bool _prompInvitationsDisabled = true;
 
   factory NewInvitationDialogService() {
     return _dialogService;
   }
 
+  void enablePromtInvitaitons() {
+    _prompInvitationsDisabled = false;
+  }
+
   Future<void> open(Member member) async {
-    final InvitationView? invitation = await InvitationViewsRepository()
-        .getInvitationByMemberId(member.memberId);
-    if (invitation != null) {
-      _openInvitation(invitation);
+    if (!_prompInvitationsDisabled) {
+      final InvitationView? invitation = await InvitationViewsRepository()
+          .getInvitationByMemberId(member.memberId);
+      if (invitation != null) {
+        _openInvitation(invitation);
+      }
     }
   }
 
