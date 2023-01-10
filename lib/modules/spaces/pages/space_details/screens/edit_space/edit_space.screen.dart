@@ -109,7 +109,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
                             icon: Icons.group,
                             iconTrailing: Icons.telegram,
                             onEdit: () => Clipboard.setData(ClipboardData(
-                                text: '/demosLinkSpaceId $space.spaceId')),
+                                text: '/demosLinkSpaceId ${space.spaceId}')),
                           ),
                         ),
                       ],
