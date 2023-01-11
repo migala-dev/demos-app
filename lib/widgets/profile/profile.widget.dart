@@ -113,6 +113,26 @@ class Profile extends StatelessWidget {
       builder: (BuildContext context) {
         return Container(
           height: 150,
+          margin: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Agregar desde...'),
+              const SizedBox(height: 16),
+              GestureDetector(
+                child: Expanded(
+                  child: Row(
+                    children: const [
+                      Icon(Icons.folder),
+                      SizedBox(width: 16),
+                      Text('Archivos')
+                    ],
+                  ),
+                ),
+                onTap: () => onOpenFilesPress(context),
+              )
+            ],
+          ),
         );
       },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
