@@ -40,28 +40,28 @@ class Profile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-              child: BlocBuilder<CurrentUserBloc, User?>(
-            bloc: CurrentUserBloc(),
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
-                      child: ProfilePicture(
-                    imageKey: state?.profilePictureKey,
-                    onPictureEditPress: () => onPictureEditPress(context),
-                  )),
-                  Expanded(
+            child: BlocBuilder<CurrentUserBloc, User?>(
+              bloc: CurrentUserBloc(),
+              builder: (context, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                        child: ProfilePicture(
+                      imageKey: state?.profilePictureKey,
+                      onPictureEditPress: () => onPictureEditPress(context),
+                    )),
+                    Expanded(
                       child: Container(
-                          margin:
-                              const EdgeInsets.only(top: 44.0, bottom: 16.0),
-                          child: CardWidget(
-                              child:  Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 40.0),
+                        margin: const EdgeInsets.only(top: 44.0, bottom: 16.0),
+                        child: CardWidget(
+                          child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 28.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 40.0),
                                 Text(
                                   'Perfil',
                                   style: TextStyle(
@@ -69,27 +69,32 @@ class Profile extends StatelessWidget {
                                       color: primaryColor,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                    const SizedBox(height: 40.0),
+                                const SizedBox(height: 40.0),
                                 Expanded(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
                                       ProfileForm(
                                         onEditNamePress: (String? name) {
                                           updateName(name);
                                         },
                                         user: state,
                                       )
-                                    ]))
-                              ])))))
-                ],
-              );
-            },
-          )),
-          Column(
-            children: children ?? [],
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
           ),
+          Column(children: children ?? []),
         ],
       ),
     );
@@ -102,7 +107,19 @@ class Profile extends StatelessWidget {
     CurrentUserBloc().add(CurrentUserUpdated(user));
   }
 
-  void onPictureEditPress(BuildContext context) async {
+  void onPictureEditPress(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 150,
+        );
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    );
+  }
+
+  void onOpenFilesPress(BuildContext context) async {
     final image = await Navigator.push(
         context,
         MaterialPageRoute(
