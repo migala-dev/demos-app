@@ -27,6 +27,7 @@ class SpaceField extends StatelessWidget {
   final String title;
   final String subtitle;
   final IconData icon;
+  final IconData? iconTrailing;
   final VoidCallback onEdit;
 
   const SpaceField(
@@ -34,13 +35,14 @@ class SpaceField extends StatelessWidget {
       required this.title,
       required this.subtitle,
       required this.icon,
-      required this.onEdit})
+      required this.onEdit,
+      this.iconTrailing})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
       child: ListTile(
         title: Text(
           title,
@@ -65,8 +67,8 @@ class SpaceField extends StatelessWidget {
         trailing: SafeWidgetValidator(
           validators: [IsCurrentUserAdminWidgetValidator()],
           child: IconButton(
-            icon: const Icon(
-              DemosIcons.pencil,
+            icon: Icon(
+              iconTrailing ?? DemosIcons.pencil,
               color: secondaryColorDark,
             ),
             onPressed: onEdit,
