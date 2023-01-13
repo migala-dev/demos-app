@@ -174,7 +174,7 @@ class _SpaceListScreenState extends State<SpaceListScreen>
       getSubtitle: (invitationView) =>
           'Expira el ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
       onSpaceTab: (invitationView) {
-        Navigator.pushNamed(context, Routes.spaceInvitation,
+        Navigator.pushNamed(context, Routes.acceptInvitation,
             arguments: invitationView);
       },
     ));

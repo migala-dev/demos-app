@@ -75,7 +75,7 @@ class _SpaceMembersScreenState extends State<SpaceMembersScreen> {
             validators: [IsCurrentUserAdminWidgetValidator()],
             child: FloatingActionButton(
               child: const Icon(DemosIcons.add_member, color: Colors.black),
-              onPressed: () => Navigator.pushNamed(context, Routes.invitations),
+              onPressed: () => Navigator.pushNamed(context, Routes.sendInvitations),
             ),
           ),
         );

@@ -20,6 +20,7 @@
 import 'package:demos_app/enviroments/enviroment.interface.dart';
 
 class EnviromentDev implements Enviroment {
+  // Dev Notes: localhost: 10.0.2.2
   final String _authServiceUrl = 'http://44.194.95.212:3000/v1';
   final String _spaceServiceUrl = 'http://44.194.95.212:3001/v1';
   final String _cacheService = 'http://44.194.95.212:3002/v1';

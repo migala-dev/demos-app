@@ -35,7 +35,7 @@ class ApiPendingCubit extends Cubit<bool> {
       checkTimestamps();
     });
   }
-  
+
   factory ApiPendingCubit() {
     return _apiPendingCubit;
   }
@@ -50,9 +50,17 @@ class ApiPendingCubit extends Cubit<bool> {
 
   void checkTimestamps() {
     DateTime now = DateTime.now();
-    if (timestampList.isEmpty && state == true) {
+    if (timestampList
+            .where((t) => now.difference(t.timestamp).inMilliseconds < 3000)
+            .isEmpty &&
+        state == true) {
       emit(false);
-    } else if (timestampList.where((t) => now.difference(t.timestamp).inMilliseconds > 500).isNotEmpty && state == false) {
+    } else if (timestampList
+            .where((t) =>
+                now.difference(t.timestamp).inMilliseconds > 500 &&
+                now.difference(t.timestamp).inMilliseconds < 3000)
+            .isNotEmpty &&
+        state == false) {
       emit(true);
     }
   }

@@ -35,6 +35,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_details/screens/vote_
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/space_details/bloc/space_bloc.events.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/screens/request_to_join/request_to_join.screen.dart';
 import 'package:demos_app/shared/screens/edit_content.screen.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/new_space.page.dart';
 import 'package:demos_app/modules/spaces/pages/new_space/screens/invitations/invitations.screen.dart';
@@ -118,17 +119,23 @@ var newSpaceHandler = Handler(
   return const NewSpaceScreen();
 });
 
-var invitationsSpaceHandler = Handler(
+var sendInvitationsHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   return const InvitationsScreen();
 });
 
-var spaceInvitationHandler = Handler(
+var acceptInvitationHandler = Handler(
     handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
   final InvitationView invitationView =
       ModalRoute.of(context!)?.settings.arguments as InvitationView;
 
-  return SpaceInvitationScreen(invitationView: invitationView);
+  return AcceptInvitationScreen(invitationView: invitationView);
+});
+
+var requestToJoinHandler = Handler(
+    handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+  String? spaceId = params['spaceId']?.first;
+  return RequestToJoin(spaceId: spaceId);
 });
 
 var proposalFormHandler = Handler(

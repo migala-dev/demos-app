@@ -33,8 +33,9 @@ class Routes {
   static const String spaces = '/spaces';
   static const String newSpace = '/new-space';
   static const String spacesDetails = '/spaces/spaces-details';
-  static const String invitations = '/invitations';
-  static const String spaceInvitation = '/space-invitation';
+  static const String sendInvitations = '/send-invitations';
+  static const String acceptInvitation = '/accept-invitation';
+  static const String requestToJoin = '/app/join/:spaceId';
   static const String spaceSettings = '/spaces/space-settings';
   static const String spacePercentage = '/spaces/space-percentage';
   static const String spaceMembers = '/spaces/space-members';
@@ -70,8 +71,9 @@ class Routes {
     router.define(spaces, handler: spacesHandler);
     router.define(spacesDetails, handler: spaceDetailsHandler);
     router.define(newSpace, handler: newSpaceHandler);
-    router.define(invitations, handler: invitationsSpaceHandler);
-    router.define(spaceInvitation, handler: spaceInvitationHandler);
+    router.define(sendInvitations, handler: sendInvitationsHandler);
+    router.define(acceptInvitation, handler: acceptInvitationHandler);
+    router.define(requestToJoin , handler: requestToJoinHandler);
     router.define(spaceSettings, handler: spaceSettingsHandler);
     router.define(spacePercentage, handler: spacePercentageSettingsHandler);
     router.define(spaceMembers, handler: spaceMembersHandler);

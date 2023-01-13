@@ -133,7 +133,7 @@ class NewInvitationDialogService {
       BuildContext context, SpaceView invitation) async {
     Navigator.pop(context);
 
-    await Navigator.pushNamed(context, Routes.spaceInvitation,
+    await Navigator.pushNamed(context, Routes.acceptInvitation,
         arguments: invitation);
 
     _currentInvitation = null;

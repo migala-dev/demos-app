@@ -35,17 +35,17 @@ import 'package:demos_app/widgets/titles/entity_title.widget.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
 import 'package:flutter/material.dart';
 
-class SpaceInvitationScreen extends StatefulWidget {
+class AcceptInvitationScreen extends StatefulWidget {
   final InvitationView invitationView;
 
-  const SpaceInvitationScreen({Key? key, required this.invitationView})
+  const AcceptInvitationScreen({Key? key, required this.invitationView})
       : super(key: key);
 
   @override
-  State<SpaceInvitationScreen> createState() => _SpaceInvitationScreenState();
+  State<AcceptInvitationScreen> createState() => _AcceptInvitationScreenState();
 }
 
-class _SpaceInvitationScreenState extends State<SpaceInvitationScreen>
+class _AcceptInvitationScreenState extends State<AcceptInvitationScreen>
     with LoadingStateHandler {
   Option? optionSelected;
 
