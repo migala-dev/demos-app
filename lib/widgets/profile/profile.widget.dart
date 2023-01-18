@@ -120,16 +120,25 @@ class Profile extends StatelessWidget {
               const Text('Agregar desde...'),
               const SizedBox(height: 16),
               GestureDetector(
-                child: Expanded(
-                  child: Row(
-                    children: const [
-                      Icon(Icons.folder),
-                      SizedBox(width: 16),
-                      Text('Archivos')
-                    ],
-                  ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.folder),
+                    SizedBox(width: 16),
+                    Text('Archivos')
+                  ],
                 ),
                 onTap: () => onOpenFilesPress(context),
+              ),
+              GestureDetector(
+                child: Row(
+                  children: const [
+                    Icon(Icons.camera),
+                    SizedBox(width: 16),
+                    Text('Camara')
+                  ],
+                ),
+                onTap: () => onOpenCameraPress(),
               )
             ],
           ),
@@ -139,12 +148,13 @@ class Profile extends StatelessWidget {
     );
   }
 
+  void onOpenCameraPress() async {
+    WidgetsFlutterBinding.ensureInitialized();
+  }
+
   void onOpenFilesPress(BuildContext context) async {
-    final image = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ImageEditorPage(),
-        ));
+    final image = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ImageEditorPage()));
 
     if (image != null) {
       final user = await CurrentUserService().uploadProfileImage(image);
