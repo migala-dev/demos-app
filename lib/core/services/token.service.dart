@@ -18,7 +18,7 @@
 */
 
 import 'dart:async';
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/constans/paths/auth.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/tokens.model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -58,7 +58,7 @@ class TokenService {
   }
 
   Future<bool> refreshTokens() async {
-    String endpoint = ApiPath().getRefreshTokenPath();
+    String endpoint = AuthPath.getRefreshTokenPath();
     String? refreshToken = await _getRefreshToken();
 
     if (refreshToken == null) {

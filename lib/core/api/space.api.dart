@@ -19,7 +19,8 @@
 
 import 'dart:io';
 import 'package:demos_app/config/themes/cubit/request_behavior.dart';
-import 'package:demos_app/constans/space.path.dart';
+import 'package:demos_app/constans/paths.depracted/space.path.deprecated.dart';
+import 'package:demos_app/constans/paths/space.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/responses/all_spaces_response.model.dart';
 import 'package:demos_app/core/models/space.model.dart';
@@ -35,7 +36,7 @@ class SpaceApi {
   }
 
   Future<AllSpacesResponse> getAllSpaces() async {
-    String endpoint = SpacePath().getSpacesPath();
+    String endpoint = SpacePathDeprecated().getSpacesPath();
     final httpResponse = await Api.get(endpoint, null);
 
     AllSpacesResponse response = AllSpacesResponse.fromObject(httpResponse);
@@ -44,12 +45,12 @@ class SpaceApi {
   }
 
   Future<SpaceResponse> createSpace(Space newSpace) async {
-    String endpoint = SpacePath().getSpacesPath();
+    String endpoint = SpacePath.getSpacesPath();
     Object params = {
       'name': newSpace.name,
       'description': newSpace.description,
-      'participationPercentage': newSpace.participationPercentage.toString(),
-      'approvalPercentage': newSpace.approvalPercentage.toString()
+      'participationPercentage': newSpace.participationPercentage,
+      'approvalPercentage': newSpace.approvalPercentage,
     };
     final httpResponse = await Api.post(endpoint, params, null);
 
@@ -59,7 +60,7 @@ class SpaceApi {
   }
 
   Future<Space> updateSpaceName(String spaceId, String name) async {
-    String endpoint = SpacePath().getSpacePath(spaceId);
+    String endpoint = SpacePath.getSpacePath(spaceId);
     Object params = {
       'name': name,
     };
@@ -73,7 +74,7 @@ class SpaceApi {
 
   Future<Space> updateSpaceDescription(
       String spaceId, String description) async {
-    String endpoint = SpacePath().getSpacePath(spaceId);
+    String endpoint = SpacePath.getSpacePath(spaceId);
     Object params = {
       'description': description,
     };
@@ -87,10 +88,10 @@ class SpaceApi {
 
   Future<Space> updateSpacePercentages(String spaceId,
       int participationPercentage, int approvalPercentage) async {
-    String endpoint = SpacePath().getSpacePath(spaceId);
+    String endpoint = SpacePath.getSpacePath(spaceId);
     Object params = {
-      'participationPercentage': participationPercentage.toString(),
-      'approvalPercentage': approvalPercentage.toString()
+      'participationPercentage': participationPercentage,
+      'approvalPercentage': approvalPercentage,
     };
 
     final httpResponse = await Api.post(endpoint, params, null);
@@ -101,7 +102,7 @@ class SpaceApi {
   }
 
   Future<Space?> uploadPicture(String spaceId, File file) async {
-    String endpoint = SpacePath().getUpdateSpaceImagePath(spaceId);
+    String endpoint = SpacePathDeprecated().getUpdateSpaceImagePath(spaceId);
 
     final httpResponse = await Api.upload(endpoint, file, null);
 
@@ -112,7 +113,7 @@ class SpaceApi {
 
   Future<SpaceResponse> getSpace(String spaceId) async {
     RequestBehavior requestBehavior = RequestBehavior(showError: false, showLoading: false);
-    String endpoint = SpacePath().getSpacePath(spaceId);
+    String endpoint = SpacePath.getSpacePath(spaceId);
     final httpResponse = await Api.get(endpoint, requestBehavior);
 
     SpaceResponse response = SpaceResponse.fromObject(httpResponse);

@@ -19,7 +19,7 @@
 
 import 'package:demos_app/config/themes/cubit/request_behavior.dart';
 import 'package:demos_app/core/api/api.dart';
-import 'package:demos_app/constans/proposals.path.dart';
+import 'package:demos_app/constans/paths.depracted/proposals.path.deprecated.dart';
 import 'package:demos_app/core/models/responses/proposal_participation_response.model.dart';
 import 'package:demos_app/core/models/responses/proposal_participations_response.model.dart';
 import 'package:demos_app/core/models/responses/update_proposal_response.model.dart';
@@ -30,7 +30,7 @@ import 'package:demos_app/modules/proposals/pages/proposal_form/models/proposal_
 class ProposalApi {
   Future<ProposalResponse> createProposalDraft(
       String spaceId, ProposalFormView proposalFormView) async {
-    final String endpoint = ProposalsPath().getDraftPath(spaceId);
+    final String endpoint = ProposalsPathDeprecated().getDraftPath(spaceId);
     final Map<String, dynamic> body =
         _getBodyFromProposalFormView(proposalFormView);
 
@@ -43,7 +43,7 @@ class ProposalApi {
   Future<ProposalResponse> updateProposalDraft(String spaceId,
       String proposalId, ProposalFormView proposalFormView) async {
     final String endpoint =
-        ProposalsPath().getProposalDraftPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getProposalDraftPath(spaceId, proposalId);
     final Map<String, dynamic> body =
         _getBodyFromProposalFormView(proposalFormView);
 
@@ -56,7 +56,7 @@ class ProposalApi {
   Future<ProposalResponse> publishProposalDraft(String spaceId,
       String proposalId, ProposalFormView proposalFormView) async {
     final String endpoint =
-        ProposalsPath().getPublishDraftPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getPublishDraftPath(spaceId, proposalId);
     final Map<String, dynamic> body =
         _getBodyFromProposalFormView(proposalFormView);
 
@@ -68,7 +68,7 @@ class ProposalApi {
 
   Future<ProposalResponse> createAndPublishProposal(
       String spaceId, ProposalFormView proposalFormView) async {
-    final String endpoint = ProposalsPath().getPublishPath(spaceId);
+    final String endpoint = ProposalsPathDeprecated().getPublishPath(spaceId);
     final Map<String, dynamic> body =
         _getBodyFromProposalFormView(proposalFormView);
 
@@ -79,7 +79,7 @@ class ProposalApi {
   }
 
   Future<ProposalResponse> getProposal(String spaceId, String proposalId) async {
-    final String endpoint = ProposalsPath().getProposalPath(spaceId, proposalId);
+    final String endpoint = ProposalsPathDeprecated().getProposalPath(spaceId, proposalId);
     final RequestBehavior requestBehavior = RequestBehavior(showError: false);
 
     final httpResponse = await Api.get(endpoint, requestBehavior);
@@ -91,7 +91,7 @@ class ProposalApi {
   Future<ProposalParticipationResponse> getProposalParticipation(
       String spaceId, String participationId) async {
     final String endpoint =
-        ProposalsPath().getProposalParticipationPath(spaceId, participationId);
+        ProposalsPathDeprecated().getProposalParticipationPath(spaceId, participationId);
     final RequestBehavior requestBehavior = RequestBehavior(showError: false);
 
     final httpResponse = await Api.get(endpoint, requestBehavior);
@@ -103,7 +103,7 @@ class ProposalApi {
   Future<ProposalParticipationsResponse> resetProposalVotes(
       String spaceId, String proposalId) async {
     final String endpoint =
-        ProposalsPath().getResetProposalParticipationPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getResetProposalParticipationPath(spaceId, proposalId);
     final RequestBehavior requestBehavior = RequestBehavior(showError: false);
 
     final httpResponse = await Api.post(endpoint, null, requestBehavior);
@@ -115,7 +115,7 @@ class ProposalApi {
   Future<UpdateProposalResponse> cancelProposal(
       String spaceId, String proposalId) async {
     final String endpoint =
-        ProposalsPath().getCancelProposalPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getCancelProposalPath(spaceId, proposalId);
 
     final httpResponse = await Api.put(endpoint, null, null);
 
@@ -127,7 +127,7 @@ class ProposalApi {
   Future<UpdateProposalResponse> deleteProposalDraft(
       String spaceId, String proposalId) async {
     final String endpoint =
-        ProposalsPath().getProposalDraftPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getProposalDraftPath(spaceId, proposalId);
 
     final httpResponse = await Api.delete(endpoint, null);
 
@@ -139,7 +139,7 @@ class ProposalApi {
   Future<ProposalResponse> updateProposal(String spaceId, String proposalId,
       ProposalFormView proposalFormView) async {
     final String endpoint =
-        ProposalsPath().getProposalPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getProposalPath(spaceId, proposalId);
     final Map<String, dynamic> body =
         _getBodyFromProposalFormView(proposalFormView);
 
@@ -152,7 +152,7 @@ class ProposalApi {
   Future<VoteProposalResponse> voteInFavorProposal(
       String spaceId, String proposalId, String userHash, bool inFavor) async {
     final String endpoint =
-        ProposalsPath().getVoteProposalPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getVoteProposalPath(spaceId, proposalId);
     final Map<String, dynamic> body = {
       'userHash': userHash,
       'inFavor': inFavor
@@ -168,7 +168,7 @@ class ProposalApi {
   Future<VoteProposalResponse> voteManifestoOptionProposal(String spaceId,
       String proposalId, String userHash, String manifestoOptionId) async {
     final String endpoint =
-        ProposalsPath().getVoteProposalPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getVoteProposalPath(spaceId, proposalId);
     final Map<String, dynamic> body = {
       'userHash': userHash,
       'manifestoOptionId': manifestoOptionId
@@ -184,7 +184,7 @@ class ProposalApi {
   Future<VoteProposalResponse> voteNullProposal(String spaceId,
       String proposalId, String userHash, String? nullVoteComment) async {
     final String endpoint =
-        ProposalsPath().getVoteProposalPath(spaceId, proposalId);
+        ProposalsPathDeprecated().getVoteProposalPath(spaceId, proposalId);
     final Map<String, dynamic> body = {
       'userHash': userHash,
       'nullVoteComment': nullVoteComment
