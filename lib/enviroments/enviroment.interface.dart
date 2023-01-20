@@ -19,6 +19,7 @@
 
 abstract class Enviroment {
   String get authServiceUrl;
+  String get userServiceUrl;
   String get spaceServiceUrl;
   String get cacheServiceUrl;
   String get manifestoServiceUrl;

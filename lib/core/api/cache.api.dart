@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/constans/paths/cache.path.dart';
 import 'package:demos_app/core/models/cache.model.dart';
 
 import 'api.dart';
@@ -31,7 +31,7 @@ class CacheApi {
   }
 
   Future<List<Cache>> getCache(String? lastUpdatedDate) async {
-    String endpoint = ApiPath().getGetCachePath();
+    String endpoint = CachePath.getCachePath();
 
     Object params = {'lastUpdatedDate': lastUpdatedDate ?? ''};
 

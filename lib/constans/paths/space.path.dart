@@ -17,26 +17,17 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/enviroments/enviroment.interface.dart';
 import 'package:demos_app/enviroments/get_enviroment.dart';
 
-class CommentVotesPath {
-  String getCommentVotesPath() {
-    final Enviroment enviroment = getEnviroment();
-    return '${enviroment.manifestoServiceUrl}/comment_votes';
+class SpacePath {
+  static String get _baseUrl =>  getEviroment().spaceServiceUrl;
+
+  static String getSpacesPath() {
+    return _baseUrl;
   }
 
-  String getSpaceCommentVotesPath(String spaceId) =>
-      '${getCommentVotesPath()}/$spaceId';
+  static String getSpacePath(String spaceId) {
+    return '${getSpacesPath()}/$spaceId';
+  }
 
-  String getSpaceManifestoCommentPath(
-          String spaceId, String manifestoCommentId) =>
-      '${getSpaceCommentVotesPath(spaceId)}/$manifestoCommentId';
-
-  String getSpaceManifestoCommentVotePath(
-          String spaceId, String manifestoCommentVoteId) =>
-      '${getSpaceCommentVotesPath(spaceId)}/$manifestoCommentVoteId';
-
-  String getVotePath(String spaceId, String manifestoCommentId) =>
-      '${getSpaceManifestoCommentPath(spaceId, manifestoCommentId)}/vote';
 }

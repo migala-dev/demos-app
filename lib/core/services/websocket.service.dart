@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/constans/paths.depracted/api_path.deprecated.dart';
 import 'package:demos_app/core/services/cache.service.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -34,7 +34,7 @@ class WebSocketService {
 
   void createConnection(String userId) {
     if (!_isConnected) {
-      String websocketPath = ApiPath().getWebsocketServicePath(userId);
+      String websocketPath = ApiPathDeprecated().getWebsocketServicePath(userId);
       connection =
           IOWebSocketChannel.connect(websocketPath, pingInterval: pingInterval);
       _startListening();

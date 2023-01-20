@@ -18,10 +18,20 @@
 */
 
 import 'package:demos_app/enviroments/enviroment_dev.dart';
+import 'package:demos_app/enviroments/enviroment_dev.deprecated.dart';
 import 'package:demos_app/enviroments/enviroment.interface.dart';
+
+Enviroment deprecatedEnviromentDev = EnviromentDevDeprecated();
+
+Enviroment getDeprecatedEnviroment() {
+  return deprecatedEnviromentDev;
+}
 
 Enviroment enviromentDev = EnviromentDev();
 
-Enviroment getEnviroment() {
+Enviroment getEviroment() {
   return enviromentDev;
 }
+
+
+

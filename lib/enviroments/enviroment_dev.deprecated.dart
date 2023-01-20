@@ -19,26 +19,28 @@
 
 import 'package:demos_app/enviroments/enviroment.interface.dart';
 
-class EnviromentDev implements Enviroment {
-  // DevNotes: localhost: 10.0.2.2
-  final String _baseServiceUrl = 'http://10.0.2.2:3000';
+class EnviromentDevDeprecated implements Enviroment {
+  // Dev Notes: localhost: 10.0.2.2
+  final String _authServiceUrl = 'http://44.194.95.212:3000/v1';
+  final String _spaceServiceUrl = 'http://44.194.95.212:3001/v1';
+  final String _cacheService = 'http://44.194.95.212:3002/v1';
+  final String _manifestoService = 'http://44.194.95.212:3003/v1';
   final String _websocketService = 'ws://44.194.95.212:5000';
 
   @override
-  String get authServiceUrl => '$_baseServiceUrl/auth';
+  String get authServiceUrl => _authServiceUrl;
   
   @override
-  String get userServiceUrl => '$_baseServiceUrl/user';
+  String get spaceServiceUrl => _spaceServiceUrl;
 
   @override
-  String get spaceServiceUrl => '$_baseServiceUrl/spaces';
-
-
-  @override
-  String get cacheServiceUrl => '$_baseServiceUrl/cache';
+  String get userServiceUrl => '';
 
   @override
-  String get manifestoServiceUrl => '$_baseServiceUrl/manifesto';
+  String get cacheServiceUrl => _cacheService;
+
+  @override
+  String get manifestoServiceUrl => _manifestoService;
 
   @override
   String get websocketServiceUrl => _websocketService;
