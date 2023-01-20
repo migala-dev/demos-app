@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/constans/comment_votes.path.dart';
+import 'package:demos_app/constans/paths.depracted/comment_votes.path.deprecated.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/responses/comment_vote_deleted_response.model.dart';
 import 'package:demos_app/core/models/responses/comment_vote_response.model.dart';
@@ -25,7 +25,7 @@ import 'package:demos_app/core/models/responses/comment_vote_response.model.dart
 class CommentVoteApi {
   Future<CommentVoteResponse> getCommentVote(
       String spaceId, String manifestoCommentVoteId) async {
-    final String endpoint = CommentVotesPath()
+    final String endpoint = CommentVotesPathDeprecated()
         .getSpaceManifestoCommentVotePath(spaceId, manifestoCommentVoteId);
 
     final httpResponse = await Api.get(endpoint, null);
@@ -36,7 +36,7 @@ class CommentVoteApi {
 
   Future<CommentVoteResponse> updateCommentVote(
       String spaceId, String manifestoCommentVoteId, bool upvote) async {
-    final String endpoint = CommentVotesPath()
+    final String endpoint = CommentVotesPathDeprecated()
         .getSpaceManifestoCommentVotePath(spaceId, manifestoCommentVoteId);
 
     final body = _getBodyFromUpvote(upvote);
@@ -49,7 +49,7 @@ class CommentVoteApi {
 
   Future<CommentVoteDeletedResponse> deleteCommentVote(
       String spaceId, String manifestoCommentVoteId) async {
-    final String endpoint = CommentVotesPath()
+    final String endpoint = CommentVotesPathDeprecated()
         .getSpaceManifestoCommentVotePath(spaceId, manifestoCommentVoteId);
 
     final httpResponse = await Api.delete(endpoint, null);
@@ -61,7 +61,7 @@ class CommentVoteApi {
   Future<CommentVoteResponse> voteComment(
       String spaceId, String manifestoCommentId, bool upvote) async {
     final String endpoint =
-        CommentVotesPath().getVotePath(spaceId, manifestoCommentId);
+        CommentVotesPathDeprecated().getVotePath(spaceId, manifestoCommentId);
 
     final body = _getBodyFromUpvote(upvote);
 

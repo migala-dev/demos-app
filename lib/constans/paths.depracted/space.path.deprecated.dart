@@ -18,28 +18,19 @@
 */
 
 import 'package:demos_app/enviroments/enviroment.interface.dart';
+import 'package:demos_app/enviroments/get_enviroment.dart';
 
-class EnviromentDev implements Enviroment {
-  // DevNotes: localhost: 10.0.2.2
-  final String _baseServiceUrl = 'http://10.0.2.2:3000';
-  final String _websocketService = 'ws://44.194.95.212:5000';
+class SpacePathDeprecated {
+  String getSpacesPath() {
+    Enviroment enviroment = getDeprecatedEnviroment();
+    return '${enviroment.spaceServiceUrl}/spaces';
+  }
 
-  @override
-  String get authServiceUrl => '$_baseServiceUrl/auth';
-  
-  @override
-  String get userServiceUrl => '$_baseServiceUrl/user';
+  String getSpacePath(String spaceId) {
+    return '${getSpacesPath()}/$spaceId';
+  }
 
-  @override
-  String get spaceServiceUrl => '$_baseServiceUrl/spaces';
-
-
-  @override
-  String get cacheServiceUrl => '$_baseServiceUrl/cache';
-
-  @override
-  String get manifestoServiceUrl => '$_baseServiceUrl/manifesto';
-
-  @override
-  String get websocketServiceUrl => _websocketService;
+  String getUpdateSpaceImagePath(String spaceId) {
+    return '${getSpacePath(spaceId)}/picture';
+  }
 }

@@ -17,20 +17,16 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/enviroments/enviroment.interface.dart';
 import 'package:demos_app/enviroments/get_enviroment.dart';
 
-class SpacePath {
-  String getSpacesPath() {
-    Enviroment enviroment = getEnviroment();
-    return '${enviroment.spaceServiceUrl}/spaces';
+class UserPath {
+  static String get _baseUrl =>  getEviroment().userServiceUrl;
+
+  static String getUpdateProfileImagePath() {
+    return '$_baseUrl/avatar';
   }
 
-  String getSpacePath(String spaceId) {
-    return '${getSpacesPath()}/$spaceId';
-  }
-
-  String getUpdateSpaceImagePath(String spaceId) {
-    return '${getSpacePath(spaceId)}/picture';
+  static String getRecoveryData() {
+    return '$_baseUrl/recover-user-data';
   }
 }
