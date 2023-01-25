@@ -17,7 +17,8 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/config/themes/cubit/request_behavior.dart';
+import 'package:demos_app/constans/paths/auth.path.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/modules/auth/models/verify_code_response.model.dart';
 
@@ -31,25 +32,25 @@ class AuthApi {
   }
 
   Future<String> signIn(String phoneNumber) async {
-    String endpoint = ApiPath().getSignInPath();
+    String endpoint = AuthPath.getLoginPath();
     Object params = {
       'phoneNumber': phoneNumber,
     };
 
-    final response = await Api.post(endpoint, params, null);
+    final response = await Api.post(endpoint, params, RequestBehavior(showLoading: false));
 
     return response['session'];
   }
 
   Future<VerifyCodeReponse> verifyCode(
       String code, String phoneNumber, String session) async {
-    String endpoint = ApiPath().getVerifyCodePath();
+    String endpoint = AuthPath.getVerifyCodePath();
     Object params = {
       'phoneNumber': phoneNumber,
       'code': code,
       'session': session,
     };
-    final httpResponse = await Api.post(endpoint, params, null);
+    final httpResponse = await Api.post(endpoint, params, RequestBehavior(showLoading: false));
 
     VerifyCodeReponse response = VerifyCodeReponse.fromObject(httpResponse);
 

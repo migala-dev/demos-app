@@ -17,7 +17,7 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import 'package:demos_app/constans/comments.path.dart';
+import 'package:demos_app/constans/paths.depracted/comments.path.deprecated.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/models/responses/comment_response.model.dart';
 
@@ -25,7 +25,7 @@ class CommentApi {
   Future<CommentResponse> createComment(
       String content, String spaceId, String manifestoId) async {
     final String endpoint =
-        CommentsPath().getManifestoCommentPath(spaceId, manifestoId);
+        CommentsPathDeprecated().getManifestoCommentPath(spaceId, manifestoId);
     final body = _getBodyFromContent(content);
 
     final httpResponse = await Api.post(endpoint, body, null);
@@ -36,7 +36,7 @@ class CommentApi {
 
   Future<CommentResponse> sendCommentReply(String content, String spaceId,
       String manifestoId, String manifestoCommentParentId) async {
-    final String endpoint = CommentsPath().getReplyManifestoCommentPath(
+    final String endpoint = CommentsPathDeprecated().getReplyManifestoCommentPath(
         spaceId, manifestoId, manifestoCommentParentId);
     final body = _getBodyFromContent(content);
 
@@ -49,7 +49,7 @@ class CommentApi {
   Future<CommentResponse> getComment(
       String spaceId, String manifestoCommentId) async {
     final String endpoint =
-        CommentsPath().getManifestoCommentPath(spaceId, manifestoCommentId);
+        CommentsPathDeprecated().getManifestoCommentPath(spaceId, manifestoCommentId);
 
     final httpResponse = await Api.get(endpoint, null);
     final response = CommentResponse.fromObject(httpResponse);
@@ -60,7 +60,7 @@ class CommentApi {
   Future<CommentResponse> deleteComment(
       String spaceId, String manifestoCommentId) async {
     final String endpoint =
-        CommentsPath().getManifestoCommentPath(spaceId, manifestoCommentId);
+        CommentsPathDeprecated().getManifestoCommentPath(spaceId, manifestoCommentId);
 
     final httpResponse = await Api.delete(endpoint, null);
     final response = CommentResponse.fromObject(httpResponse);
@@ -71,7 +71,7 @@ class CommentApi {
   Future<CommentResponse> updateComment(
       String spaceId, String manifestoCommentId, String content) async {
     final String endpoint =
-        CommentsPath().getManifestoCommentPath(spaceId, manifestoCommentId);
+        CommentsPathDeprecated().getManifestoCommentPath(spaceId, manifestoCommentId);
 
     final body = _getBodyFromContent(content);
 

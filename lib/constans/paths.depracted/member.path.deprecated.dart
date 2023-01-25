@@ -20,9 +20,9 @@
 import 'package:demos_app/enviroments/enviroment.interface.dart';
 import 'package:demos_app/enviroments/get_enviroment.dart';
 
-class MemberPath {
+class MemberPathDeprecated {
   String getMembersPath() {
-    Enviroment enviroment = getEnviroment();
+    Enviroment enviroment = getDeprecatedEnviroment();
     return '${enviroment.spaceServiceUrl}/members';
   }
 

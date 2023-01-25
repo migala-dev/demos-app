@@ -18,7 +18,8 @@
 */
 
 import 'dart:io';
-import 'package:demos_app/constans/api_path.dart';
+import 'package:demos_app/constans/paths.depracted/api_path.deprecated.dart';
+import 'package:demos_app/constans/paths/user.path.dart';
 import 'package:demos_app/core/models/user.model.dart';
 import 'api.dart';
 
@@ -31,7 +32,7 @@ class UserApi {
   }
 
   static Future<User> updateUserName(String? name) async {
-    String endpoint = ApiPath().getUserPath();
+    String endpoint = ApiPathDeprecated().getUserPath();
 
     Object params = {'name': name};
 
@@ -43,7 +44,7 @@ class UserApi {
   }
 
   static Future<User?> uploadProfileImage(File file) async {
-    String endpoint = ApiPath().getUpdateProfileImagePath();
+    String endpoint = UserPath.getUpdateProfileImagePath();
 
     final httpResponse = await Api.upload(endpoint, file, null);
 

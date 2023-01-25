@@ -18,7 +18,7 @@
 */
 
 import 'package:demos_app/config/themes/cubit/request_behavior.dart';
-import 'package:demos_app/constans/member.path.dart';
+import 'package:demos_app/constans/paths.depracted/member.path.deprecated.dart';
 import 'package:demos_app/core/api/api.dart';
 import 'package:demos_app/core/enums/space_role.enum.dart';
 import 'package:demos_app/core/models/responses/accept_invitation_response.model.dart';
@@ -36,7 +36,7 @@ class MemberApi {
     return _memberApi;
   }
   Future<AcceptInvitationResponse> acceptInvitation(String spaceId) async {
-    final String endpoint = MemberPath().getAcceptInvitationPath(spaceId);
+    final String endpoint = MemberPathDeprecated().getAcceptInvitationPath(spaceId);
     final httpResponse = await Api.post(endpoint, null, null);
 
     final AcceptInvitationResponse response =
@@ -46,7 +46,7 @@ class MemberApi {
   }
 
   Future<InvitationResponse> rejectInvitation(String spaceId) async {
-    final String endpoint = MemberPath().getRejectInvitationPath(spaceId);
+    final String endpoint = MemberPathDeprecated().getRejectInvitationPath(spaceId);
     final httpResponse = await Api.post(endpoint, null, null);
 
     final InvitationResponse response = InvitationResponse.fromObject(httpResponse);
@@ -56,7 +56,7 @@ class MemberApi {
 
   Future<SendInvitationsResponse> sendInvitations(
       String spaceId, List<InvitationContact> contacts) async {
-    final String endpoint = MemberPath().getInvitationPath(spaceId);
+    final String endpoint = MemberPathDeprecated().getInvitationPath(spaceId);
     final Object params = {'users': contacts.map((c) => c.toJson()).toList()};
 
     final httpResponse = await Api.post(endpoint, params, null);
@@ -68,7 +68,7 @@ class MemberApi {
   }
 
   Future<MemberResponse> getMember(String spaceId, String memberId) async {
-    final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    final String endpoint = MemberPathDeprecated().getMemberPath(spaceId, memberId);
 
     final httpResponse = await Api.get(endpoint, RequestBehavior(showError: false));
 
@@ -79,7 +79,7 @@ class MemberApi {
 
   Future<bool> updateMember(
       String spaceId, String memberId, String? name, SpaceRole role) async {
-    final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    final String endpoint = MemberPathDeprecated().getMemberPath(spaceId, memberId);
     final Object params = {
       'name': name,
       'role': getSpaceRoleString(role),
@@ -91,22 +91,22 @@ class MemberApi {
   }
 
   Future<void> deleteMember(String spaceId, String memberId) async {
-    final String endpoint = MemberPath().getMemberPath(spaceId, memberId);
+    final String endpoint = MemberPathDeprecated().getMemberPath(spaceId, memberId);
     await Api.delete(endpoint, null);
   }
 
   Future<void> cancelInvitation(String spaceId, String memberId) async {
-    final String endpoint = MemberPath().getMemberInvitationPath(spaceId, memberId);
+    final String endpoint = MemberPathDeprecated().getMemberInvitationPath(spaceId, memberId);
     await Api.delete(endpoint, null);
   }
 
   Future<void> leaveSpace(String spaceId) async {
-    final String endpoint = MemberPath().getMembersSpacePath(spaceId);
+    final String endpoint = MemberPathDeprecated().getMembersSpacePath(spaceId);
     await Api.delete(endpoint, null);
   }
 
   Future<MemberPhoneNumbersResponse> getMemberPhoneNumbers(String spaceId) async {
-    final String endpoint = MemberPath().getMembersPhoneNumbersPath(spaceId);
+    final String endpoint = MemberPathDeprecated().getMembersPhoneNumbersPath(spaceId);
 
     final httpResponse = await Api.get(endpoint, RequestBehavior(showError: false, showLoading: false));
 
