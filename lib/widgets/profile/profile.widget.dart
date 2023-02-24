@@ -17,7 +17,10 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:camera/camera.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/services/current_user/current_user.service.dart';
+import 'package:demos_app/shared/screens/camera_preview.screen.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,28 +43,29 @@ class Profile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-              child: BlocBuilder<CurrentUserBloc, User?>(
-            bloc: CurrentUserBloc(),
-            builder: (context, state) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(
+            child: BlocBuilder<CurrentUserBloc, User?>(
+              bloc: CurrentUserBloc(),
+              builder: (context, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
                       child: ProfilePicture(
-                    imageKey: state?.profilePictureKey,
-                    onPictureEditPress: () => onPictureEditPress(context),
-                  )),
-                  Expanded(
+                        imageKey: state?.profilePictureKey,
+                        onPictureEditPress: () => onPictureEditPress(context),
+                      ),
+                    ),
+                    Expanded(
                       child: Container(
-                          margin:
-                              const EdgeInsets.only(top: 44.0, bottom: 16.0),
-                          child: CardWidget(
-                              child:  Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 40.0),
+                        margin: const EdgeInsets.only(top: 44.0, bottom: 16.0),
+                        child: CardWidget(
+                          child: Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 28.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(height: 40.0),
                                 Text(
                                   'Perfil',
                                   style: TextStyle(
@@ -69,27 +73,32 @@ class Profile extends StatelessWidget {
                                       color: primaryColor,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                    const SizedBox(height: 40.0),
+                                const SizedBox(height: 40.0),
                                 Expanded(
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
                                       ProfileForm(
                                         onEditNamePress: (String? name) {
                                           updateName(name);
                                         },
                                         user: state,
                                       )
-                                    ]))
-                              ])))))
-                ],
-              );
-            },
-          )),
-          Column(
-            children: children ?? [],
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
           ),
+          Column(children: children ?? []),
         ],
       ),
     );
@@ -102,12 +111,69 @@ class Profile extends StatelessWidget {
     CurrentUserBloc().add(CurrentUserUpdated(user));
   }
 
-  void onPictureEditPress(BuildContext context) async {
-    final image = await Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ImageEditorPage(),
-        ));
+  void onPictureEditPress(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 120,
+          margin: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text('Agregar desde...'),
+              const SizedBox(height: 16),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: const [
+                    Icon(Icons.folder, size: 30, color: primaryColor),
+                    SizedBox(width: 16),
+                    Text('Archivos')
+                  ],
+                ),
+                onTap: () => onOpenFilesPress(context),
+              ),
+              const SizedBox(height: 16),
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                child: Row(
+                  children: const [
+                    Icon(Icons.camera_alt, size: 30, color: primaryColor),
+                    SizedBox(width: 16),
+                    Text('Camara')
+                  ],
+                ),
+                onTap: () => onOpenCameraPress(context),
+              )
+            ],
+          ),
+        );
+      },
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+    );
+  }
+
+  void onOpenCameraPress(BuildContext context) async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    await availableCameras().then((value) async {
+      final photo = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => CameraPreviewScreen(cameras: value)));
+
+      if (photo != null) {
+        final user = await CurrentUserService().uploadProfileImage(photo);
+        CurrentUserBloc().add(CurrentUserUpdated(user));
+      }
+    });
+  }
+
+  void onOpenFilesPress(BuildContext context) async {
+    final image = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ImageEditorPage()));
 
     if (image != null) {
       final user = await CurrentUserService().uploadProfileImage(image);

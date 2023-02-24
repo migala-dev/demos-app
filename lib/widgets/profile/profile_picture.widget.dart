@@ -51,12 +51,16 @@ class ProfilePicture extends StatelessWidget {
             child: editable
                 ? SafeWidgetValidator(
                     child: FloatingActionButton(
-                    elevation: 0,
-                    mini: true,
-                    child: const Icon(DemosIcons.camera, color: Colors.black,),
-                    onPressed: onPictureEditPress,
-                    backgroundColor: secondaryColor,
-                  ))
+                      elevation: 0,
+                      mini: true,
+                      child: const Icon(
+                        DemosIcons.camera,
+                        color: Colors.black,
+                      ),
+                      onPressed: onPictureEditPress,
+                      backgroundColor: secondaryColor,
+                    ),
+                  )
                 : Container())
       ],
     );
