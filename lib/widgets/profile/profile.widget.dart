@@ -159,13 +159,13 @@ class Profile extends StatelessWidget {
     WidgetsFlutterBinding.ensureInitialized();
 
     await availableCameras().then((value) async {
-      final image = await Navigator.push(
+      final photo = await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => CameraPreviewScreen(cameras: value)));
 
-      if (image != null) {
-        final user = await CurrentUserService().uploadProfileImage(image);
+      if (photo != null) {
+        final user = await CurrentUserService().uploadProfileImage(photo);
         CurrentUserBloc().add(CurrentUserUpdated(user));
       }
     });

@@ -31,9 +31,10 @@ class _CameraPreviewScreenState extends State<CameraPreviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: takePicture,
-        child: const Icon(Icons.camera),
+        child: const Icon(Icons.camera_alt),
       ),
       body: SafeArea(
         child: cameraController.value.isInitialized

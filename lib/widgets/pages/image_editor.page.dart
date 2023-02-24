@@ -25,9 +25,9 @@ import 'package:flutter/material.dart';
 import 'package:image_crop/image_crop.dart';
 
 class ImageEditorPage extends StatefulWidget {
-  ImageEditorPage({Key? key, this.photo}) : super(key: key);
+  const ImageEditorPage({Key? key, this.photo}) : super(key: key);
 
-  File? photo;
+  final File? photo;
 
   @override
   _ImageEditorPageState createState() => _ImageEditorPageState();
