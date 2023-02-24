@@ -17,7 +17,9 @@
   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import 'package:camera/camera.dart';
 import 'package:demos_app/core/services/current_user/current_user.service.dart';
+import 'package:demos_app/shared/screens/camera_preview.screen.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,10 +49,11 @@ class Profile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Center(
-                        child: ProfilePicture(
-                      imageKey: state?.profilePictureKey,
-                      onPictureEditPress: () => onPictureEditPress(context),
-                    )),
+                      child: ProfilePicture(
+                        imageKey: state?.profilePictureKey,
+                        onPictureEditPress: () => onPictureEditPress(context),
+                      ),
+                    ),
                     Expanded(
                       child: Container(
                         margin: const EdgeInsets.only(top: 44.0, bottom: 16.0),
@@ -138,7 +141,7 @@ class Profile extends StatelessWidget {
                     Text('Camara')
                   ],
                 ),
-                onTap: () => onOpenCameraPress(),
+                onTap: () => onOpenCameraPress(context),
               )
             ],
           ),
@@ -148,13 +151,25 @@ class Profile extends StatelessWidget {
     );
   }
 
-  void onOpenCameraPress() async {
+  void onOpenCameraPress(BuildContext context) async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    await availableCameras().then((value) async {
+      final image = await Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (_) => CameraPreviewScreen(cameras: value)));
+
+      if (image != null) {
+        final user = await CurrentUserService().uploadProfileImage(image);
+        CurrentUserBloc().add(CurrentUserUpdated(user));
+      }
+    });
   }
 
   void onOpenFilesPress(BuildContext context) async {
-    final image = await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const ImageEditorPage()));
+    final image = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ImageEditorPage()));
 
     if (image != null) {
       final user = await CurrentUserService().uploadProfileImage(image);

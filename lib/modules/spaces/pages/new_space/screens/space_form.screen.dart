@@ -72,7 +72,7 @@ class _SpaceFormScreenState extends State<SpaceFormScreen> {
     File? imageFile = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ImageEditorPage(),
+          builder: (context) => ImageEditorPage(),
         ));
     if (imageFile != null) {
       setState(() {

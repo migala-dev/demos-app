@@ -25,7 +25,9 @@ import 'package:flutter/material.dart';
 import 'package:image_crop/image_crop.dart';
 
 class ImageEditorPage extends StatefulWidget {
-  const ImageEditorPage({Key? key}) : super(key: key);
+  ImageEditorPage({Key? key, this.photo}) : super(key: key);
+
+  File? photo;
 
   @override
   _ImageEditorPageState createState() => _ImageEditorPageState();
@@ -45,9 +47,12 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SafeArea(
+    if (widget.photo != null) {
+      _sample = widget.photo;
+    }
+
+    return Scaffold(
+      body: SafeArea(
         child: Container(
           color: Colors.black,
           padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
@@ -115,6 +120,7 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
     final pickedFile = await pickImage();
     if (pickedFile != null) {
       final file = File(pickedFile.path);
+
       final sample = await ImageCrop.sampleImage(
         file: file,
         preferredSize: context.size!.longestSide.ceil(),
@@ -143,7 +149,7 @@ class _ImageEditorPageState extends State<ImageEditorPage> {
     // scale up to use maximum possible number of pixels
     // this will sample image in higher resolution to make cropped image larger
     final sample = await ImageCrop.sampleImage(
-      file: _file!,
+      file: _file ?? widget.photo!,
       preferredSize: (2000 / scale).round(),
     );
 
