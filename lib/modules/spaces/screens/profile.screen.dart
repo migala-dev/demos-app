@@ -18,6 +18,7 @@
 */
 
 import 'package:demos_app/widgets/profile/profile.widget.dart';
+import 'package:demos_app/widgets/simbols/powered_by_migala.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
@@ -32,14 +33,20 @@ class _ProfileState extends State<ProfileSettingScreen> {
   Widget build(BuildContext context) {
     Color primaryColor = Theme.of(context).primaryColor;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: primaryColor,
-        appBar: AppBar(
-          title: const Text('Perfil', style: TextStyle(fontSize: 22.0),),
+      resizeToAvoidBottomInset: false,
+      backgroundColor: primaryColor,
+      appBar: AppBar(
+        title: const Text(
+          'Perfil',
+          style: TextStyle(fontSize: 22.0),
         ),
-        body: Container(
-          margin: const EdgeInsets.symmetric(vertical: 28, horizontal: 28),
-          child: const Profile(),
-        ));
+      ),
+      body: Container(
+        margin: const EdgeInsets.symmetric(vertical: 18, horizontal: 28),
+        child: Column(
+          children: const [Expanded(child: Profile()), PoweredByMigala()],
+        ),
+      ),
+    );
   }
 }
