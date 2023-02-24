@@ -18,6 +18,7 @@
 */
 
 import 'package:camera/camera.dart';
+import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/core/services/current_user/current_user.service.dart';
 import 'package:demos_app/shared/screens/camera_preview.screen.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
@@ -115,7 +116,7 @@ class Profile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 150,
+          height: 120,
           margin: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,20 +124,23 @@ class Profile extends StatelessWidget {
               const Text('Agregar desde...'),
               const SizedBox(height: 16),
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
-                    Icon(Icons.folder),
+                    Icon(Icons.folder, size: 30, color: primaryColor),
                     SizedBox(width: 16),
                     Text('Archivos')
                   ],
                 ),
                 onTap: () => onOpenFilesPress(context),
               ),
+              const SizedBox(height: 16),
               GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 child: Row(
                   children: const [
-                    Icon(Icons.camera),
+                    Icon(Icons.camera_alt, size: 30, color: primaryColor),
                     SizedBox(width: 16),
                     Text('Camara')
                   ],
