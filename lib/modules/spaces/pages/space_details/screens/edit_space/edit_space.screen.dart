@@ -128,7 +128,7 @@ class _EditSpaceScreenState extends State<EditSpaceScreen> {
     File? imageFile = await Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ImageEditorPage(),
+          builder: (context) => const ImageEditorPage(),
         ));
     if (imageFile != null) {
       NewSpaceService().uploadPicture(space.spaceId!, imageFile);

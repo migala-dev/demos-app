@@ -172,8 +172,8 @@ class Profile extends StatelessWidget {
   }
 
   void onOpenFilesPress(BuildContext context) async {
-    final image = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ImageEditorPage()));
+    final image = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const ImageEditorPage()));
 
     if (image != null) {
       final user = await CurrentUserService().uploadProfileImage(image);
