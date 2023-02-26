@@ -22,6 +22,7 @@ import 'package:flutter/material.dart';
 import 'package:demos_app/utils/ui/modals/open_update_string_field_modal.dart';
 import 'package:demos_app/widgets/profile/profile_field.widget.dart';
 import 'package:demos_app/core/models/user.model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileForm extends StatelessWidget {
   final void Function(String?)? onEditNamePress;
@@ -50,6 +51,23 @@ class ProfileForm extends StatelessWidget {
           title: 'Teléfono',
           icon: DemosIcons.phone,
           value: formatPhoneNumber(user?.phoneNumber),
+        ),
+        GestureDetector(
+          child: const ProfileField(
+            title: 'Ver nuestras',
+            value: 'Politicas de Privacidad',
+            icon: DemosIcons.info_outlined,
+          ),
+          onTap: (() async {
+            const String url = 'https://demos-migala.com/privacidad';
+            final Uri uri = Uri.parse(url);
+
+            if (await canLaunchUrl(uri)) {
+              await launchUrl(uri);
+            } else {
+              throw 'No se pudo abrir $url';
+            }
+          }),
         ),
       ],
     );
