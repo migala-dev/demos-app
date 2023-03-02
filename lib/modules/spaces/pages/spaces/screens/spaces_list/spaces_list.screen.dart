@@ -21,11 +21,10 @@ import 'dart:io';
 
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
-import 'package:demos_app/core/bloc/current_user_bloc/current_user_bloc.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/widgets/go_to_profile.widget.dart';
 import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
-import 'package:demos_app/widgets/profile/profile_picture.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:demos_app/config/routes/routes.dart';
@@ -68,37 +67,25 @@ class _SpaceListScreenState extends State<SpaceListScreen>
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
-    final currentUser = CurrentUserBloc().state;
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
         title: getTitle(),
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 14, top: 8),
-            child: GestureDetector(
-              child: ProfilePicture(
-                width: 100,
-                imageKey: currentUser!.profilePictureKey,
-              ),
-              onTap: () =>
-                  Navigator.of(context).pushNamed(Routes.profileSettings),
-            ),
-          )
-        ],
+        actions: const [GoToProfile()],
       ),
       backgroundColor: primaryColor,
       floatingActionButton: SafeWidgetValidator(
-          child: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.newSpace);
-        },
-        child: const Icon(
-          DemosIcons.add_space,
-          color: Colors.black,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, Routes.newSpace);
+          },
+          child: const Icon(
+            DemosIcons.add_space,
+            color: Colors.black,
+          ),
         ),
-      )),
+      ),
       body: Padding(
         padding: EdgeInsets.only(
             bottom: Platform.isIOS ? 64.0 : 32.0,
