@@ -22,6 +22,7 @@ import 'dart:io';
 import 'package:demos_app/config/custom-icons/demos_icons_icons.dart';
 import 'package:demos_app/config/themes/main_theme.dart';
 import 'package:demos_app/modules/spaces/models/invitation_view.model.dart';
+import 'package:demos_app/modules/spaces/pages/spaces/widgets/go_to_profile.widget.dart';
 import 'package:demos_app/widgets/general/cache_refresh_indicator.widget.dart';
 import 'package:demos_app/widgets/general/card.widget.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,6 @@ import 'package:demos_app/config/routes/routes.dart';
 import 'package:demos_app/modules/spaces/models/space_view.model.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/screens/spaces_list/widgets/space_list.widget.dart';
 import 'package:demos_app/modules/spaces/pages/spaces/utils/checkers.dart';
-import 'package:demos_app/modules/spaces/pages/spaces/widgets/popup_spaces_menu_options.widget.dart';
 import 'package:demos_app/shared/services/date_formatter.service.dart';
 import 'package:demos_app/utils/navigation/go_to_space_details.dart';
 import 'package:demos_app/widgets/wrappers/safe_widget/safe_widget_validator.dart';
@@ -69,14 +69,14 @@ class _SpaceListScreenState extends State<SpaceListScreen>
     final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: false,
-          title: getTitle(),
-          actions: [PopupSpacesMenuOptions()],
-        ),
-        backgroundColor: primaryColor,
-        floatingActionButton: SafeWidgetValidator(
-            child: FloatingActionButton(
+      appBar: AppBar(
+        centerTitle: false,
+        title: getTitle(),
+        actions: const [GoToProfile()],
+      ),
+      backgroundColor: primaryColor,
+      floatingActionButton: SafeWidgetValidator(
+        child: FloatingActionButton(
           onPressed: () {
             Navigator.pushNamed(context, Routes.newSpace);
           },
@@ -84,11 +84,19 @@ class _SpaceListScreenState extends State<SpaceListScreen>
             DemosIcons.add_space,
             color: Colors.black,
           ),
-        )),
-        body: Padding(
-                padding: EdgeInsets.only(
-                    bottom: Platform.isIOS ? 64.0 : 32.0, right: 8.0, left: 8.0, top: 4.0),
-                child: CardWidget(child: getBody(context))));
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(
+            bottom: Platform.isIOS ? 64.0 : 32.0,
+            right: 8.0,
+            left: 8.0,
+            top: 4.0),
+        child: CardWidget(
+          child: getBody(context),
+        ),
+      ),
+    );
   }
 
   Widget getBody(BuildContext context) {
@@ -128,17 +136,18 @@ class _SpaceListScreenState extends State<SpaceListScreen>
                 text: 'TUS ESPACIOS',
               ),
               Tab(
-                  icon: Badge(
-                      showBadge: widget.invitations.isNotEmpty,
-                      elevation: 0,
-                      badgeColor: primaryColor,
-                      position: const BadgePosition(end: -20),
-                      badgeContent: Text(
-                        widget.invitations.length.toString(),
-                        style: const TextStyle(
-                            fontSize: 10.0, color: Colors.white),
-                      ),
-                      child: const Text('INVITACIONES'))),
+                icon: Badge(
+                  showBadge: widget.invitations.isNotEmpty,
+                  elevation: 0,
+                  badgeColor: primaryColor,
+                  position: const BadgePosition(end: -20),
+                  badgeContent: Text(
+                    widget.invitations.length.toString(),
+                    style: const TextStyle(fontSize: 10.0, color: Colors.white),
+                  ),
+                  child: const Text('INVITACIONES'),
+                ),
+              ),
             ],
           ),
         ),
@@ -158,35 +167,42 @@ class _SpaceListScreenState extends State<SpaceListScreen>
 
   Widget getSpaceList() {
     return CacheRefreshIndicator(
-            child: SpaceListWidget<SpaceView>(
-      spaces: widget.spaces,
-      getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
-      onSpaceTab: (spaceView) async {
-        await goToSpaceDetails(spaceView);
-      },
-    ));
+      child: SpaceListWidget<SpaceView>(
+        spaces: widget.spaces,
+        getSubtitle: (spaceView) => '${spaceView.membersCount} miembros',
+        onSpaceTab: (spaceView) async {
+          await goToSpaceDetails(spaceView);
+        },
+      ),
+    );
   }
 
   Widget getInvitationList() {
     return CacheRefreshIndicator(
-            child: SpaceListWidget<InvitationView>(
-      spaces: widget.invitations,
-      getSubtitle: (invitationView) =>
-          'Expira el ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
-      onSpaceTab: (invitationView) {
-        Navigator.pushNamed(context, Routes.spaceInvitation,
-            arguments: invitationView);
-      },
-    ));
+      child: SpaceListWidget<InvitationView>(
+        spaces: widget.invitations,
+        getSubtitle: (invitationView) =>
+            'Expira el ${DateFormatterService.parseToStandardDate(invitationView.expiredAt)}',
+        onSpaceTab: (invitationView) {
+          Navigator.pushNamed(context, Routes.spaceInvitation,
+              arguments: invitationView);
+        },
+      ),
+    );
   }
 
-    Widget getTitle() {
+  Widget getTitle() {
     if (areOnlySpaceInvitations(widget.spaces, widget.invitations)) {
       return const Text('Tus Invitaciones');
     }
 
-    if (areOnlySpaces(widget.spaces, widget.invitations)) return const Text('Tus Espacios');
+    if (areOnlySpaces(widget.spaces, widget.invitations)) {
+      return const Text('Tus Espacios');
+    }
 
-    return const Text('Demos', textAlign: TextAlign.left,);
+    return const Text(
+      'Demos',
+      textAlign: TextAlign.left,
+    );
   }
 }
